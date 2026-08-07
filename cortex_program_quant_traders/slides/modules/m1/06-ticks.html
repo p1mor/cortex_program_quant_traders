@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex Quant Trader - TechPulse Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+  <link rel="stylesheet" href="../../css/slides.css" />
+</head>
+<body>
+<section class="slide" id="slide-7" data-module="1">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="1">Modulo I</span>
+    <span class="lesson-tag">L6</span>
+    <span class="slide-title">Granularidad: Ticks, Tick Size y Nocional</span>
+    <span class="concept-code">M1.L6.C06</span>
+  </header>
+  <div class="slide-body ratio-60-40">
+    <div class="slide-left">
+      <div class="section-title">
+        <div class="section-number">Leccion 6</div>
+        <h2>Ticks y Valor Nocional</h2>
+      </div>
+      <div class="divider gradient"></div>
+      <p class="t-body">El <strong>tick size</strong> es la minima variacion de precio permitida. El <strong>valor nocional</strong> determina cuanto dinero representa un contrato por cada punto de movimiento.</p>
+      <div class="formula-block u-mt-4">
+        <div style="text-align:center;">$$\text{Valor por Tick} = \text{Tick Size} \times \text{Tick Value}$$</div>
+      </div>
+      <div class="callout u-mt-4">
+        <p><strong>ES:</strong> Tick 0.25, Value $12.50. Un punto = 4 ticks = $50/contrato. Un movimiento de 10 puntos = $500.</p>
+      </div>
+    </div>
+    <div class="slide-right">
+      <table class="slide-table">
+        <thead>
+          <tr>
+            <th>Activo</th>
+            <th>Tick Size</th>
+            <th>Tick Value</th>
+            <th>Multi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="accent">ES</td>
+            <td>0.25</td>
+            <td>$12.50</td>
+            <td>$50/pt</td>
+          </tr>
+          <tr>
+            <td class="accent">NQ</td>
+            <td>0.25</td>
+            <td>$5.00</td>
+            <td>$20/pt</td>
+          </tr>
+          <tr>
+            <td class="accent">CL</td>
+            <td>0.01</td>
+            <td>$10.00</td>
+            <td>$1000/pt</td>
+          </tr>
+          <tr>
+            <td class="accent">GC</td>
+            <td>0.10</td>
+            <td>$10.00</td>
+            <td>$100/pt</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">08/34</span>
+  </footer>
+</section>
+</body>
+</html>

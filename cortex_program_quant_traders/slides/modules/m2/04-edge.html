@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex Quant Trader - TechPulse Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+  <link rel="stylesheet" href="../../css/slides.css" />
+</head>
+<body>
+<section class="slide" id="slide-16" data-module="2">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="2">Modulo II</span>
+    <span class="lesson-tag">L15</span>
+    <span class="slide-title">El Edge Estadistico</span>
+    <span class="concept-code">M2.L15.C15</span>
+  </header>
+  <div class="slide-body ratio-60-40">
+    <div class="slide-left">
+      <div class="section-title">
+        <div class="section-number">Leccion 15</div>
+        <h2>El Edge Estadistico</h2>
+      </div>
+      <div class="divider gradient"></div>
+      <p class="t-body">El edge es la ventaja esperada por operacion. Se define como la diferencia entre la ganancia esperada en trades ganadores y la perdida esperada en trades perdedores.</p>
+      <div class="formula-block u-mt-4">
+        <div style="text-align:center;">E = (W &times; P) &minus; (L &times; (1 &minus; P))</div>
+      </div>
+      <p class="t-body u-mt-3">Donde <strong>W</strong> = ganancia promedio, <strong>L</strong> = perdida promedio, <strong>P</strong> = probabilidad de ganancia.</p>
+    </div>
+    <div class="slide-right">
+      <table class="slide-table">
+        <thead>
+          <tr>
+            <th>Metrica</th>
+            <th>Descripcion</th>
+            <th>Target</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="accent">Sharpe</td>
+            <td>Retorno ajustado por riesgo</td>
+            <td>&gt; 1.5</td>
+          </tr>
+          <tr>
+            <td class="accent">Sortino</td>
+            <td>Ajustado solo por downside</td>
+            <td>&gt; 2.0</td>
+          </tr>
+          <tr>
+            <td class="accent">Profit Factor</td>
+            <td>Ganancia bruta / Perdida bruta</td>
+            <td>&gt; 1.8</td>
+          </tr>
+          <tr>
+            <td class="accent">Max DD</td>
+            <td>Maximo drawdown relativo</td>
+            <td>&lt; 15%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">17/34</span>
+  </footer>
+</section>
+</body>
+</html>

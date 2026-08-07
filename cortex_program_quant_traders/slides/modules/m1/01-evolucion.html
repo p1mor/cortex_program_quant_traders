@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex Quant Trader - TechPulse Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+  <link rel="stylesheet" href="../../css/slides.css" />
+</head>
+<body>
+<section class="slide" id="slide-2" data-module="1">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="1">Modulo I</span>
+    <span class="lesson-tag">L1</span>
+    <span class="slide-title">Evolucion Estructural: Open Outcry a HFT</span>
+    <span class="concept-code">M1.L1.C01</span>
+  </header>
+  <div class="slide-body ratio-60-40">
+    <div class="slide-left">
+      <div class="section-title">
+        <div class="section-number">Leccion 1</div>
+        <h2>Evolucion Estructural</h2>
+      </div>
+      <div class="divider gradient"></div>
+      <p class="t-body">La historia del trading es la historia de la <strong>reduccion de friccion</strong>. Desde los corros fisicos hasta los motores de matching electronicos con latencia sub-microsegundo.</p>
+      <div class="timeline u-mt-6">
+        <div class="timeline-node">
+          <div class="tl-icon">&#x25A0;</div>
+          <div class="tl-label">1792</div>
+          <div class="tl-desc">Buttonwood</div>
+        </div>
+        <div class="timeline-node">
+          <div class="tl-icon">&#x25A0;</div>
+          <div class="tl-label">Open Outcry</div>
+          <div class="tl-desc">Corros fisicos</div>
+        </div>
+        <div class="timeline-node">
+          <div class="tl-icon">&#x25A0;</div>
+          <div class="tl-label">1990s</div>
+          <div class="tl-desc">Electronico</div>
+        </div>
+        <div class="timeline-node">
+          <div class="tl-icon">&#x25A0;</div>
+          <div class="tl-label">HFT</div>
+          <div class="tl-desc">Latencia sub-us</div>
+        </div>
+      </div>
+      <div class="callout u-mt-4">
+        <p><strong>Implicacion:</strong> El trader moderno compite en un ecosistema donde la ejecucion es electronica, el libro es transparente y la latencia se mide en nanosegundos.</p>
+      </div>
+    </div>
+    <div class="slide-right">
+      <div class="viz-panel">
+        <div class="viz-title">Evolucion de la ejecucion</div>
+        <div style="display:flex;flex-direction:column;gap:var(--sp-4);font-family:var(--font-mono);font-size:var(--fs-caption);">
+          <div style="padding:var(--sp-4);border-left:3px solid var(--txt-tertiary);background:rgba(107,114,128,0.06);">
+            <div style="color:var(--txt-tertiary);font-weight:700;">OPEN OUTCRY</div>
+            <div style="color:var(--txt-secondary);">Voz y senas en el pit. Friccion alta.</div>
+          </div>
+          <div style="padding:var(--sp-4);border-left:3px solid var(--accent);background:var(--accent-subtle);">
+            <div style="color:var(--accent);font-weight:700;">MATCHING ENGINE</div>
+            <div style="color:var(--txt-secondary);">Orden electronica. Libro central. FIFO.</div>
+          </div>
+          <div style="padding:var(--sp-4);border-left:3px solid var(--hi);background:var(--hi-subtle);">
+            <div style="color:var(--hi);font-weight:700;">HFT</div>
+            <div style="color:var(--txt-secondary);">Latencia sub-us. Co-location. Algoritmos.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">03/34</span>
+  </footer>
+</section>
+</body>
+</html>

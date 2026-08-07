@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Slide Viewer — Cortex Quant Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+  <link rel="stylesheet" href="css/slides.css" />
+  <style>
+    body { display:flex; align-items:center; justify-content:center; min-height:100vh; background:#000; }
+    .slide { width:100vw; height:100vh; }
+    .viewer-info { position:fixed; bottom:var(--sp-4); left:var(--sp-4); z-index:100;
+      font-family:var(--font-mono); font-size:var(--fs-micro); color:var(--txt-tertiary);
+      background:var(--bg-panel); border:1px solid var(--border-default); padding:var(--sp-2) var(--sp-3); }
+    .viewer-info a { color:var(--accent); }
+  </style>
+</head>
+<body>
+  <div id="slide-container"></div>
+  <div class="viewer-info">
+    <a href="index.html">Volver al programa</a> &middot; Archivo: <span id="file-name">—</span>
+  </div>
+  <script>
+    (async function() {
+      const params = new URLSearchParams(location.search);
+      const file = params.get('slide');
+      if (!file) {
+        document.getElementById('slide-container').innerHTML =
+          '<div style="color:#6b7280;font-family:monospace;text-align:center;padding:4rem;">Especifica ?slide=modules/m0/00-portada.html</div>';
+        return;
+      }
+      document.getElementById('file-name').textContent = file;
+      try {
+        const resp = await fetch(file);
+        const html = await resp.text();
+        document.getElementById('slide-container').innerHTML = html;
+      } catch(e) {
+        document.getElementById('slide-container').innerHTML =
+          '<div style="color:#e63955;font-family:monospace;text-align:center;padding:4rem;">Error cargando: ' + file + '</div>';
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex Quant Trader - TechPulse Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+  <link rel="stylesheet" href="../../css/slides.css" />
+</head>
+<body>
+<section class="slide" id="slide-22" data-module="2">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="2">Modulo II</span>
+    <span class="lesson-tag">L21</span>
+    <span class="slide-title">Walk Forward</span>
+    <span class="concept-code">M2.L21.C21</span>
+  </header>
+  <div class="slide-body">
+    <div class="slide-left">
+      <div class="section-title">
+        <div class="section-number">Leccion 21</div>
+        <h2>Walk Forward</h2>
+      </div>
+      <div class="divider gradient"></div>
+      <p class="t-body">Walk Forward Analysis (WFA) es la tecnica gold standard de validacion. Entrena en una ventana, testea en la siguiente, y repite deslizandose en el tiempo.</p>
+      <div class="formula-block u-mt-4">
+        <div style="text-align:center;">WFE = R<sub>out</sub> / R<sub>in</sub></div>
+      </div>
+      <p class="t-body u-mt-3">Donde <strong>WFE</strong> = Walk Forward Efficiency, <strong>R<sub>out</sub></strong> = rendimiento out-of-sample, <strong>R<sub>in</sub></strong> = rendimiento in-sample.</p>
+    </div>
+    <div class="slide-right">
+      <div class="callout accent">
+        <p><strong>Walk Forward:</strong></p>
+        <p>&#x25A0; Divide los datos en ventanas de entrenamiento y prueba.</p>
+        <p>&#x25A0; Re-optimiza periodicamente adaptandose al mercado.</p>
+        <p>&#x25A0; WFE &gt; 0.5 indica que el edge sobrevive fuera de sample.</p>
+        <p>&#x25A0; Evita el overfitting al validar en datos no vistos.</p>
+      </div>
+    </div>
+  </div>
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">23/34</span>
+  </footer>
+</section>
+</body>
+</html>

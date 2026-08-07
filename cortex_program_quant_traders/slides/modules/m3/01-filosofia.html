@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex Quant Trader - TechPulse Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+  <link rel="stylesheet" href="../../css/slides.css" />
+</head>
+<body>
+<section class="slide" id="slide-23" data-module="3">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="3">Modulo III</span>
+    <span class="lesson-tag">L22</span>
+    <span class="slide-title">Filosofia Operativa</span>
+    <span class="concept-code">M3.L22.C22</span>
+  </header>
+  <div class="slide-body ratio-60-40">
+    <div class="slide-left">
+      <div class="section-title">
+        <div class="section-number">Leccion 22</div>
+        <h2>Filosofia Operativa</h2>
+      </div>
+      <div class="divider gradient"></div>
+      <p class="t-body">El framework Cortex opera como un sistema estocastico: no busca predecir, sino clasificar estados probabilisticos del mercado y asignar la accion optima (LONG, SHORT o NO OPERAR) segun la evidencia disponible.</p>
+      <div class="feature-card u-mt-4">
+        <div class="feature-icon u-accent">&#x25A0;</div>
+        <div class="feature-content">
+          <div class="feature-title">Cortex</div>
+          <div class="feature-body">Motor de inferencia. Procesa variables de microestructura y genera el estado probabilistico.</div>
+        </div>
+      </div>
+      <div class="feature-card u-mt-3">
+        <div class="feature-icon u-cyan">&#x25A0;</div>
+        <div class="feature-content">
+          <div class="feature-title">Dendrita</div>
+          <div class="feature-body">Capa de contexto. Evalua la calidad del entorno operativo y filtra senales de baja confianza.</div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-right">
+      <div class="viz-panel">
+        <div class="viz-title">Arquitectura Cortex-Dendrita</div>
+        <div style="display:flex;flex-direction:column;gap:var(--sp-3);font-family:var(--font-mono);font-size:var(--fs-caption);">
+          <div style="text-align:center;padding:var(--sp-3);border:1px solid var(--border);background:var(--bg-elevated);">
+            <div style="color:var(--txt-tertiary);font-weight:700;">FEED DE DATOS</div>
+          </div>
+          <div style="text-align:center;color:var(--txt-tertiary);">&#x25BC;</div>
+          <div style="text-align:center;padding:var(--sp-4);border:2px solid var(--accent);background:var(--accent-subtle);">
+            <div style="color:var(--accent);font-weight:700;">CORTEX</div>
+            <div style="color:var(--txt-secondary);font-size:var(--fs-small);">Inferencia probabilistica</div>
+          </div>
+          <div style="text-align:center;color:var(--txt-tertiary);">&#x25BC;</div>
+          <div style="display:flex;gap:var(--sp-3);">
+            <div style="flex:1;text-align:center;padding:var(--sp-3);border:1px solid var(--cyan);background:var(--cyan-subtle);">
+              <div style="color:var(--cyan);font-weight:700;">SI: DENDRITA</div>
+              <div style="color:var(--txt-secondary);font-size:var(--fs-small);">Contexto favorable</div>
+            </div>
+            <div style="flex:1;text-align:center;padding:var(--sp-3);border:1px solid var(--bear);background:var(--bear-subtle);">
+              <div style="color:var(--bear);font-weight:700;">NO: NO OPERAR</div>
+              <div style="color:var(--txt-secondary);font-size:var(--fs-small);">Contexto desfavorable</div>
+            </div>
+          </div>
+        </div>
+        <div class="formula-block u-mt-4">
+          <div style="text-align:center;font-size:var(--fs-small);">P(accion) = f(Cortex, Dendrita, Contexto)</div>
+        </div>
+        <div style="display:flex;gap:var(--sp-3);margin-top:var(--sp-4);font-family:var(--font-mono);font-size:var(--fs-caption);">
+          <div style="flex:1;text-align:center;padding:var(--sp-3);border-left:3px solid var(--accent);background:var(--accent-subtle);">
+            <div style="color:var(--accent);font-weight:700;">LONG</div>
+          </div>
+          <div style="flex:1;text-align:center;padding:var(--sp-3);border-left:3px solid var(--bear);background:var(--bear-subtle);">
+            <div style="color:var(--bear);font-weight:700;">NO OPERAR</div>
+          </div>
+          <div style="flex:1;text-align:center;padding:var(--sp-3);border-left:3px solid var(--hi);background:var(--hi-subtle);">
+            <div style="color:var(--hi);font-weight:700;">SHORT</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">24/34</span>
+  </footer>
+</section>
+</body>
+</html>

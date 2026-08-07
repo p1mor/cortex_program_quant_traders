@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex Quant Trader - TechPulse Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+  <link rel="stylesheet" href="../../css/slides.css" />
+</head>
+<body>
+<section class="slide" id="slide-17" data-module="2">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="2">Modulo II</span>
+    <span class="lesson-tag">L16</span>
+    <span class="slide-title">Diseno de Estrategias</span>
+    <span class="concept-code">M2.L16.C16</span>
+  </header>
+  <div class="slide-body">
+    <div class="slide-left">
+      <div class="section-title">
+        <div class="section-number">Leccion 16</div>
+        <h2>Diseno de Estrategias</h2>
+      </div>
+      <div class="divider gradient"></div>
+      <p class="t-body">El diseno de una estrategia quant sigue un proceso riguroso: desde la hipotesis inicial hasta la validacion estadistica. Cada paso debe ser documentado y reproducible.</p>
+      <div class="callout u-mt-4">
+        <p><strong>Principio:</strong> Una estrategia sin hipotesis clara es un ajuste de curva disfrazado de modelo.</p>
+      </div>
+    </div>
+    <div class="slide-right">
+      <div class="card-grid cols-1">
+        <div class="info-card">
+          <div class="card-icon u-accent">1</div>
+          <div class="card-title">Hipotesis</div>
+          <div class="card-body">Definir la ineficiencia de mercado que se pretende explotar. Pregunta concreta, falsable.</div>
+        </div>
+        <div class="info-card">
+          <div class="card-icon u-purple">2</div>
+          <div class="card-title">Variables</div>
+          <div class="card-body">Seleccionar features cuantificables. Feature engineering basado en microestructura.</div>
+        </div>
+        <div class="info-card">
+          <div class="card-icon u-cyan">3</div>
+          <div class="card-title">Reglas</div>
+          <div class="card-body">Definir entradas, salidas, stops y sizing. Reglas claras, sin ambiguedad.</div>
+        </div>
+        <div class="info-card">
+          <div class="card-icon u-hi">4</div>
+          <div class="card-title">Validacion</div>
+          <div class="card-body">Backtesting out-of-sample, walk-forward, Monte Carlo. Testear robustez, no solo performance.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">18/34</span>
+  </footer>
+</section>
+</body>
+</html>
