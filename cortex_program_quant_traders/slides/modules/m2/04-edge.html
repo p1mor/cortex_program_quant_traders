@@ -19,55 +19,85 @@
     <span class="brand">CORTEX QUANT TRADER</span>
     <span class="divider"></span>
     <span class="module-tag" data-mod="2">Modulo II</span>
-    <span class="lesson-tag">L15</span>
-    <span class="slide-title">El Edge Estadistico</span>
-    <span class="concept-code">M2.L15.C15</span>
+    <span class="lesson-tag">L17</span>
+    <span class="slide-title">El Edge Estad&iacute;stico</span>
+    <span class="concept-code">M2.L17.C17</span>
   </header>
   <div class="slide-body ratio-60-40">
-    <div class="slide-left">
+    <div class="slide-left" style="gap:var(--sp-4);">
       <div class="section-title">
-        <div class="section-number">Leccion 15</div>
-        <h2>El Edge Estadistico</h2>
+        <div class="section-number">Lecci&oacute;n 17</div>
+        <h2>El Edge Estad&iacute;stico</h2>
       </div>
       <div class="divider gradient"></div>
-      <p class="t-body">El edge es la ventaja esperada por operacion. Se define como la diferencia entre la ganancia esperada en trades ganadores y la perdida esperada en trades perdedores.</p>
-      <div class="formula-block u-mt-4">
-        <div style="text-align:center;">E = (W &times; P) &minus; (L &times; (1 &minus; P))</div>
+
+      <section style="position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(180px,.72fr) 1.65fr;border:1px solid rgba(0,51,255,.42);border-left:3px solid var(--accent);background:radial-gradient(circle at 94% 12%,rgba(0,51,255,.14),transparent 28%),linear-gradient(90deg,rgba(0,51,255,.085),rgba(0,0,0,.12));">
+        <div style="padding:var(--sp-3);border-right:1px solid rgba(0,51,255,.22);">
+          <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;color:var(--accent);">01 / VENTAJA</div>
+          <div style="margin-top:var(--sp-3);font-family:var(--font-display);font-size:var(--fs-h2);line-height:1.08;color:var(--txt-primary);">Edge no es<br><span style="color:var(--accent);">predicci&oacute;n.</span></div>
+        </div>
+        <div style="padding:var(--sp-3);display:flex;flex-direction:column;justify-content:center;">
+          <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:var(--txt-tertiary);">&iquest;QU&Eacute; ES UN EDGE?</div>
+          <p style="margin:var(--sp-2) 0 0;font-family:var(--font-body);font-size:var(--fs-small);line-height:1.68;color:var(--txt-secondary);">Es una <strong style="color:var(--txt-primary);">ventaja probabil&iacute;stica</strong> que permite obtener una expectativa positiva cuando se ejecuta de forma consistente sobre una cantidad suficiente de operaciones.</p>
+          <div style="display:flex;align-items:center;gap:var(--sp-2);margin-top:var(--sp-3);font-family:var(--font-mono);font-size:9px;"><span style="padding:5px 7px;background:var(--accent-subtle);color:var(--accent);">VENTAJA</span><span style="color:var(--txt-tertiary);">&times;</span><span style="padding:5px 7px;background:var(--purple-subtle);color:var(--purple);">REPETICI&Oacute;N</span><span style="color:var(--txt-tertiary);">&rarr;</span><span style="padding:5px 7px;background:var(--cyan-subtle);color:var(--hi);">EXPECTATIVA +</span></div>
+        </div>
+      </section>
+
+      <section style="padding:var(--sp-3);border:1px solid var(--border-default);background:rgba(255,255,255,.018);">
+        <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;"><span style="color:var(--purple);">DISTRIBUCI&Oacute;N DE RESULTADOS</span><span style="color:var(--txt-tertiary);">TRADE &ne; SISTEMA</span></div>
+        <div style="position:relative;height:44px;margin:var(--sp-2) 0;">
+          <div style="position:absolute;left:0;right:0;top:22px;height:1px;background:var(--border-default);"></div>
+          <div style="position:absolute;left:50%;top:8px;bottom:8px;width:1px;background:rgba(255,255,255,.18);"></div>
+          <div style="position:absolute;left:3%;right:3%;top:0;bottom:0;display:flex;align-items:center;justify-content:space-around;">
+            <i style="width:7px;height:7px;background:var(--bear-glow);transform:translateY(15px);"></i><i style="width:9px;height:9px;background:var(--bear-glow);transform:translateY(9px);"></i><i style="width:6px;height:6px;background:var(--bear-glow);transform:translateY(19px);"></i><i style="width:8px;height:8px;background:var(--txt-tertiary);transform:translateY(4px);"></i><i style="width:7px;height:7px;background:var(--purple);transform:translateY(-4px);"></i><i style="width:10px;height:10px;background:var(--bull-glow);transform:translateY(-12px);"></i><i style="width:7px;height:7px;background:var(--bull-glow);transform:translateY(-18px);"></i><i style="width:9px;height:9px;background:var(--hi);transform:translateY(-8px);"></i><i style="width:6px;height:6px;background:var(--bull-glow);transform:translateY(-21px);"></i>
+          </div>
+          <span style="position:absolute;left:0;bottom:-2px;font-family:var(--font-mono);font-size:9px;color:var(--bear-glow);">P&Eacute;RDIDAS</span><span style="position:absolute;right:0;top:-2px;font-family:var(--font-mono);font-size:9px;color:var(--bull-glow);">GANANCIAS</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3);padding-top:var(--sp-2);border-top:1px solid var(--border-subtle);">
+          <p style="margin:0;font-family:var(--font-body);font-size:var(--fs-small);line-height:1.62;color:var(--txt-secondary);"><strong style="color:var(--purple);">Probabilidad y resultado individual:</strong> tener edge no significa predecir el pr&oacute;ximo movimiento. Cada trade es incierto; lo importante es que el <strong style="color:var(--txt-primary);">conjunto de operaciones presente una distribuci&oacute;n favorable</strong>.</p>
+          <p style="margin:0;font-family:var(--font-body);font-size:var(--fs-small);line-height:1.62;color:var(--txt-secondary);"><strong style="color:var(--hi);">Ley de los Grandes N&uacute;meros:</strong> el edge necesita repetici&oacute;n para manifestarse. Una muestra amplia permite evaluar si los resultados son consistentes con la <strong style="color:var(--txt-primary);">ventaja estad&iacute;stica esperada</strong>.</p>
+        </div>
+      </section>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3);">
+        <section style="padding:var(--sp-3);border:1px solid rgba(6,182,212,.32);border-top:2px solid var(--hi);background:var(--cyan-subtle);">
+          <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:var(--hi);">EXPECTATIVA MATEM&Aacute;TICA</div>
+          <p style="margin:var(--sp-2) 0 0;font-family:var(--font-body);font-size:var(--fs-small);line-height:1.62;color:var(--txt-secondary);">Representa cu&aacute;nto esperamos <strong style="color:var(--txt-primary);">ganar o perder en promedio por operaci&oacute;n</strong>, considerando probabilidad de ganar, ganancia promedio y p&eacute;rdida promedio.</p>
+        </section>
+        <section style="padding:var(--sp-3);border:1px solid rgba(164,140,255,.32);border-top:2px solid var(--purple);background:var(--purple-subtle);">
+          <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:var(--purple);">WIN RATE &times; PAYOFF</div>
+          <p style="margin:var(--sp-2) 0 0;font-family:var(--font-body);font-size:var(--fs-small);line-height:1.62;color:var(--txt-secondary);">Un Win Rate alto no garantiza rentabilidad. Importa el equilibrio entre <strong style="color:var(--txt-primary);">frecuencia de aciertos y magnitud de ganancias y p&eacute;rdidas</strong>.</p>
+        </section>
       </div>
-      <p class="t-body u-mt-3">Donde <strong>W</strong> = ganancia promedio, <strong>L</strong> = perdida promedio, <strong>P</strong> = probabilidad de ganancia.</p>
+
+      <section style="display:grid;grid-template-columns:180px 1fr;align-items:center;gap:var(--sp-3);padding:var(--sp-2) var(--sp-3);border-left:3px solid var(--warn);background:var(--warn-subtle);">
+        <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:var(--warn);">RACHAS &middot; VARIANZA &middot; DRAWDOWN</div>
+        <p style="margin:0;font-family:var(--font-body);font-size:var(--fs-small);line-height:1.62;color:var(--txt-secondary);">Incluso una estrategia con edge puede atravesar p&eacute;rdidas consecutivas y drawdowns. La <strong style="color:var(--txt-primary);">variabilidad forma parte natural del comportamiento estad&iacute;stico</strong> de un sistema.</p>
+      </section>
     </div>
-    <div class="slide-right">
-      <table class="slide-table">
-        <thead>
-          <tr>
-            <th>Metrica</th>
-            <th>Descripcion</th>
-            <th>Target</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="accent">Sharpe</td>
-            <td>Retorno ajustado por riesgo</td>
-            <td>&gt; 1.5</td>
-          </tr>
-          <tr>
-            <td class="accent">Sortino</td>
-            <td>Ajustado solo por downside</td>
-            <td>&gt; 2.0</td>
-          </tr>
-          <tr>
-            <td class="accent">Profit Factor</td>
-            <td>Ganancia bruta / Perdida bruta</td>
-            <td>&gt; 1.8</td>
-          </tr>
-          <tr>
-            <td class="accent">Max DD</td>
-            <td>Maximo drawdown relativo</td>
-            <td>&lt; 15%</td>
-          </tr>
-        </tbody>
-      </table>
+
+    <div class="slide-right" style="gap:var(--sp-3);">
+      <section style="position:relative;overflow:hidden;padding:var(--sp-4);border:1px solid rgba(0,51,255,.42);border-top:3px solid var(--accent);background:radial-gradient(circle at 92% 7%,rgba(0,51,255,.16),transparent 25%),rgba(0,51,255,.035);">
+        <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:10px;letter-spacing:.15em;"><span style="color:var(--accent);">MEDICI&Oacute;N DEL EDGE</span><span style="color:var(--txt-tertiary);">LAB / 17</span></div>
+        <p style="margin:var(--sp-2) 0 0;font-family:var(--font-body);font-size:var(--fs-small);line-height:1.58;color:var(--txt-secondary);">M&eacute;tricas como <strong style="color:var(--txt-primary);">Expectancy, Profit Factor, Sharpe, Sortino y Drawdown</strong> permiten analizar rentabilidad, consistencia y riesgo desde diferentes perspectivas.</p>
+
+        <div style="margin-top:var(--sp-3);padding:var(--sp-3);border:1px solid rgba(164,140,255,.38);background:linear-gradient(135deg,rgba(164,140,255,.10),rgba(0,51,255,.07));text-align:center;">
+          <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:.14em;color:var(--purple);">EXPECTANCY / OPERACI&Oacute;N</div>
+          <div style="margin-top:var(--sp-2);font-family:var(--font-display);font-size:var(--fs-h2);line-height:1.15;color:var(--txt-primary);">E = (W &times; P) &minus; (L &times; (1 &minus; P))</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:var(--sp-3);background:rgba(164,140,255,.26);font-family:var(--font-mono);font-size:9px;text-align:left;"><span style="padding:6px;background:rgba(0,0,0,.52);color:var(--txt-secondary);"><strong style="color:var(--bull-glow);">W</strong> &middot; ganancia promedio</span><span style="padding:6px;background:rgba(0,0,0,.52);color:var(--txt-secondary);"><strong style="color:var(--bear-glow);">L</strong> &middot; p&eacute;rdida promedio</span><span style="padding:6px;background:rgba(0,0,0,.52);color:var(--txt-secondary);"><strong style="color:var(--purple);">P</strong> &middot; prob. de ganancia</span></div>
+        </div>
+      </section>
+
+      <section style="padding:var(--sp-3);border:1px solid var(--border-default);background:rgba(255,255,255,.018);">
+        <div style="display:grid;grid-template-columns:1.05fr 1.55fr .55fr;gap:var(--sp-2);padding:0 var(--sp-2) var(--sp-2);font-family:var(--font-mono);font-size:9px;letter-spacing:.12em;color:var(--txt-tertiary);"><span>M&Eacute;TRICA</span><span>LECTURA</span><span style="text-align:right;">REF.</span></div>
+
+        <div style="display:grid;grid-template-columns:1.05fr 1.55fr .55fr;align-items:center;gap:var(--sp-2);padding:var(--sp-2);border-top:1px solid rgba(0,51,255,.42);background:rgba(0,51,255,.065);"><strong style="font-family:var(--font-mono);font-size:10px;color:var(--accent);">EXPECTANCY</strong><span style="font-family:var(--font-body);font-size:var(--fs-small);color:var(--txt-secondary);">Promedio esperado por trade</span><strong style="text-align:right;font-family:var(--font-mono);font-size:10px;color:var(--bull-glow);">&gt; 0</strong></div>
+        <div style="display:grid;grid-template-columns:1.05fr 1.55fr .55fr;align-items:center;gap:var(--sp-2);padding:var(--sp-2);border-top:1px solid rgba(6,182,212,.32);background:rgba(6,182,212,.055);"><strong style="font-family:var(--font-mono);font-size:10px;color:var(--hi);">PROFIT FACTOR</strong><span style="font-family:var(--font-body);font-size:var(--fs-small);color:var(--txt-secondary);">Ganancia bruta / p&eacute;rdida bruta</span><strong style="text-align:right;font-family:var(--font-mono);font-size:10px;color:var(--txt-primary);">&gt; 1.8</strong></div>
+        <div style="display:grid;grid-template-columns:1.05fr 1.55fr .55fr;align-items:center;gap:var(--sp-2);padding:var(--sp-2);border-top:1px solid rgba(164,140,255,.32);background:rgba(164,140,255,.055);"><strong style="font-family:var(--font-mono);font-size:10px;color:var(--purple);">SHARPE</strong><span style="font-family:var(--font-body);font-size:var(--fs-small);color:var(--txt-secondary);">Retorno ajustado por riesgo</span><strong style="text-align:right;font-family:var(--font-mono);font-size:10px;color:var(--txt-primary);">&gt; 1.5</strong></div>
+        <div style="display:grid;grid-template-columns:1.05fr 1.55fr .55fr;align-items:center;gap:var(--sp-2);padding:var(--sp-2);border-top:1px solid rgba(34,197,94,.28);background:rgba(34,197,94,.045);"><strong style="font-family:var(--font-mono);font-size:10px;color:var(--bull-glow);">SORTINO</strong><span style="font-family:var(--font-body);font-size:var(--fs-small);color:var(--txt-secondary);">Ajustado solo por downside</span><strong style="text-align:right;font-family:var(--font-mono);font-size:10px;color:var(--txt-primary);">&gt; 2.0</strong></div>
+        <div style="display:grid;grid-template-columns:1.05fr 1.55fr .55fr;align-items:center;gap:var(--sp-2);padding:var(--sp-2);border-top:1px solid rgba(230,57,85,.30);background:rgba(230,57,85,.045);"><strong style="font-family:var(--font-mono);font-size:10px;color:var(--bear-glow);">MAX DD</strong><span style="font-family:var(--font-body);font-size:var(--fs-small);color:var(--txt-secondary);">M&aacute;ximo drawdown relativo</span><strong style="text-align:right;font-family:var(--font-mono);font-size:10px;color:var(--txt-primary);">&lt; 15%</strong></div>
+      </section>
+
     </div>
   </div>
   <footer class="slide-footer">

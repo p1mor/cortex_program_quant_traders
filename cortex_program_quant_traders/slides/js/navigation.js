@@ -171,17 +171,24 @@ const SlideNav = (() => {
      ══════════════════════════════════════════════════════════════════════ */
 
   function updateCounters() {
-    const label = String(currentIndex + 1).padStart(2, '0')
-                + '/' + String(slides.length).padStart(2, '0');
-    dom.slideCounters.forEach(el => { el.textContent = label; });
+    const lessonTotal = 42;
 
-    /* Update footer counter inside each slide */
-    slides.forEach((slide, i) => {
+    /* El deck contiene portadas e índice, por lo que slides.length representa
+       pantallas físicas (47), no lecciones curriculares (42). Los pies de las
+       lecciones se derivan de Lnn y las portadas conservan su valor escrito. */
+    slides.forEach((slide) => {
       const ctr = slide.querySelector('.slide-counter');
-      if (ctr) {
-        ctr.textContent = String(i + 1).padStart(2, '0')
-                        + '/' + String(slides.length).padStart(2, '0');
-      }
+      const lessonTag = slide.querySelector('.lesson-tag');
+      if (!ctr || !lessonTag) return;
+
+      const match = lessonTag.textContent.match(/\d+/);
+      if (!match) return;
+
+      const lessonNumber = Number(match[0]);
+      if (lessonNumber < 1 || lessonNumber > lessonTotal) return;
+
+      ctr.textContent = String(lessonNumber).padStart(2, '0')
+                      + '/' + String(lessonTotal).padStart(2, '0');
     });
   }
 
@@ -497,10 +504,15 @@ const SlideNav = (() => {
      §12  BOOTSTRAP
      ══════════════════════════════════════════════════════════════════════ */
 
+  function autoInit() {
+    /* The modular index delays initialization until its source slides load. */
+    if (!document.documentElement.dataset.deckLoading && !slides.length) init();
+  }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', autoInit);
   } else {
-    init();
+    autoInit();
   }
 
   return { init, goTo, next, prev, getCurrent };

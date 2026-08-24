@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex Quant Trader - TechPulse Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-12 .l11-stage {
+      min-height: 0;
+      padding: clamp(18px, 2vw, 30px) clamp(22px, 2.4vw, 42px);
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: clamp(14px, 1.6vh, 22px);
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px),
+        #000;
+      background-size: 48px 48px;
+    }
+
+    #slide-12 .l11-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 36%);
+      align-items: end;
+      gap: clamp(22px, 3vw, 52px);
+    }
+
+    #slide-12 .l11-kicker,
+    #slide-12 .l11-atlas-label,
+    #slide-12 .l11-index,
+    #slide-12 .l11-market-code,
+    #slide-12 .l11-architecture,
+    #slide-12 .l11-tech-label {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+
+    #slide-12 .l11-kicker {
+      margin-bottom: 7px;
+      color: var(--accent);
+      font-size: var(--fs-slide-label);
+      font-weight: 700;
+    }
+
+    #slide-12 .l11-heading h2 {
+      margin: 0;
+      color: var(--txt-primary);
+      font-family: var(--font-display);
+      font-size: var(--fs-slide-title);
+      font-weight: 500;
+      line-height: 1.12;
+    }
+
+    #slide-12 .l11-title-rule {
+      width: 54px;
+      height: 2px;
+      margin: 14px 0 13px;
+      background: linear-gradient(90deg, var(--accent), var(--cyan));
+    }
+
+    #slide-12 .l11-intro {
+      max-width: 1030px;
+      margin: 0;
+      color: var(--txt-secondary);
+      font-family: var(--font-body);
+      font-size: var(--fs-slide-body);
+      line-height: 1.55;
+    }
+
+    #slide-12 .l11-intro strong,
+    #slide-12 .l11-copy strong {
+      color: var(--txt-primary);
+      font-weight: 700;
+    }
+
+    #slide-12 .l11-visual {
+      position: relative;
+      height: clamp(92px, 12vh, 138px);
+      border-bottom: 1px solid var(--border-default);
+      overflow: hidden;
+      background: linear-gradient(90deg, transparent, rgba(0,229,255,.04));
+    }
+
+    #slide-12 .l11-visual::before {
+      content: "ARQUITECTURA / 04 MERCADOS";
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index: 2;
+      color: var(--txt-muted);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      letter-spacing: .14em;
+    }
+
+    #slide-12 .l11-visual img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center bottom;
+      filter: saturate(.9) contrast(1.05);
+    }
+
+    #slide-12 .l11-atlas {
+      min-height: 0;
+      border: 1px solid var(--border-default);
+      border-top-color: var(--accent);
+      background: rgba(5, 6, 9, .96);
+      display: grid;
+      grid-template-rows: auto repeat(4, minmax(0, 1fr));
+    }
+
+    #slide-12 .l11-atlas-head {
+      min-height: 34px;
+      padding: 8px 14px;
+      display: grid;
+      grid-template-columns: 148px minmax(0, 1.45fr) minmax(330px, .9fr);
+      align-items: center;
+      border-bottom: 1px solid var(--border-default);
+      color: var(--txt-muted);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    #slide-12 .l11-atlas-head span:last-child {
+      padding-left: 20px;
+      border-left: 1px solid var(--border-subtle);
+    }
+
+    #slide-12 .l11-lane {
+      --lane: var(--accent);
+      --lane-bg: rgba(0, 51, 255, .075);
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 148px minmax(0, 1.45fr) minmax(330px, .9fr);
+      border-bottom: 1px solid var(--border-subtle);
+      background: linear-gradient(90deg, var(--lane-bg), transparent 41%);
+    }
+
+    #slide-12 .l11-lane:last-child { border-bottom: 0; }
+    #slide-12 .l11-lane.is-stocks { --lane: var(--cyan); --lane-bg: rgba(0, 229, 255, .065); }
+    #slide-12 .l11-lane.is-forex { --lane: var(--purple); --lane-bg: rgba(164, 140, 255, .07); }
+    #slide-12 .l11-lane.is-crypto { --lane: var(--hi); --lane-bg: rgba(0, 207, 222, .06); }
+
+    #slide-12 .l11-identity {
+      position: relative;
+      padding: clamp(11px, 1.25vh, 17px) 14px 10px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      border-right: 1px solid var(--border-subtle);
+    }
+
+    #slide-12 .l11-identity::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 12px;
+      bottom: 12px;
+      width: 3px;
+      background: var(--lane);
+      box-shadow: 0 0 18px color-mix(in srgb, var(--lane) 55%, transparent);
+    }
+
+    #slide-12 .l11-index {
+      color: var(--txt-muted);
+      font-size: var(--fs-slide-micro);
+    }
+
+    #slide-12 .l11-market-name {
+      color: var(--txt-primary);
+      font-family: var(--font-display);
+      font-size: clamp(1.12rem, 1.35vw, 1.5rem);
+      font-weight: 500;
+      line-height: 1.05;
+    }
+
+    #slide-12 .l11-architecture {
+      color: var(--lane);
+      font-size: var(--fs-slide-micro);
+      font-weight: 700;
+    }
+
+    #slide-12 .l11-copy,
+    #slide-12 .l11-tech {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    #slide-12 .l11-copy {
+      padding: clamp(10px, 1.2vh, 16px) 20px;
+      color: var(--txt-secondary);
+      font-family: var(--font-body);
+      font-size: var(--fs-slide-support);
+      line-height: 1.48;
+    }
+
+    #slide-12 .l11-tech {
+      padding: clamp(10px, 1.2vh, 16px) 18px;
+      border-left: 1px solid var(--border-subtle);
+      background: rgba(255,255,255,.012);
+      color: var(--txt-secondary);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-support);
+      line-height: 1.48;
+    }
+
+    #slide-12 .l11-tech-label {
+      margin-bottom: 5px;
+      color: var(--lane);
+      font-size: var(--fs-slide-micro);
+      font-weight: 700;
+    }
+
+    #slide-12 .l11-tech strong { color: var(--txt-primary); }
+
+    @media (min-width: 1181px) and (max-height: 820px) {
+      #slide-12 .l11-stage { padding-top: 16px; padding-bottom: 14px; gap: 12px; }
+      #slide-12 .l11-heading { grid-template-columns: minmax(0, 1fr) 300px; }
+      #slide-12 .l11-visual { height: 92px; }
+      #slide-12 .l11-title-rule { margin-top: 10px; margin-bottom: 9px; }
+      #slide-12 .l11-atlas-head { min-height: 30px; padding-top: 6px; padding-bottom: 6px; }
+      #slide-12 .l11-copy, #slide-12 .l11-tech { padding-top: 8px; padding-bottom: 8px; }
+    }
+
+    @media (max-width: 1180px) {
+      #slide-12 .l11-stage { overflow-y: auto; }
+      #slide-12 .l11-heading { grid-template-columns: 1fr; }
+      #slide-12 .l11-visual { display: none; }
+      #slide-12 .l11-atlas { grid-template-rows: auto; }
+      #slide-12 .l11-atlas-head { display: none; }
+      #slide-12 .l11-lane { grid-template-columns: 130px minmax(0, 1fr); }
+      #slide-12 .l11-tech { grid-column: 2; border-left: 0; border-top: 1px solid var(--border-subtle); }
+      #slide-12 .l11-identity { grid-row: span 2; }
+    }
+
+    @media (max-width: 700px) {
+      #slide-12 .l11-lane { grid-template-columns: 1fr; }
+      #slide-12 .l11-identity,
+      #slide-12 .l11-copy,
+      #slide-12 .l11-tech { grid-column: 1; }
+      #slide-12 .l11-identity { grid-row: auto; border-right: 0; border-bottom: 1px solid var(--border-subtle); }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-12" data-module="1">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="1">Módulo I</span>
+    <span class="lesson-tag">L11</span>
+    <span class="slide-title">Futuros, Stocks y Forex</span>
+    <span class="concept-code">M1.L11.C11</span>
+  </header>
+
+  <div class="slide-body single-col">
+    <main class="l11-stage">
+      <section class="l11-heading" aria-labelledby="l11-title">
+        <div>
+          <div class="l11-kicker">Lección 11 · Arquitectura de negociación</div>
+          <h2 id="l11-title">Anatomía de Activos</h2>
+          <div class="l11-title-rule"></div>
+          <p class="l11-intro">Los mercados financieros están compuestos por diferentes <strong>clases de activos</strong>, cada una con una estructura, reglas de negociación y mecanismos de formación de precios particulares. Aunque todos permiten transferir capital y riesgo entre participantes, <strong>no todos funcionan bajo la misma arquitectura de mercado</strong>.</p>
+        </div>
+        <figure class="l11-visual" aria-label="Representación visual de futuros, acciones, forex y Bitcoin">
+          <img src="../../assets/images/clases-activos-11-v3.png" alt="Visual conceptual de futuros, acciones, forex y Bitcoin" />
+        </figure>
+      </section>
+
+      <section class="l11-atlas" aria-label="Atlas comparativo de arquitecturas de mercado">
+        <div class="l11-atlas-head">
+          <span>Clase / mercado</span>
+          <span>Naturaleza económica</span>
+          <span>Ficha microestructural</span>
+        </div>
+
+        <article class="l11-lane is-futures">
+          <div class="l11-identity">
+            <span class="l11-index">01 / CLOB</span>
+            <strong class="l11-market-name">Futuros</strong>
+            <span class="l11-architecture">Centralizado</span>
+          </div>
+          <div class="l11-copy"><span>Contratos estandarizados negociados en <strong>mercados centralizados</strong> como CME. También se clasifican dentro del mercado de <strong>derivados</strong>. Representan el compromiso de comprar o vender un activo bajo condiciones definidas. Ofrecen alta transparencia de <strong>precio, volumen y libro de órdenes</strong>, utilizan margen y tienen vencimiento.</span></div>
+          <div class="l11-tech"><span class="l11-tech-label">Infraestructura observable</span><span><strong>CME/CBOT.</strong> Contratos estandarizados. CLOB/DOM visible. Volumen consolidado. Matching Engine. Margen. Vencimiento. CFTC.</span></div>
+        </article>
+
+        <article class="l11-lane is-stocks">
+          <div class="l11-identity">
+            <span class="l11-index">02 / VENUES</span>
+            <strong class="l11-market-name">Stocks</strong>
+            <span class="l11-architecture">Regulado · multi-venue</span>
+          </div>
+          <div class="l11-copy"><span>Representan <strong>propiedad parcial de una empresa</strong>. Se negocian principalmente en bolsas y otros centros electrónicos regulados. Su precio refleja la interacción entre oferta y demanda, expectativas sobre la compañía y condiciones generales del mercado.</span></div>
+          <div class="l11-tech"><span class="l11-tech-label">Infraestructura distribuida</span><span><strong>NYSE/Nasdaq + otros venues.</strong> Propiedad empresarial. Order Books por venue. Volumen fragmentado/consolidable.</span></div>
+        </article>
+
+        <article class="l11-lane is-forex">
+          <div class="l11-identity">
+            <span class="l11-index">03 / OTC</span>
+            <strong class="l11-market-name">Forex</strong>
+            <span class="l11-architecture">Descentralizado</span>
+          </div>
+          <div class="l11-copy"><span>Mercado global de <strong>divisas</strong>, principalmente <strong>OTC y descentralizado</strong>. No existe un único libro de órdenes o volumen consolidado mundial; bancos, dealers, brokers y otras instituciones forman una red distribuida de liquidez y precios.</span></div>
+          <div class="l11-tech"><span class="l11-tech-label">Red multi-dealer</span><span><strong>OTC.</strong> Sin CLOB ni volumen global consolidado. Liquidez fragmentada. 24/5. Apalancamiento.</span></div>
+        </article>
+
+        <article class="l11-lane is-crypto">
+          <div class="l11-identity">
+            <span class="l11-index">04 / CEX + DEX</span>
+            <strong class="l11-market-name">Cripto</strong>
+            <span class="l11-architecture">Fragmentado</span>
+          </div>
+          <div class="l11-copy"><span>Activos digitales negociados <strong>24/7</strong>. Su estructura está fragmentada entre múltiples exchanges centralizados (CEX) y mercados descentralizados (DEX). Cada venue puede tener su propio precio, volumen, liquidez y libro de órdenes.</span></div>
+          <div class="l11-tech"><span class="l11-tech-label">Liquidez por venue</span><span><strong>CEX + DEX.</strong> Order Book/liquidez por venue. Sin precio ni volumen global único. Mercado 24/7. Alta heterogeneidad regulatoria.</span></div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">11/34</span>
+  </footer>
+</section>
+</body>
+</html>

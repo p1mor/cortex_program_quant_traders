@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex Quant Trader - TechPulse Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+  <link rel="stylesheet" href="../../css/slides.css" />
+</head>
+<body>
+<section class="slide" id="slide-6" data-module="1">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="1">Modulo I</span>
+    <span class="lesson-tag">L5</span>
+    <span class="slide-title">Taxonomia de Participantes</span>
+    <span class="concept-code">M1.L5.C05</span>
+  </header>
+  <div class="slide-body">
+    <div class="slide-left">
+      <div class="section-title">
+        <div class="section-number">Lección 5</div>
+        <h2>Taxonomia de Participantes</h2>
+      </div>
+      <div class="divider gradient"></div>
+      <div class="card-grid cols-2" style="display:none;">
+        <div class="info-card">
+          <div class="card-icon u-bull">&#x25B2;</div>
+          <div class="card-title">Actores direccionales</div>
+          <div class="card-body">Fondos de cobertura, bancos de inversión e inversores minoristas. Buscan beneficiarse de las fluctuaciones de precio cuando especulan.</div>
+        </div>
+        <div class="info-card">
+          <div class="card-icon u-hi">&#x25A0;</div>
+          <div class="card-title">Actores no direccionales</div>
+          <div class="card-body">Creadores de mercado (<em>market makers</em>) y <em>brokers</em>: facilitan transacciones, no dependen de la dirección del precio y obtienen beneficios mediante volumen, frecuencia y comisiones.</div>
+        </div>
+      </div>
+      <div class="callout cyan u-mt-4" style="display:none;">
+        <p><strong>Órdenes en el mercado:</strong> la mecánica de precios permite que los precios existan y se mantengan. La participación se realiza mediante el principio de doble subasta, que distingue entre dos tipos de órdenes.</p>
+      </div>
+      <div class="card-grid cols-2" style="display:none;">
+        <div class="info-card">
+          <div class="card-icon u-hi">&#x25A0;</div>
+          <div class="card-title">Órdenes pacientes</div>
+          <div class="card-body">Colocan órdenes límite de compra o venta con distintos precios y volúmenes. Las órdenes introducidas primero y a precios más competitivos tienen prioridad.</div>
+        </div>
+        <div class="info-card">
+          <div class="card-icon u-bull">&#x25B2;</div>
+          <div class="card-title">Órdenes impacientes</div>
+          <div class="card-body">Son órdenes a mercado: se ejecutan cuando encuentran una contraparte al precio disponible, proporcionada por órdenes pacientes u órdenes límite.</div>
+        </div>
+      </div>
+      <div class="callout u-mt-4" style="display:none;">
+        <p><strong>La subasta real de mercado:</strong> las órdenes pacientes se ejecutan cuando las órdenes impacientes son compatibles. Este proceso determina el precio real de un activo en un momento dado.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:var(--sp-3);font-family:var(--font-mono);">
+        <div class="viz-title">Participantes → flujo → precio</div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3);">
+          <div style="padding:var(--sp-3);border:1px solid var(--border-default);border-left:3px solid var(--bull-glow);background:var(--bg-elevated);">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2);">
+              <span style="color:var(--bull-glow);font-weight:700;font-size:var(--fs-caption);letter-spacing:.07em;">01 · DIRECCIONALES</span>
+              <span style="color:var(--bull-glow);font-size:var(--fs-body);">▲</span>
+            </div>
+            <div style="margin-top:var(--sp-3);color:var(--txt-secondary);font-family:var(--font-body);font-size:var(--fs-caption);line-height:1.6;">Fondos de cobertura, bancos de inversión e inversores minoristas. Buscan beneficiarse de las fluctuaciones de precio cuando especulan.</div>
+            <div style="display:flex;align-items:center;gap:4px;margin-top:var(--sp-3);"><span style="width:12px;height:12px;background:var(--bull);"></span><span style="height:4px;flex:1;background:var(--bull);opacity:.55;"></span><span style="color:var(--bull-glow);font-size:10px;">TESIS</span></div>
+          </div>
+
+          <div style="padding:var(--sp-3);border:1px solid var(--border-default);border-left:3px solid var(--hi);background:var(--bg-elevated);">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2);">
+              <span style="color:var(--hi);font-weight:700;font-size:var(--fs-caption);letter-spacing:.07em;">02 · NO DIRECCIONALES</span>
+              <span style="color:var(--hi);font-size:var(--fs-body);">■</span>
+            </div>
+            <div style="margin-top:var(--sp-3);color:var(--txt-secondary);font-family:var(--font-body);font-size:var(--fs-caption);line-height:1.6;">Market makers y brokers facilitan transacciones; no dependen de la dirección del precio y monetizan volumen, frecuencia y comisiones.</div>
+            <div style="display:flex;align-items:center;gap:4px;margin-top:var(--sp-3);"><span style="color:var(--hi);font-size:10px;">VOLUMEN</span><span style="height:4px;flex:1;background:var(--hi);opacity:.55;"></span><span style="width:12px;height:12px;background:var(--hi);"></span></div>
+          </div>
+        </div>
+
+        <div style="padding:var(--sp-3);border:1px solid var(--border-default);background:var(--bg-elevated);">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:var(--sp-2);margin-bottom:var(--sp-3);">
+            <span style="color:var(--cyan);font-weight:700;font-size:var(--fs-caption);letter-spacing:.07em;">03 · DOBLE SUBASTA</span>
+            <span style="color:var(--txt-tertiary);font-size:10px;">MECÁNICA DEL PRECIO</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 116px 1fr;gap:var(--sp-3);align-items:center;">
+            <div>
+              <div style="color:var(--cyan);font-size:10px;margin-bottom:6px;">ÓRDENES LÍMITE · ESPERAN</div>
+              <div style="display:flex;flex-direction:column;gap:4px;"><span style="height:11px;width:88%;background:var(--cyan);opacity:.45;"></span><span style="height:11px;width:63%;background:var(--cyan);opacity:.35;"></span><span style="height:11px;width:42%;background:var(--cyan);opacity:.25;"></span></div>
+            </div>
+            <div style="padding:var(--sp-2);text-align:center;border:1px solid var(--border-strong);background:rgba(255,255,255,.02);">
+              <div style="color:var(--txt-primary);font-size:10px;font-weight:700;">MATCH</div>
+              <div style="margin:6px 0;color:var(--warn);font-size:var(--fs-body);">⇄</div>
+              <div style="color:var(--txt-secondary);font-size:10px;">PRECIO REAL</div>
+            </div>
+            <div>
+              <div style="color:var(--bull-glow);font-size:10px;text-align:right;margin-bottom:6px;">ÓRD. A MERCADO · CRUZAN</div>
+              <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;"><span style="height:11px;width:42%;background:var(--bull);opacity:.25;"></span><span style="height:11px;width:63%;background:var(--bull);opacity:.35;"></span><span style="height:11px;width:88%;background:var(--bull);opacity:.45;"></span></div>
+            </div>
+          </div>
+          <div style="margin-top:var(--sp-3);padding-top:var(--sp-2);border-top:1px solid var(--border-default);font-family:var(--font-body);font-size:var(--fs-caption);color:var(--txt-secondary);"><strong style="color:var(--cyan);">Órdenes en el mercado:</strong> los precios existen y se mantienen mediante este encuentro entre liquidez disponible y demanda de ejecución.</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3);">
+          <div style="padding:var(--sp-3);border-left:3px solid var(--hi);background:var(--hi-subtle);">
+            <div style="display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--hi);font-weight:700;font-size:var(--fs-caption);letter-spacing:.07em;">04 · PACIENTES</span><span style="color:var(--hi);">□</span></div>
+            <div style="margin-top:var(--sp-2);font-family:var(--font-body);font-size:var(--fs-caption);line-height:1.6;color:var(--txt-secondary);">Colocan órdenes límite de compra o venta con distintos precios y volúmenes. Las primeras y más competitivas tienen prioridad.</div>
+            <div style="margin-top:var(--sp-3);display:flex;gap:3px;"><span style="width:34%;height:4px;background:var(--hi);"></span><span style="width:26%;height:4px;background:var(--hi);opacity:.6;"></span><span style="width:18%;height:4px;background:var(--hi);opacity:.35;"></span></div>
+          </div>
+          <div style="padding:var(--sp-3);border-left:3px solid var(--bull-glow);background:var(--bull-subtle);">
+            <div style="display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--bull-glow);font-weight:700;font-size:var(--fs-caption);letter-spacing:.07em;">05 · IMPACIENTES</span><span style="color:var(--bull-glow);">▲</span></div>
+            <div style="margin-top:var(--sp-2);font-family:var(--font-body);font-size:var(--fs-caption);line-height:1.6;color:var(--txt-secondary);">Son órdenes a mercado: se ejecutan cuando encuentran una contraparte al precio disponible, proporcionada por órdenes pacientes.</div>
+            <div style="margin-top:var(--sp-3);display:flex;align-items:center;gap:4px;"><span style="color:var(--bull-glow);font-size:10px;">MKT</span><span style="height:4px;flex:1;background:var(--bull);opacity:.6;"></span><span style="color:var(--bull-glow);">→</span></div>
+          </div>
+        </div>
+
+        <div style="padding:var(--sp-3);border-left:3px solid var(--accent);background:var(--accent-subtle);font-family:var(--font-body);font-size:var(--fs-caption);line-height:1.6;color:var(--txt-secondary);"><strong style="color:var(--txt-primary);">La subasta real de mercado:</strong> las órdenes pacientes se ejecutan cuando las órdenes impacientes son compatibles. Este proceso determina el precio real de un activo en un momento dado.</div>
+      </div>
+    </div>
+    <div class="slide-right">
+      <div class="viz-panel">
+        <div class="viz-title">Facilitadores de transacciones</div>
+        <div style="display:flex;flex-direction:column;gap:var(--sp-4);font-family:var(--font-mono);font-size:var(--fs-caption);">
+          <div style="display:none;padding:var(--sp-4);border-left:3px solid var(--bull-glow);background:var(--bull-subtle);">
+            <div style="color:var(--bull-glow);font-weight:700;">01 · ACTORES DIRECCIONALES</div>
+            <div style="color:var(--txt-secondary);">Fondos de cobertura, bancos de inversión e inversores minoristas. Participan con una tesis de precio y buscan beneficiarse de sus fluctuaciones.</div>
+          </div>
+          <div style="display:none;padding:var(--sp-4);border-left:3px solid var(--hi);background:var(--hi-subtle);">
+            <div style="color:var(--hi);font-weight:700;">02 · ACTORES NO DIRECCIONALES</div>
+            <div style="color:var(--txt-secondary);">No dependen de que el precio suba o baje. Su función es facilitar la operación y monetizar el volumen, la frecuencia y las comisiones.</div>
+          </div>
+          <div style="margin-left:0;padding:var(--sp-4);border-left:3px solid var(--accent);background:var(--accent-subtle);">
+            <div style="color:var(--accent);font-weight:700;">├─ BROKERS</div>
+            <div style="color:var(--txt-secondary);">Intermedian y facilitan la ejecución de transacciones entre participantes.</div>
+          </div>
+          <div style="margin-left:0;padding:var(--sp-4);border-left:3px solid var(--cyan);background:var(--cyan-subtle);">
+            <div style="color:var(--cyan);font-weight:700;">└─ MARKET MAKERS</div>
+            <div style="color:var(--txt-secondary);">Proporcionan liquidez al libro de órdenes y gestionan inventario para capturar el <em>spread</em>.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">07/34</span>
+  </footer>
+</section>
+</body>
+</html>

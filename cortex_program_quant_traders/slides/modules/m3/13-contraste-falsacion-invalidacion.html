@@ -1,0 +1,795 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contraste, Falsación e Invalidación — Cortex Quant Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-35 .l36-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: clamp(13px, 1.55vh, 20px);
+      min-height: 0;
+      padding: clamp(22px, 2.8vh, 34px) clamp(30px, 3.1vw, 60px) clamp(18px, 2.3vh, 28px);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 18% 58%, rgba(0,51,255,.052), transparent 28%),
+        radial-gradient(circle at 78% 52%, rgba(230,57,85,.032), transparent 26%),
+        #000;
+    }
+
+    #slide-35 .l36-head h2 {
+      font-size: var(--fs-slide-title, clamp(1.75rem, 1.95vw, 2.25rem));
+    }
+
+    #slide-35 .l36-head .divider {
+      margin-top: clamp(11px, 1.4vh, 17px);
+    }
+
+    #slide-35 .l36-canvas {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: clamp(10px, 1.05vw, 17px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-35 .l36-axiom {
+      display: grid;
+      grid-template-columns: minmax(220px, .55fr) minmax(0, 1.45fr) auto;
+      gap: clamp(15px, 1.45vw, 24px);
+      align-items: center;
+      min-width: 0;
+      padding: clamp(10px, 1vw, 15px) clamp(15px, 1.35vw, 23px);
+      border-top: 1px solid rgba(0,51,255,.72);
+      border-bottom: 1px solid rgba(6,182,212,.35);
+      background: linear-gradient(90deg, rgba(0,51,255,.09), rgba(6,182,212,.025) 62%, rgba(230,57,85,.025));
+    }
+
+    #slide-35 .l36-axiom-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.05rem, 1.28vw, 1.5rem);
+      line-height: 1.14;
+      color: var(--txt-primary);
+    }
+
+    #slide-35 .l36-axiom-title span {
+      display: block;
+      color: var(--hi);
+    }
+
+    #slide-35 .l36-axiom-copy {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.42;
+    }
+
+    #slide-35 .l36-axiom-copy strong,
+    #slide-35 .l36-protocol-copy strong,
+    #slide-35 .l36-source-copy strong,
+    #slide-35 .l36-case-copy strong,
+    #slide-35 .l36-principle-copy strong {
+      color: var(--txt-primary);
+      font-weight: 700;
+    }
+
+    #slide-35 .l36-axiom-badge,
+    #slide-35 .l36-lab-head,
+    #slide-35 .l36-sequence,
+    #slide-35 .l36-testbench-title,
+    #slide-35 .l36-signal-code,
+    #slide-35 .l36-source-name,
+    #slide-35 .l36-spectrum-labels,
+    #slide-35 .l36-gate-label,
+    #slide-35 .l36-outcome-label,
+    #slide-35 .l36-protocol-head,
+    #slide-35 .l36-protocol-index,
+    #slide-35 .l36-protocol-title,
+    #slide-35 .l36-case-label,
+    #slide-35 .l36-case-flow,
+    #slide-35 .l36-principle-label {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    #slide-35 .l36-axiom-badge {
+      min-width: clamp(165px, 12vw, 220px);
+      padding: 8px 11px;
+      border: 1px solid rgba(230,57,85,.48);
+      color: var(--bear-glow);
+      background: var(--bear-subtle);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 800;
+      text-align: center;
+    }
+
+    #slide-35 .l36-lab {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      border: 1px solid var(--border-default);
+      border-top: 2px solid var(--accent);
+      background: rgba(7,8,10,.98);
+    }
+
+    #slide-35 .l36-lab::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .32;
+      background-image:
+        linear-gradient(rgba(255,255,255,.017) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.017) 1px, transparent 1px);
+      background-size: 42px 42px;
+    }
+
+    #slide-35 .l36-lab > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    #slide-35 .l36-lab-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: clamp(8px, .8vh, 11px) clamp(14px, 1.25vw, 21px);
+      border-bottom: 1px solid rgba(61,64,69,.72);
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+    }
+
+    #slide-35 .l36-lab-head span:last-child {
+      color: var(--hi);
+      font-weight: 800;
+    }
+
+    #slide-35 .l36-sequence {
+      display: grid;
+      grid-template-columns: repeat(9, auto);
+      align-items: stretch;
+      justify-content: stretch;
+      min-width: 0;
+      border-bottom: 1px solid rgba(61,64,69,.72);
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+    }
+
+    #slide-35 .l36-sequence span {
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      padding: 8px 7px;
+      color: var(--step-color, var(--txt-secondary));
+      background: var(--step-bg, rgba(255,255,255,.018));
+      font-weight: 800;
+      text-align: center;
+    }
+
+    #slide-35 .l36-sequence i {
+      display: grid;
+      place-items: center;
+      min-width: 19px;
+      color: var(--txt-tertiary);
+      font-style: normal;
+    }
+
+    #slide-35 .l36-sequence .is-hypothesis { --step-color: var(--accent); --step-bg: rgba(0,51,255,.075); }
+    #slide-35 .l36-sequence .is-contrast { --step-color: var(--purple); --step-bg: rgba(164,140,255,.065); }
+    #slide-35 .l36-sequence .is-evidence { --step-color: var(--warn); --step-bg: rgba(255,183,77,.06); }
+    #slide-35 .l36-sequence .is-falsification { --step-color: var(--bear-glow); --step-bg: rgba(230,57,85,.06); }
+    #slide-35 .l36-sequence .is-verdict { --step-color: var(--hi); --step-bg: rgba(0,229,255,.055); }
+
+    #slide-35 .l36-workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1.48fr) minmax(330px, .82fr);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-35 .l36-testbench {
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
+      gap: clamp(8px, .8vw, 12px);
+      min-width: 0;
+      min-height: 0;
+      padding: clamp(11px, 1.05vw, 17px);
+      border-right: 1px solid rgba(61,64,69,.72);
+      overflow: hidden;
+    }
+
+    #slide-35 .l36-testbench-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    #slide-35 .l36-testbench-title {
+      color: var(--accent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-35 .l36-testbench-head > span:last-child {
+      color: var(--txt-tertiary);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    #slide-35 .l36-signal-entry {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      min-width: 0;
+      padding: 8px 10px;
+      border: 1px solid rgba(0,51,255,.45);
+      background: rgba(0,51,255,.055);
+    }
+
+    #slide-35 .l36-signal-code {
+      display: grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-35 .l36-signal-copy {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
+      line-height: 1.34;
+    }
+
+    #slide-35 .l36-signal-copy strong {
+      color: var(--txt-primary);
+    }
+
+    #slide-35 .l36-signal-state {
+      padding: 6px 8px;
+      border: 1px solid rgba(164,140,255,.42);
+      color: var(--purple);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    #slide-35 .l36-source-array {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-35 .l36-source {
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: 6px;
+      min-width: 0;
+      padding: 8px 9px;
+      border-top: 2px solid var(--source-color);
+      background: var(--source-bg);
+    }
+
+    #slide-35 .l36-source-structure { --source-color: var(--accent); --source-bg: rgba(0,51,255,.055); }
+    #slide-35 .l36-source-confirmation { --source-color: var(--purple); --source-bg: rgba(164,140,255,.05); }
+    #slide-35 .l36-source-context { --source-color: var(--warn); --source-bg: rgba(255,183,77,.045); }
+
+    #slide-35 .l36-source-name {
+      color: var(--source-color);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-35 .l36-spectrum {
+      position: relative;
+      height: 15px;
+      border-top: 1px solid rgba(34,197,94,.5);
+      border-bottom: 1px solid rgba(230,57,85,.5);
+      background: linear-gradient(90deg, rgba(34,197,94,.12), rgba(107,114,128,.08) 50%, rgba(230,57,85,.12));
+    }
+
+    #slide-35 .l36-spectrum::after {
+      content: "";
+      position: absolute;
+      top: -3px;
+      left: var(--marker-x);
+      width: 5px;
+      height: 19px;
+      border: 1px solid var(--source-color);
+      background: #000;
+      box-shadow: 0 0 10px color-mix(in srgb, var(--source-color) 35%, transparent);
+    }
+
+    #slide-35 .l36-spectrum-labels {
+      display: flex;
+      justify-content: space-between;
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+    }
+
+    #slide-35 .l36-source-copy {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
+      line-height: 1.32;
+    }
+
+    #slide-35 .l36-verdict {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 8px;
+      align-items: stretch;
+      min-width: 0;
+    }
+
+    #slide-35 .l36-outcome {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 9px;
+      align-items: center;
+      min-width: 0;
+      padding: 8px 10px;
+      border: 1px solid var(--outcome-color);
+      background: var(--outcome-bg);
+    }
+
+    #slide-35 .l36-outcome-continue { --outcome-color: rgba(0,229,255,.48); --outcome-bg: rgba(0,229,255,.045); }
+    #slide-35 .l36-outcome-invalidate { --outcome-color: rgba(230,57,85,.5); --outcome-bg: rgba(230,57,85,.05); }
+
+    #slide-35 .l36-outcome-mark {
+      color: var(--outcome-color);
+      font-family: var(--font-display);
+      font-size: clamp(1.15rem, 1.4vw, 1.65rem);
+      line-height: 1;
+    }
+
+    #slide-35 .l36-outcome-label {
+      display: block;
+      color: var(--outcome-color);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-35 .l36-outcome p {
+      margin-top: 3px;
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
+      line-height: 1.28;
+    }
+
+    #slide-35 .l36-gate {
+      display: grid;
+      place-items: center;
+      min-width: 84px;
+      padding: 7px 9px;
+      border: 1px solid rgba(255,183,77,.48);
+      color: var(--warn);
+      background:
+        linear-gradient(90deg, transparent 49%, rgba(255,183,77,.35) 50%, transparent 51%),
+        linear-gradient(transparent 49%, rgba(255,183,77,.35) 50%, transparent 51%),
+        rgba(255,183,77,.035);
+      text-align: center;
+    }
+
+    #slide-35 .l36-gate-label {
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 800;
+      line-height: 1.28;
+    }
+
+    #slide-35 .l36-protocol {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto repeat(3, minmax(0, 1fr));
+      gap: 0;
+      min-width: 0;
+      min-height: 0;
+      padding: clamp(11px, 1.05vw, 17px) clamp(13px, 1.15vw, 19px);
+      background: linear-gradient(180deg, rgba(164,140,255,.035), transparent 50%);
+    }
+
+    #slide-35 .l36-protocol::before {
+      content: "";
+      position: absolute;
+      top: 44px;
+      bottom: 18px;
+      left: clamp(26px, 2vw, 35px);
+      width: 1px;
+      background: linear-gradient(var(--accent), var(--warn), var(--bear-glow));
+    }
+
+    #slide-35 .l36-protocol-head {
+      padding-bottom: 7px;
+      color: var(--purple);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-35 .l36-protocol-step {
+      position: relative;
+      display: grid;
+      grid-template-columns: 40px minmax(0, 1fr);
+      gap: 10px;
+      align-content: center;
+      min-width: 0;
+      padding: 7px 0;
+      border-top: 1px solid rgba(61,64,69,.55);
+    }
+
+    #slide-35 .l36-protocol-index {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      align-self: start;
+      width: 27px;
+      height: 27px;
+      border: 1px solid var(--protocol-color);
+      color: var(--protocol-color);
+      background: #07080a;
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 800;
+    }
+
+    #slide-35 .l36-protocol-step.is-contrast { --protocol-color: var(--accent); }
+    #slide-35 .l36-protocol-step.is-falsification { --protocol-color: var(--warn); }
+    #slide-35 .l36-protocol-step.is-invalidation { --protocol-color: var(--bear-glow); }
+
+    #slide-35 .l36-protocol-title {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--protocol-color);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-35 .l36-protocol-copy {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
+      line-height: 1.34;
+    }
+
+    #slide-35 .l36-case {
+      display: grid;
+      grid-template-columns: auto minmax(370px, .9fr) minmax(0, 1.45fr);
+      gap: clamp(11px, 1vw, 17px);
+      align-items: center;
+      min-width: 0;
+      padding: 8px clamp(13px, 1.2vw, 20px);
+      border-top: 1px solid rgba(255,183,77,.38);
+      background: rgba(255,183,77,.035);
+    }
+
+    #slide-35 .l36-case-label {
+      color: var(--warn);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-35 .l36-case-flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 4px;
+      min-width: 0;
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 800;
+    }
+
+    #slide-35 .l36-case-flow span {
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      min-height: 31px;
+      padding: 5px 6px;
+      border: 1px solid var(--case-color);
+      color: var(--case-color);
+      background: rgba(0,0,0,.4);
+      line-height: 1.25;
+      text-align: center;
+    }
+
+    #slide-35 .l36-case-flow .is-macro { --case-color: var(--bull-glow); }
+    #slide-35 .l36-case-flow .is-divergence { --case-color: var(--purple); }
+    #slide-35 .l36-case-flow .is-cusum { --case-color: var(--warn); }
+    #slide-35 .l36-case-flow .is-intermarket { --case-color: var(--bear-glow); }
+
+    #slide-35 .l36-case-copy {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
+      line-height: 1.34;
+    }
+
+    #slide-35 .l36-principle {
+      display: grid;
+      grid-template-columns: auto minmax(360px, .9fr) minmax(0, 1fr);
+      gap: clamp(14px, 1.35vw, 23px);
+      align-items: center;
+      min-width: 0;
+      padding: clamp(9px, .9vw, 13px) clamp(15px, 1.35vw, 23px);
+      border-left: 3px solid var(--accent);
+      background: linear-gradient(90deg, rgba(0,51,255,.105), rgba(6,182,212,.055));
+    }
+
+    #slide-35 .l36-principle-label {
+      color: var(--accent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-35 .l36-principle-quote {
+      color: var(--txt-primary);
+      font-family: var(--font-display);
+      font-size: clamp(.98rem, 1.15vw, 1.28rem);
+      line-height: 1.28;
+    }
+
+    #slide-35 .l36-principle-copy {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.38;
+    }
+
+    @media (max-width: 1180px) {
+      #slide-35 .l36-stage {
+        overflow-y: auto;
+      }
+
+      #slide-35 .l36-workspace {
+        grid-template-columns: 1fr;
+      }
+
+      #slide-35 .l36-testbench {
+        border-right: 0;
+        border-bottom: 1px solid rgba(61,64,69,.72);
+      }
+
+      #slide-35 .l36-protocol {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: auto 1fr;
+      }
+
+      #slide-35 .l36-protocol-head {
+        grid-column: 1 / -1;
+      }
+
+      #slide-35 .l36-protocol::before {
+        display: none;
+      }
+
+      #slide-35 .l36-case {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      #slide-35 .l36-stage {
+        padding: 20px 16px 28px;
+      }
+
+      #slide-35 .l36-axiom,
+      #slide-35 .l36-principle {
+        grid-template-columns: 1fr;
+      }
+
+      #slide-35 .l36-axiom-badge {
+        justify-self: start;
+      }
+
+      #slide-35 .l36-sequence {
+        grid-template-columns: 1fr;
+      }
+
+      #slide-35 .l36-sequence i {
+        min-height: 18px;
+      }
+
+      #slide-35 .l36-source-array,
+      #slide-35 .l36-protocol {
+        grid-template-columns: 1fr;
+      }
+
+      #slide-35 .l36-verdict {
+        grid-template-columns: 1fr;
+      }
+
+      #slide-35 .l36-gate {
+        min-height: 48px;
+      }
+    }
+
+    @media (min-width: 1181px) and (max-height: 820px) {
+      #slide-35 .l36-stage {
+        gap: 9px;
+        padding-top: 15px;
+        padding-bottom: 12px;
+      }
+
+      #slide-35 .l36-head .divider {
+        margin-top: 7px;
+      }
+
+      #slide-35 .l36-canvas {
+        gap: 7px;
+      }
+
+      #slide-35 .l36-axiom {
+        padding-top: 7px;
+        padding-bottom: 7px;
+      }
+
+      #slide-35 .l36-lab-head,
+      #slide-35 .l36-sequence span {
+        padding-top: 6px;
+        padding-bottom: 6px;
+      }
+
+      #slide-35 .l36-testbench,
+      #slide-35 .l36-protocol {
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
+
+      #slide-35 .l36-testbench {
+        gap: 6px;
+      }
+
+      #slide-35 .l36-source,
+      #slide-35 .l36-protocol-step {
+        padding-top: 5px;
+        padding-bottom: 5px;
+      }
+
+      #slide-35 .l36-case,
+      #slide-35 .l36-principle {
+        padding-top: 6px;
+        padding-bottom: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-35" data-module="3">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span><span class="divider"></span>
+    <span class="module-tag" data-mod="3">Módulo III</span><span class="lesson-tag">L36</span>
+    <span class="slide-title">Contraste, Falsación e Invalidación</span><span class="concept-code">M3.L36.C36</span>
+  </header>
+
+  <main class="slide-body l36-stage">
+    <div class="section-title l36-head">
+      <div class="section-number">Lección 36</div>
+      <h2>Contraste, Falsación e Invalidación</h2>
+      <div class="divider gradient"></div>
+    </div>
+
+    <div class="l36-canvas">
+      <section class="l36-axiom" aria-label="Regla epistemológica">
+        <h3 class="l36-axiom-title">Una hipótesis no se protege.<span>Se pone a prueba.</span></h3>
+        <p class="l36-axiom-copy">En Cortex-Dendrita, toda interpretación permanece bajo investigación. El trader del <strong>Quant Trading Desk</strong> debe confrontarla con la evidencia, no defenderla de la contradicción.</p>
+        <span class="l36-axiom-badge">Modo adversarial · activo</span>
+      </section>
+
+      <section class="l36-lab" aria-label="Banco adversarial de falsación">
+        <div class="l36-lab-head"><span>Banco adversarial de falsación</span><span>Hipótesis bajo presión</span></div>
+
+        <div class="l36-sequence" aria-label="Secuencia de contraste y falsación">
+          <span class="is-hypothesis">Hipótesis</span><i>→</i>
+          <span class="is-contrast">Contraste</span><i>→</i>
+          <span class="is-evidence">Evidencia contradictoria</span><i>→</i>
+          <span class="is-falsification">Falsación</span><i>→</i>
+          <span class="is-verdict">Invalidación o continuidad</span>
+        </div>
+
+        <div class="l36-workspace">
+          <div class="l36-testbench">
+            <div class="l36-testbench-head">
+              <span class="l36-testbench-title">Ensayo de resistencia de la tesis</span>
+              <span>Confirmar ≠ seleccionar solo evidencia favorable</span>
+            </div>
+
+            <div class="l36-signal-entry">
+              <span class="l36-signal-code">H₀</span>
+              <p class="l36-signal-copy"><strong>Interpretación provisional:</strong> se somete simultáneamente a evidencia compatible y a información capaz de refutarla.</p>
+              <span class="l36-signal-state">Bajo contraste</span>
+            </div>
+
+            <div class="l36-source-array" aria-label="Fuentes de evidencia para el contraste">
+              <article class="l36-source l36-source-structure" style="--marker-x:34%;">
+                <span class="l36-source-name">Estructura</span>
+                <div><div class="l36-spectrum"></div><div class="l36-spectrum-labels"><span>Sostiene</span><span>Contradice</span></div></div>
+                <p class="l36-source-copy"><strong>HWTE y microciclos</strong> confrontan el sesgo rector con su respaldo multidimensional.</p>
+              </article>
+
+              <article class="l36-source l36-source-confirmation" style="--marker-x:58%;">
+                <span class="l36-source-name">Confirmación</span>
+                <div><div class="l36-spectrum"></div><div class="l36-spectrum-labels"><span>Sostiene</span><span>Contradice</span></div></div>
+                <p class="l36-source-copy"><strong>CUSUM y niveles</strong> revelan continuidad, pérdida de confirmación o tensión.</p>
+              </article>
+
+              <article class="l36-source l36-source-context" style="--marker-x:74%;">
+                <span class="l36-source-name">Contexto</span>
+                <div><div class="l36-spectrum"></div><div class="l36-spectrum-labels"><span>Sostiene</span><span>Contradice</span></div></div>
+                <p class="l36-source-copy"><strong>Intermercado</strong> añade evidencia externa compatible o incompatible con la tesis.</p>
+              </article>
+            </div>
+
+            <div class="l36-verdict" aria-label="Resultados del proceso de falsación">
+              <div class="l36-outcome l36-outcome-continue">
+                <span class="l36-outcome-mark">✓</span>
+                <div><span class="l36-outcome-label">Continuidad</span><p>La tesis conserva vigencia porque sobrevive al contraste.</p></div>
+              </div>
+              <div class="l36-gate"><span class="l36-gate-label">Umbral de<br>evidencia</span></div>
+              <div class="l36-outcome l36-outcome-invalidate">
+                <span class="l36-outcome-mark">×</span>
+                <div><span class="l36-outcome-label">Invalidar</span><p>La interpretación debe abandonarse o reformularse.</p></div>
+              </div>
+            </div>
+          </div>
+
+          <aside class="l36-protocol" aria-label="Protocolo adversarial">
+            <span class="l36-protocol-head">Protocolo adversarial</span>
+
+            <article class="l36-protocol-step is-contrast">
+              <span class="l36-protocol-index">01</span>
+              <div><span class="l36-protocol-title">Contraste</span><p class="l36-protocol-copy">Consiste en comparar la hipótesis con la evidencia disponible en <strong>HWTE, microciclos, CUSUM, niveles e intermercado</strong>, buscando confirmaciones y contradicciones.</p></div>
+            </article>
+
+            <article class="l36-protocol-step is-falsification">
+              <span class="l36-protocol-index">02</span>
+              <div><span class="l36-protocol-title">Falsación</span><p class="l36-protocol-copy">Exige buscar activamente información capaz de demostrar que la interpretación puede estar equivocada. El trader no selecciona únicamente la evidencia que favorece su tesis.</p></div>
+            </article>
+
+            <article class="l36-protocol-step is-invalidation">
+              <span class="l36-protocol-index">03</span>
+              <div><span class="l36-protocol-title">Invalidación</span><p class="l36-protocol-copy">Ocurre cuando aparece evidencia suficiente para que la tesis deje de ser sostenible. En ese momento, la interpretación debe <strong>abandonarse o reformularse</strong>.</p></div>
+            </article>
+          </aside>
+        </div>
+
+        <div class="l36-case">
+          <span class="l36-case-label">Caso · tesis alcista bajo presión</span>
+          <div class="l36-case-flow" aria-label="Evidencia del ejemplo">
+            <span class="is-macro">HWTE positivo</span>
+            <span class="is-divergence">Divergencia multidimensional</span>
+            <span class="is-cusum">CUSUM pierde confirmación</span>
+            <span class="is-intermarket">Intermercado incompatible</span>
+          </div>
+          <p class="l36-case-copy">Si una tesis alcista apoyada por un macrociclo HWTE positivo comienza a recibir divergencia multidimensional, pérdida de confirmación en CUSUM o evidencia intermercado incompatible, el trader debe <strong>revisar si la tesis sigue vigente</strong>.</p>
+        </div>
+      </section>
+
+      <section class="l36-principle">
+        <span class="l36-principle-label">Principio Cortex-Dendrita</span>
+        <p class="l36-principle-quote">“Una tesis sólida no es la que evita la contradicción, sino la que sobrevive al contraste.”</p>
+        <p class="l36-principle-copy">El trader del Quant Trading Desk debe estar dispuesto a <strong>abandonar una idea cuando la evidencia deja de sostenerla</strong>.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">36/42</span>
+  </footer>
+</section>
+</body>
+</html>

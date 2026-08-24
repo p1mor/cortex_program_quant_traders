@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cobertura y Arquitectura Multimercado — Cortex Quant Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-40 {
+      --l41-blue: #0033ff;
+      --l41-cyan: #00e5ff;
+      --l41-purple: #a48cff;
+      --l41-green: #22c55e;
+      --l41-amber: #ffb74d;
+      --l41-red: #e63955;
+      --l41-panel: rgba(7, 8, 10, .98);
+    }
+
+    #slide-40 .slide-body { min-height: 0; background: #000; }
+
+    #slide-40 .l41-stage {
+      min-width: 0;
+      min-height: 0;
+      height: 100%;
+      padding: clamp(18px, 2vw, 32px) clamp(24px, 3.1vw, 58px) 16px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(0, 229, 255, .02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 51, 255, .018) 1px, transparent 1px),
+        #000;
+      background-size: 54px 54px;
+    }
+
+    #slide-40 .l41-head {
+      margin: 0 0 clamp(13px, 1.3vh, 18px);
+      flex: 0 0 auto;
+    }
+
+    #slide-40 .l41-head .section-number {
+      margin-bottom: 7px;
+      font-size: var(--fs-slide-label);
+      color: var(--l41-blue);
+    }
+
+    #slide-40 .l41-head h2 {
+      margin: 0;
+      font-size: var(--fs-slide-title);
+      line-height: 1.18;
+    }
+
+    #slide-40 .l41-head .divider {
+      width: 50px;
+      height: 2px;
+      margin-top: 13px;
+      background: linear-gradient(90deg, var(--l41-blue), var(--l41-cyan));
+    }
+
+    #slide-40 .l41-canvas {
+      min-width: 0;
+      min-height: 0;
+      flex: 1;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: clamp(8px, 1vh, 12px);
+    }
+
+    #slide-40 .l41-doctrine {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+      padding: 10px 16px;
+      border-top: 1px solid var(--l41-cyan);
+      border-bottom: 1px solid rgba(0, 229, 255, .28);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .07), rgba(164, 140, 255, .04) 52%, rgba(0, 229, 255, .04));
+    }
+
+    #slide-40 .l41-doctrine-label,
+    #slide-40 .l41-doctrine-badge,
+    #slide-40 .l41-kicker,
+    #slide-40 .l41-network-meta,
+    #slide-40 .l41-role,
+    #slide-40 .l41-node-index,
+    #slide-40 .l41-node-title,
+    #slide-40 .l41-node-symbol,
+    #slide-40 .l41-core-label,
+    #slide-40 .l41-relation-title,
+    #slide-40 .l41-relation-formula,
+    #slide-40 .l41-caution,
+    #slide-40 .l41-engine-label,
+    #slide-40 .l41-engine-meta,
+    #slide-40 .l41-flow-node,
+    #slide-40 .l41-case-label,
+    #slide-40 .l41-principle-label {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .085em;
+      font-weight: 700;
+    }
+
+    #slide-40 .l41-doctrine-label {
+      color: var(--l41-cyan);
+      font-size: var(--fs-slide-label);
+      white-space: nowrap;
+    }
+
+    #slide-40 .l41-doctrine p,
+    #slide-40 .l41-relation-copy,
+    #slide-40 .l41-engine-copy,
+    #slide-40 .l41-case-copy,
+    #slide-40 .l41-principle-copy {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: var(--fs-slide-body);
+      line-height: 1.42;
+      color: var(--txt-secondary);
+    }
+
+    #slide-40 strong { color: var(--txt-primary); font-weight: 700; }
+
+    #slide-40 .l41-doctrine-badge {
+      padding: 8px 14px;
+      border: 1px solid rgba(164, 140, 255, .55);
+      color: var(--l41-purple);
+      background: rgba(164, 140, 255, .06);
+      font-size: var(--fs-slide-label);
+      white-space: nowrap;
+    }
+
+    #slide-40 .l41-workspace {
+      min-width: 0;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1.28fr) minmax(430px, .72fr);
+      border: 1px solid var(--border-default);
+      border-top: 2px solid var(--l41-blue);
+      background: var(--l41-panel);
+      overflow: hidden;
+    }
+
+    #slide-40 .l41-network,
+    #slide-40 .l41-engine {
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-40 .l41-network {
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
+      border-right: 1px solid var(--border-default);
+      background: linear-gradient(145deg, rgba(0, 51, 255, .035), transparent 55%, rgba(0, 229, 255, .025));
+    }
+
+    #slide-40 .l41-network-head,
+    #slide-40 .l41-engine-head {
+      min-width: 0;
+      min-height: 36px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    #slide-40 .l41-kicker,
+    #slide-40 .l41-engine-label {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-40 .l41-network-meta,
+    #slide-40 .l41-engine-meta {
+      color: var(--l41-cyan);
+      font-size: var(--fs-slide-label);
+      text-align: right;
+    }
+
+    #slide-40 .l41-functions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    #slide-40 .l41-role {
+      min-width: 0;
+      padding: 7px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-right: 1px solid var(--border-subtle);
+      color: var(--l41-blue);
+      font-size: var(--fs-slide-label);
+      text-align: center;
+    }
+
+    #slide-40 .l41-role:last-child { border-right: 0; color: var(--l41-purple); }
+    #slide-40 .l41-role b { color: currentColor; }
+
+    #slide-40 .l41-topology {
+      min-width: 0;
+      min-height: 0;
+      margin: 8px 12px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      background:
+        radial-gradient(circle at 51% 50%, rgba(0, 229, 255, .065), transparent 22%),
+        linear-gradient(rgba(148, 156, 165, .07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 156, 165, .06) 1px, transparent 1px),
+        rgba(2,3,5,.96);
+      background-size: auto, 100% 25%, 12.5% 100%, auto;
+    }
+
+    #slide-40 .l41-topology svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    #slide-40 .l41-market-node,
+    #slide-40 .l41-core {
+      position: absolute;
+      z-index: 3;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: rgba(3,4,7,.97);
+    }
+
+    #slide-40 .l41-market-node {
+      width: 27%;
+      min-height: 64px;
+      padding: 9px 10px;
+      gap: 9px;
+      border: 1px solid currentColor;
+    }
+
+    #slide-40 .l41-market-node.is-equity { left: 4%; top: 9%; color: var(--l41-blue); }
+    #slide-40 .l41-market-node.is-metals { left: 4%; bottom: 9%; color: var(--l41-purple); }
+    #slide-40 .l41-market-node.is-energy { right: 4%; top: calc(50% - 32px); color: var(--l41-cyan); }
+
+    #slide-40 .l41-node-index {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border: 1px solid currentColor;
+      font-size: var(--fs-slide-micro);
+      flex: 0 0 auto;
+    }
+
+    #slide-40 .l41-node-copy { min-width: 0; text-align: left; }
+
+    #slide-40 .l41-node-title {
+      display: block;
+      color: currentColor;
+      font-size: var(--fs-slide-label);
+      margin-bottom: 2px;
+    }
+
+    #slide-40 .l41-node-symbol {
+      color: var(--txt-primary);
+      font-size: var(--fs-slide-support);
+    }
+
+    #slide-40 .l41-core {
+      left: 43%;
+      top: calc(50% - 51px);
+      width: 18%;
+      aspect-ratio: 1;
+      flex-direction: column;
+      border: 1px solid var(--l41-cyan);
+      outline: 1px solid rgba(0, 51, 255, .34);
+      outline-offset: 8px;
+      background:
+        linear-gradient(90deg, transparent 49.5%, rgba(0,229,255,.18) 49.6% 50.4%, transparent 50.5%),
+        linear-gradient(transparent 49.5%, rgba(0,229,255,.18) 49.6% 50.4%, transparent 50.5%),
+        rgba(3,4,7,.98);
+    }
+
+    #slide-40 .l41-core-label {
+      color: var(--l41-cyan);
+      font-size: var(--fs-slide-micro);
+    }
+
+    #slide-40 .l41-core strong {
+      margin-top: 4px;
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 1.05vw, 1.22rem);
+      line-height: 1.05;
+      font-weight: 500;
+    }
+
+    #slide-40 .l41-relation {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) minmax(190px, .72fr) auto;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-top: 1px solid var(--border-subtle);
+      background: linear-gradient(90deg, rgba(0, 229, 255, .045), rgba(230, 57, 85, .035));
+    }
+
+    #slide-40 .l41-relation-title {
+      color: var(--l41-cyan);
+      font-size: var(--fs-slide-label);
+      white-space: nowrap;
+    }
+
+    #slide-40 .l41-relation-copy {
+      font-size: var(--fs-slide-support);
+      line-height: 1.35;
+    }
+
+    #slide-40 .l41-relation-pairs {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+    }
+
+    #slide-40 .l41-relation-formula {
+      padding: 6px 5px;
+      border: 1px solid currentColor;
+      background: rgba(255,255,255,.015);
+      font-size: var(--fs-slide-micro);
+      text-align: center;
+    }
+
+    #slide-40 .l41-relation-formula.is-neg { color: var(--l41-red); }
+    #slide-40 .l41-relation-formula.is-pos { color: var(--l41-green); }
+
+    #slide-40 .l41-caution {
+      padding: 6px 8px;
+      border-left: 2px solid var(--l41-amber);
+      color: var(--l41-amber);
+      background: rgba(255,183,77,.045);
+      font-size: var(--fs-slide-micro);
+      line-height: 1.3;
+      text-align: center;
+    }
+
+    #slide-40 .l41-engine {
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
+      background: linear-gradient(180deg, rgba(164, 140, 255, .025), rgba(0, 229, 255, .022));
+    }
+
+    #slide-40 .l41-engine-copy {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: var(--fs-slide-support);
+      line-height: 1.38;
+    }
+
+    #slide-40 .l41-flow {
+      min-width: 0;
+      min-height: 0;
+      padding: 10px 14px;
+      display: grid;
+      grid-template-rows: repeat(5, minmax(34px, 1fr));
+      align-items: center;
+      gap: 5px;
+      position: relative;
+    }
+
+    #slide-40 .l41-flow::before {
+      content: "";
+      position: absolute;
+      left: 31px;
+      top: 10%;
+      bottom: 10%;
+      width: 1px;
+      background: linear-gradient(var(--l41-blue), var(--l41-purple), var(--l41-cyan), var(--l41-green));
+    }
+
+    #slide-40 .l41-flow-node {
+      min-width: 0;
+      min-height: 0;
+      margin-left: 36px;
+      padding: 7px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border: 1px solid rgba(148,156,165,.24);
+      background: rgba(3,4,7,.97);
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-micro);
+      position: relative;
+    }
+
+    #slide-40 .l41-flow-node::before {
+      content: "";
+      position: absolute;
+      left: -43px;
+      width: 13px;
+      height: 13px;
+      border: 2px solid currentColor;
+      background: #030407;
+      transform: rotate(45deg);
+    }
+
+    #slide-40 .l41-flow-node::after {
+      content: "";
+      position: absolute;
+      left: -29px;
+      width: 29px;
+      height: 1px;
+      background: currentColor;
+      opacity: .65;
+    }
+
+    #slide-40 .l41-flow-node b { color: currentColor; }
+    #slide-40 .l41-flow-node small {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro);
+      text-align: right;
+    }
+
+    #slide-40 .l41-flow-node:nth-child(1) { color: var(--l41-blue); }
+    #slide-40 .l41-flow-node:nth-child(2) { color: var(--l41-amber); }
+    #slide-40 .l41-flow-node:nth-child(3) { color: var(--l41-purple); }
+    #slide-40 .l41-flow-node:nth-child(4) { color: var(--l41-cyan); }
+    #slide-40 .l41-flow-node:nth-child(5) { color: var(--l41-green); border-color: rgba(34,197,94,.52); background: rgba(34,197,94,.045); }
+
+    #slide-40 .l41-case {
+      min-width: 0;
+      padding: 10px 14px;
+      border-top: 1px solid var(--border-default);
+      border-left: 2px solid var(--l41-purple);
+      background: rgba(164,140,255,.04);
+    }
+
+    #slide-40 .l41-case-label {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--l41-purple);
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-40 .l41-case-copy {
+      font-size: var(--fs-slide-support);
+      line-height: 1.38;
+    }
+
+    #slide-40 .l41-principle {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: auto minmax(390px, 1.08fr) minmax(0, 1fr);
+      align-items: center;
+      gap: 18px;
+      padding: 10px 16px;
+      border-left: 2px solid var(--l41-blue);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .09), rgba(0, 229, 255, .045));
+    }
+
+    #slide-40 .l41-principle-label {
+      color: var(--l41-blue);
+      font-size: var(--fs-slide-label);
+      white-space: nowrap;
+    }
+
+    #slide-40 .l41-principle blockquote {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 1.08vw, 1.26rem);
+      line-height: 1.2;
+      color: var(--txt-primary);
+    }
+
+    #slide-40 .l41-principle blockquote em { color: var(--l41-cyan); font-style: normal; }
+
+    #slide-40 .l41-principle-copy {
+      font-size: var(--fs-slide-support);
+      line-height: 1.36;
+    }
+
+    @media (min-width: 1181px) and (max-height: 820px) {
+      #slide-40 .l41-stage { padding-top: 14px; padding-bottom: 10px; }
+      #slide-40 .l41-head { margin-bottom: 10px; }
+      #slide-40 .l41-head .divider { margin-top: 9px; }
+      #slide-40 .l41-canvas { gap: 7px; }
+      #slide-40 .l41-doctrine { padding-block: 7px; }
+      #slide-40 .l41-network-head,
+      #slide-40 .l41-engine-head { min-height: 31px; padding-block: 6px; }
+      #slide-40 .l41-functions .l41-role { padding-block: 5px; }
+      #slide-40 .l41-topology { margin-block: 6px; }
+      #slide-40 .l41-relation { padding-block: 6px; }
+      #slide-40 .l41-engine-copy,
+      #slide-40 .l41-case { padding-block: 7px; }
+      #slide-40 .l41-flow { padding-block: 7px; gap: 3px; }
+      #slide-40 .l41-principle { padding-block: 7px; }
+    }
+
+    @media (max-width: 1180px) {
+      #slide-40 .l41-stage { overflow-y: auto; scrollbar-width: none; }
+      #slide-40 .l41-stage::-webkit-scrollbar { width: 0; }
+      #slide-40 .l41-canvas { grid-template-rows: auto auto auto; }
+      #slide-40 .l41-workspace { grid-template-columns: 1fr; }
+      #slide-40 .l41-network { min-height: 620px; border-right: 0; border-bottom: 1px solid var(--border-default); }
+      #slide-40 .l41-engine { min-height: 620px; }
+      #slide-40 .l41-principle { grid-template-columns: 1fr; gap: 7px; }
+    }
+
+    @media (max-width: 760px) {
+      #slide-40 .l41-stage { padding-inline: 18px; }
+      #slide-40 .l41-doctrine { grid-template-columns: 1fr; align-items: start; }
+      #slide-40 .l41-doctrine-badge { width: fit-content; }
+      #slide-40 .l41-relation { grid-template-columns: 1fr; }
+      #slide-40 .l41-market-node { width: 34%; }
+      #slide-40 .l41-core { width: 24%; left: 39%; }
+      #slide-40 .l41-flow-node { flex-direction: column; align-items: flex-start; }
+      #slide-40 .l41-flow-node small { text-align: left; }
+      #slide-40 .l41-principle blockquote { font-size: var(--fs-slide-body); }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-40" data-module="3">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="3">Módulo III</span>
+    <span class="lesson-tag">L41</span>
+    <span class="slide-title">Cobertura y Arquitectura Multimercado</span>
+    <span class="concept-code">M3.L41.C41</span>
+  </header>
+
+  <div class="slide-body single-col">
+    <main class="l41-stage">
+      <div class="section-title l41-head">
+        <div class="section-number">Lección 41</div>
+        <h2>Cobertura y Arquitectura Multimercado</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="l41-canvas">
+        <section class="l41-doctrine" aria-label="Arquitectura de tres mercados">
+          <span class="l41-doctrine-label">Arquitectura de tres mercados</span>
+          <p>Cortex-Dendrita está diseñado para operar una <strong>arquitectura de tres mercados: Equity, Metales y Energía</strong>, representados por <strong>Equity → NQ · ES</strong>, <strong>Metales → GC</strong> y <strong>Energía → CL</strong>.</p>
+          <span class="l41-doctrine-badge">Contexto + cobertura</span>
+        </section>
+
+        <section class="l41-workspace" aria-label="Topología y motor de cobertura multimercado">
+          <article class="l41-network">
+            <div class="l41-network-head">
+              <span class="l41-kicker">Topología multimercado</span>
+              <span class="l41-network-meta">Equity · Metales · Energía</span>
+            </div>
+
+            <div class="l41-functions">
+              <span class="l41-role">01 · <b>Ampliar el contexto inferencial</b></span>
+              <span class="l41-role">02 · <b>Permitir coberturas multimercado</b></span>
+            </div>
+
+            <div class="l41-topology" aria-label="Red integrada de Equity, Metales y Energía">
+              <svg viewBox="0 0 1000 420" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="l41LinkA" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="#0033ff" />
+                    <stop offset="1" stop-color="#00e5ff" />
+                  </linearGradient>
+                  <linearGradient id="l41LinkB" x1="0" y1="1" x2="1" y2="0">
+                    <stop offset="0" stop-color="#a48cff" />
+                    <stop offset="1" stop-color="#00e5ff" />
+                  </linearGradient>
+                  <marker id="l41ArrowCyan" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+                    <path d="M0,0 L8,4 L0,8 Z" fill="#00e5ff" />
+                  </marker>
+                </defs>
+                <path d="M292 90 C382 95 394 158 472 190" fill="none" stroke="url(#l41LinkA)" stroke-width="2" vector-effect="non-scaling-stroke" marker-end="url(#l41ArrowCyan)" />
+                <path d="M292 330 C382 320 395 259 472 226" fill="none" stroke="url(#l41LinkB)" stroke-width="2" vector-effect="non-scaling-stroke" marker-end="url(#l41ArrowCyan)" />
+                <path d="M600 208 C707 208 726 208 816 208" fill="none" stroke="#00e5ff" stroke-width="2" vector-effect="non-scaling-stroke" marker-end="url(#l41ArrowCyan)" />
+                <path d="M278 112 C485 36 704 61 824 176" fill="none" stroke="#e63955" stroke-width="1.5" stroke-dasharray="8 8" opacity=".55" vector-effect="non-scaling-stroke" />
+                <path d="M278 310 C489 389 709 354 824 240" fill="none" stroke="#a48cff" stroke-width="1.5" stroke-dasharray="8 8" opacity=".42" vector-effect="non-scaling-stroke" />
+              </svg>
+
+              <div class="l41-market-node is-equity">
+                <span class="l41-node-index">01</span>
+                <span class="l41-node-copy"><span class="l41-node-title">Equity</span><span class="l41-node-symbol">NQ · ES</span></span>
+              </div>
+              <div class="l41-market-node is-metals">
+                <span class="l41-node-index">02</span>
+                <span class="l41-node-copy"><span class="l41-node-title">Metales</span><span class="l41-node-symbol">GC</span></span>
+              </div>
+              <div class="l41-core">
+                <span class="l41-core-label">arquitectura</span>
+                <strong>Cortex-<br />Dendrita</strong>
+              </div>
+              <div class="l41-market-node is-energy">
+                <span class="l41-node-index">03</span>
+                <span class="l41-node-copy"><span class="l41-node-title">Energía</span><span class="l41-node-symbol">CL</span></span>
+              </div>
+            </div>
+
+            <div class="l41-relation">
+              <span class="l41-relation-title">Sesgo intermercado</span>
+              <p class="l41-relation-copy">Al mismo tiempo, la arquitectura permite acumular <strong>sesgo intermercado</strong>. Por regla general, CL mantiene una relación frecuentemente inversa con Equity.</p>
+              <div class="l41-relation-pairs">
+                <span class="l41-relation-formula is-neg">CL + → sesgo Equity −</span>
+                <span class="l41-relation-formula is-pos">CL − → sesgo Equity +</span>
+              </div>
+              <span class="l41-caution">Evidencia adicional · nunca regla automática</span>
+            </div>
+          </article>
+
+          <aside class="l41-engine">
+            <div class="l41-engine-head">
+              <span class="l41-engine-label">Motor de cobertura</span>
+              <span class="l41-engine-meta">distribuir exposición</span>
+            </div>
+            <p class="l41-engine-copy">Cuando Equity presenta una estructura ambigua, difícil de capitalizar o una exposición que requiere compensación, el trader del <strong>Quant Trading Desk</strong> puede buscar estructuras independientes en <strong>GC o CL</strong> para construir una cobertura desde otro mercado. Esta relación admite excepciones y debe utilizarse como <strong>evidencia adicional</strong>, nunca como una regla automática de ejecución.</p>
+
+            <div class="l41-flow" aria-label="Ruta de construcción de una cobertura multimercado">
+              <div class="l41-flow-node"><b>Exposición Equity</b><small>NQ / ES</small></div>
+              <div class="l41-flow-node"><b>Estructura pierde claridad</b><small>ambigüedad / compensación</small></div>
+              <div class="l41-flow-node"><b>Investigar otro mercado</b><small>GC o CL</small></div>
+              <div class="l41-flow-node"><b>Tesis independiente sólida</b><small>evidencia suficiente</small></div>
+              <div class="l41-flow-node"><b>Vehículo de cobertura</b><small>exposición distribuida</small></div>
+            </div>
+
+            <div class="l41-case">
+              <span class="l41-case-label">Ejemplo · cobertura fuera de Equity</span>
+              <p class="l41-case-copy">Si el trader mantiene exposición en Equity y su estructura comienza a perder claridad, puede investigar GC o CL. Si alguno desarrolla una tesis inferencial suficientemente sólida, puede utilizar ese mercado como <strong>vehículo de cobertura</strong>, en lugar de depender exclusivamente de NQ o ES.</p>
+            </div>
+          </aside>
+        </section>
+
+        <section class="l41-principle" aria-label="Principio Cortex-Dendrita">
+          <span class="l41-principle-label">Principio Cortex-Dendrita</span>
+          <blockquote>“La arquitectura multimercado permite <em>observar, inferir y distribuir exposición</em> entre mercados diferentes.”</blockquote>
+          <p class="l41-principle-copy">El trader del Quant Trading Desk no queda condicionado a Equity: <strong>utiliza Equity, Metales y Energía como una arquitectura integrada de contexto, sesgo y cobertura.</strong></p>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">←</kbd> <kbd class="kbd">→</kbd></span>
+    <span class="slide-counter">41/42</span>
+  </footer>
+</section>
+</body>
+</html>

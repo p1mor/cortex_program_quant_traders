@@ -3,92 +3,1164 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>Cortex Quant Trader - TechPulse Consulting</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
-    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
-  <link rel="stylesheet" href="../../css/slides.css" />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <style>
+    /* =========================================================
+       CORTEX QUANT TRADER
+       PROGRAMA FORMATIVO — ÍNDICE GENERAL
+       ========================================================= */
+
+    :root {
+
+      /* ---------- BRAND ---------- */
+
+      --bg-primary: #000000;
+      --bg-secondary: #0a0a0a;
+
+      --txt-primary: #f5f7fa;
+      --txt-secondary: #aab2c0;
+      --txt-tertiary: #626b78;
+      --txt-muted: #444c58;
+
+      --border-default: rgba(255,255,255,0.12);
+      --border-subtle: rgba(255,255,255,0.065);
+
+      --accent: #0033ff;
+      --purple: #a48cff;
+      --cyan: #06b6d4;
+
+      /* ---------- SPACING ---------- */
+
+      --sp-1: 4px;
+      --sp-2: 8px;
+      --sp-3: 12px;
+      --sp-4: 16px;
+      --sp-5: 20px;
+      --sp-6: 24px;
+      --sp-7: 32px;
+      --sp-8: 40px;
+      --sp-9: 48px;
+      --sp-10: 64px;
+
+      /* ---------- FONT ---------- */
+
+      --fs-micro: 10px;
+      --fs-caption: 12px;
+      --fs-body: 13px;
+      --fs-small-title: 15px;
+      --fs-title: 30px;
+
+      --font-ui: "Inter", sans-serif;
+      --font-mono: "JetBrains Mono", monospace;
+    }
+
+
+    /* =========================================================
+       RESET
+       ========================================================= */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      background: var(--bg-primary);
+    }
+
+    body {
+      font-family: var(--font-ui);
+      color: var(--txt-primary);
+      overflow: hidden;
+    }
+
+
+    /* =========================================================
+       SLIDE
+       ========================================================= */
+
+    .slide {
+      width: 100vw;
+      height: 100vh;
+
+      display: grid;
+
+      grid-template-rows:
+        92px
+        1fr
+        48px;
+
+      position: relative;
+
+      background:
+        radial-gradient(
+          circle at 50% -25%,
+          rgba(255,255,255,0.035),
+          transparent 38%
+        ),
+        var(--bg-primary);
+
+      overflow: hidden;
+    }
+
+
+    /* subtle technical grid */
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      pointer-events: none;
+
+      background-image:
+        linear-gradient(
+          rgba(255,255,255,0.013) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,0.013) 1px,
+          transparent 1px
+        );
+
+      background-size: 64px 64px;
+
+      mask-image:
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.35),
+          transparent 72%
+        );
+
+      opacity: .5;
+    }
+
+
+    /* =========================================================
+       HEADER
+       ========================================================= */
+
+    .slide-header {
+
+      position: relative;
+      z-index: 2;
+
+      display: grid;
+
+      grid-template-columns:
+        auto
+        1px
+        auto
+        auto
+        1fr
+        auto;
+
+      align-items: center;
+
+      gap: 18px;
+
+      padding:
+        24px
+        clamp(32px, 4vw, 72px)
+        18px;
+
+      border-bottom:
+        1px solid var(--border-default);
+    }
+
+
+    .brand {
+
+      font-family: var(--font-mono);
+
+      font-size: 11px;
+      font-weight: 700;
+
+      letter-spacing: .14em;
+
+      color: #fff;
+
+      white-space: nowrap;
+    }
+
+
+    .header-divider {
+      width: 1px;
+      height: 18px;
+
+      background: var(--border-default);
+    }
+
+
+    .module-tag,
+    .lesson-tag {
+
+      font-family: var(--font-mono);
+
+      font-size: 9px;
+      font-weight: 600;
+
+      letter-spacing: .1em;
+
+      text-transform: uppercase;
+
+      color: var(--txt-tertiary);
+
+      white-space: nowrap;
+    }
+
+
+    .slide-title {
+
+      justify-self: end;
+
+      font-size: clamp(18px, 1.8vw, 27px);
+      font-weight: 600;
+
+      letter-spacing: -.035em;
+
+      color: #ffffff;
+
+      white-space: nowrap;
+    }
+
+
+    .concept-code {
+
+      font-family: var(--font-mono);
+
+      font-size: 10px;
+      font-weight: 600;
+
+      color: var(--txt-tertiary);
+
+      letter-spacing: .05em;
+    }
+
+
+    /* =========================================================
+       MAIN AREA
+       ========================================================= */
+
+    .slide-body {
+
+      position: relative;
+      z-index: 2;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+      width: 100%;
+
+      min-height: 0;
+      padding: clamp(24px, 3.2vh, 42px) clamp(28px, 3.6vw, 64px);
+      gap: 0;
+      background: #000000;
+    }
+
+
+    /* =========================================================
+       MODULE COLUMN
+       ========================================================= */
+
+    .module {
+
+      position: relative;
+
+      min-width: 0;
+
+      min-height: 0;
+      padding: clamp(22px, 2.3vw, 38px);
+
+      display: flex;
+      flex-direction: column;
+
+      border: 0;
+      background: #000000;
+      box-shadow: none;
+    }
+
+
+    .module:first-child {
+      padding-left: clamp(22px, 2.3vw, 38px);
+    }
+
+
+    .module:last-child {
+      padding-right: clamp(22px, 2.3vw, 38px);
+    }
+
+
+    .module:not(:last-child)::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--border-default);
+    }
+
+
+    /* =========================================================
+       MODULE HEADER
+       ========================================================= */
+
+    .module-header {
+
+      position: relative;
+
+      padding-left: 0;
+
+      margin-bottom: clamp(18px, 2.2vh, 28px);
+    }
+
+
+    .module-header::before {
+      display: none;
+    }
+
+
+    .module-number {
+
+      font-family: var(--font-mono);
+
+      font-size: 10px;
+      font-weight: 700;
+
+      text-transform: uppercase;
+
+      letter-spacing: .15em;
+
+      color: var(--module-color);
+
+      margin-bottom: 7px;
+    }
+
+
+    .module-title {
+
+      font-size: clamp(17px, 1.55vw, 23px);
+
+      line-height: 1.15;
+
+      font-weight: 600;
+
+      letter-spacing: -.035em;
+
+      color: var(--module-color);
+    }
+
+
+    .module-line {
+
+      width: 48px;
+
+      height: 1px;
+
+      margin-top: 21px;
+
+      background: var(--module-color);
+
+      opacity: 1;
+    }
+
+
+    /* =========================================================
+       CONTENT LIST
+       ========================================================= */
+
+    .topic-list {
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 0;
+
+      width: 100%;
+      flex: 1;
+    }
+
+
+    .topic {
+
+      min-height: 36px;
+
+      display: grid;
+
+      grid-template-columns:
+        36px
+        1fr;
+
+      align-items: center;
+
+      gap: 10px;
+
+      border-bottom: 1px solid var(--border-subtle);
+
+      transition:
+        border-color .25s ease,
+        transform .25s ease;
+    }
+
+
+    .topic:last-child {
+      border-bottom: 0;
+    }
+
+
+    .topic-number {
+
+      font-family: var(--font-mono);
+
+      font-size: 10px;
+
+      font-weight: 500;
+
+      letter-spacing: .025em;
+
+      color: var(--txt-tertiary);
+    }
+
+
+    .topic-text {
+
+      font-size: clamp(10.5px, .79vw, 12.5px);
+
+      line-height: 1.35;
+
+      font-weight: 400;
+
+      letter-spacing: -.01em;
+
+      color: var(--txt-secondary);
+    }
+
+    .module-summary {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: var(--sp-4);
+      margin-top: var(--sp-5);
+      padding-top: var(--sp-4);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .module-summary-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--txt-tertiary);
+    }
+
+    .module-summary-value {
+      font-family: var(--font-mono);
+      font-size: clamp(20px, 1.8vw, 28px);
+      font-weight: 700;
+      letter-spacing: -.06em;
+      line-height: 1;
+      color: var(--module-color);
+    }
+
+
+    /* =========================================================
+       MODULE IDENTITIES
+       ========================================================= */
+
+    .module-1 {
+      --module-color: var(--accent);
+    }
+
+    .module-2 {
+      --module-color: var(--purple);
+    }
+
+    .module-3 {
+      --module-color: var(--cyan);
+    }
+
+
+    /* subtle number accent */
+
+    .module-1 .topic-number {
+      color: color-mix(
+        in srgb,
+        var(--accent) 60%,
+        var(--txt-tertiary)
+      );
+    }
+
+    .module-2 .topic-number {
+      color: color-mix(
+        in srgb,
+        var(--purple) 60%,
+        var(--txt-tertiary)
+      );
+    }
+
+    .module-3 .topic-number {
+      color: color-mix(
+        in srgb,
+        var(--cyan) 60%,
+        var(--txt-tertiary)
+      );
+    }
+
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+
+    .slide-footer {
+
+      position: relative;
+      z-index: 2;
+
+      display: grid;
+
+      grid-template-columns:
+        1fr
+        auto
+        auto;
+
+      align-items: center;
+
+      gap: 30px;
+
+      padding:
+        0
+        clamp(32px, 4vw, 72px);
+
+      border-top:
+        1px solid var(--border-default);
+
+      background:
+        rgba(7,9,13,.72);
+
+      backdrop-filter:
+        blur(8px);
+    }
+
+
+    .watermark {
+
+      font-family: var(--font-mono);
+
+      font-size: 8.5px;
+
+      letter-spacing: .055em;
+
+      text-transform: uppercase;
+
+      color: var(--txt-muted);
+    }
+
+
+    .nav-hint {
+
+      font-family: var(--font-mono);
+
+      font-size: 8.5px;
+
+      color: var(--txt-tertiary);
+    }
+
+
+    .kbd {
+
+      display: inline-flex;
+
+      align-items: center;
+      justify-content: center;
+
+      min-width: 18px;
+      height: 18px;
+
+      padding: 0 5px;
+
+      margin: 0 1px;
+
+      border:
+        1px solid var(--border-default);
+
+      border-radius: 3px;
+
+      background:
+        rgba(255,255,255,.025);
+
+      font-family: var(--font-mono);
+
+      font-size: 8px;
+
+      color: var(--txt-secondary);
+    }
+
+
+    .slide-counter {
+
+      font-family: var(--font-mono);
+
+      font-size: 9px;
+
+      font-weight: 700;
+
+      letter-spacing: .08em;
+
+      color: var(--txt-secondary);
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+       ========================================================= */
+
+    @media (max-width: 1100px) {
+
+      .slide-body {
+        padding-left: 24px;
+        padding-right: 24px;
+        gap: 12px;
+      }
+
+      .module {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .topic {
+        grid-template-columns:
+          30px
+          1fr;
+      }
+
+      .topic-text {
+        font-size: 10px;
+      }
+    }
+
+
+    /* =========================================================
+       PRINT / PRESENTATION
+       ========================================================= */
+
+    @media print {
+
+      html,
+      body {
+        width: 1920px;
+        height: 1080px;
+      }
+
+      .slide {
+        width: 1920px;
+        height: 1080px;
+
+        page-break-after: always;
+      }
+    }
+
+  </style>
 </head>
+
+
 <body>
-<section class="slide" id="slide-1" data-module="0">
-  <header class="slide-header">
-    <span class="brand">CORTEX QUANT TRADER</span>
-    <span class="divider"></span>
-    <span class="module-tag" data-mod="0">Programa Formativo</span>
-    <span class="lesson-tag">Indice</span>
-    <span class="slide-title">Arquitectura del Programa Formativo</span>
-    <span class="concept-code">CQT.0</span>
-  </header>
-  <div class="slide-body">
-    <div class="slide-left" style="border-right:1px solid var(--border-default);">
-      <div class="section-title">
-        <div class="section-number" style="color:var(--accent);">Modulo I</div>
-        <h3 style="color:var(--accent);">Fundamentos y Microestructura</h3>
-      </div>
-      <div class="divider" style="background:var(--accent);"></div>
-      <div style="display:flex;flex-direction:column;gap:var(--sp-2);font-size:var(--fs-caption);">
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">01</span><span style="color:var(--txt-secondary);">Evolucion Estructural: Open Outcry a HFT</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">02</span><span style="color:var(--txt-secondary);">La Naturaleza de los Mercados Financieros</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">03</span><span style="color:var(--txt-secondary);">Mecanica de Mercado: Que mueve el precio?</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">04</span><span style="color:var(--txt-secondary);">Oferta, Demanda y Liquidez</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">05</span><span style="color:var(--txt-secondary);">Taxonomia de Participantes</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">06</span><span style="color:var(--txt-secondary);">Ticks, Tick Size y Nocional</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">07</span><span style="color:var(--txt-secondary);">The Bid-Ask Spread</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">08</span><span style="color:var(--txt-secondary);">Slippage e Impacto de Mercado</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">09</span><span style="color:var(--txt-secondary);">Futuros, Stocks y Forex</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">10</span><span style="color:var(--txt-secondary);">Commodities, Bonos y Sinteticos</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;"><span style="color:var(--txt-tertiary);min-width:24px;">11</span><span style="color:var(--txt-secondary);">Tape Reading y Footprint</span></div>
-      </div>
-    </div>
-    <div class="slide-left" style="border-right:1px solid var(--border-default);">
-      <div class="section-title">
-        <div class="section-number" style="color:var(--purple);">Modulo II</div>
-        <h3 style="color:var(--purple);">Trading Cuantitativo</h3>
-      </div>
-      <div class="divider" style="background:var(--purple);"></div>
-      <div style="display:flex;flex-direction:column;gap:var(--sp-2);font-size:var(--fs-caption);">
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">12</span><span style="color:var(--txt-secondary);">La Revolucion Cuantitativa</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">13</span><span style="color:var(--txt-secondary);">El Perfil del Quant Trader</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">14</span><span style="color:var(--txt-secondary);">Sistematico vs. Discrecional</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">15</span><span style="color:var(--txt-secondary);">El Edge Estadistico</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">16</span><span style="color:var(--txt-secondary);">Diseno de Estrategias</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">17</span><span style="color:var(--txt-secondary);">Backtesting y Sesgos</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">18</span><span style="color:var(--txt-secondary);">Overfitting</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">19</span><span style="color:var(--txt-secondary);">Pruebas de Robustez I</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">20</span><span style="color:var(--txt-secondary);">Monte Carlo</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;"><span style="color:var(--txt-tertiary);min-width:24px;">21</span><span style="color:var(--txt-secondary);">Walk Forward Analysis</span></div>
-      </div>
-    </div>
-    <div class="slide-left">
-      <div class="section-title">
-        <div class="section-number" style="color:var(--cyan);">Modulo III</div>
-        <h3 style="color:var(--cyan);">Cortex-Dendrita</h3>
-      </div>
-      <div class="divider" style="background:var(--cyan);"></div>
-      <div style="display:flex;flex-direction:column;gap:var(--sp-2);font-size:var(--fs-caption);">
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">22</span><span style="color:var(--txt-secondary);">Filosofia Operativa</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">23</span><span style="color:var(--txt-secondary);">Cortex vs. Dendrita</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">24</span><span style="color:var(--txt-secondary);">Estado Probabilistico del Activo</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">25</span><span style="color:var(--txt-secondary);">Inferencia en Tiempo Real</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">26</span><span style="color:var(--txt-secondary);">Variables de Microestructura</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">27</span><span style="color:var(--txt-secondary);">Liquidez y Perfiles de Volumen</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">28</span><span style="color:var(--txt-secondary);">Entropia del Mercado</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">29</span><span style="color:var(--txt-secondary);">Contexto de Mercado</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">30</span><span style="color:var(--txt-secondary);">Long, Short o No Operar</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;border-bottom:1px solid var(--border-subtle);"><span style="color:var(--txt-tertiary);min-width:24px;">31</span><span style="color:var(--txt-secondary);">Hibridacion Quant-Discrecional</span></div>
-        <div style="display:flex;gap:var(--sp-3);padding:var(--sp-2) 0;"><span style="color:var(--txt-tertiary);min-width:24px;">32</span><span style="color:var(--txt-secondary);">Protocolo de Decisiones</span></div>
-      </div>
-    </div>
-  </div>
-  <footer class="slide-footer">
-    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
-    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd> &middot; <kbd class="kbd">1</kbd> <kbd class="kbd">2</kbd> <kbd class="kbd">3</kbd> modulos</span>
-    <span class="slide-counter">02/34</span>
-  </footer>
-</section>
+
+  <section
+    class="slide"
+    id="slide-1"
+    data-module="0"
+  >
+
+    <!-- =====================================================
+         HEADER
+         ===================================================== -->
+
+    <header class="slide-header">
+
+      <span class="brand">
+        CORTEX QUANT TRADER
+      </span>
+
+      <span class="header-divider"></span>
+
+      <span
+        class="module-tag"
+        data-mod="0"
+      >
+        Programa Formativo
+      </span>
+
+      <span class="lesson-tag">
+        Índice
+      </span>
+
+      <span class="slide-title">
+        Arquitectura del Programa Formativo
+      </span>
+
+      <span class="concept-code">
+        CQT.0
+      </span>
+
+    </header>
+
+
+    <!-- =====================================================
+         BODY
+         ===================================================== -->
+
+    <main class="slide-body">
+
+
+      <!-- ===================================================
+           MODULE I
+           =================================================== -->
+
+      <section class="module module-1">
+
+        <div class="module-header">
+
+          <div class="module-number">
+            Módulo I
+          </div>
+
+          <h2 class="module-title">
+            Fundamentos y Microestructura
+          </h2>
+
+          <div class="module-line"></div>
+
+        </div>
+
+
+        <div class="topic-list">
+
+          <div class="topic">
+            <span class="topic-number">01.</span>
+            <span class="topic-text">
+              Del origen de la vida a las neuronas
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">02.</span>
+            <span class="topic-text">
+              Finanzas desde la era sumeria
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">03.</span>
+            <span class="topic-text">
+              El mercado financiero y su naturaleza
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">04.</span>
+            <span class="topic-text">
+              Evolución histórica del trading
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">05.</span>
+            <span class="topic-text">
+              Taxonomía de Participantes
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">06.</span>
+            <span class="topic-text">
+              El precio
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">07.</span>
+            <span class="topic-text">
+              Oferta, Demanda y Liquidez
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">08.</span>
+            <span class="topic-text">
+              Ticks, Tick Size y Nocional
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">09.</span>
+            <span class="topic-text">
+              The Bid-Ask Spread
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">10.</span>
+            <span class="topic-text">
+              Slippage e Impacto de Mercado
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">11.</span>
+            <span class="topic-text">
+              Futuros, Stocks y Forex
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">12.</span>
+            <span class="topic-text">
+              Commodities, Bonos y Sintéticos
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">13.</span>
+            <span class="topic-text">
+              Tape Reading y Footprint
+            </span>
+          </div>
+
+        </div>
+
+        <div class="module-summary" aria-label="Resumen del módulo I">
+          <span class="module-summary-label">Fundamentos operativos</span>
+          <span class="module-summary-value">13</span>
+        </div>
+
+      </section>
+
+
+      <!-- ===================================================
+           MODULE II
+           =================================================== -->
+
+      <section class="module module-2">
+
+        <div class="module-header">
+
+          <div class="module-number">
+            Módulo II
+          </div>
+
+          <h2 class="module-title">
+            Trading Cuantitativo
+          </h2>
+
+          <div class="module-line"></div>
+
+        </div>
+
+
+        <div class="topic-list">
+
+          <div class="topic">
+            <span class="topic-number">14.</span>
+            <span class="topic-text">
+              La Revolución Cuantitativa
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">15.</span>
+            <span class="topic-text">
+              El Perfil del Quant Trader
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">16.</span>
+            <span class="topic-text">
+              Sistemático vs. Discrecional
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">17.</span>
+            <span class="topic-text">
+              El Edge Estadístico
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">18.</span>
+            <span class="topic-text">
+              Diseño de Estrategias Mecánicas
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">19.</span>
+            <span class="topic-text">
+              Backtesting Riguroso
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">20.</span>
+            <span class="topic-text">
+              Overfitting
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">21.</span>
+            <span class="topic-text">
+              Pruebas de Robustez
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">22.</span>
+            <span class="topic-text">
+              Monte Carlo
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">23.</span>
+            <span class="topic-text">
+              Walk Forward
+            </span>
+          </div>
+
+        </div>
+
+        <div class="module-summary" aria-label="Resumen del módulo II">
+          <span class="module-summary-label">Research y validación</span>
+          <span class="module-summary-value">10</span>
+        </div>
+
+      </section>
+
+
+      <!-- ===================================================
+           MODULE III
+           =================================================== -->
+
+      <section class="module module-3">
+
+        <div class="module-header">
+
+          <div class="module-number">
+            Módulo III
+          </div>
+
+          <h2 class="module-title">
+            Cortex-Dendrita
+          </h2>
+
+          <div class="module-line"></div>
+
+        </div>
+
+
+        <div class="topic-list">
+
+          <div class="topic">
+            <span class="topic-number">24.</span>
+            <span class="topic-text">
+              Introducción a Cortex-Dendrita
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">25.</span>
+            <span class="topic-text">
+              Filosofía de la Inferencia
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">26.</span>
+            <span class="topic-text">
+              Cortex vs. Dendrita
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">27.</span>
+            <span class="topic-text">
+              El Método Científico en Cortex-Dendrita
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">28.</span>
+            <span class="topic-text">
+              Arquitectura Multidimensional
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">29.</span>
+            <span class="topic-text">
+              HWTE como Eje Inferencial
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">30.</span>
+            <span class="topic-text">
+              Macrociclo, Frontera y Migración
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">31.</span>
+            <span class="topic-text">
+              Microciclos y Confluencia Multidimensional
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">32.</span>
+            <span class="topic-text">
+              Observación y Acumulación de Sesgo
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">33.</span>
+            <span class="topic-text">
+              Lectura Unilateral y Multilateral del Mercado
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">34.</span>
+            <span class="topic-text">
+              Confluencia, Divergencia y Sesgo Intermercado
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">35.</span>
+            <span class="topic-text">
+              De la Hipótesis a la Tesis Inferencial
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">36.</span>
+            <span class="topic-text">
+              Contraste, Falsación e Invalidación
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">37.</span>
+            <span class="topic-text">
+              Vigencia y Retoma de la Tesis
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">38.</span>
+            <span class="topic-text">
+              De la Inferencia a la Ejecución Multidimensional
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">39.</span>
+            <span class="topic-text">
+              Gestión de la Inferencia: Entrada, Stop y Salida
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">40.</span>
+            <span class="topic-text">
+              Técnicas de Ejecución y Adaptación al Mercado
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">41.</span>
+            <span class="topic-text">
+              Cobertura y Arquitectura Multimercado
+            </span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">42.</span>
+            <span class="topic-text">
+              Protocolo Integral de Inferencia Cortex-Dendrita
+            </span>
+          </div>
+
+        </div>
+
+        <div class="module-summary" aria-label="Resumen del módulo III">
+          <span class="module-summary-label">Framework propietario</span>
+          <span class="module-summary-value">19</span>
+        </div>
+
+      </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+         ===================================================== -->
+
+    <footer class="slide-footer">
+
+      <span class="watermark">
+        TechPulse Consulting |
+        Proprietary Framework Cortex Quant Trader
+      </span>
+
+      <span class="nav-hint">
+
+        <kbd class="kbd">&larr;</kbd>
+        <kbd class="kbd">&rarr;</kbd>
+
+        &nbsp;·&nbsp;
+
+        <kbd class="kbd">1</kbd>
+        <kbd class="kbd">2</kbd>
+        <kbd class="kbd">3</kbd>
+
+        módulos
+
+      </span>
+
+      <span class="slide-counter">
+        02/42
+      </span>
+
+    </footer>
+
+  </section>
+
 </body>
 </html>

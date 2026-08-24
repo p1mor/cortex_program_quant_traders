@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>El Método Científico en Cortex-Dendrita — Cortex Quant Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-26 .l27-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: clamp(18px, 2.2vh, 28px);
+      min-height: 0;
+      padding: clamp(24px, 3.1vh, 38px) clamp(30px, 3.2vw, 62px) clamp(22px, 2.8vh, 34px);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 62% 58%, rgba(0, 51, 255, .05), transparent 27%),
+        radial-gradient(circle at 94% 80%, rgba(6, 182, 212, .055), transparent 23%),
+        #000;
+    }
+
+    #slide-26 .l27-head .divider {
+      margin-top: clamp(15px, 1.9vh, 21px);
+    }
+
+    #slide-26 .l27-canvas {
+      display: grid;
+      grid-template-columns: minmax(300px, .64fr) minmax(0, 1.36fr);
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: clamp(12px, 1.4vw, 22px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-26 .l27-premise {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: minmax(210px, .46fr) minmax(0, 1.54fr) auto;
+      gap: clamp(18px, 2vw, 34px);
+      align-items: center;
+      padding: clamp(13px, 1.6vh, 19px) clamp(18px, 1.6vw, 28px);
+      border-top: 1px solid rgba(0, 51, 255, .55);
+      border-bottom: 1px solid rgba(6, 182, 212, .28);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .095), rgba(6, 182, 212, .04));
+    }
+
+    #slide-26 .l27-kicker,
+    #slide-26 .l27-premise-tags span,
+    #slide-26 .l27-note-label,
+    #slide-26 .l27-warning,
+    #slide-26 .l27-loop-head,
+    #slide-26 .l27-stage-index,
+    #slide-26 .l27-stage-meta,
+    #slide-26 .l27-gate-label,
+    #slide-26 .l27-outcome b,
+    #slide-26 .l27-update b,
+    #slide-26 .l27-feedback,
+    #slide-26 .l27-principle-label,
+    #slide-26 .l27-validity {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    #slide-26 .l27-kicker {
+      color: var(--accent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+    }
+
+    #slide-26 .l27-premise p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.5;
+    }
+
+    #slide-26 .l27-premise strong {
+      color: var(--txt-primary);
+      font-weight: 700;
+    }
+
+    #slide-26 .l27-premise-tags {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+      min-width: clamp(175px, 13vw, 240px);
+    }
+
+    #slide-26 .l27-premise-tags span {
+      padding: 6px 9px;
+      border-left: 2px solid var(--txt-tertiary);
+      color: var(--txt-tertiary);
+      background: rgba(17, 17, 17, .76);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+    }
+
+    #slide-26 .l27-premise-tags span:last-child {
+      border-color: var(--hi);
+      color: var(--hi);
+      background: var(--hi-subtle);
+    }
+
+    #slide-26 .l27-notes {
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: clamp(10px, 1.2vh, 16px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-26 .l27-note {
+      min-width: 0;
+      padding: clamp(14px, 1.6vh, 20px) clamp(16px, 1.4vw, 24px);
+      border: 1px solid var(--border-default);
+      background: rgba(8, 9, 11, .94);
+    }
+
+    #slide-26 .l27-note:first-child { border-left: 3px solid var(--accent); }
+    #slide-26 .l27-note:last-child { border-left: 3px solid var(--purple); }
+
+    #slide-26 .l27-note-label {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+    }
+
+    #slide-26 .l27-note p {
+      margin-top: 8px;
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.52;
+    }
+
+    #slide-26 .l27-note strong {
+      color: var(--txt-primary);
+      font-weight: 700;
+    }
+
+    #slide-26 .l27-warnings {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    #slide-26 .l27-warning {
+      display: grid;
+      place-items: center;
+      min-height: clamp(48px, 5.7vh, 64px);
+      padding: 8px 10px;
+      border: 1px solid rgba(230, 57, 85, .42);
+      color: var(--bear);
+      background: var(--bear-subtle);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+      text-align: center;
+    }
+
+    #slide-26 .l27-lab {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto auto auto auto;
+      gap: clamp(11px, 1.3vh, 16px);
+      min-width: 0;
+      min-height: 0;
+      padding: clamp(18px, 2vh, 26px);
+      border: 1px solid var(--border-default);
+      background:
+        linear-gradient(rgba(148, 156, 165, .04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 156, 165, .04) 1px, transparent 1px),
+        rgba(6, 7, 9, .97);
+      background-size: 34px 34px, 34px 34px, auto;
+      overflow: hidden;
+    }
+
+    #slide-26 .l27-lab::after {
+      content: "";
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      right: -120px;
+      top: -120px;
+      border: 1px solid rgba(6, 182, 212, .18);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    #slide-26 .l27-loop-head {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+    }
+
+    #slide-26 .l27-loop-head span:last-child { color: var(--hi); }
+
+    #slide-26 .l27-main-route {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, .84fr) auto minmax(0, 1.05fr) auto minmax(0, .84fr) auto minmax(0, 1.18fr) auto minmax(0, .92fr);
+      align-items: stretch;
+      min-width: 0;
+    }
+
+    #slide-26 .l27-route-node {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: clamp(92px, 11vh, 124px);
+      padding: clamp(12px, 1.45vh, 17px) 11px;
+      border: 1px solid var(--border-default);
+      background: rgba(0, 0, 0, .84);
+    }
+
+    #slide-26 .l27-route-node:nth-of-type(1) { border-top: 2px solid var(--accent); }
+    #slide-26 .l27-route-node:nth-of-type(2) { border-top: 2px solid var(--cyan); }
+    #slide-26 .l27-route-node:nth-of-type(3) { border-top: 2px solid var(--purple); }
+    #slide-26 .l27-route-node:nth-of-type(4) { border-top: 2px solid var(--bear); }
+    #slide-26 .l27-route-node:nth-of-type(5) { border-top: 2px solid var(--hi); }
+
+    #slide-26 .l27-stage-index {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+    }
+
+    #slide-26 .l27-route-node strong {
+      display: block;
+      margin-top: 8px;
+      color: var(--txt-primary);
+      font-family: var(--font-display);
+      font-size: clamp(.88rem, 1vw, 1.14rem);
+      font-weight: 500;
+      line-height: 1.12;
+    }
+
+    #slide-26 .l27-stage-meta {
+      display: block;
+      margin-top: auto;
+      padding-top: 8px;
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      line-height: 1.35;
+    }
+
+    #slide-26 .l27-route-node.contrast .l27-stage-meta { color: var(--bear); }
+    #slide-26 .l27-route-node.thesis .l27-stage-meta { color: var(--hi); }
+
+    #slide-26 .l27-route-arrow {
+      display: grid;
+      place-items: center;
+      min-width: clamp(16px, 1.4vw, 26px);
+      color: var(--txt-tertiary);
+      font-family: var(--font-mono);
+      font-size: .76rem;
+    }
+
+    #slide-26 .l27-decision {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(130px, .48fr) minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 10px;
+      align-items: stretch;
+      min-width: 0;
+    }
+
+    #slide-26 .l27-gate {
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      padding: 11px;
+      border: 1px solid var(--purple);
+      background: var(--purple-subtle);
+      text-align: center;
+    }
+
+    #slide-26 .l27-gate-label {
+      color: var(--purple);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    #slide-26 .l27-outcome {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+      min-width: 0;
+      padding: 11px 13px;
+      border-left: 3px solid var(--accent);
+      background: var(--accent-subtle);
+    }
+
+    #slide-26 .l27-outcome.no-trade {
+      border-color: var(--hi);
+      background: var(--hi-subtle);
+    }
+
+    #slide-26 .l27-outcome b {
+      color: var(--accent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+    }
+
+    #slide-26 .l27-outcome.no-trade b { color: var(--hi); }
+
+    #slide-26 .l27-outcome span {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
+      line-height: 1.35;
+    }
+
+    #slide-26 .l27-or {
+      display: grid;
+      place-items: center;
+      color: var(--txt-tertiary);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      text-transform: uppercase;
+    }
+
+    #slide-26 .l27-update-row {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    #slide-26 .l27-update {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      padding: 10px 13px;
+      border: 1px solid rgba(6, 182, 212, .35);
+      background: rgba(6, 182, 212, .055);
+    }
+
+    #slide-26 .l27-update b {
+      color: var(--hi);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+    }
+
+    #slide-26 .l27-update span {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
+      line-height: 1.35;
+    }
+
+    #slide-26 .l27-feedback {
+      color: var(--purple);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      white-space: nowrap;
+    }
+
+    #slide-26 .l27-principle {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: minmax(165px, .34fr) minmax(0, 1.45fr) minmax(260px, .55fr);
+      gap: clamp(18px, 2vw, 34px);
+      align-items: center;
+      padding: clamp(14px, 1.7vh, 20px) clamp(18px, 1.6vw, 28px);
+      border-left: 3px solid var(--accent);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .10), rgba(6, 182, 212, .055));
+    }
+
+    #slide-26 .l27-principle-label {
+      color: var(--accent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+    }
+
+    #slide-26 .l27-principle p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.5;
+    }
+
+    #slide-26 .l27-principle strong {
+      color: var(--txt-primary);
+      font-weight: 700;
+    }
+
+    #slide-26 .l27-validity {
+      padding: 10px 13px;
+      border: 1px solid var(--hi);
+      color: var(--hi);
+      background: var(--hi-subtle);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+      line-height: 1.45;
+      text-align: center;
+    }
+
+    @media (max-height: 820px) {
+      #slide-26 .l27-stage {
+        gap: 13px;
+        padding-top: 20px;
+        padding-bottom: 18px;
+      }
+
+      #slide-26 .l27-head .divider { margin-top: 11px; }
+      #slide-26 .l27-canvas { gap: 9px 14px; }
+      #slide-26 .l27-premise { padding-top: 9px; padding-bottom: 9px; }
+      #slide-26 .l27-notes { gap: 7px; }
+      #slide-26 .l27-note { padding: 9px 13px; }
+      #slide-26 .l27-note p { margin-top: 5px; line-height: 1.4; }
+      #slide-26 .l27-warning { min-height: 36px; padding: 5px 8px; }
+      #slide-26 .l27-lab { gap: 7px; padding: 12px; }
+      #slide-26 .l27-loop-head { padding-bottom: 6px; }
+      #slide-26 .l27-route-node { min-height: 80px; padding: 8px; }
+      #slide-26 .l27-route-node strong { margin-top: 5px; }
+      #slide-26 .l27-stage-meta { padding-top: 4px; }
+      #slide-26 .l27-gate,
+      #slide-26 .l27-outcome { padding: 7px 9px; }
+      #slide-26 .l27-update { padding: 7px 9px; }
+      #slide-26 .l27-principle { padding-top: 8px; padding-bottom: 8px; }
+      #slide-26 .l27-principle p { line-height: 1.4; }
+      #slide-26 .l27-validity { padding: 6px 9px; }
+    }
+
+    @media (max-width: 1180px) {
+      #slide-26 .l27-canvas { grid-template-columns: minmax(270px, .58fr) minmax(0, 1.42fr); }
+      #slide-26 .l27-premise { grid-template-columns: minmax(180px, .4fr) minmax(0, 1.6fr); }
+      #slide-26 .l27-premise-tags { display: none; }
+      #slide-26 .l27-lab { padding: 16px; }
+      #slide-26 .l27-principle { grid-template-columns: minmax(145px, .3fr) minmax(0, 1.5fr); }
+      #slide-26 .l27-validity { grid-column: 1 / -1; padding: 8px 12px; }
+    }
+
+    @media (max-width: 900px) {
+      #slide-26 .l27-stage { display: block; overflow-y: auto; }
+      #slide-26 .l27-canvas { grid-template-columns: 1fr; grid-template-rows: auto; margin-top: 24px; }
+      #slide-26 .l27-premise,
+      #slide-26 .l27-principle { grid-column: auto; grid-template-columns: 1fr; }
+      #slide-26 .l27-lab { min-height: 540px; }
+    }
+
+    @media (max-width: 620px) {
+      #slide-26 .l27-stage { padding: 22px 18px 28px; }
+      #slide-26 .l27-main-route { grid-template-columns: 1fr; gap: 6px; }
+      #slide-26 .l27-route-arrow { transform: rotate(90deg); min-height: 18px; }
+      #slide-26 .l27-decision { grid-template-columns: 1fr; }
+      #slide-26 .l27-or { min-height: 20px; }
+      #slide-26 .l27-update-row { grid-template-columns: 1fr; }
+      #slide-26 .l27-feedback { white-space: normal; }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-26" data-module="3">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="3">MÓDULO III</span>
+    <span class="lesson-tag">L27</span>
+    <span class="slide-title">El Método Científico en Cortex-Dendrita</span>
+    <span class="concept-code">M3.L27.C27</span>
+  </header>
+
+  <main class="slide-body l27-stage">
+    <div class="l27-head">
+      <div class="section-title">
+        <div class="section-number">LECCIÓN 27</div>
+        <h2>El Método Científico en Cortex-Dendrita</h2>
+      </div>
+      <div class="divider gradient"></div>
+    </div>
+
+    <div class="l27-canvas">
+      <section class="l27-premise">
+        <div class="l27-kicker">Método científico aplicado</div>
+        <p>Cortex-Dendrita aplica el <strong>método científico a la construcción de inferencias de mercado</strong>. Dentro del Quant Trading Desk, el trader no busca predecir ni reaccionar ante señales aisladas: <strong>observa, acumula evidencia, formula hipótesis y las somete a contraste antes de ejecutar.</strong></p>
+        <div class="l27-premise-tags"><span>No predice</span><span>No reacciona</span><span>Observa · contrasta</span></div>
+      </section>
+
+      <aside class="l27-notes">
+        <section class="l27-note">
+          <div class="l27-note-label">Estado contemporáneo</div>
+          <p>El proceso comienza con la <strong>observación del estado contemporáneo del mercado</strong>. La información proporcionada por Cortex-Dendrita permite acumular sesgo y plantear una hipótesis.</p>
+        </section>
+
+        <div class="l27-warnings">
+          <div class="l27-warning">Hipótesis ≠ operación</div>
+          <div class="l27-warning">Sesgo ≠ confirmación</div>
+        </div>
+
+        <section class="l27-note">
+          <div class="l27-note-label">Disciplina de contraste</div>
+          <p>El trader debe contrastar su hipótesis con la evidencia disponible, buscando deliberadamente información favorable y <strong>evidencia contradictoria capaz de falsarla</strong>. Solo con suficiente coherencia puede construir una <strong>tesis inferencial</strong>, acompañada de condiciones claras de vigencia e invalidación.</p>
+        </section>
+      </aside>
+
+      <section class="l27-lab" aria-label="Protocolo científico de inferencia Cortex-Dendrita">
+        <div class="l27-loop-head"><span>Protocolo experimental</span><span>Proceso iterativo</span></div>
+
+        <div class="l27-main-route">
+          <div class="l27-route-node"><span class="l27-stage-index">01</span><strong>Observación</strong><span class="l27-stage-meta">Estado contemporáneo</span></div>
+          <div class="l27-route-arrow">→</div>
+          <div class="l27-route-node"><span class="l27-stage-index">02</span><strong>Evidencia y sesgo</strong><span class="l27-stage-meta">Acumulación</span></div>
+          <div class="l27-route-arrow">→</div>
+          <div class="l27-route-node"><span class="l27-stage-index">03</span><strong>Hipótesis</strong><span class="l27-stage-meta">Proposición provisional</span></div>
+          <div class="l27-route-arrow">→</div>
+          <div class="l27-route-node contrast"><span class="l27-stage-index">04</span><strong>Contraste y falsación</strong><span class="l27-stage-meta">Favorable + contradictoria</span></div>
+          <div class="l27-route-arrow">→</div>
+          <div class="l27-route-node thesis"><span class="l27-stage-index">05</span><strong>Tesis inferencial</strong><span class="l27-stage-meta">Vigencia + invalidación</span></div>
+        </div>
+
+        <div class="l27-decision">
+          <div class="l27-gate"><span class="l27-gate-label">06 / ¿Evidencia suficiente?</span></div>
+          <div class="l27-outcome"><b>Sí</b><span><strong>Ejecución</strong> justificada por la tesis.</span></div>
+          <div class="l27-or">o</div>
+          <div class="l27-outcome no-trade"><b>No</b><span><strong>No Operar</strong> como decisión válida.</span></div>
+        </div>
+
+        <div class="l27-update-row">
+          <div class="l27-update"><b>07 / Actualización</b><span>Nueva información actualiza la evidencia, la vigencia y el estado de la tesis.</span></div>
+          <div class="l27-feedback">↺ vuelve a observar</div>
+        </div>
+      </section>
+
+      <section class="l27-principle">
+        <div class="l27-principle-label">Principio Cortex-Dendrita</div>
+        <p><strong>El trader del Quant Trading Desk no intenta demostrar que su hipótesis es correcta;</strong> intenta determinar si la evidencia disponible es suficiente para sostenerla y justificar una ejecución.</p>
+        <div class="l27-validity">Sin evidencia suficiente, No Operar también es una decisión científicamente válida.</div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">27/42</span>
+  </footer>
+</section>
+</body>
+</html>

@@ -19,37 +19,85 @@
     <span class="brand">CORTEX QUANT TRADER</span>
     <span class="divider"></span>
     <span class="module-tag" data-mod="2">Modulo II</span>
-    <span class="lesson-tag">L21</span>
+    <span class="lesson-tag">L23</span>
     <span class="slide-title">Walk Forward</span>
-    <span class="concept-code">M2.L21.C21</span>
+    <span class="concept-code">M2.L23.C23</span>
   </header>
-  <div class="slide-body">
-    <div class="slide-left">
+  <div class="slide-body single-col l23-body">
+    <main class="slide-left full l23-main">
       <div class="section-title">
-        <div class="section-number">Leccion 21</div>
+        <div class="section-number">Lecci&oacute;n 23</div>
         <h2>Walk Forward</h2>
       </div>
       <div class="divider gradient"></div>
-      <p class="t-body">Walk Forward Analysis (WFA) es la tecnica gold standard de validacion. Entrena en una ventana, testea en la siguiente, y repite deslizandose en el tiempo.</p>
-      <div class="formula-block u-mt-4">
-        <div style="text-align:center;">WFE = R<sub>out</sub> / R<sub>in</sub></div>
+
+      <div class="l23-stage">
+        <section class="l23-thesis" aria-labelledby="l23-thesis-title">
+          <div>
+            <span class="l23-kicker">Validaci&oacute;n secuencial / 23</span>
+            <h3 id="l23-thesis-title">Desarrollar. Congelar.<br><em>Validar hacia adelante.</em></h3>
+          </div>
+          <p>El <strong>Walk Forward Analysis</strong> eval&uacute;a una estrategia secuencialmente en el tiempo: se desarrolla u optimiza sobre una ventana de datos y posteriormente se prueba sobre <strong>datos no utilizados en esa optimizaci&oacute;n</strong>, repitiendo el proceso en ventanas sucesivas. Permite evaluar estabilidad y capacidad de generalizaci&oacute;n fuera de muestra.</p>
+          <div class="l23-direction"><span>Pasado disponible</span><i>&rarr;</i><strong>Futuro no visto</strong></div>
+        </section>
+
+        <section class="l23-calendar" aria-labelledby="l23-calendar-title">
+          <div class="l23-calendar-head">
+            <div><span class="l23-kicker">Escalera temporal</span><h3 id="l23-calendar-title">Cada ventana avanza sin mirar hacia adelante</h3></div>
+            <div class="l23-calendar-legend"><span class="is-is"><i></i>In-Sample</span><span class="is-oos"><i></i>Out-of-Sample</span><span class="is-live"><i></i>Mercado avanza</span></div>
+          </div>
+
+          <div class="l23-time-axis" aria-hidden="true"><span>T<sub>0</sub></span><span>T<sub>1</sub></span><span>T<sub>2</sub></span><span>T<sub>3</sub></span><span>T<sub>4</sub></span><span>T<sub>5</sub></span><span>T<sub>6</sub></span></div>
+
+          <div class="l23-cycles" aria-label="Cuatro ciclos Walk Forward">
+            <div class="l23-cycle cycle-1">
+              <strong>Ciclo 01</strong>
+              <div class="l23-cycle-track"><span class="l23-is">Optimizar / calibrar</span><span class="l23-oos">Validar OOS<small>sin modificar</small></span></div>
+            </div>
+            <div class="l23-cycle cycle-2">
+              <strong>Ciclo 02</strong>
+              <div class="l23-cycle-track"><span class="l23-is">Optimizar / calibrar</span><span class="l23-oos">Validar OOS<small>sin modificar</small></span></div>
+            </div>
+            <div class="l23-cycle cycle-3">
+              <strong>Ciclo 03</strong>
+              <div class="l23-cycle-track"><span class="l23-is">Optimizar / calibrar</span><span class="l23-oos">Validar OOS<small>sin modificar</small></span></div>
+            </div>
+            <div class="l23-cycle cycle-4">
+              <strong>Ciclo 04</strong>
+              <div class="l23-cycle-track"><span class="l23-is">Optimizar / calibrar</span><span class="l23-oos">Validar OOS<small>sin modificar</small></span></div>
+            </div>
+          </div>
+
+          <div class="l23-process" aria-label="Proceso Walk Forward">
+            <span><b>01</b>Desarrollar</span><i>&rarr;</i><span><b>02</b>Congelar reglas</span><i>&rarr;</i><span><b>03</b>Validar OOS</span><i>&rarr;</i><span><b>04</b>Desplazar ventana</span>
+          </div>
+
+          <div class="l23-oos-equity">
+            <div class="l23-oos-copy"><span class="l23-kicker">Equity OOS concatenada</span><p>Los resultados fuera de muestra de cada ciclo se unen para evaluar <strong>estabilidad y capacidad de generalizaci&oacute;n</strong> a trav&eacute;s del tiempo.</p></div>
+            <div class="l23-oos-chart">
+              <svg viewBox="0 0 760 120" role="img" aria-label="Curva conceptual formada por resultados out-of-sample consecutivos" preserveAspectRatio="none">
+                <g class="l23-grid-lines"><line x1="15" y1="25" x2="745" y2="25"/><line x1="15" y1="60" x2="745" y2="60"/><line x1="15" y1="95" x2="745" y2="95"/><line x1="190" y1="15" x2="190" y2="105"/><line x1="380" y1="15" x2="380" y2="105"/><line x1="570" y1="15" x2="570" y2="105"/></g>
+                <path class="l23-equity-area" d="M15,91 C70,82 120,88 190,67 C250,48 310,60 380,48 C440,36 500,53 570,34 C635,17 690,31 745,19 L745,110 L15,110 Z"/>
+                <path class="l23-equity-line" d="M15,91 C70,82 120,88 190,67 C250,48 310,60 380,48 C440,36 500,53 570,34 C635,17 690,31 745,19"/>
+                <g class="l23-equity-points"><circle cx="190" cy="67" r="4"/><circle cx="380" cy="48" r="4"/><circle cx="570" cy="34" r="4"/><circle cx="745" cy="19" r="4"/></g>
+              </svg>
+              <div class="l23-oos-labels"><span>OOS 01</span><span>OOS 02</span><span>OOS 03</span><span>OOS 04</span></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="l23-principle">
+          <span class="l23-kicker">Principio Quant</span>
+          <p>Un edge robusto debe demostrar capacidad de funcionar <strong>fuera de los datos donde fue desarrollado</strong>.</p>
+          <div class="l23-proof"><span>Ventanas sucesivas</span><b>+</b><span>Datos no vistos</span><b>&rarr;</b><span>Evidencia de generalizaci&oacute;n</span></div>
+        </section>
       </div>
-      <p class="t-body u-mt-3">Donde <strong>WFE</strong> = Walk Forward Efficiency, <strong>R<sub>out</sub></strong> = rendimiento out-of-sample, <strong>R<sub>in</sub></strong> = rendimiento in-sample.</p>
-    </div>
-    <div class="slide-right">
-      <div class="callout accent">
-        <p><strong>Walk Forward:</strong></p>
-        <p>&#x25A0; Divide los datos en ventanas de entrenamiento y prueba.</p>
-        <p>&#x25A0; Re-optimiza periodicamente adaptandose al mercado.</p>
-        <p>&#x25A0; WFE &gt; 0.5 indica que el edge sobrevive fuera de sample.</p>
-        <p>&#x25A0; Evita el overfitting al validar en datos no vistos.</p>
-      </div>
-    </div>
+    </main>
   </div>
   <footer class="slide-footer">
     <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
     <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
-    <span class="slide-counter">23/34</span>
+    <span class="slide-counter">27/39</span>
   </footer>
 </section>
 </body>

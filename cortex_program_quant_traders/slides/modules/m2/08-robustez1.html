@@ -19,36 +19,87 @@
     <span class="brand">CORTEX QUANT TRADER</span>
     <span class="divider"></span>
     <span class="module-tag" data-mod="2">Modulo II</span>
-    <span class="lesson-tag">L19</span>
-    <span class="slide-title">Pruebas de Robustez I</span>
-    <span class="concept-code">M2.L19.C19</span>
+    <span class="lesson-tag">L21</span>
+    <span class="slide-title">Pruebas de Robustez</span>
+    <span class="concept-code">M2.L21.C21</span>
   </header>
-  <div class="slide-body">
-    <div class="slide-left">
+  <div class="slide-body single-col l21-body">
+    <main class="slide-left full l21-main">
       <div class="section-title">
-        <div class="section-number">Leccion 19</div>
-        <h2>Pruebas de Robustez I</h2>
+        <div class="section-number">Lecci&oacute;n 21</div>
+        <h2>Pruebas de Robustez</h2>
       </div>
       <div class="divider gradient"></div>
-      <p class="t-body">Antes de operar en vivo, una estrategia debe superar multiples pruebas de robustez. El objetivo no es maximizar el rendimiento historico, sino demostrar que el edge persiste bajo condiciones variables.</p>
-      <div class="callout u-mt-4">
-        <p><strong>Criterio:</strong> Si la estrategia solo funciona en un subconjunto narrow de condiciones, no es robusta. El edge debe ser resiliente.</p>
+
+      <div class="l21-stage">
+        <section class="l21-thesis" aria-labelledby="l21-thesis-title">
+          <div>
+            <span class="l21-kicker">T&uacute;nel de estr&eacute;s / 21</span>
+            <h3 id="l21-thesis-title">Perturbar el sistema.<br><em>Observar si el edge permanece.</em></h3>
+          </div>
+          <p>Las <strong>pruebas de robustez</strong> buscan comprobar que el rendimiento de una estrategia no depende &uacute;nicamente de condiciones hist&oacute;ricas espec&iacute;ficas. Una estrategia robusta deber&iacute;a conservar su <strong>edge</strong> ante datos no vistos, cambios de par&aacute;metros, distintos reg&iacute;menes de mercado y costes reales de ejecuci&oacute;n.</p>
+          <div class="l21-specimen"><span>EDGE</span><i></i><strong>BAJO ESTR&Eacute;S</strong></div>
+        </section>
+
+        <section class="l21-rig" aria-labelledby="l21-rig-title">
+          <div class="l21-rig-head">
+            <div><span class="l21-kicker">Banco de pruebas</span><h3 id="l21-rig-title">Un mismo sistema, seis perturbaciones</h3></div>
+            <div class="l21-rig-legend"><span><i class="base"></i>Base</span><span><i class="variant"></i>Variantes</span><span><i class="failure"></i>Degradaci&oacute;n</span></div>
+          </div>
+
+          <div class="l21-stations" aria-label="Ejemplos de pruebas de robustez">
+            <div><b>01</b><strong>OOS</strong><span>Datos no vistos</span></div>
+            <div><b>02</b><strong>Par&aacute;metros</strong><span>&plusmn;5% &middot; &plusmn;10% &middot; &plusmn;20%</span></div>
+            <div><b>03</b><strong>Reg&iacute;menes</strong><span>Tendencia &middot; rango &middot; estr&eacute;s</span></div>
+            <div><b>04</b><strong>Costes</strong><span>Spread &middot; fees &middot; slippage</span></div>
+            <div><b>05</b><strong>Permutaci&oacute;n</strong><span>Reordenar operaciones</span></div>
+            <div><b>06</b><strong>Muestra</strong><span>Alterar inicio y final</span></div>
+          </div>
+
+          <div class="l21-tunnel">
+            <svg viewBox="0 0 1200 280" role="img" aria-label="Curva base y variantes de una estrategia atravesando seis pruebas de robustez" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="l21-base-line" x1="0" x2="1"><stop offset="0" stop-color="#0033ff"/><stop offset=".58" stop-color="#06b6d4"/><stop offset="1" stop-color="#22c55e"/></linearGradient>
+                <linearGradient id="l21-stable-area" x1="0" x2="1"><stop offset="0" stop-color="#0033ff" stop-opacity=".02"/><stop offset="1" stop-color="#22c55e" stop-opacity=".12"/></linearGradient>
+              </defs>
+              <g class="l21-grid-lines">
+                <line x1="45" y1="45" x2="1160" y2="45"/><line x1="45" y1="100" x2="1160" y2="100"/><line x1="45" y1="155" x2="1160" y2="155"/><line x1="45" y1="210" x2="1160" y2="210"/>
+                <line x1="45" y1="250" x2="1160" y2="250"/><line x1="230" y1="20" x2="230" y2="250"/><line x1="415" y1="20" x2="415" y2="250"/><line x1="600" y1="20" x2="600" y2="250"/><line x1="785" y1="20" x2="785" y2="250"/><line x1="970" y1="20" x2="970" y2="250"/>
+              </g>
+              <path class="l21-stable-area" d="M45,224 C130,201 180,207 230,182 C310,151 352,166 415,134 C490,103 540,119 600,91 C680,63 730,83 785,60 C865,36 915,55 970,38 C1040,23 1100,37 1160,20 L1160,105 C1080,111 1025,100 970,112 C890,124 840,115 785,130 C710,143 660,135 600,151 C520,170 470,163 415,183 C335,207 280,198 230,219 C150,238 100,230 45,250 Z"/>
+              <g class="l21-variant-paths">
+                <path d="M45,231 C140,206 180,218 230,190 C315,157 355,179 415,146 C500,111 540,137 600,105 C680,76 730,99 785,75 C860,53 915,75 970,57 C1045,41 1095,57 1160,39"/>
+                <path d="M45,217 C135,196 182,202 230,174 C310,143 350,158 415,126 C495,95 535,111 600,82 C680,54 725,74 785,52 C860,30 915,48 970,31 C1045,18 1095,32 1160,19"/>
+                <path d="M45,238 C132,218 180,225 230,201 C310,172 355,187 415,160 C500,131 540,147 600,120 C680,93 728,112 785,91 C862,70 912,88 970,73 C1045,61 1092,75 1160,60"/>
+                <path class="is-fragile" d="M45,226 C135,201 182,214 230,184 C315,154 350,170 415,143 C500,116 540,133 600,111 C680,95 725,129 785,126 C858,131 910,164 970,177 C1040,196 1095,219 1160,234"/>
+              </g>
+              <path class="l21-base-path" d="M45,224 C130,201 180,207 230,182 C310,151 352,166 415,134 C490,103 540,119 600,91 C680,63 730,83 785,60 C865,36 915,55 970,38 C1040,23 1100,37 1160,20"/>
+              <g class="l21-gates"><circle cx="230" cy="182" r="5"/><circle cx="415" cy="134" r="5"/><circle cx="600" cy="91" r="5"/><circle cx="785" cy="60" r="5"/><circle cx="970" cy="38" r="5"/><circle cx="1160" cy="20" r="5"/></g>
+            </svg>
+            <div class="l21-tunnel-label is-input">Entrada<br><strong>Backtest base</strong></div>
+            <div class="l21-tunnel-label is-output">Salida<br><strong>Edge resistente</strong></div>
+          </div>
+
+          <div class="l21-result">
+            <span>Fr&aacute;gil</span>
+            <div class="l21-result-track"><i></i><b>Zona de estabilidad</b></div>
+            <span>Robusta</span>
+            <p>La curva no tiene que permanecer id&eacute;ntica: debe conservar una <strong>expectativa razonablemente estable</strong> sin colapsar ante perturbaciones plausibles.</p>
+          </div>
+        </section>
+
+        <section class="l21-principle">
+          <span class="l21-kicker">Principio Quant</span>
+          <p>No buscamos el mejor backtest, sino evidencia de que el edge es <strong>estable y resistente</strong>.</p>
+          <div class="l21-verdict"><span>Mejor resultado</span><b>&ne;</b><span>Mayor robustez</span></div>
+        </section>
       </div>
-    </div>
-    <div class="slide-right">
-      <div class="callout accent">
-        <p><strong>Pruebas fundamentales:</strong></p>
-        <p>&#x25A0; Out-of-sample testing: datos nunca vistos por el modelo.</p>
-        <p>&#x25A0; Permutation testing: aleatorizar senales para verificar que el edge no es aleatorio.</p>
-        <p>&#x25A0; Regime analysis: evaluar en diferentes regimenes de volatilidad y tendencia.</p>
-        <p>&#x25A0; Sensibilidad a costos: incluir slippage, comisiones, impacto de mercado.</p>
-      </div>
-    </div>
+    </main>
   </div>
   <footer class="slide-footer">
     <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
     <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
-    <span class="slide-counter">21/34</span>
+    <span class="slide-counter">25/39</span>
   </footer>
 </section>
 </body>

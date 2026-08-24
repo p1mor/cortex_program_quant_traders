@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Observación y Acumulación de Sesgo — Cortex Quant Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-31 .l32-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: clamp(16px, 2vh, 26px);
+      min-height: 0;
+      padding: clamp(24px, 3.1vh, 38px) clamp(30px, 3.2vw, 62px) clamp(22px, 2.8vh, 34px);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 26% 56%, rgba(0, 51, 255, .05), transparent 26%),
+        radial-gradient(circle at 81% 58%, rgba(6, 182, 212, .045), transparent 24%),
+        #000;
+    }
+
+    #slide-31 .l32-head .divider {
+      margin-top: clamp(14px, 1.8vh, 20px);
+    }
+
+    #slide-31 .l32-canvas {
+      display: grid;
+      grid-template-columns: minmax(0, 1.03fr) minmax(390px, .97fr);
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: clamp(12px, 1.35vw, 21px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-31 .l32-premise {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: minmax(220px, .4fr) minmax(0, 1.6fr) auto;
+      gap: clamp(16px, 1.8vw, 30px);
+      align-items: center;
+      padding: clamp(12px, 1.4vh, 17px) clamp(18px, 1.55vw, 27px);
+      border-top: 1px solid rgba(0, 51, 255, .56);
+      border-bottom: 1px solid rgba(6, 182, 212, .28);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .09), rgba(6, 182, 212, .035));
+    }
+
+    #slide-31 .l32-kicker,
+    #slide-31 .l32-observe-badge,
+    #slide-31 .l32-panel-head,
+    #slide-31 .l32-source-index,
+    #slide-31 .l32-source-type,
+    #slide-31 .l32-class-chip,
+    #slide-31 .l32-register-label,
+    #slide-31 .l32-gate,
+    #slide-31 .l32-cross-label,
+    #slide-31 .l32-rel-direction,
+    #slide-31 .l32-rel-output,
+    #slide-31 .l32-not-absolute,
+    #slide-31 .l32-case-label,
+    #slide-31 .l32-case-chip,
+    #slide-31 .l32-case-result,
+    #slide-31 .l32-principle-label,
+    #slide-31 .l32-equation {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    #slide-31 .l32-kicker {
+      color: var(--accent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 700;
+    }
+
+    #slide-31 .l32-premise p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.46;
+    }
+
+    #slide-31 .l32-premise strong,
+    #slide-31 .l32-ledger-copy strong,
+    #slide-31 .l32-register-copy strong,
+    #slide-31 .l32-case p strong,
+    #slide-31 .l32-principle strong {
+      color: var(--txt-primary);
+      font-weight: 700;
+    }
+
+    #slide-31 .l32-observe-badge {
+      min-width: clamp(205px, 15vw, 275px);
+      padding: 8px 11px;
+      border: 1px solid rgba(0, 229, 255, .42);
+      color: var(--hi);
+      background: var(--hi-subtle);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 700;
+      text-align: center;
+    }
+
+    #slide-31 .l32-ledger,
+    #slide-31 .l32-crossmarket {
+      position: relative;
+      display: grid;
+      min-width: 0;
+      min-height: 0;
+      border: 1px solid var(--border-default);
+      background: rgba(7, 8, 10, .97);
+      overflow: hidden;
+    }
+
+    #slide-31 .l32-ledger {
+      grid-template-rows: auto auto minmax(0, 1fr) auto auto;
+      gap: clamp(9px, 1.05vh, 13px);
+      padding: clamp(15px, 1.7vw, 25px);
+      border-top: 2px solid var(--accent);
+    }
+
+    #slide-31 .l32-ledger::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .34;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(61, 64, 69, .17) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(61, 64, 69, .17) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+
+    #slide-31 .l32-ledger > *,
+    #slide-31 .l32-crossmarket > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    #slide-31 .l32-panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 700;
+    }
+
+    #slide-31 .l32-panel-head span:last-child { color: var(--hi); }
+
+    #slide-31 .l32-ledger-copy {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .68vw, .8125rem));
+      line-height: 1.28;
+    }
+
+    #slide-31 .l32-sources {
+      display: grid;
+      grid-template-rows: repeat(3, auto);
+      align-content: space-between;
+      gap: clamp(7px, .8vh, 10px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-31 .l32-source {
+      --source-color: var(--accent);
+      display: grid;
+      grid-template-columns: 34px minmax(115px, .34fr) minmax(0, 1fr) auto;
+      gap: clamp(9px, .9vw, 14px);
+      align-items: center;
+      min-width: 0;
+      padding: clamp(8px, .85vh, 11px) clamp(10px, 1vw, 15px);
+      border-left: 2px solid var(--source-color);
+      background: rgba(17, 17, 17, .88);
+    }
+
+    #slide-31 .l32-source.micro { --source-color: var(--purple); background: rgba(164, 140, 255, .045); }
+    #slide-31 .l32-source.cross { --source-color: var(--cyan); background: rgba(6, 182, 212, .045); }
+
+    #slide-31 .l32-source-index {
+      color: var(--source-color);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-31 .l32-source-name {
+      min-width: 0;
+    }
+
+    #slide-31 .l32-source-type {
+      color: var(--source-color);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 800;
+    }
+
+    #slide-31 .l32-source-name strong {
+      display: block;
+      margin-top: 4px;
+      color: var(--txt-primary);
+      font-family: var(--font-display);
+      font-size: clamp(.8rem, .92vw, 1.02rem);
+      font-weight: 500;
+      line-height: 1.08;
+    }
+
+    #slide-31 .l32-source p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .68vw, .8125rem));
+      line-height: 1.34;
+    }
+
+    #slide-31 .l32-classification {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 4px;
+      min-width: clamp(94px, 7vw, 130px);
+    }
+
+    #slide-31 .l32-class-chip {
+      padding: 3px 5px;
+      border: 1px solid var(--border-subtle);
+      color: var(--txt-tertiary);
+      background: var(--bg-panel);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      text-align: center;
+      line-height: 1.08;
+    }
+
+    #slide-31 .l32-class-chip.favor { border-color: rgba(34, 197, 94, .36); color: var(--bull-glow); }
+    #slide-31 .l32-class-chip.weaken { border-color: rgba(255, 183, 77, .36); color: var(--warn); }
+    #slide-31 .l32-class-chip.contradict { border-color: rgba(230, 57, 85, .36); color: var(--bear); }
+
+    #slide-31 .l32-register {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) minmax(170px, .42fr);
+      gap: clamp(11px, 1.1vw, 17px);
+      align-items: center;
+      min-width: 0;
+      padding: clamp(9px, .95vh, 12px) clamp(11px, 1vw, 15px);
+      border: 1px solid rgba(0, 229, 255, .3);
+      background: linear-gradient(90deg, var(--accent-subtle), rgba(0, 229, 255, .035));
+    }
+
+    #slide-31 .l32-register-label {
+      color: var(--hi);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-31 .l32-register-meter {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 4px;
+    }
+
+    #slide-31 .l32-register-meter span {
+      height: 10px;
+      border: 1px solid var(--border-default);
+      background: var(--bg-panel);
+    }
+
+    #slide-31 .l32-register-meter span:nth-child(-n+2) { border-color: var(--accent); background: var(--accent-subtle); }
+    #slide-31 .l32-register-meter span:nth-child(3),
+    #slide-31 .l32-register-meter span:nth-child(4) { border-color: var(--purple); background: var(--purple-subtle); }
+    #slide-31 .l32-register-meter span:nth-child(5) { border-color: var(--cyan); background: var(--cyan-subtle); }
+
+    #slide-31 .l32-register-copy {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .68vw, .8125rem));
+      line-height: 1.32;
+    }
+
+    #slide-31 .l32-gates {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 7px;
+      align-items: stretch;
+    }
+
+    #slide-31 .l32-gate {
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      padding: 6px 8px;
+      border: 1px solid rgba(255, 183, 77, .38);
+      color: var(--warn);
+      background: var(--warn-subtle);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 800;
+      text-align: center;
+    }
+
+    #slide-31 .l32-gate:last-child {
+      border-color: rgba(230, 57, 85, .36);
+      color: var(--bear);
+      background: var(--bear-subtle);
+    }
+
+    #slide-31 .l32-gate-arrow {
+      display: grid;
+      place-items: center;
+      color: var(--txt-tertiary);
+      font-family: var(--font-mono);
+    }
+
+    #slide-31 .l32-crossmarket {
+      grid-template-rows: auto auto auto minmax(0, 1fr);
+      gap: clamp(10px, 1.15vh, 14px);
+      padding: clamp(15px, 1.7vw, 25px);
+      border-top: 2px solid var(--cyan);
+      background:
+        linear-gradient(145deg, rgba(6, 182, 212, .065), transparent 43%),
+        rgba(7, 8, 10, .97);
+    }
+
+    #slide-31 .l32-cross-copy {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .68vw, .8125rem));
+      line-height: 1.28;
+    }
+
+    #slide-31 .l32-cross-copy strong { color: var(--txt-primary); }
+
+    #slide-31 .l32-relations {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(8px, .9vw, 14px);
+      min-width: 0;
+    }
+
+    #slide-31 .l32-relation {
+      --relation-color: var(--bear);
+      display: grid;
+      grid-template-rows: auto auto auto;
+      gap: 7px;
+      min-width: 0;
+      padding: clamp(10px, 1vw, 14px);
+      border: 1px solid var(--border-subtle);
+      border-top: 2px solid var(--relation-color);
+      background: color-mix(in srgb, var(--relation-color) 5%, rgba(8, 8, 8, .95));
+    }
+
+    #slide-31 .l32-relation.bull { --relation-color: var(--bull-glow); }
+
+    #slide-31 .l32-cross-label {
+      color: var(--relation-color);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-31 .l32-relation-flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 6px;
+      align-items: center;
+    }
+
+    #slide-31 .l32-rel-direction,
+    #slide-31 .l32-rel-output {
+      display: grid;
+      place-items: center;
+      padding: clamp(8px, .85vh, 11px) 7px;
+      border: 1px solid color-mix(in srgb, var(--relation-color) 38%, transparent);
+      color: var(--relation-color);
+      background: color-mix(in srgb, var(--relation-color) 7%, transparent);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 800;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    #slide-31 .l32-rel-arrow {
+      color: var(--txt-tertiary);
+      font-family: var(--font-mono);
+    }
+
+    #slide-31 .l32-relation p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .68vw, .8125rem));
+      line-height: 1.22;
+    }
+
+    #slide-31 .l32-not-absolute {
+      grid-column: 1 / -1;
+      justify-self: center;
+      padding: 5px 9px;
+      border-left: 2px solid var(--warn);
+      color: var(--warn);
+      background: var(--warn-subtle);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 700;
+      text-align: center;
+    }
+
+    #slide-31 .l32-cases {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(8px, .9vw, 14px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-31 .l32-case {
+      --case-color: var(--bull-glow);
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
+      gap: 7px;
+      min-width: 0;
+      padding: clamp(10px, 1vw, 14px);
+      border-left: 2px solid var(--case-color);
+      background: color-mix(in srgb, var(--case-color) 5%, rgba(8, 8, 8, .95));
+    }
+
+    #slide-31 .l32-case.contradictory { --case-color: var(--warn); }
+
+    #slide-31 .l32-case-label {
+      color: var(--case-color);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-31 .l32-case-flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 5px;
+      align-items: stretch;
+    }
+
+    #slide-31 .l32-case-chip,
+    #slide-31 .l32-case-result {
+      display: grid;
+      place-items: center;
+      padding: 6px;
+      border: 1px solid var(--border-default);
+      color: var(--txt-primary);
+      background: var(--bg-panel);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 700;
+      text-align: center;
+    }
+
+    #slide-31 .l32-case-result {
+      border-color: color-mix(in srgb, var(--case-color) 42%, transparent);
+      color: var(--case-color);
+      background: color-mix(in srgb, var(--case-color) 7%, transparent);
+    }
+
+    #slide-31 .l32-case-arrow {
+      display: grid;
+      place-items: center;
+      color: var(--txt-tertiary);
+      font-family: var(--font-mono);
+    }
+
+    #slide-31 .l32-case p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .68vw, .8125rem));
+      line-height: 1.22;
+    }
+
+    #slide-31 .l32-principle {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: minmax(220px, .4fr) auto minmax(0, 1.6fr);
+      gap: clamp(14px, 1.5vw, 24px);
+      align-items: center;
+      padding: clamp(11px, 1.3vh, 16px) clamp(18px, 1.55vw, 27px);
+      border-left: 3px solid var(--hi);
+      background: linear-gradient(90deg, var(--accent-subtle), var(--hi-subtle));
+    }
+
+    #slide-31 .l32-principle-label {
+      color: var(--accent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-31 .l32-equation {
+      padding: 7px 10px;
+      border: 1px solid rgba(0, 229, 255, .4);
+      color: var(--hi);
+      background: var(--hi-subtle);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 800;
+      text-align: center;
+    }
+
+    #slide-31 .l32-principle p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.44;
+    }
+
+    #slide-31 .l32-principle em {
+      color: var(--hi);
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    @media (max-height: 820px) {
+      #slide-31 .l32-stage { gap: 13px; padding-top: 20px; padding-bottom: 18px; }
+      #slide-31 .l32-head .divider { margin-top: 11px; }
+      #slide-31 .l32-canvas { gap: 9px 14px; }
+      #slide-31 .l32-premise { padding-top: 9px; padding-bottom: 9px; }
+      #slide-31 .l32-ledger,
+      #slide-31 .l32-crossmarket { padding: 9px; gap: 5px; }
+      #slide-31 .l32-sources,
+      #slide-31 .l32-cases { gap: 5px; }
+      #slide-31 .l32-source { padding-top: 4px; padding-bottom: 4px; }
+      #slide-31 .l32-register { padding-top: 7px; padding-bottom: 7px; }
+      #slide-31 .l32-relation,
+      #slide-31 .l32-case { padding: 6px; gap: 4px; }
+      #slide-31 .l32-rel-direction,
+      #slide-31 .l32-rel-output { padding-top: 5px; padding-bottom: 5px; }
+      #slide-31 .l32-principle { padding-top: 8px; padding-bottom: 8px; }
+    }
+
+    @media (max-width: 1120px) {
+      #slide-31 .l32-canvas { grid-template-columns: minmax(0, .92fr) minmax(350px, 1.08fr); }
+      #slide-31 .l32-premise { grid-template-columns: 185px minmax(0, 1fr); }
+      #slide-31 .l32-observe-badge { grid-column: 1 / -1; width: 100%; }
+      #slide-31 .l32-source { grid-template-columns: 28px minmax(100px, .34fr) minmax(0, 1fr); }
+      #slide-31 .l32-classification { display: none; }
+      #slide-31 .l32-register { grid-template-columns: auto minmax(0, 1fr); }
+      #slide-31 .l32-register-copy { grid-column: 1 / -1; }
+      #slide-31 .l32-principle { grid-template-columns: 185px minmax(0, 1fr); }
+      #slide-31 .l32-equation { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 900px) {
+      #slide-31 .l32-stage { overflow-y: auto; }
+      #slide-31 .l32-canvas { grid-template-columns: 1fr; grid-template-rows: auto auto auto auto; }
+      #slide-31 .l32-premise,
+      #slide-31 .l32-principle { grid-column: 1; }
+      #slide-31 .l32-ledger,
+      #slide-31 .l32-crossmarket { min-height: 620px; }
+    }
+
+    @media (max-width: 620px) {
+      #slide-31 .l32-premise,
+      #slide-31 .l32-principle,
+      #slide-31 .l32-source,
+      #slide-31 .l32-register,
+      #slide-31 .l32-relations,
+      #slide-31 .l32-cases { grid-template-columns: 1fr; }
+      #slide-31 .l32-ledger,
+      #slide-31 .l32-crossmarket { min-height: 900px; }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-31" data-module="3">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="3">MÓDULO III</span>
+    <span class="lesson-tag">L32</span>
+    <span class="slide-title">Observación y Acumulación de Sesgo</span>
+    <span class="concept-code">M3.L32.C32</span>
+  </header>
+
+  <main class="slide-body l32-stage">
+    <div class="l32-head">
+      <div class="section-title">
+        <div class="section-number">LECCIÓN 32</div>
+        <h2>Observación y Acumulación de Sesgo</h2>
+      </div>
+      <div class="divider gradient"></div>
+    </div>
+
+    <div class="l32-canvas">
+      <section class="l32-premise">
+        <div class="l32-kicker">Leer antes de decidir</div>
+        <p>En Cortex-Dendrita, <strong>observar no significa buscar inmediatamente una operación</strong>. El trader comienza leyendo el estado contemporáneo y acumulando evidencia que pueda favorecer, debilitar o contradecir una posible dirección.</p>
+        <div class="l32-observe-badge">Estado operativo · Observando</div>
+      </section>
+
+      <section class="l32-ledger" aria-label="Registro progresivo de evidencia y acumulación de sesgo">
+        <div class="l32-panel-head"><span>Ledger de evidencia</span><span>Acumulación progresiva</span></div>
+        <p class="l32-ledger-copy">La acumulación puede comenzar con el <strong>macrociclo HWTE</strong>, continuar con microciclos y confirmaciones, y ampliarse mediante la lectura intermercado. Cada evidencia informa; ninguna autoriza por sí sola una ejecución.</p>
+
+        <div class="l32-sources">
+          <article class="l32-source macro">
+            <span class="l32-source-index">01</span>
+            <div class="l32-source-name"><span class="l32-source-type">Estructura</span><strong>Macrociclo HWTE</strong></div>
+            <p>Establece el contexto direccional desde el cual comienza la investigación.</p>
+            <div class="l32-classification"><span class="l32-class-chip favor">Favorece</span><span class="l32-class-chip weaken">Debilita</span><span class="l32-class-chip contradict">Contradice</span></div>
+          </article>
+
+          <article class="l32-source micro">
+            <span class="l32-source-index">02</span>
+            <div class="l32-source-name"><span class="l32-source-type">Evidencia interna</span><strong>Microciclos y confirmaciones</strong></div>
+            <p>Permiten contrastar la coherencia multidimensional del sesgo vigente.</p>
+            <div class="l32-classification"><span class="l32-class-chip favor">Favorece</span><span class="l32-class-chip weaken">Debilita</span><span class="l32-class-chip contradict">Contradice</span></div>
+          </article>
+
+          <article class="l32-source cross">
+            <span class="l32-source-index">03</span>
+            <div class="l32-source-name"><span class="l32-source-type">Evidencia cruzada</span><strong>Lectura intermercado</strong></div>
+            <p>Amplía el análisis incorporando relaciones externas como CL frente a Equity.</p>
+            <div class="l32-classification"><span class="l32-class-chip favor">Favorece</span><span class="l32-class-chip weaken">Debilita</span><span class="l32-class-chip contradict">Contradice</span></div>
+          </article>
+        </div>
+
+        <div class="l32-register">
+          <span class="l32-register-label">Sesgo acumulado</span>
+          <div class="l32-register-meter" aria-label="Evidencia acumulada todavía incompleta"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <p class="l32-register-copy"><strong>Acumular sesgo</strong> todavía no confirma una inferencia ni autoriza ejecutar.</p>
+        </div>
+
+        <div class="l32-gates"><span class="l32-gate">Inferencia · no confirmada</span><i class="l32-gate-arrow">→</i><span class="l32-gate">Ejecución · no autorizada</span></div>
+      </section>
+
+      <aside class="l32-crossmarket">
+        <div class="l32-panel-head"><span>Acumulación de sesgo intermercado</span><span>CL ↔ Equity</span></div>
+        <p class="l32-cross-copy">Cortex-Dendrita incorpora <strong>CL como fuente relevante de sesgo cruzado para Equity —NQ y ES—</strong>. La relación observada es frecuentemente inversa y siempre debe contrastarse con la evidencia interna de Equity.</p>
+
+        <div class="l32-relations">
+          <article class="l32-relation">
+            <span class="l32-cross-label">Relación observada 01</span>
+            <div class="l32-relation-flow"><span class="l32-rel-direction">CL · sesgo + ↑</span><i class="l32-rel-arrow">→</i><span class="l32-rel-output">Equity · evidencia bajista potencial</span></div>
+            <p>La acumulación positiva en petróleo puede añadir presión contraria sobre NQ y ES.</p>
+          </article>
+          <article class="l32-relation bull">
+            <span class="l32-cross-label">Relación observada 02</span>
+            <div class="l32-relation-flow"><span class="l32-rel-direction">CL · sesgo − ↓</span><i class="l32-rel-arrow">→</i><span class="l32-rel-output">Equity · evidencia alcista potencial</span></div>
+            <p>La acumulación negativa en petróleo puede aportar respaldo a Equity.</p>
+          </article>
+          <div class="l32-not-absolute">Relación frecuente, no absoluta · contrastar NQ y ES</div>
+        </div>
+
+        <div class="l32-cases">
+          <article class="l32-case">
+            <span class="l32-case-label">Escenario A · Evidencia favorable</span>
+            <div class="l32-case-flow"><span class="l32-case-chip">NQ + · ES +<br>CL acumula −</span><i class="l32-case-arrow">→</i><span class="l32-case-result">Hipótesis alcista favorecida</span></div>
+            <p>Con macrociclos positivos en NQ y ES, un CL bajista aporta sesgo adicional favorable. El trader <strong>continúa contrastando</strong> antes de ejecutar.</p>
+          </article>
+          <article class="l32-case contradictory">
+            <span class="l32-case-label">Escenario B · Evidencia contradictoria</span>
+            <div class="l32-case-flow"><span class="l32-case-chip">Equity +<br>CL acumula + fuerte</span><i class="l32-case-arrow">→</i><span class="l32-case-result">Contradicción incorporada</span></div>
+            <p>Si Equity mantiene estructura positiva y CL acumula sesgo positivo, la contradicción debe <strong>incorporarse a la investigación</strong>.</p>
+          </article>
+        </div>
+      </aside>
+
+      <section class="l32-principle">
+        <div class="l32-principle-label">Principio Cortex-Dendrita</div>
+        <div class="l32-equation">Sesgo ≠ inferencia ≠ ejecución</div>
+        <p>El trader acumula evidencia hasta determinar si existe suficiente coherencia para formular y contrastar una hipótesis. Cuando permanece incompleta o contradictoria, <em>continuar observando y no operar también forma parte del proceso inferencial.</em></p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">32/42</span>
+  </footer>
+</section>
+</body>
+</html>

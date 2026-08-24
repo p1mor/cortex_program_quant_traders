@@ -19,47 +19,179 @@
     <span class="brand">CORTEX QUANT TRADER</span>
     <span class="divider"></span>
     <span class="module-tag" data-mod="2">Modulo II</span>
-    <span class="lesson-tag">L16</span>
-    <span class="slide-title">Diseno de Estrategias</span>
-    <span class="concept-code">M2.L16.C16</span>
+    <span class="lesson-tag">L18</span>
+    <span class="slide-title">Dise&ntilde;o de Estrategias Mec&aacute;nicas</span>
+    <span class="concept-code">M2.L18.C18</span>
   </header>
-  <div class="slide-body">
-    <div class="slide-left">
+
+  <!-- Prototipo archivado: blueprint operativo / circuito L18.
+       Se conserva intacto para poder recuperarlo en una iteraci&oacute;n futura. -->
+  <div class="slide-body single-col" id="l18-blueprint-prototype" hidden aria-hidden="true">
+    <div class="slide-left full" style="gap:var(--sp-4);">
       <div class="section-title">
-        <div class="section-number">Leccion 16</div>
-        <h2>Diseno de Estrategias</h2>
+        <div class="section-number">Lecci&oacute;n 18</div>
+        <h2>Dise&ntilde;o de Estrategias Mec&aacute;nicas</h2>
       </div>
       <div class="divider gradient"></div>
-      <p class="t-body">El diseno de una estrategia quant sigue un proceso riguroso: desde la hipotesis inicial hasta la validacion estadistica. Cada paso debe ser documentado y reproducible.</p>
-      <div class="callout u-mt-4">
-        <p><strong>Principio:</strong> Una estrategia sin hipotesis clara es un ajuste de curva disfrazado de modelo.</p>
-      </div>
-    </div>
-    <div class="slide-right">
-      <div class="card-grid cols-1">
-        <div class="info-card">
-          <div class="card-icon u-accent">1</div>
-          <div class="card-title">Hipotesis</div>
-          <div class="card-body">Definir la ineficiencia de mercado que se pretende explotar. Pregunta concreta, falsable.</div>
+
+      <section style="position:relative;overflow:hidden;display:grid;grid-template-rows:auto auto minmax(0,1fr) auto;gap:var(--sp-3);flex:1;min-height:0;padding:var(--sp-4);border:1px solid var(--border-default);background:repeating-linear-gradient(0deg,transparent 0,transparent 31px,rgba(164,140,255,.025) 32px),repeating-linear-gradient(90deg,transparent 0,transparent 31px,rgba(6,182,212,.02) 32px),#030305;">
+        <div style="position:absolute;right:var(--sp-4);top:var(--sp-4);display:grid;grid-template-columns:repeat(4,5px);gap:4px;opacity:.65;"><i style="width:5px;height:5px;background:var(--purple);"></i><i style="width:5px;height:5px;background:var(--purple);"></i><i style="width:5px;height:5px;background:var(--accent);"></i><i style="width:5px;height:5px;background:var(--hi);"></i><i style="width:5px;height:5px;background:var(--purple);"></i><i style="width:5px;height:5px;background:var(--accent);"></i><i style="width:5px;height:5px;background:var(--hi);"></i><i style="width:5px;height:5px;background:var(--hi);"></i></div>
+
+        <div style="display:grid;grid-template-columns:220px 1fr 190px;align-items:center;gap:var(--sp-4);padding:var(--sp-3) var(--sp-4);border-left:3px solid var(--accent);background:linear-gradient(90deg,rgba(0,51,255,.09),rgba(164,140,255,.035),transparent);">
+          <div>
+            <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.16em;color:var(--accent);">SYSTEM SPEC / 18</div>
+            <div style="margin-top:5px;font-family:var(--font-display);font-size:var(--fs-h3);color:var(--txt-primary);">Estrategia mec&aacute;nica</div>
+          </div>
+          <p style="margin:0;font-family:var(--font-body);font-size:var(--fs-small);line-height:1.62;color:var(--txt-secondary);">Es un sistema compuesto por <strong style="color:var(--txt-primary);">reglas objetivas, cuantificables y reproducibles</strong>. Ante los mismos datos, siempre debe producir la misma decisi&oacute;n, eliminando la interpretaci&oacute;n discrecional.</p>
+          <div style="padding:var(--sp-2) var(--sp-3);border:1px solid rgba(164,140,255,.38);background:rgba(164,140,255,.07);font-family:var(--font-mono);font-size:11px;text-align:center;color:var(--purple);">f ( D, &theta; ) <span style="color:var(--txt-tertiary);">&rarr;</span> ACCI&Oacute;N</div>
         </div>
-        <div class="info-card">
-          <div class="card-icon u-purple">2</div>
-          <div class="card-title">Variables</div>
-          <div class="card-body">Seleccionar features cuantificables. Feature engineering basado en microestructura.</div>
+
+        <div style="position:relative;padding:var(--sp-2) 0;">
+          <div style="position:absolute;left:5%;right:5%;top:50%;height:1px;background:linear-gradient(90deg,var(--accent),var(--purple),var(--hi),var(--warn),var(--bull-glow));"></div>
+          <div style="position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:var(--sp-3);font-family:var(--font-mono);font-size:9px;text-align:center;">
+            <div style="padding:7px 10px;border:1px solid rgba(0,51,255,.48);background:#030305;color:var(--accent);clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%,10px 50%);">01 &middot; DATOS</div>
+            <div style="padding:7px 10px;border:1px solid rgba(164,140,255,.48);background:#030305;color:var(--purple);clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%,10px 50%);">02 &middot; REGLAS</div>
+            <div style="padding:7px 10px;border:1px solid rgba(6,182,212,.48);background:#030305;color:var(--hi);clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%,10px 50%);">03 &middot; PAR&Aacute;METROS</div>
+            <div style="padding:7px 10px;border:1px solid rgba(255,183,77,.48);background:#030305;color:var(--warn);clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%,10px 50%);">04 &middot; EJECUCI&Oacute;N</div>
+            <div style="padding:7px 10px;border:1px solid rgba(34,197,94,.48);background:#030305;color:var(--bull-glow);clip-path:polygon(0 0,calc(100% - 10px) 0,100% 50%,calc(100% - 10px) 100%,0 100%,10px 50%);">05 &middot; ESTRATEGIA</div>
+          </div>
         </div>
-        <div class="info-card">
-          <div class="card-icon u-cyan">3</div>
-          <div class="card-title">Reglas</div>
-          <div class="card-body">Definir entradas, salidas, stops y sizing. Reglas claras, sin ambiguedad.</div>
+
+        <div style="display:grid;grid-template-columns:.82fr 1.45fr .82fr;gap:var(--sp-4);min-height:0;">
+          <section style="position:relative;padding:var(--sp-4);border-left:2px solid var(--accent);background:linear-gradient(90deg,rgba(0,51,255,.075),transparent);">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;"><span style="color:var(--accent);">INPUT BUS</span><span style="color:var(--txt-tertiary);">DATOS</span></div>
+            <p style="margin:var(--sp-2) 0 0;font-family:var(--font-body);font-size:var(--fs-small);line-height:1.58;color:var(--txt-secondary);">Toda estrategia parte de informaci&oacute;n observable: <strong style="color:var(--txt-primary);">precio, volumen, volatilidad, tiempo, indicadores</strong> o transformaciones matem&aacute;ticas de estos datos.</p>
+            <div style="display:grid;gap:7px;margin-top:var(--sp-3);font-family:var(--font-mono);font-size:9px;">
+              <div style="display:grid;grid-template-columns:74px 1fr;align-items:center;gap:8px;color:var(--accent);"><span>PRICE</span><i style="height:4px;background:linear-gradient(90deg,var(--accent) 72%,rgba(0,51,255,.12) 72%);"></i></div>
+              <div style="display:grid;grid-template-columns:74px 1fr;align-items:center;gap:8px;color:var(--purple);"><span>VOLUME</span><i style="height:4px;background:linear-gradient(90deg,var(--purple) 55%,rgba(164,140,255,.12) 55%);"></i></div>
+              <div style="display:grid;grid-template-columns:74px 1fr;align-items:center;gap:8px;color:var(--hi);"><span>VOLATILITY</span><i style="height:4px;background:linear-gradient(90deg,var(--hi) 84%,rgba(6,182,212,.12) 84%);"></i></div>
+              <div style="display:grid;grid-template-columns:74px 1fr;align-items:center;gap:8px;color:var(--warn);"><span>TIME</span><i style="height:4px;background:linear-gradient(90deg,var(--warn) 38%,rgba(255,183,77,.12) 38%);"></i></div>
+            </div>
+          </section>
+
+          <section style="position:relative;display:grid;grid-template-columns:1fr 112px 1fr;align-items:stretch;gap:var(--sp-3);padding:var(--sp-4);border:1px solid rgba(164,140,255,.30);background:radial-gradient(circle at center,rgba(164,140,255,.09),transparent 52%);">
+            <div style="display:flex;flex-direction:column;justify-content:center;">
+              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:var(--bull-glow);">ENTRY GATE</div>
+              <p style="margin:var(--sp-2) 0 0;font-family:var(--font-body);font-size:var(--fs-small);line-height:1.55;color:var(--txt-secondary);">Las reglas de entrada definen exactamente cu&aacute;ndo y bajo qu&eacute; condiciones operar. Pueden combinar <strong style="color:var(--txt-primary);">indicadores, precio, operadores l&oacute;gicos y diferentes tipos de &oacute;rdenes</strong>.</p>
+              <div style="margin-top:var(--sp-3);padding:8px 10px;border-bottom:1px solid var(--bull-glow);background:rgba(34,197,94,.055);font-family:var(--font-mono);font-size:10px;line-height:1.5;color:var(--txt-secondary);"><span style="color:var(--purple);">IF</span> Close <span style="color:var(--accent);">&gt;</span> SMA(50) <span style="color:var(--purple);">AND</span> RSI(14) <span style="color:var(--accent);">&gt;</span> 55 <span style="color:var(--txt-tertiary);">&rarr;</span> <strong style="color:var(--bull-glow);">BUY</strong></div>
+            </div>
+
+            <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--sp-2);">
+              <span style="width:1px;height:30px;background:linear-gradient(transparent,var(--purple));"></span>
+              <div style="display:flex;align-items:center;justify-content:center;width:106px;height:92px;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);background:linear-gradient(135deg,rgba(0,51,255,.38),rgba(164,140,255,.30),rgba(6,182,212,.28));">
+                <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:102px;height:88px;clip-path:inherit;background:#030305;font-family:var(--font-mono);text-align:center;"><span style="font-size:9px;color:var(--txt-tertiary);">LOGIC</span><strong style="margin-top:4px;font-size:11px;color:var(--purple);">KERNEL</strong><span style="margin-top:4px;font-size:9px;color:var(--hi);">EXECUTE</span></div>
+              </div>
+              <span style="width:1px;height:30px;background:linear-gradient(var(--hi),transparent);"></span>
+            </div>
+
+            <div style="display:flex;flex-direction:column;justify-content:center;">
+              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:var(--bear-glow);">EXIT MATRIX</div>
+              <p style="margin:var(--sp-2) 0 0;font-family:var(--font-body);font-size:var(--fs-small);line-height:1.55;color:var(--txt-secondary);">Las reglas de salida determinan cu&aacute;ndo finalizar una operaci&oacute;n mediante mecanismos objetivos como <strong style="color:var(--txt-primary);">Stop Loss, Take Profit, Trailing Stop, tiempo o se&ntilde;ales de salida</strong>.</p>
+              <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:var(--sp-3);font-family:var(--font-mono);font-size:9px;"><span style="padding:5px 7px;border:1px solid rgba(230,57,85,.34);color:var(--bear-glow);">STOP</span><span style="padding:5px 7px;border:1px solid rgba(34,197,94,.34);color:var(--bull-glow);">TARGET</span><span style="padding:5px 7px;border:1px solid rgba(255,183,77,.34);color:var(--warn);">TRAIL</span><span style="padding:5px 7px;border:1px solid rgba(164,140,255,.34);color:var(--purple);">TIME</span></div>
+            </div>
+          </section>
+
+          <section style="padding:var(--sp-4);border-right:2px solid var(--hi);background:linear-gradient(270deg,rgba(6,182,212,.075),transparent);">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;"><span style="color:var(--hi);">PARAMETER BANK</span><span style="color:var(--txt-tertiary);">&theta;</span></div>
+            <p style="margin:var(--sp-2) 0 0;font-family:var(--font-body);font-size:var(--fs-small);line-height:1.58;color:var(--txt-secondary);">Los par&aacute;metros configuran las reglas: <strong style="color:var(--txt-primary);">per&iacute;odos de indicadores, niveles, distancias, multiplicadores y n&uacute;mero de barras</strong>. Diferentes par&aacute;metros producen variantes de una misma l&oacute;gica.</p>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:var(--sp-3);font-family:var(--font-mono);font-size:9px;text-align:center;"><span style="padding:6px;border-bottom:1px solid var(--accent);color:var(--accent);">SMA / 50</span><span style="padding:6px;border-bottom:1px solid var(--purple);color:var(--purple);">RSI / 14</span><span style="padding:6px;border-bottom:1px solid var(--warn);color:var(--warn);">STOP / 2&times;</span><span style="padding:6px;border-bottom:1px solid var(--hi);color:var(--hi);">BARS / 20</span></div>
+          </section>
         </div>
-        <div class="info-card">
-          <div class="card-icon u-hi">4</div>
-          <div class="card-title">Validacion</div>
-          <div class="card-body">Backtesting out-of-sample, walk-forward, Monte Carlo. Testear robustez, no solo performance.</div>
+
+        <div style="display:grid;grid-template-columns:220px 1fr auto;align-items:center;gap:var(--sp-4);padding:var(--sp-3) var(--sp-4);border-top:1px solid rgba(6,182,212,.28);border-bottom:1px solid rgba(6,182,212,.28);background:linear-gradient(90deg,rgba(6,182,212,.065),rgba(0,51,255,.025),transparent);">
+          <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:var(--hi);">BATCH GENERATOR / STRATEGYQUANT</div>
+          <p style="margin:0;font-family:var(--font-body);font-size:var(--fs-small);line-height:1.58;color:var(--txt-secondary);">Herramientas como <strong style="color:var(--txt-primary);">StrategyQuant</strong> permiten combinar sistem&aacute;ticamente estos bloques y par&aacute;metros para generar grandes cantidades de estrategias mec&aacute;nicas que posteriormente ser&aacute;n estudiadas.</p>
+          <div style="display:flex;align-items:flex-end;gap:4px;height:30px;"><i style="width:7px;height:9px;background:var(--accent);"></i><i style="width:7px;height:16px;background:var(--purple);"></i><i style="width:7px;height:23px;background:var(--hi);"></i><i style="width:7px;height:30px;background:var(--bull-glow);"></i></div>
         </div>
-      </div>
+      </section>
+
+      <section style="display:grid;grid-template-columns:1fr 80px 1fr;align-items:stretch;border:1px solid rgba(164,140,255,.30);background:#030305;">
+        <div style="padding:var(--sp-3) var(--sp-4);border-left:3px solid var(--accent);">
+          <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:var(--accent);">MEC&Aacute;NICA / REGLA</div>
+          <p style="margin:var(--sp-2) 0 0;font-family:var(--font-body);font-size:var(--fs-small);line-height:1.58;color:var(--txt-secondary);">Una estrategia mec&aacute;nica <strong style="color:var(--txt-primary);text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:3px;">ejecuta reglas deterministas previamente definidas</strong>.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;border-left:1px solid var(--border-default);border-right:1px solid var(--border-default);font-family:var(--font-mono);"><span style="font-size:9px;color:var(--txt-tertiary);">CONTRASTE</span><strong style="margin-top:4px;font-family:var(--font-display);font-size:var(--fs-h3);color:var(--purple);">&ne;</strong></div>
+        <div style="padding:var(--sp-3) var(--sp-4);border-right:3px solid var(--hi);">
+          <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:.14em;color:var(--hi);">CORTEX-DENDRITA / INFERENCIA</div>
+          <p style="margin:var(--sp-2) 0 0;font-family:var(--font-body);font-size:var(--fs-small);line-height:1.58;color:var(--txt-secondary);">Cortex-Dendrita <strong style="color:var(--txt-primary);text-decoration:underline;text-decoration-color:var(--hi);text-underline-offset:3px;">interpreta m&uacute;ltiples dimensiones de informaci&oacute;n</strong> para construir inferencias y <strong style="color:var(--txt-primary);text-decoration:underline;text-decoration-color:var(--hi);text-underline-offset:3px;">adaptar la decisi&oacute;n al estado observado del mercado</strong>.</p>
+        </div>
+      </section>
     </div>
   </div>
+
+  <div class="slide-body single-col l18-simple-body">
+    <main class="slide-left full l18-simple">
+      <div class="section-title">
+        <div class="section-number">Lecci&oacute;n 18</div>
+        <h2>Dise&ntilde;o de Estrategias Mec&aacute;nicas</h2>
+      </div>
+      <div class="divider gradient"></div>
+
+      <div class="l18-compact-layout">
+        <section class="l18-compact-intro" aria-labelledby="l18-system-title">
+          <div class="l18-intro-heading">
+            <span class="l18-eyebrow">Sistema determinista</span>
+            <h3 id="l18-system-title">Mismos datos.<br><em>Misma decisi&oacute;n.</em></h3>
+          </div>
+          <p>Una estrategia mec&aacute;nica es un sistema compuesto por <strong>reglas objetivas, cuantificables y reproducibles</strong>. Ante los mismos datos, siempre debe producir la misma decisi&oacute;n, eliminando la interpretaci&oacute;n discrecional.</p>
+          <div class="l18-function" aria-label="Funci&oacute;n determinista">f ( D, &theta; ) <span>&rarr;</span> ACCI&Oacute;N</div>
+        </section>
+
+        <section class="l18-flow-section" aria-labelledby="l18-flow-title">
+          <div class="l18-section-label" id="l18-flow-title">Estructura conceptual</div>
+          <div class="l18-simple-flow" aria-label="Datos, reglas, par&aacute;metros, ejecuci&oacute;n y estrategia">
+            <div class="l18-flow-step is-blue"><span>01</span><strong>Datos</strong></div>
+            <div class="l18-flow-step is-purple"><span>02</span><strong>Reglas</strong></div>
+            <div class="l18-flow-step is-cyan"><span>03</span><strong>Par&aacute;metros</strong></div>
+            <div class="l18-flow-step is-amber"><span>04</span><strong>Ejecuci&oacute;n</strong></div>
+            <div class="l18-flow-step is-green"><span>05</span><strong>Estrategia</strong></div>
+          </div>
+        </section>
+
+        <section class="l18-simple-grid" aria-label="Componentes de una estrategia mec&aacute;nica">
+          <article class="l18-simple-panel is-blue">
+            <div class="l18-panel-label"><span>01</span> Datos de mercado</div>
+            <p>Toda estrategia parte de informaci&oacute;n observable: <strong>precio, volumen, volatilidad, tiempo, indicadores</strong> o transformaciones matem&aacute;ticas de estos datos.</p>
+          </article>
+
+          <article class="l18-simple-panel is-green">
+            <div class="l18-panel-label"><span>02</span> Reglas de entrada</div>
+            <p>Definen exactamente cu&aacute;ndo y bajo qu&eacute; condiciones operar. Pueden combinar <strong>indicadores, precio, operadores l&oacute;gicos y diferentes tipos de &oacute;rdenes</strong>.</p>
+            <code>Close &gt; SMA(50) AND RSI(14) &gt; 55 &rarr; <b>BUY</b></code>
+          </article>
+
+          <article class="l18-simple-panel is-red">
+            <div class="l18-panel-label"><span>03</span> Reglas de salida</div>
+            <p>Determinan cu&aacute;ndo finalizar una operaci&oacute;n mediante mecanismos objetivos como <strong>Stop Loss, Take Profit, Trailing Stop, tiempo o se&ntilde;ales de salida</strong>.</p>
+          </article>
+
+          <article class="l18-simple-panel is-purple">
+            <div class="l18-panel-label"><span>04</span> Par&aacute;metros</div>
+            <p>Son los valores que configuran las reglas: <strong>per&iacute;odos, niveles, distancias, multiplicadores y n&uacute;mero de barras</strong>. Diferentes par&aacute;metros producen variantes de una misma l&oacute;gica.</p>
+          </article>
+        </section>
+
+        <section class="l18-generation">
+          <div class="l18-section-label">Generaci&oacute;n de estrategias</div>
+          <p>Herramientas como <strong>StrategyQuant</strong> permiten combinar sistem&aacute;ticamente estos bloques y par&aacute;metros para generar grandes cantidades de estrategias mec&aacute;nicas que posteriormente ser&aacute;n estudiadas.</p>
+          <div class="l18-generation-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        </section>
+
+        <section class="l18-simple-contrast" aria-label="Contraste entre estrategia mec&aacute;nica y Cortex-Dendrita">
+          <div class="l18-contrast-side is-blue">
+            <span class="l18-eyebrow">Estrategia mec&aacute;nica</span>
+            <p>Una estrategia mec&aacute;nica <strong class="l18-essential">ejecuta reglas deterministas previamente definidas</strong>.</p>
+          </div>
+          <div class="l18-versus" aria-hidden="true">&ne;</div>
+          <div class="l18-contrast-side is-cyan">
+            <span class="l18-eyebrow">Cortex-Dendrita</span>
+            <p>Cortex-Dendrita <strong class="l18-essential">interpreta m&uacute;ltiples dimensiones de informaci&oacute;n</strong> para construir inferencias y <strong class="l18-essential">adaptar la decisi&oacute;n al estado observado del mercado</strong>.</p>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
   <footer class="slide-footer">
     <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
     <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>

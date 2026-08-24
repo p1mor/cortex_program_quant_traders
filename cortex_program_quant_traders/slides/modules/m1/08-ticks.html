@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex Quant Trader - TechPulse Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+  <link rel="stylesheet" href="../../css/slides.css" />
+</head>
+<body>
+<section class="slide" id="slide-9" data-module="1">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="1">Modulo I</span>
+    <span class="lesson-tag">L8</span>
+    <span class="slide-title">Granularidad: Ticks, Tick Size y Nocional</span>
+    <span class="concept-code">M1.L8.C08</span>
+  </header>
+  <div class="slide-body ratio-60-40">
+    <div class="slide-left">
+      <div class="section-title">
+        <div class="section-number">Lección 8</div>
+        <h2>Ticks y Valor Nocional</h2>
+      </div>
+      <div class="divider gradient"></div>
+      <p class="t-body" style="display:none;">El <strong>tick size</strong> es la minima variacion de precio permitida. El <strong>valor nocional</strong> determina cuanto dinero representa un contrato por cada punto de movimiento.</p>
+      <div class="formula-block u-mt-4" style="display:none;">
+        <div style="text-align:center;"><strong>Valor por tick</strong> = Tick size × Multiplicador del contrato</div>
+        <div style="text-align:center;margin-top:var(--sp-2);"><strong>Valor por punto</strong> = Valor por tick ÷ Tick size</div>
+        <div style="text-align:center;margin-top:var(--sp-3);color:var(--txt-secondary);font-size:var(--fs-caption);">Ejemplo ES: 0.25 × $50 = $12.50 por tick; un punto equivale a $50.</div>
+      </div>
+      <div class="callout u-mt-4" style="display:none;">
+        <p><strong>ES:</strong> Tick 0.25, Value $12.50. Un punto = 4 ticks = $50/contrato. Un movimiento de 10 puntos = $500.</p>
+        <p style="margin-top:var(--sp-2);"><strong>NQ:</strong> Tick 0.25, Value $5.00. Un punto = 4 ticks = $20/contrato. Un movimiento de 10 puntos = $200.</p>
+        <p style="margin-top:var(--sp-2);"><strong>GC:</strong> Tick 0.10, Value $10.00. Un punto = 10 ticks = $100/contrato. Un movimiento de 10 puntos = $1,000.</p>
+        <p style="margin-top:var(--sp-2);"><strong>CL:</strong> Tick 0.01, Value $10.00. Un punto = 100 ticks = $1,000/contrato. Un movimiento de 10 puntos = $10,000.</p>
+      </div>
+      <div style="margin-top:calc(var(--sp-5) * -1);display:flex;flex-direction:column;gap:var(--sp-3);font-family:var(--font-mono);">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--sp-2) 0;border-bottom:1px solid var(--border-default);"><span style="color:var(--accent);font-size:10px;font-weight:700;letter-spacing:.1em;">GRANULARITY ENGINE</span><span style="color:var(--txt-tertiary);font-size:10px;">PRECIO → CAPITAL</span></div>
+        <div style="position:relative;padding:var(--sp-5);border:1px solid var(--border-default);background:radial-gradient(circle at 18% 50%,rgba(0,51,255,.17),transparent 32%),linear-gradient(135deg,rgba(0,51,255,.06),rgba(6,182,212,.03));overflow:hidden;">
+          <div style="position:absolute;right:-35px;top:-35px;width:150px;height:150px;border:1px solid rgba(6,182,212,.24);border-radius:50%;box-shadow:0 0 0 26px rgba(0,51,255,.035),0 0 0 52px rgba(6,182,212,.025);"></div>
+          <div style="position:relative;color:var(--txt-secondary);font-family:var(--font-body);font-size:var(--fs-body);line-height:1.7;max-width:85%;">El <strong style="color:var(--txt-primary);">tick size</strong> es la mínima variación de precio permitida. El <strong style="color:var(--txt-primary);">valor nocional</strong> determina cuánto dinero representa un contrato por cada punto de movimiento.</div>
+          <div style="position:relative;display:grid;grid-template-columns:1fr 32px 1fr 32px 1fr;align-items:center;text-align:center;margin-top:var(--sp-5);">
+            <div style="padding:var(--sp-3);border:1px solid var(--accent);background:var(--accent-subtle);"><div style="color:var(--accent);font-size:10px;letter-spacing:.08em;">TICK SIZE</div><div style="margin-top:5px;color:var(--txt-primary);font-size:var(--fs-h3);font-weight:700;">0.25</div></div>
+            <span style="color:var(--accent);font-size:var(--fs-h3);">×</span>
+            <div style="padding:var(--sp-3);border:1px solid var(--hi);background:var(--hi-subtle);"><div style="color:var(--hi);font-size:10px;letter-spacing:.08em;">MULTIPLICADOR</div><div style="margin-top:5px;color:var(--txt-primary);font-size:var(--fs-h3);font-weight:700;">$50</div></div>
+            <span style="color:var(--hi);font-size:var(--fs-h3);">→</span>
+            <div style="padding:var(--sp-3);border:1px solid var(--warn);background:var(--warn-subtle);"><div style="color:var(--warn);font-size:10px;letter-spacing:.08em;">VALOR / TICK</div><div style="margin-top:5px;color:var(--txt-primary);font-size:var(--fs-h3);font-weight:700;">$12.50</div></div>
+          </div>
+          <div style="position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:var(--sp-4);"><span style="height:18px;background:var(--accent);opacity:.45;"></span><span style="height:18px;background:var(--accent);opacity:.6;"></span><span style="height:18px;background:var(--accent);opacity:.75;"></span><span style="height:18px;background:var(--accent);"></span></div>
+          <div style="position:relative;display:flex;justify-content:space-between;align-items:center;margin-top:var(--sp-2);font-size:10px;color:var(--txt-tertiary);"><span>1 TICK</span><span>2 TICKS</span><span>3 TICKS</span><span>4 TICKS = 1 PUNTO</span></div>
+          <div style="position:relative;margin-top:var(--sp-4);padding:var(--sp-3);border-left:3px solid var(--hi);background:rgba(6,182,212,.08);font-size:var(--fs-caption);line-height:1.65;color:var(--txt-secondary);"><strong style="color:var(--hi);">Fórmula:</strong> <strong style="color:var(--txt-primary);">Valor por tick = Tick size × Multiplicador del contrato</strong><br><strong style="color:var(--txt-primary);">Valor por punto = Valor por tick ÷ Tick size</strong><br><span style="color:var(--txt-tertiary);">Ejemplo ES: 0.25 × $50 = $12.50 por tick; un punto equivale a $50.</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="slide-right">
+      <table class="slide-table" style="display:none;">
+        <thead>
+          <tr>
+            <th>Activo</th>
+            <th>Tick Size</th>
+            <th>Tick Value</th>
+            <th>Multi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="accent">ES</td>
+            <td>0.25</td>
+            <td>$12.50</td>
+            <td>$50/pt</td>
+          </tr>
+          <tr>
+            <td class="accent">NQ</td>
+            <td>0.25</td>
+            <td>$5.00</td>
+            <td>$20/pt</td>
+          </tr>
+          <tr>
+            <td class="accent">GC</td>
+            <td>0.10</td>
+            <td>$10.00</td>
+            <td>$100/pt</td>
+          </tr>
+          <tr>
+            <td class="accent">CL</td>
+            <td>0.01</td>
+            <td>$10.00</td>
+            <td>$1000/pt</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top:calc(var(--sp-5) * -1);display:flex;flex-direction:column;gap:var(--sp-3);font-family:var(--font-mono);">
+        <div style="display:flex;justify-content:space-between;align-items:end;padding:0 var(--sp-1);">
+          <div>
+            <div style="font-size:10px;letter-spacing:.14em;color:var(--txt-tertiary);">MATRIZ DE CONTRATOS</div>
+            <div style="margin-top:5px;font-family:var(--font-display);font-size:var(--fs-h3);color:var(--txt-primary);">Del tick al impacto</div>
+          </div>
+          <div style="font-size:10px;color:var(--txt-tertiary);">TICK &rarr; PUNTO &rarr; P&amp;L</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr;gap:var(--sp-2);">
+          <article style="position:relative;overflow:hidden;padding:var(--sp-3) var(--sp-4);border-left:3px solid var(--accent);background:var(--accent-subtle);">
+            <div style="position:absolute;right:-18px;top:-36px;width:112px;height:112px;border:1px solid rgba(0,51,255,.24);border-radius:50%;"></div>
+            <div style="position:relative;display:flex;justify-content:space-between;align-items:center;gap:var(--sp-3);">
+              <div><strong style="font-size:var(--fs-h3);color:var(--accent);">ES</strong><span style="margin-left:8px;font-size:10px;color:var(--txt-tertiary);">E-MINI S&amp;P 500</span></div>
+              <strong style="font-size:var(--fs-caption);color:var(--txt-primary);">10 PTS = $500</strong>
+            </div>
+            <div style="position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-2);margin-top:var(--sp-3);font-size:10px;">
+              <div><span style="display:block;color:var(--txt-tertiary);">TICK SIZE</span><strong style="color:var(--txt-primary);">0.25</strong></div>
+              <div><span style="display:block;color:var(--txt-tertiary);">VALOR / TICK</span><strong style="color:var(--txt-primary);">$12.50</strong></div>
+              <div><span style="display:block;color:var(--txt-tertiary);">PUNTO</span><strong style="color:var(--accent);">4 TICKS = $50</strong></div>
+            </div>
+          </article>
+
+          <article style="position:relative;overflow:hidden;padding:var(--sp-3) var(--sp-4);border-left:3px solid var(--hi);background:rgba(6,182,212,.08);">
+            <div style="position:relative;display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:var(--sp-3);">
+              <div><strong style="font-size:var(--fs-h3);color:var(--hi);">NQ</strong><span style="margin-left:8px;font-size:10px;color:var(--txt-tertiary);">E-MINI NASDAQ-100</span></div>
+              <span aria-hidden="true" style="display:flex;gap:4px;align-items:center;"><i style="display:block;width:12px;height:5px;background:var(--hi);opacity:.45;"></i><i style="display:block;width:12px;height:5px;background:var(--hi);opacity:.6;"></i><i style="display:block;width:12px;height:5px;background:var(--hi);opacity:.78;"></i><i style="display:block;width:12px;height:5px;background:var(--hi);"></i></span>
+              <strong style="font-size:var(--fs-caption);color:var(--txt-primary);">10 PTS = $200</strong>
+            </div>
+            <div style="position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-2);margin-top:var(--sp-3);font-size:10px;">
+              <div><span style="display:block;color:var(--txt-tertiary);">TICK SIZE</span><strong style="color:var(--txt-primary);">0.25</strong></div>
+              <div><span style="display:block;color:var(--txt-tertiary);">VALOR / TICK</span><strong style="color:var(--txt-primary);">$5.00</strong></div>
+              <div><span style="display:block;color:var(--txt-tertiary);">PUNTO</span><strong style="color:var(--hi);">4 TICKS = $20</strong></div>
+            </div>
+          </article>
+
+          <article style="position:relative;overflow:hidden;padding:var(--sp-3) var(--sp-4);border-left:3px solid var(--warn);background:var(--warn-subtle);">
+            <div style="position:relative;display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:var(--sp-3);">
+              <div><strong style="font-size:var(--fs-h3);color:var(--warn);">GC</strong><span style="margin-left:8px;font-size:10px;color:var(--txt-tertiary);">GOLD</span></div>
+              <span style="padding:3px 6px;border:1px solid rgba(255,176,59,.35);font-size:9px;letter-spacing:.08em;color:var(--warn);white-space:nowrap;">10 STEP GRID</span>
+              <strong style="font-size:var(--fs-caption);color:var(--txt-primary);">10 PTS = $1,000</strong>
+            </div>
+            <div style="position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-2);margin-top:var(--sp-3);font-size:10px;">
+              <div><span style="display:block;color:var(--txt-tertiary);">TICK SIZE</span><strong style="color:var(--txt-primary);">0.10</strong></div>
+              <div><span style="display:block;color:var(--txt-tertiary);">VALOR / TICK</span><strong style="color:var(--txt-primary);">$10.00</strong></div>
+              <div><span style="display:block;color:var(--txt-tertiary);">PUNTO</span><strong style="color:var(--warn);">10 TICKS = $100</strong></div>
+            </div>
+          </article>
+
+          <article style="position:relative;overflow:hidden;padding:var(--sp-3) var(--sp-4);border-left:3px solid #9b7bff;background:rgba(155,123,255,.09);">
+            <div style="position:relative;display:grid;grid-template-columns:1fr auto auto;align-items:center;gap:var(--sp-3);">
+              <div><strong style="font-size:var(--fs-h3);color:#9b7bff;">CL</strong><span style="margin-left:8px;font-size:10px;color:var(--txt-tertiary);">CRUDE OIL</span></div>
+              <span style="padding:3px 6px;border:1px solid rgba(155,123,255,.35);font-size:9px;letter-spacing:.07em;color:#9b7bff;white-space:nowrap;">100 MICRO STEPS</span>
+              <strong style="font-size:var(--fs-caption);color:var(--txt-primary);">10 PTS = $10,000</strong>
+            </div>
+            <div style="position:relative;display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-2);margin-top:var(--sp-3);font-size:10px;">
+              <div><span style="display:block;color:var(--txt-tertiary);">TICK SIZE</span><strong style="color:var(--txt-primary);">0.01</strong></div>
+              <div><span style="display:block;color:var(--txt-tertiary);">VALOR / TICK</span><strong style="color:var(--txt-primary);">$10.00</strong></div>
+              <div><span style="display:block;color:var(--txt-tertiary);">PUNTO</span><strong style="color:#9b7bff;">100 TICKS = $1,000</strong></div>
+            </div>
+          </article>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-3) var(--sp-4);border:1px solid var(--line);background:var(--bg-panel);font-size:10px;color:var(--txt-secondary);">
+          <span style="display:inline-block;width:8px;height:8px;background:var(--hi);box-shadow:0 0 12px rgba(6,182,212,.65);"></span>
+          <span><strong style="color:var(--txt-primary);">Lectura operativa:</strong> el mismo desplazamiento en puntos produce un resultado monetario distinto seg&uacute;n el contrato.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">08/34</span>
+  </footer>
+</section>
+</body>
+</html>

@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Arquitectura Multidimensional — Cortex Quant Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-27 .l28-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: clamp(16px, 2vh, 26px);
+      min-height: 0;
+      padding: clamp(24px, 3.1vh, 38px) clamp(30px, 3.2vw, 62px) clamp(22px, 2.8vh, 34px);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 27% 63%, rgba(0, 51, 255, .055), transparent 27%),
+        radial-gradient(circle at 85% 34%, rgba(6, 182, 212, .05), transparent 23%),
+        #000;
+    }
+
+    #slide-27 .l28-head .divider {
+      margin-top: clamp(14px, 1.8vh, 20px);
+    }
+
+    #slide-27 .l28-canvas {
+      display: grid;
+      grid-template-columns: minmax(0, 1.22fr) minmax(340px, .78fr);
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: clamp(12px, 1.35vw, 21px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-27 .l28-premise {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: minmax(205px, .42fr) minmax(0, 1.58fr) auto;
+      gap: clamp(16px, 1.8vw, 30px);
+      align-items: center;
+      padding: clamp(13px, 1.45vh, 18px) clamp(18px, 1.55vw, 27px);
+      border-top: 1px solid rgba(0, 51, 255, .58);
+      border-bottom: 1px solid rgba(6, 182, 212, .28);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .10), rgba(6, 182, 212, .035));
+    }
+
+    #slide-27 .l28-kicker,
+    #slide-27 .l28-distinction,
+    #slide-27 .l28-panel-head,
+    #slide-27 .l28-core-label,
+    #slide-27 .l28-core-output,
+    #slide-27 .l28-dim-code,
+    #slide-27 .l28-dim-unit,
+    #slide-27 .l28-cycle span,
+    #slide-27 .l28-align-label,
+    #slide-27 .l28-compiler-index,
+    #slide-27 .l28-compiler-meta,
+    #slide-27 .l28-proof-chip,
+    #slide-27 .l28-principle-label {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    #slide-27 .l28-kicker {
+      color: var(--accent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+    }
+
+    #slide-27 .l28-premise p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.5;
+    }
+
+    #slide-27 .l28-premise strong,
+    #slide-27 .l28-copy strong,
+    #slide-27 .l28-principle strong {
+      color: var(--txt-primary);
+      font-weight: 700;
+    }
+
+    #slide-27 .l28-distinction {
+      min-width: clamp(185px, 15vw, 275px);
+      padding: 9px 12px;
+      border: 1px solid rgba(0, 229, 255, .44);
+      color: var(--hi);
+      background: var(--hi-subtle);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+      text-align: center;
+    }
+
+    #slide-27 .l28-observatory,
+    #slide-27 .l28-compiler {
+      position: relative;
+      min-width: 0;
+      min-height: 0;
+      border: 1px solid var(--border-default);
+      background: rgba(7, 8, 10, .96);
+      overflow: hidden;
+    }
+
+    #slide-27 .l28-observatory::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .4;
+      background-image:
+        linear-gradient(rgba(61, 64, 69, .18) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(61, 64, 69, .18) 1px, transparent 1px);
+      background-size: 54px 54px;
+    }
+
+    #slide-27 .l28-observatory {
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
+      gap: clamp(10px, 1.2vh, 15px);
+      padding: clamp(15px, 1.7vw, 25px);
+    }
+
+    #slide-27 .l28-observatory > *,
+    #slide-27 .l28-compiler > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    #slide-27 .l28-panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+    }
+
+    #slide-27 .l28-panel-head span:last-child {
+      color: var(--hi);
+    }
+
+    #slide-27 .l28-core {
+      display: grid;
+      grid-template-columns: minmax(155px, .56fr) minmax(0, 1.44fr) auto;
+      align-items: stretch;
+      min-width: 0;
+      border: 1px solid rgba(0, 51, 255, .56);
+      border-top: 2px solid var(--accent);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .15), rgba(0, 229, 255, .035));
+    }
+
+    #slide-27 .l28-core-id {
+      display: grid;
+      align-content: center;
+      gap: 4px;
+      padding: clamp(12px, 1.2vw, 18px);
+      border-right: 1px solid rgba(0, 51, 255, .28);
+    }
+
+    #slide-27 .l28-core-id strong {
+      font-family: var(--font-display);
+      color: var(--txt-primary);
+      font-size: clamp(1.45rem, 2vw, 2.2rem);
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    #slide-27 .l28-core-label {
+      color: var(--accent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+    }
+
+    #slide-27 .l28-core-copy {
+      display: grid;
+      align-content: center;
+      gap: 7px;
+      padding: clamp(11px, 1.15vw, 17px);
+      min-width: 0;
+    }
+
+    #slide-27 .l28-core-copy p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
+      line-height: 1.42;
+    }
+
+    #slide-27 .l28-price-sequence {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(42px, 1fr));
+      gap: 6px;
+      min-height: 52px;
+      padding: 2px 4px 0;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(61, 64, 69, .18) 1px, transparent 1px);
+      background-size: 100% 15px;
+    }
+
+    #slide-27 .l28-price-sequence::before {
+      content: "";
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      bottom: 20px;
+      height: 1px;
+      transform: rotate(-4.5deg);
+      transform-origin: left center;
+      background: linear-gradient(90deg, rgba(34, 197, 94, .12), var(--bull-glow));
+      opacity: .75;
+    }
+
+    #slide-27 .l28-candle-step {
+      position: relative;
+      display: grid;
+      grid-template-rows: minmax(32px, 1fr) auto;
+      min-width: 0;
+      border-bottom: 1px solid rgba(34, 197, 94, .34);
+    }
+
+    #slide-27 .l28-candle-track {
+      position: relative;
+      min-height: 32px;
+    }
+
+    #slide-27 .l28-candle {
+      position: absolute;
+      z-index: 2;
+      left: 50%;
+      bottom: var(--rise);
+      width: clamp(9px, .7vw, 13px);
+      height: var(--body-h);
+      transform: translateX(-50%);
+      border: 1px solid var(--bull-glow);
+      background: rgba(34, 197, 94, .82);
+      box-shadow: 0 0 12px rgba(34, 197, 94, .12);
+    }
+
+    #slide-27 .l28-candle::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      top: -7px;
+      bottom: -7px;
+      left: 50%;
+      width: 1px;
+      transform: translateX(-50%);
+      background: var(--bull-glow);
+    }
+
+    #slide-27 .l28-candle::after {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 100%;
+      width: 8px;
+      height: 1px;
+      background: var(--hi);
+    }
+
+    #slide-27 .l28-candle-label {
+      position: relative;
+      z-index: 3;
+      padding: 3px 2px;
+      color: var(--txt-tertiary);
+      background: rgba(0, 0, 0, .78);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      letter-spacing: .08em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    #slide-27 .l28-core-output {
+      display: grid;
+      place-items: center;
+      align-content: center;
+      gap: 5px;
+      min-width: clamp(132px, 10vw, 180px);
+      padding: 10px 14px;
+      border-left: 1px solid rgba(0, 229, 255, .24);
+      color: var(--hi);
+      background: rgba(0, 229, 255, .045);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 700;
+      text-align: center;
+    }
+
+    #slide-27 .l28-core-output b {
+      color: var(--txt-primary);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+    }
+
+    #slide-27 .l28-dimensions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(8px, .9vw, 14px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-27 .l28-dimension {
+      --dim-color: var(--accent);
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
+      gap: 6px;
+      min-width: 0;
+      padding: clamp(11px, 1.1vw, 16px);
+      border: 1px solid var(--border-subtle);
+      border-left: 2px solid var(--dim-color);
+      background: rgba(5, 5, 5, .92);
+    }
+
+    #slide-27 .l28-dimension.vib { --dim-color: var(--purple); background: rgba(164, 140, 255, .045); }
+    #slide-27 .l28-dimension.dib { --dim-color: var(--cyan); background: rgba(6, 182, 212, .045); }
+
+    #slide-27 .l28-dim-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    #slide-27 .l28-dim-code {
+      color: var(--dim-color);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-27 .l28-dim-unit {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+    }
+
+    #slide-27 .l28-dimension h3 {
+      font-family: var(--font-display);
+      color: var(--txt-primary);
+      font-size: clamp(.86rem, 1vw, 1.12rem);
+      font-weight: 500;
+      line-height: 1.18;
+    }
+
+    #slide-27 .l28-dimension p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
+      line-height: 1.4;
+    }
+
+    #slide-27 .l28-dimension p strong {
+      color: var(--txt-primary);
+      font-weight: 700;
+    }
+
+    #slide-27 .l28-cycle {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+      align-items: end;
+      min-height: 31px;
+    }
+
+    #slide-27 .l28-cycle span {
+      display: grid;
+      place-items: end center;
+      height: var(--h);
+      min-height: 18px;
+      padding-bottom: 3px;
+      border-top: 2px solid var(--dim-color);
+      color: var(--dim-color);
+      background: color-mix(in srgb, var(--dim-color) 10%, transparent);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 700;
+    }
+
+    #slide-27 .l28-alignment {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: clamp(10px, 1vw, 16px);
+      align-items: center;
+      min-width: 0;
+      padding-top: clamp(8px, 1vh, 12px);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    #slide-27 .l28-align-label {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+    }
+
+    #slide-27 .l28-align-line {
+      position: relative;
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent), var(--purple), var(--cyan), var(--hi));
+    }
+
+    #slide-27 .l28-align-line::before,
+    #slide-27 .l28-align-line::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 6px;
+      height: 6px;
+      transform: translateY(-50%) rotate(45deg);
+      background: var(--txt-primary);
+    }
+
+    #slide-27 .l28-align-line::before { left: 33%; }
+    #slide-27 .l28-align-line::after { left: 66%; }
+
+    #slide-27 .l28-align-states {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    #slide-27 .l28-align-states span {
+      padding: 4px 7px;
+      border: 1px solid var(--border-default);
+      color: var(--txt-secondary);
+      background: var(--bg-panel);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    #slide-27 .l28-compiler {
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
+      gap: clamp(11px, 1.25vh, 16px);
+      padding: clamp(15px, 1.7vw, 25px);
+      border-top: 2px solid var(--purple);
+      background:
+        linear-gradient(145deg, rgba(164, 140, 255, .075), transparent 42%),
+        rgba(7, 8, 10, .97);
+    }
+
+    #slide-27 .l28-copy {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
+      line-height: 1.46;
+    }
+
+    #slide-27 .l28-compiler-stack {
+      display: grid;
+      grid-template-rows: repeat(5, minmax(0, 1fr));
+      gap: clamp(5px, .65vh, 8px);
+      min-height: 0;
+    }
+
+    #slide-27 .l28-compiler-step {
+      --step-color: var(--accent);
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) auto;
+      gap: 9px;
+      align-items: center;
+      min-width: 0;
+      padding: clamp(7px, .8vh, 10px) clamp(9px, .8vw, 13px);
+      border-left: 2px solid var(--step-color);
+      background: rgba(17, 17, 17, .86);
+    }
+
+    #slide-27 .l28-compiler-step:nth-child(2) { --step-color: var(--purple); margin-left: 4%; }
+    #slide-27 .l28-compiler-step:nth-child(3) { --step-color: var(--cyan); margin-left: 8%; }
+    #slide-27 .l28-compiler-step:nth-child(4) { --step-color: var(--warn); margin-left: 12%; }
+    #slide-27 .l28-compiler-step:nth-child(5) { --step-color: var(--hi); margin-left: 16%; }
+
+    #slide-27 .l28-compiler-index {
+      color: var(--step-color);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-27 .l28-compiler-step strong {
+      color: var(--txt-primary);
+      font-family: var(--font-display);
+      font-size: clamp(.79rem, .9vw, 1rem);
+      font-weight: 500;
+      line-height: 1.15;
+    }
+
+    #slide-27 .l28-compiler-meta {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      white-space: nowrap;
+    }
+
+    #slide-27 .l28-proof {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 11px;
+      align-items: center;
+      padding-top: clamp(8px, 1vh, 12px);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    #slide-27 .l28-proof-chip {
+      padding: 6px 9px;
+      border: 1px solid rgba(255, 183, 77, .46);
+      color: var(--warn);
+      background: var(--warn-subtle);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+    }
+
+    #slide-27 .l28-proof p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
+      line-height: 1.38;
+    }
+
+    #slide-27 .l28-principle {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: minmax(205px, .42fr) minmax(0, 1.58fr);
+      gap: clamp(16px, 1.8vw, 30px);
+      align-items: center;
+      padding: clamp(12px, 1.35vh, 17px) clamp(18px, 1.55vw, 27px);
+      border-left: 3px solid var(--hi);
+      background: linear-gradient(90deg, var(--accent-subtle), var(--hi-subtle));
+    }
+
+    #slide-27 .l28-principle-label {
+      color: var(--accent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-27 .l28-principle p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.48;
+    }
+
+    #slide-27 .l28-principle em {
+      color: var(--hi);
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    @media (max-height: 820px) {
+      #slide-27 .l28-stage {
+        gap: 13px;
+        padding-top: 20px;
+        padding-bottom: 18px;
+      }
+
+      #slide-27 .l28-head .divider { margin-top: 11px; }
+      #slide-27 .l28-canvas { gap: 10px 14px; }
+      #slide-27 .l28-premise { padding-top: 10px; padding-bottom: 10px; }
+      #slide-27 .l28-observatory,
+      #slide-27 .l28-compiler { padding: 13px; gap: 8px; }
+      #slide-27 .l28-core-id,
+      #slide-27 .l28-core-copy { padding-top: 9px; padding-bottom: 9px; }
+      #slide-27 .l28-dimension { padding: 9px; gap: 4px; }
+      #slide-27 .l28-cycle { min-height: 25px; }
+      #slide-27 .l28-compiler-stack { gap: 4px; }
+      #slide-27 .l28-compiler-step { padding-top: 5px; padding-bottom: 5px; }
+      #slide-27 .l28-principle { padding-top: 9px; padding-bottom: 9px; }
+    }
+
+    @media (max-width: 1180px) {
+      #slide-27 .l28-canvas { grid-template-columns: minmax(0, 1.16fr) minmax(310px, .84fr); }
+      #slide-27 .l28-premise { grid-template-columns: 180px minmax(0, 1fr); }
+      #slide-27 .l28-distinction { grid-column: 1 / -1; width: 100%; }
+      #slide-27 .l28-core { grid-template-columns: 135px minmax(0, 1fr); }
+      #slide-27 .l28-core-output { grid-column: 1 / -1; min-width: 0; border-left: 0; border-top: 1px solid rgba(0, 229, 255, .24); }
+      #slide-27 .l28-align-states span:nth-child(2) { display: none; }
+    }
+
+    @media (max-width: 900px) {
+      #slide-27 .l28-stage { overflow-y: auto; }
+      #slide-27 .l28-canvas { grid-template-columns: 1fr; grid-template-rows: auto auto auto auto; }
+      #slide-27 .l28-premise,
+      #slide-27 .l28-principle { grid-column: 1; }
+      #slide-27 .l28-observatory,
+      #slide-27 .l28-compiler { min-height: 520px; }
+    }
+
+    @media (max-width: 620px) {
+      #slide-27 .l28-premise,
+      #slide-27 .l28-principle { grid-template-columns: 1fr; }
+      #slide-27 .l28-dimensions { grid-template-columns: 1fr; }
+      #slide-27 .l28-observatory { min-height: 760px; }
+      #slide-27 .l28-align-states { display: none; }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-27" data-module="3">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="3">MÓDULO III</span>
+    <span class="lesson-tag">L28</span>
+    <span class="slide-title">Arquitectura Multidimensional</span>
+    <span class="concept-code">M3.L28.C28</span>
+  </header>
+
+  <main class="slide-body l28-stage">
+    <div class="l28-head">
+      <div class="section-title">
+        <div class="section-number">LECCIÓN 28</div>
+        <h2>Arquitectura Multidimensional</h2>
+      </div>
+      <div class="divider gradient"></div>
+    </div>
+
+    <div class="l28-canvas">
+      <section class="l28-premise">
+        <div class="l28-kicker">Framework multidimensional</div>
+        <p>Cortex-Dendrita observa el mercado mediante <strong>cuatro dimensiones microestructurales distintas</strong>. TIB, VIB, DIB y HWTE no representan marcos temporales diferentes: cada dimensión mide un criterio propio del estado contemporáneo.</p>
+        <div class="l28-distinction">4 dimensiones ≠ 4 temporalidades</div>
+      </section>
+
+      <section class="l28-observatory" aria-label="Observatorio de dimensiones Cortex-Dendrita">
+        <div class="l28-panel-head"><span>Observatorio multidimensional</span><span>Jerarquía estructural</span></div>
+
+        <div class="l28-core">
+          <div class="l28-core-id">
+            <span class="l28-core-label">Eje rector</span>
+            <strong>HWTE</strong>
+          </div>
+          <div class="l28-core-copy">
+            <p>Observa la <strong>estructura informacional</strong> del mercado. Tres barras consecutivas cerradas determinan el macrociclo vigente.</p>
+            <div class="l28-price-sequence" aria-label="Tres barras de precio alcistas cerradas consecutivamente en HWTE">
+              <div class="l28-candle-step"><div class="l28-candle-track"><i class="l28-candle" style="--rise:1px; --body-h:12px"></i></div><span class="l28-candle-label">Cierre 01</span></div>
+              <div class="l28-candle-step"><div class="l28-candle-track"><i class="l28-candle" style="--rise:7px; --body-h:14px"></i></div><span class="l28-candle-label">Cierre 02</span></div>
+              <div class="l28-candle-step"><div class="l28-candle-track"><i class="l28-candle" style="--rise:13px; --body-h:16px"></i></div><span class="l28-candle-label">Cierre 03</span></div>
+            </div>
+          </div>
+          <div class="l28-core-output"><span>Salida estructural</span><b>Macrociclo alcista</b><span>Sesgo long habilitado ↗</span></div>
+        </div>
+
+        <div class="l28-dimensions">
+          <article class="l28-dimension tib">
+            <div class="l28-dim-top"><span class="l28-dim-code">TIB</span><span class="l28-dim-unit">Frecuencia</span></div>
+            <h3>Agresión</h3>
+            <p>Observa la <strong>frecuencia</strong> con la que aparece la agresión.</p>
+            <div class="l28-cycle" aria-label="Microciclo TIB de tres cierres"><span style="--h:55%">01</span><span style="--h:78%">02</span><span style="--h:100%">03</span></div>
+          </article>
+
+          <article class="l28-dimension vib">
+            <div class="l28-dim-top"><span class="l28-dim-code">VIB</span><span class="l28-dim-unit">Tamaño</span></div>
+            <h3>Volumen</h3>
+            <p>Observa el <strong>tamaño</strong> de la agresión ejecutada.</p>
+            <div class="l28-cycle" aria-label="Microciclo VIB de tres cierres"><span style="--h:70%">01</span><span style="--h:48%">02</span><span style="--h:92%">03</span></div>
+          </article>
+
+          <article class="l28-dimension dib">
+            <div class="l28-dim-top"><span class="l28-dim-code">DIB</span><span class="l28-dim-unit">Capital</span></div>
+            <h3>Desplazamiento</h3>
+            <p>Observa el <strong>capital desplazado</strong> por el flujo.</p>
+            <div class="l28-cycle" aria-label="Microciclo DIB de tres cierres"><span style="--h:43%">01</span><span style="--h:73%">02</span><span style="--h:100%">03</span></div>
+          </article>
+        </div>
+
+        <div class="l28-alignment">
+          <span class="l28-align-label">Relación entre dimensiones</span>
+          <span class="l28-align-line"></span>
+          <div class="l28-align-states"><span>Convergencia</span><span>Divergencia</span><span>Tensión</span></div>
+        </div>
+      </section>
+
+      <aside class="l28-compiler">
+        <div class="l28-panel-head"><span>Compilador inferencial</span><span>Contexto → decisión</span></div>
+        <p class="l28-copy"><strong>HWTE ocupa la posición estructural principal.</strong> El macrociclo establece el sesgo direccional habilitado; después, el trader busca microciclos de tres cierres en TIB, VIB y DIB para evaluar su alineación.</p>
+
+        <div class="l28-compiler-stack" aria-label="Ruta de construcción de la inferencia">
+          <div class="l28-compiler-step"><span class="l28-compiler-index">01</span><strong>HWTE / Macrociclo</strong><span class="l28-compiler-meta">3 cierres</span></div>
+          <div class="l28-compiler-step"><span class="l28-compiler-index">02</span><strong>TIB · VIB · DIB / Microciclos</strong><span class="l28-compiler-meta">3 cierres</span></div>
+          <div class="l28-compiler-step"><span class="l28-compiler-index">03</span><strong>Alineación multidimensional</strong><span class="l28-compiler-meta">Relación</span></div>
+          <div class="l28-compiler-step"><span class="l28-compiler-index">04</span><strong>Confirmaciones</strong><span class="l28-compiler-meta">CUSUM</span></div>
+          <div class="l28-compiler-step"><span class="l28-compiler-index">05</span><strong>Inferencia</strong><span class="l28-compiler-meta">Tesis</span></div>
+        </div>
+
+        <div class="l28-proof">
+          <span class="l28-proof-chip">Consistencia</span>
+          <p>La inferencia gana consistencia cuando distintas dimensiones aportan <strong>evidencia compatible</strong>; CUSUM puede incorporarse como capa adicional de confirmación.</p>
+        </div>
+      </aside>
+
+      <section class="l28-principle">
+        <div class="l28-principle-label">Principio Cortex-Dendrita</div>
+        <p><strong>Una dimensión aporta información; la relación entre dimensiones construye contexto.</strong> El trader no busca que todas las lecturas simplemente coincidan: utiliza su <em>convergencia, divergencia o tensión</em> como evidencia para construir y contrastar su tesis inferencial.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">28/42</span>
+  </footer>
+</section>
+</body>
+</html>

@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Confluencia, Divergencia y Sesgo Intermercado — Cortex Quant Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-33 .l34-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: clamp(15px, 1.8vh, 24px);
+      min-height: 0;
+      padding: clamp(23px, 3vh, 36px) clamp(30px, 3.2vw, 62px) clamp(20px, 2.6vh, 31px);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 42% 58%, rgba(0, 51, 255, .055), transparent 31%),
+        radial-gradient(circle at 76% 54%, rgba(6, 182, 212, .043), transparent 27%),
+        #000;
+    }
+
+    #slide-33 .l34-head .divider { margin-top: clamp(13px, 1.7vh, 19px); }
+
+    #slide-33 .l34-canvas {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: clamp(12px, 1.25vw, 20px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-33 .l34-overview {
+      display: grid;
+      grid-template-columns: minmax(180px, .32fr) repeat(3, minmax(0, 1fr));
+      min-width: 0;
+      border-top: 1px solid rgba(0, 51, 255, .68);
+      border-bottom: 1px solid rgba(6, 182, 212, .34);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .09), rgba(6, 182, 212, .035));
+    }
+
+    #slide-33 .l34-kicker,
+    #slide-33 .l34-overview-code,
+    #slide-33 .l34-overview-title,
+    #slide-33 .l34-shell-head,
+    #slide-33 .l34-axis,
+    #slide-33 .l34-quadrant-title,
+    #slide-33 .l34-marker-code,
+    #slide-33 .l34-marker-state,
+    #slide-33 .l34-marker-result,
+    #slide-33 .l34-rail-title,
+    #slide-33 .l34-equation,
+    #slide-33 .l34-rule-label,
+    #slide-33 .l34-warning,
+    #slide-33 .l34-case-label,
+    #slide-33 .l34-principle-label,
+    #slide-33 .l34-principle-formula {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    #slide-33 .l34-kicker {
+      display: flex;
+      align-items: center;
+      padding: clamp(12px, 1.2vw, 19px) clamp(16px, 1.4vw, 24px);
+      color: var(--accent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+      border-right: 1px solid rgba(61,64,69,.72);
+    }
+
+    #slide-33 .l34-overview-item {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 11px;
+      align-items: center;
+      min-width: 0;
+      padding: clamp(10px, 1.05vw, 16px) clamp(14px, 1.25vw, 21px);
+      border-right: 1px solid rgba(61,64,69,.48);
+    }
+
+    #slide-33 .l34-overview-item:last-child { border-right: 0; }
+
+    #slide-33 .l34-overview-code {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+    }
+
+    #slide-33 .l34-overview-title {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--item-color);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-33 .l34-overview-item:nth-child(2) { --item-color: var(--txt-primary); }
+    #slide-33 .l34-overview-item:nth-child(3) { --item-color: var(--accent); }
+    #slide-33 .l34-overview-item:nth-child(4) { --item-color: var(--hi); }
+
+    #slide-33 .l34-overview-item p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.34;
+    }
+
+    #slide-33 .l34-overview-item strong,
+    #slide-33 .l34-marker-copy strong,
+    #slide-33 .l34-rule-copy strong,
+    #slide-33 .l34-case-copy strong,
+    #slide-33 .l34-principle-copy strong {
+      color: var(--txt-primary);
+      font-weight: 700;
+    }
+
+    #slide-33 .l34-phase-shell {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.34fr) minmax(410px, .96fr);
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      border: 1px solid var(--border-default);
+      border-top: 2px solid var(--accent);
+      background: rgba(7,8,10,.98);
+    }
+
+    #slide-33 .l34-phase-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .28;
+      background-image:
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+      background-size: 42px 42px;
+    }
+
+    #slide-33 .l34-phase-shell > * { position: relative; z-index: 1; }
+
+    #slide-33 .l34-shell-head {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: clamp(10px, 1vh, 13px) clamp(15px, 1.45vw, 24px);
+      border-bottom: 1px solid rgba(61,64,69,.72);
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+    }
+
+    #slide-33 .l34-shell-head span:last-child { color: var(--hi); font-weight: 800; }
+
+    #slide-33 .l34-phase-plot {
+      position: relative;
+      min-width: 0;
+      min-height: 0;
+      padding: 29px 26px 39px 53px;
+      border-right: 1px solid rgba(61,64,69,.72);
+      overflow: hidden;
+    }
+
+    #slide-33 .l34-quadrants {
+      position: absolute;
+      inset: 29px 26px 39px 53px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      border: 1px solid rgba(85,90,98,.62);
+      background: rgba(0,0,0,.5);
+    }
+
+    #slide-33 .l34-quadrant {
+      position: relative;
+      display: grid;
+      align-content: start;
+      gap: 4px;
+      min-width: 0;
+      padding: clamp(10px, .95vw, 15px);
+      overflow: hidden;
+    }
+
+    #slide-33 .l34-quadrant:nth-child(1),
+    #slide-33 .l34-quadrant:nth-child(2) { border-bottom: 1px solid rgba(85,90,98,.46); }
+    #slide-33 .l34-quadrant:nth-child(1),
+    #slide-33 .l34-quadrant:nth-child(3) { border-right: 1px solid rgba(85,90,98,.46); }
+
+    #slide-33 .l34-q-tension { background: linear-gradient(135deg, rgba(164,140,255,.055), transparent 62%); }
+    #slide-33 .l34-q-coherent { background: linear-gradient(225deg, rgba(0,51,255,.075), rgba(0,229,255,.025)); }
+    #slide-33 .l34-q-fragile { background: linear-gradient(45deg, rgba(230,57,85,.035), transparent 65%); }
+    #slide-33 .l34-q-contrast { background: linear-gradient(315deg, rgba(255,183,77,.045), transparent 65%); }
+
+    #slide-33 .l34-quadrant-title {
+      color: var(--quad-color);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-33 .l34-q-tension { --quad-color: var(--purple); }
+    #slide-33 .l34-q-coherent { --quad-color: var(--hi); }
+    #slide-33 .l34-q-fragile { --quad-color: var(--bear); }
+    #slide-33 .l34-q-contrast { --quad-color: var(--warn); }
+
+    #slide-33 .l34-quadrant p {
+      max-width: 76%;
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .68vw, .8125rem));
+      line-height: 1.3;
+    }
+
+    #slide-33 .l34-axis {
+      position: absolute;
+      z-index: 4;
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    #slide-33 .l34-axis-x-left { left: 54px; bottom: 13px; color: var(--purple); }
+    #slide-33 .l34-axis-x-right { right: 26px; bottom: 13px; color: var(--accent); }
+    #slide-33 .l34-axis-x-center { left: 50%; bottom: 13px; transform: translateX(-50%); }
+    #slide-33 .l34-axis-y-top { left: 12px; top: 30px; color: var(--hi); writing-mode: vertical-rl; transform: rotate(180deg); }
+    #slide-33 .l34-axis-y-bottom { left: 12px; bottom: 40px; color: var(--bear); writing-mode: vertical-rl; transform: rotate(180deg); }
+
+    #slide-33 .l34-crosshair-x,
+    #slide-33 .l34-crosshair-y {
+      position: absolute;
+      z-index: 2;
+      pointer-events: none;
+      background: rgba(0,229,255,.2);
+    }
+
+    #slide-33 .l34-crosshair-x { left: 53px; right: 26px; top: 50%; height: 1px; }
+    #slide-33 .l34-crosshair-y { top: 29px; bottom: 39px; left: calc(50% + 13px); width: 1px; }
+
+    #slide-33 .l34-trajectory {
+      position: absolute;
+      z-index: 3;
+      inset: 29px 26px 39px 53px;
+      width: calc(100% - 79px);
+      height: calc(100% - 68px);
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    #slide-33 .l34-trajectory-channel,
+    #slide-33 .l34-trajectory-flow {
+      fill: none;
+      vector-effect: non-scaling-stroke;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    #slide-33 .l34-trajectory-channel {
+      stroke: rgba(4,5,7,.98);
+      stroke-width: 12px;
+    }
+
+    #slide-33 .l34-trajectory-flow {
+      stroke: url(#l34Path);
+      stroke-width: 3px;
+      stroke-dasharray: 11 8;
+    }
+
+    #slide-33 .l34-marker {
+      position: absolute;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 9px;
+      align-items: center;
+      width: 22%;
+      min-width: 174px;
+      max-width: 270px;
+      min-width: 0;
+      padding: clamp(8px, .78vw, 12px);
+      border: 1px solid var(--marker-color);
+      background: rgba(4,5,7,.96);
+      box-shadow: 0 0 22px color-mix(in srgb, var(--marker-color) 12%, transparent);
+      transform: translate(-50%, -50%);
+    }
+
+    #slide-33 .l34-marker-a { --marker-color: var(--accent); left: 73%; top: 34%; }
+    #slide-33 .l34-marker-b { --marker-color: var(--purple); left: 29%; top: 34%; }
+
+    #slide-33 .l34-marker-code {
+      display: grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      color: var(--marker-color);
+      border: 1px solid var(--marker-color);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-33 .l34-marker-state {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--txt-primary);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-33 .l34-marker-result {
+      color: var(--marker-color);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    #slide-33 .l34-marker-copy {
+      grid-column: 1 / -1;
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .68vw, .8125rem));
+      line-height: 1.3;
+    }
+
+    #slide-33 .l34-relation-rail {
+      display: grid;
+      grid-template-rows: auto repeat(3, auto) auto;
+      align-content: start;
+      gap: clamp(6px, .68vh, 9px);
+      min-width: 0;
+      min-height: 0;
+      padding: clamp(10px, 1.05vw, 16px);
+      background: linear-gradient(180deg, rgba(6,182,212,.035), transparent 45%);
+    }
+
+    #slide-33 .l34-rail-title {
+      color: var(--hi);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-33 .l34-rule {
+      display: grid;
+      grid-template-columns: minmax(70px, .3fr) minmax(0, 1fr);
+      gap: 8px;
+      align-items: center;
+      min-width: 0;
+      padding: clamp(7px, .68vw, 10px);
+      border-left: 2px solid var(--rule-color);
+      background: var(--rule-bg);
+    }
+
+    #slide-33 .l34-rule-equity { --rule-color: var(--accent); --rule-bg: rgba(0,51,255,.065); }
+    #slide-33 .l34-rule-cl { --rule-color: var(--hi); --rule-bg: rgba(0,229,255,.052); }
+    #slide-33 .l34-rule-gc { --rule-color: var(--warn); --rule-bg: rgba(255,183,77,.052); }
+
+    #slide-33 .l34-rule-label {
+      color: var(--rule-color);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-33 .l34-rule-body {
+      display: grid;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    #slide-33 .l34-equation-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    #slide-33 .l34-equation {
+      padding: 4px 6px;
+      color: var(--equation-color, var(--txt-primary));
+      border: 1px solid color-mix(in srgb, var(--equation-color, var(--txt-primary)) 35%, transparent);
+      background: rgba(0,0,0,.42);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 800;
+      line-height: 1.18;
+      text-align: center;
+    }
+
+    #slide-33 .l34-equation.confluence { --equation-color: var(--accent); }
+    #slide-33 .l34-equation.divergence { --equation-color: var(--purple); }
+    #slide-33 .l34-equation.bearish { --equation-color: var(--bear); }
+    #slide-33 .l34-equation.bullish { --equation-color: var(--bull); }
+    #slide-33 .l34-equation.gold { --equation-color: var(--warn); }
+
+    #slide-33 .l34-rule-copy {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .68vw, .8125rem));
+      line-height: 1.22;
+    }
+
+    #slide-33 .l34-warning {
+      padding: 6px 8px;
+      border: 1px solid rgba(255,183,77,.34);
+      color: var(--warn);
+      background: var(--warn-subtle);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 800;
+      line-height: 1.22;
+      text-align: center;
+    }
+
+    #slide-33 .l34-case-strip {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 13px;
+      align-items: center;
+      padding: clamp(9px, .9vh, 12px) clamp(15px, 1.45vw, 24px);
+      border-top: 1px solid rgba(61,64,69,.72);
+      background: rgba(17,17,17,.72);
+    }
+
+    #slide-33 .l34-case-label {
+      color: var(--warn);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-33 .l34-case-copy {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.36;
+    }
+
+    #slide-33 .l34-principle {
+      display: grid;
+      grid-template-columns: auto minmax(330px, .72fr) minmax(0, 1fr);
+      gap: clamp(14px, 1.4vw, 23px);
+      align-items: center;
+      padding: clamp(10px, 1vh, 13px) clamp(16px, 1.4vw, 24px);
+      border-left: 3px solid var(--accent);
+      background: linear-gradient(90deg, rgba(0,51,255,.12), rgba(0,229,255,.055));
+    }
+
+    #slide-33 .l34-principle-label {
+      color: var(--accent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-33 .l34-principle-formula {
+      color: var(--hi);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    #slide-33 .l34-principle-copy {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.36;
+    }
+
+    @media (max-height: 820px) {
+      #slide-33 .l34-stage { gap: 11px; padding: 18px 32px 16px; }
+      #slide-33 .l34-head .divider { margin-top: 10px; }
+      #slide-33 .l34-head h2 { font-size: var(--fs-slide-title, clamp(1.75rem, 2vw, 2.25rem)); }
+      #slide-33 .l34-canvas { gap: 9px; }
+      #slide-33 .l34-overview { grid-template-columns: 150px repeat(3, minmax(0,1fr)); }
+      #slide-33 .l34-kicker,
+      #slide-33 .l34-overview-item { padding-top: 7px; padding-bottom: 7px; }
+      #slide-33 .l34-shell-head,
+      #slide-33 .l34-case-strip { padding-top: 6px; padding-bottom: 6px; }
+      #slide-33 .l34-phase-plot { padding: 22px 19px 31px 43px; }
+      #slide-33 .l34-quadrants { inset: 22px 19px 31px 43px; }
+      #slide-33 .l34-axis-x-left { left: 44px; bottom: 9px; }
+      #slide-33 .l34-axis-x-right { right: 19px; bottom: 9px; }
+      #slide-33 .l34-axis-x-center { bottom: 9px; }
+      #slide-33 .l34-axis-y-top { left: 8px; top: 23px; }
+      #slide-33 .l34-axis-y-bottom { left: 8px; bottom: 32px; }
+      #slide-33 .l34-crosshair-x { left: 43px; right: 19px; }
+      #slide-33 .l34-crosshair-y { top: 22px; bottom: 31px; left: calc(50% + 12px); }
+      #slide-33 .l34-trajectory { inset: 22px 19px 31px 43px; width: calc(100% - 62px); height: calc(100% - 53px); }
+      #slide-33 .l34-relation-rail { gap: 6px; padding: 10px 11px; }
+      #slide-33 .l34-rule { gap: 7px; padding: 6px 7px; }
+      #slide-33 .l34-equation,
+      #slide-33 .l34-warning { padding-top: 4px; padding-bottom: 4px; }
+      #slide-33 .l34-principle { padding-top: 7px; padding-bottom: 7px; }
+    }
+
+    @media (max-width: 1180px) {
+      #slide-33 .l34-overview { grid-template-columns: 140px repeat(3, minmax(0,1fr)); }
+      #slide-33 .l34-phase-shell { grid-template-columns: minmax(0, 1.3fr) minmax(390px, .94fr); }
+      #slide-33 .l34-principle { grid-template-columns: auto minmax(280px, .72fr) minmax(0,1fr); }
+    }
+
+    @media (max-width: 1000px) {
+      #slide-33 .l34-stage { overflow-y: auto; }
+      #slide-33 .l34-overview { grid-template-columns: 1fr 1fr; }
+      #slide-33 .l34-kicker { border-right: 0; border-bottom: 1px solid rgba(61,64,69,.48); }
+      #slide-33 .l34-phase-shell { grid-template-columns: 1fr; grid-template-rows: auto 460px auto auto; }
+      #slide-33 .l34-phase-plot { border-right: 0; border-bottom: 1px solid rgba(61,64,69,.72); }
+      #slide-33 .l34-relation-rail { min-height: 420px; }
+      #slide-33 .l34-principle { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 620px) {
+      #slide-33 .l34-stage { padding: 18px 16px; }
+      #slide-33 .l34-overview { grid-template-columns: 1fr; }
+      #slide-33 .l34-marker { width: 38%; padding: 7px; }
+      #slide-33 .l34-marker-copy { display: none; }
+      #slide-33 .l34-quadrant p { display: none; }
+      #slide-33 .l34-rule { grid-template-columns: 1fr; }
+      #slide-33 .l34-case-strip { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-33" data-module="3">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span><span class="divider"></span>
+    <span class="module-tag" data-mod="3">Módulo III</span><span class="lesson-tag">L34</span>
+    <span class="slide-title">Confluencia, Divergencia y Sesgo Intermercado</span><span class="concept-code">M3.L34.C34</span>
+  </header>
+
+  <main class="slide-body l34-stage">
+    <div class="section-title l34-head">
+      <div class="section-number">Lección 34</div>
+      <h2>Confluencia, Divergencia y Sesgo Intermercado</h2>
+      <div class="divider gradient"></div>
+    </div>
+
+    <div class="l34-canvas">
+      <section class="l34-overview" aria-label="Arquitectura intermercado">
+        <span class="l34-kicker">Lectura conjunta</span>
+        <div class="l34-overview-item">
+          <span class="l34-overview-code">01</span>
+          <div><span class="l34-overview-title">Universo</span><p><strong>NQ · ES · CL · GC</strong> amplían el campo de evidencia.</p></div>
+        </div>
+        <div class="l34-overview-item">
+          <span class="l34-overview-code">02</span>
+          <div><span class="l34-overview-title">Equity</span><p><strong>NQ + ES</strong>: mismo sesgo = confluencia; sesgo opuesto = divergencia.</p></div>
+        </div>
+        <div class="l34-overview-item">
+          <span class="l34-overview-code">03</span>
+          <div><span class="l34-overview-title">Intermercado</span><p><strong>CL + GC</strong> aportan sesgo externo para contrastar la investigación.</p></div>
+        </div>
+      </section>
+
+      <section class="l34-phase-shell" aria-label="Mapa de fase de evidencia intermercado">
+        <div class="l34-shell-head"><span>Mapa de fase · coherencia × evidencia externa</span><span>Trayectoria del ejemplo A → B</span></div>
+
+        <div class="l34-phase-plot">
+          <div class="l34-quadrants" aria-hidden="true">
+            <div class="l34-quadrant l34-q-tension"><span class="l34-quadrant-title">Tensión interna</span><p>Existe apoyo externo, pero Equity pierde alineación.</p></div>
+            <div class="l34-quadrant l34-q-coherent"><span class="l34-quadrant-title">Coherencia ampliada</span><p>Equity converge y el intermercado aporta evidencia compatible.</p></div>
+            <div class="l34-quadrant l34-q-fragile"><span class="l34-quadrant-title">Evidencia frágil</span><p>Divergencia interna y presión externa contradictoria.</p></div>
+            <div class="l34-quadrant l34-q-contrast"><span class="l34-quadrant-title">Contraste externo</span><p>Equity converge, pero otros mercados matizan la lectura.</p></div>
+          </div>
+
+          <span class="l34-axis l34-axis-x-left">Divergencia</span>
+          <span class="l34-axis l34-axis-x-center">Coherencia interna de Equity</span>
+          <span class="l34-axis l34-axis-x-right">Confluencia</span>
+          <span class="l34-axis l34-axis-y-top">Refuerza</span>
+          <span class="l34-axis l34-axis-y-bottom">Contradice</span>
+          <span class="l34-crosshair-x"></span><span class="l34-crosshair-y"></span>
+
+          <svg class="l34-trajectory" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="l34Path" x1="1" y1="0" x2="0" y2="0">
+                <stop offset="0" stop-color="#0033ff" />
+                <stop offset="1" stop-color="#a48cff" />
+              </linearGradient>
+              <marker id="l34Arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#a48cff" />
+              </marker>
+            </defs>
+            <path class="l34-trajectory-channel" d="M62,46 L62,52 Q62,59 55,59 L47,59 Q40,59 40,52 L40,46" />
+            <path class="l34-trajectory-flow" d="M62,46 L62,52 Q62,59 55,59 L47,59 Q40,59 40,52 L40,46" marker-end="url(#l34Arrow)" />
+          </svg>
+
+          <article class="l34-marker l34-marker-a">
+            <span class="l34-marker-code">A</span>
+            <div><span class="l34-marker-state">NQ − · ES − · CL +</span><span class="l34-marker-result">Hipótesis bajista compatible</span></div>
+            <p class="l34-marker-copy">Macrociclos negativos en Equity y estructura positiva en CL aportan evidencia intermercado <strong>coherente con la tesis bajista</strong>.</p>
+          </article>
+
+          <article class="l34-marker l34-marker-b">
+            <span class="l34-marker-code">B</span>
+            <div><span class="l34-marker-state">NQ − · ES +</span><span class="l34-marker-result">La coherencia disminuye</span></div>
+            <p class="l34-marker-copy">La divergencia entre NQ y ES introduce <strong>tensión informacional</strong> y exige mayor contraste.</p>
+          </article>
+        </div>
+
+        <aside class="l34-relation-rail" aria-label="Modelos de relación intermercado">
+          <span class="l34-rail-title">Modelos de relación</span>
+
+          <div class="l34-rule l34-rule-equity">
+            <span class="l34-rule-label">Equity</span>
+            <div class="l34-rule-body">
+              <div class="l34-equation-row"><span class="l34-equation confluence">NQ = ES → confluencia</span><span class="l34-equation divergence">NQ ≠ ES → divergencia</span></div>
+              <p class="l34-rule-copy">Macrociclos HWTE con el mismo sesgo fortalecen la coherencia; los opuestos crean tensión que debe contrastarse.</p>
+            </div>
+          </div>
+
+          <div class="l34-rule l34-rule-cl">
+            <span class="l34-rule-label">CL ↔ Equity</span>
+            <div class="l34-rule-body">
+              <div class="l34-equation-row"><span class="l34-equation bearish">CL + → sesgo bajista</span><span class="l34-equation bullish">CL − → sesgo alcista</span></div>
+              <p class="l34-rule-copy">El petróleo mantiene frecuentemente una <strong>relación inversa con Equity</strong>. Admite excepciones y nunca funciona como señal automática.</p>
+            </div>
+          </div>
+
+          <div class="l34-rule l34-rule-gc">
+            <span class="l34-rule-label">GC ↔ Equity</span>
+            <div class="l34-rule-body">
+              <div class="l34-equation-row"><span class="l34-equation gold">Mayor confluencia habitual</span><span class="l34-equation divergence">Divergencia posible</span></div>
+              <p class="l34-rule-copy">El oro constituye otra fuente de evidencia: suele confluir con Equity, aunque también puede divergir.</p>
+            </div>
+          </div>
+
+          <span class="l34-warning">Sesgo intermercado ≠ orden · Ninguna relación sustituye la evidencia propia de Equity</span>
+        </aside>
+
+        <div class="l34-case-strip">
+          <span class="l34-case-label">Lectura de la trayectoria</span>
+          <p class="l34-case-copy">A muestra evidencia adicional compatible con una hipótesis bajista. Si después NQ y ES divergen, la evidencia pierde coherencia y el trader debe <strong>continuar contrastando antes de inferir o ejecutar</strong>.</p>
+        </div>
+      </section>
+
+      <section class="l34-principle">
+        <span class="l34-principle-label">Principio Cortex-Dendrita</span>
+        <span class="l34-principle-formula">Confluencia fortalece · Divergencia introduce tensión · Intermercado acumula sesgo</span>
+        <p class="l34-principle-copy">Ninguna condición determina una operación por sí sola: <strong>aporta evidencia para construir y contrastar la inferencia.</strong></p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">34/42</span>
+  </footer>
+</section>
+</body>
+</html>

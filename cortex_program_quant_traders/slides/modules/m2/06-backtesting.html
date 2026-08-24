@@ -19,36 +19,131 @@
     <span class="brand">CORTEX QUANT TRADER</span>
     <span class="divider"></span>
     <span class="module-tag" data-mod="2">Modulo II</span>
-    <span class="lesson-tag">L17</span>
+    <span class="lesson-tag">L19</span>
     <span class="slide-title">Backtesting Riguroso</span>
-    <span class="concept-code">M2.L17.C17</span>
+    <span class="concept-code">M2.L19.C19</span>
   </header>
-  <div class="slide-body">
-    <div class="slide-left">
+  <div class="slide-body single-col l19-body">
+    <main class="slide-left full l19-main">
       <div class="section-title">
-        <div class="section-number">Leccion 17</div>
+        <div class="section-number">Lecci&oacute;n 19</div>
         <h2>Backtesting Riguroso</h2>
       </div>
       <div class="divider gradient"></div>
-      <p class="t-body">El backtesting es la herramienta central de validacion, pero esta plagado de trampas metodologicas. Un backtest mal construido genera falsa confianza y destruye capital en vivo.</p>
-      <div class="callout u-mt-4">
-        <p><strong>Regla:</strong> Si tu backtest no tiene al menos un periodo de underperformance significativo, algo esta mal.</p>
+
+      <div class="l19-workbench">
+        <section class="l19-experiment" aria-labelledby="l19-lab-title">
+          <div class="l19-experiment-head">
+            <div>
+              <span class="l19-kicker">C&aacute;mara de validaci&oacute;n / 19</span>
+              <h3 id="l19-lab-title">Simular reglas.<br><em>Observar evidencia.</em></h3>
+            </div>
+            <p><strong>&iquest;Qu&eacute; es el backtesting?</strong> Es la simulaci&oacute;n de una estrategia mec&aacute;nica sobre <strong>datos hist&oacute;ricos</strong> para observar c&oacute;mo habr&iacute;a ejecutado sus reglas y cu&aacute;l habr&iacute;a sido su comportamiento bajo condiciones pasadas.</p>
+          </div>
+
+          <div class="l19-history">
+            <div class="l19-history-head">
+              <span>Muestra hist&oacute;rica / m&uacute;ltiples reg&iacute;menes</span>
+              <span>Tiempo &rarr;</span>
+            </div>
+
+            <div class="l19-plot" aria-label="Representaci&oacute;n conceptual de diferentes condiciones hist&oacute;ricas">
+              <div class="l19-regimes" aria-hidden="true">
+                <span>Expansi&oacute;n</span><span>Rango</span><span>Estr&eacute;s</span><span>Recuperaci&oacute;n</span>
+              </div>
+              <svg viewBox="0 0 900 180" role="img" aria-label="Curva conceptual de resultados hist&oacute;ricos dividida entre in-sample y out-of-sample" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="l19-area" x1="0" x2="1">
+                    <stop offset="0" stop-color="#0033ff" stop-opacity=".18" />
+                    <stop offset=".66" stop-color="#0033ff" stop-opacity=".05" />
+                    <stop offset="1" stop-color="#a48cff" stop-opacity=".13" />
+                  </linearGradient>
+                  <linearGradient id="l19-line" x1="0" x2="1">
+                    <stop offset="0" stop-color="#0033ff" />
+                    <stop offset=".66" stop-color="#06b6d4" />
+                    <stop offset="1" stop-color="#a48cff" />
+                  </linearGradient>
+                </defs>
+                <g class="l19-grid-lines">
+                  <line x1="0" y1="35" x2="900" y2="35" /><line x1="0" y1="75" x2="900" y2="75" />
+                  <line x1="0" y1="115" x2="900" y2="115" /><line x1="0" y1="155" x2="900" y2="155" />
+                  <line x1="180" y1="0" x2="180" y2="180" /><line x1="360" y1="0" x2="360" y2="180" />
+                  <line x1="540" y1="0" x2="540" y2="180" /><line x1="720" y1="0" x2="720" y2="180" />
+                </g>
+                <path class="l19-area-path" d="M0,146 L40,137 L78,141 L118,118 L158,126 L202,101 L242,108 L284,83 L326,91 L370,64 L412,75 L454,53 L498,66 L540,40 L584,52 L606,45 L630,70 L660,62 L690,83 L720,57 L752,65 L782,47 L814,55 L846,32 L878,42 L900,25 L900,180 L0,180 Z" />
+                <path class="l19-equity-path" d="M0,146 L40,137 L78,141 L118,118 L158,126 L202,101 L242,108 L284,83 L326,91 L370,64 L412,75 L454,53 L498,66 L540,40 L584,52 L606,45 L630,70 L660,62 L690,83 L720,57 L752,65 L782,47 L814,55 L846,32 L878,42 L900,25" />
+                <line class="l19-gate-line" x1="606" y1="0" x2="606" y2="180" />
+                <circle class="l19-gate-dot" cx="606" cy="45" r="5" />
+              </svg>
+              <div class="l19-validation-gate">Freeze / validar</div>
+            </div>
+
+            <div class="l19-split-bar" aria-label="Divisi&oacute;n de datos in-sample y out-of-sample">
+              <div class="l19-is"><span>IS</span><strong>Desarrollo</strong><small>Datos utilizados</small></div>
+              <div class="l19-oos"><span>OOS</span><strong>Validaci&oacute;n</strong><small>Datos no vistos</small></div>
+            </div>
+            <p class="l19-partition-copy">Los datos pueden dividirse entre un per&iacute;odo utilizado para desarrollar la estrategia (<strong>IS</strong>) y otro reservado para observar su comportamiento sobre informaci&oacute;n no utilizada durante su construcci&oacute;n (<strong>OOS</strong>).</p>
+          </div>
+
+          <div class="l19-controls">
+            <article>
+              <span class="l19-control-index">01 / Cobertura</span>
+              <h4>Calidad y extensi&oacute;n</h4>
+              <p>El backtest debe utilizar datos suficientemente amplios y representativos, incluyendo <strong>diferentes per&iacute;odos y condiciones de mercado</strong>. Una muestra pobre puede producir conclusiones enga&ntilde;osas.</p>
+            </article>
+            <article>
+              <span class="l19-control-index">02 / Fricci&oacute;n</span>
+              <h4>Ejecuci&oacute;n realista</h4>
+              <p>La simulaci&oacute;n debe aproximarse a las condiciones en vivo, incorporando <strong>spread, comisiones, slippage y caracter&iacute;sticas del instrumento</strong>.</p>
+              <div class="l19-frictions" aria-hidden="true"><span>Spread</span><span>Fees</span><span>Slippage</span><span>Instrumento</span></div>
+            </article>
+            <article>
+              <span class="l19-control-index">03 / Evidencia</span>
+              <h4>Tama&ntilde;o de muestra</h4>
+              <p>Se necesita un n&uacute;mero suficiente de operaciones para que las m&eacute;tricas tengan significado estad&iacute;stico. <strong>Pocos trades pueden producir resultados extraordinarios simplemente por azar.</strong></p>
+            </article>
+          </div>
+        </section>
+
+        <aside class="l19-audit" aria-label="Consola de auditor&iacute;a del backtest">
+          <section class="l19-telemetry">
+            <div class="l19-audit-head">
+              <span class="l19-kicker">Lectura integral</span>
+              <span>Telemetry / 07</span>
+            </div>
+            <p>No debe evaluarse &uacute;nicamente el beneficio final. Es necesario observar conjuntamente <strong>equity curve, drawdown, n&uacute;mero de operaciones, Profit Factor, Expectancy, estabilidad y relaci&oacute;n retorno/riesgo</strong>.</p>
+            <div class="l19-metric-ledger" aria-label="M&eacute;tricas para una lectura integral">
+              <span><i>01</i>Equity curve</span>
+              <span><i>02</i>Drawdown</span>
+              <span><i>03</i>N.&ordm; operaciones</span>
+              <span><i>04</i>Profit Factor</span>
+              <span><i>05</i>Expectancy</span>
+              <span><i>06</i>Estabilidad</span>
+              <span class="is-wide"><i>07</i>Retorno / riesgo</span>
+            </div>
+          </section>
+
+          <section class="l19-biases">
+            <div class="l19-audit-head">
+              <span class="l19-kicker">Sesgos del backtesting</span>
+              <span>Bias firewall</span>
+            </div>
+            <p>Errores metodol&oacute;gicos pueden producir resultados artificialmente favorables y deben reconocerse durante la construcci&oacute;n del experimento.</p>
+            <div class="l19-bias-rail">
+              <div><span>Look-Ahead Bias</span><i></i></div>
+              <div><span>Survivorship Bias</span><i></i></div>
+              <div><span>Data-Snooping</span><i></i></div>
+            </div>
+          </section>
+
+          <section class="l19-principle">
+            <span class="l19-kicker">Principio Quant</span>
+            <blockquote>El backtest <strong>no demuestra</strong> que una estrategia funcionar&aacute; en el futuro; demuestra c&oacute;mo sus reglas <strong>se habr&iacute;an comportado</strong> bajo determinadas condiciones hist&oacute;ricas.</blockquote>
+            <div class="l19-verdict"><span>Evidencia hist&oacute;rica</span><strong>&ne;</strong><span>Garant&iacute;a futura</span></div>
+          </section>
+        </aside>
       </div>
-    </div>
-    <div class="slide-right">
-      <div class="card-grid cols-1">
-        <div class="info-card">
-          <div class="card-icon u-accent">&#x25A0;</div>
-          <div class="card-title">Survivorship Bias</div>
-          <div class="card-body">Testear solo con activos que sobrevivieron al periodo. Los resultados se inflan artificialmente porque se excluyen los fracasos.</div>
-        </div>
-        <div class="info-card">
-          <div class="card-icon u-hi">&#x25A0;</div>
-          <div class="card-title">Look-ahead Bias</div>
-          <div class="card-body">Usar informacion que no estaba disponible en el momento de la decision. El backtest ve el futuro que el trader en vivo no puede ver.</div>
-        </div>
-      </div>
-    </div>
+    </main>
   </div>
   <footer class="slide-footer">
     <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>

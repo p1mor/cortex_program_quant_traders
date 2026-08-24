@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>De la Hipótesis a la Tesis Inferencial — Cortex Quant Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-34 .l35-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: clamp(15px, 1.8vh, 24px);
+      min-height: 0;
+      padding: clamp(23px, 3vh, 36px) clamp(30px, 3.2vw, 62px) clamp(20px, 2.6vh, 31px);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 22% 56%, rgba(0,51,255,.055), transparent 27%),
+        radial-gradient(circle at 76% 55%, rgba(6,182,212,.047), transparent 29%),
+        #000;
+    }
+
+    #slide-34 .l35-head .divider { margin-top: clamp(13px, 1.7vh, 19px); }
+
+    #slide-34 .l35-canvas {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: clamp(12px, 1.25vw, 20px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-34 .l35-premise {
+      display: grid;
+      grid-template-columns: minmax(180px, .31fr) minmax(0, 1fr) auto;
+      gap: clamp(15px, 1.5vw, 25px);
+      align-items: center;
+      min-width: 0;
+      padding: clamp(11px, 1.1vw, 17px) clamp(16px, 1.45vw, 24px);
+      border-top: 1px solid rgba(0,51,255,.68);
+      border-bottom: 1px solid rgba(6,182,212,.34);
+      background: linear-gradient(90deg, rgba(0,51,255,.09), rgba(6,182,212,.035));
+    }
+
+    #slide-34 .l35-kicker,
+    #slide-34 .l35-premise-badge,
+    #slide-34 .l35-lab-head,
+    #slide-34 .l35-chamber-index,
+    #slide-34 .l35-chamber-label,
+    #slide-34 .l35-hypothesis-code,
+    #slide-34 .l35-chip,
+    #slide-34 .l35-evidence-name,
+    #slide-34 .l35-evidence-state,
+    #slide-34 .l35-scan-label,
+    #slide-34 .l35-gate-core,
+    #slide-34 .l35-gate-output,
+    #slide-34 .l35-thesis-code,
+    #slide-34 .l35-condition-title,
+    #slide-34 .l35-execution-state,
+    #slide-34 .l35-case-label,
+    #slide-34 .l35-case-token,
+    #slide-34 .l35-case-result,
+    #slide-34 .l35-principle-label,
+    #slide-34 .l35-principle-formula {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    #slide-34 .l35-kicker {
+      color: var(--accent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-34 .l35-premise p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.42;
+    }
+
+    #slide-34 .l35-premise strong,
+    #slide-34 .l35-chamber-copy strong,
+    #slide-34 .l35-hypothesis-copy strong,
+    #slide-34 .l35-evidence-copy strong,
+    #slide-34 .l35-gate-copy strong,
+    #slide-34 .l35-thesis-copy strong,
+    #slide-34 .l35-condition p strong,
+    #slide-34 .l35-case-copy strong,
+    #slide-34 .l35-principle-copy strong {
+      color: var(--txt-primary);
+      font-weight: 700;
+    }
+
+    #slide-34 .l35-premise-badge {
+      min-width: clamp(205px, 15vw, 275px);
+      padding: 8px 11px;
+      border: 1px solid rgba(255,183,77,.42);
+      color: var(--warn);
+      background: var(--warn-subtle);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 800;
+      text-align: center;
+    }
+
+    #slide-34 .l35-lab {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      border: 1px solid var(--border-default);
+      border-top: 2px solid var(--accent);
+      background: rgba(7,8,10,.98);
+    }
+
+    #slide-34 .l35-lab::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .28;
+      background-image:
+        linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
+      background-size: 42px 42px;
+    }
+
+    #slide-34 .l35-lab > * { position: relative; z-index: 1; }
+
+    #slide-34 .l35-lab-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: clamp(10px, 1vh, 13px) clamp(15px, 1.45vw, 24px);
+      border-bottom: 1px solid rgba(61,64,69,.72);
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+    }
+
+    #slide-34 .l35-lab-head span:last-child { color: var(--hi); font-weight: 800; }
+
+    #slide-34 .l35-process {
+      display: grid;
+      grid-template-columns: minmax(180px, .82fr) 31px minmax(285px, 1.42fr) 31px minmax(180px, .84fr) 31px minmax(220px, 1fr);
+      min-width: 0;
+      min-height: 0;
+      padding: clamp(13px, 1.35vw, 21px);
+    }
+
+    #slide-34 .l35-chamber {
+      position: relative;
+      display: grid;
+      min-width: 0;
+      min-height: 0;
+      padding: clamp(11px, 1.05vw, 17px);
+      border: 1px solid var(--chamber-border);
+      background: var(--chamber-bg);
+      overflow: hidden;
+    }
+
+    #slide-34 .l35-hypothesis { --chamber-border: rgba(0,51,255,.5); --chamber-bg: rgba(0,51,255,.055); grid-template-rows: auto auto minmax(0,1fr) auto; gap: 9px; }
+    #slide-34 .l35-evidence { --chamber-border: rgba(164,140,255,.43); --chamber-bg: rgba(164,140,255,.04); grid-template-rows: auto auto minmax(0,1fr) auto; gap: 8px; }
+    #slide-34 .l35-contrast { --chamber-border: rgba(255,183,77,.44); --chamber-bg: rgba(255,183,77,.04); grid-template-rows: auto auto minmax(0,1fr) auto; gap: 9px; }
+    #slide-34 .l35-thesis { --chamber-border: rgba(0,229,255,.46); --chamber-bg: rgba(0,229,255,.045); grid-template-rows: auto auto minmax(0,1fr) auto; gap: 9px; }
+
+    #slide-34 .l35-chamber-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    #slide-34 .l35-chamber-index {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+    }
+
+    #slide-34 .l35-chamber-label {
+      color: var(--chamber-accent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-34 .l35-hypothesis .l35-chamber-label { --chamber-accent: var(--accent); }
+    #slide-34 .l35-evidence .l35-chamber-label { --chamber-accent: var(--purple); }
+    #slide-34 .l35-contrast .l35-chamber-label { --chamber-accent: var(--warn); }
+    #slide-34 .l35-thesis .l35-chamber-label { --chamber-accent: var(--hi); }
+
+    #slide-34 .l35-chamber-copy {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .68vw, .8125rem));
+      line-height: 1.35;
+    }
+
+    #slide-34 .l35-flow-arrow {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      color: var(--txt-tertiary);
+      font-family: var(--font-mono);
+      font-size: 1rem;
+    }
+
+    #slide-34 .l35-flow-arrow::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(107,114,128,.35), var(--hi));
+    }
+
+    #slide-34 .l35-flow-arrow span {
+      position: relative;
+      z-index: 1;
+      padding-left: 4px;
+      color: var(--hi);
+      background: #07080a;
+    }
+
+    #slide-34 .l35-hypothesis-core {
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      gap: 7px;
+      min-height: 0;
+      border: 1px solid rgba(0,51,255,.42);
+      background:
+        radial-gradient(circle, rgba(0,51,255,.14) 0 8%, transparent 9% 33%, rgba(0,51,255,.09) 34% 35%, transparent 36%),
+        rgba(0,0,0,.48);
+      text-align: center;
+    }
+
+    #slide-34 .l35-hypothesis-code {
+      color: var(--txt-primary);
+      font-size: clamp(1.55rem, 2.15vw, 2.45rem);
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    #slide-34 .l35-hypothesis-code sub { color: var(--accent); font-size: .45em; }
+
+    #slide-34 .l35-hypothesis-copy {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .68vw, .8125rem));
+      line-height: 1.34;
+    }
+
+    #slide-34 .l35-chip-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    #slide-34 .l35-chip {
+      padding: 6px 7px;
+      color: var(--txt-secondary);
+      border: 1px solid rgba(61,64,69,.7);
+      background: rgba(17,17,17,.85);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 700;
+      text-align: center;
+    }
+
+    #slide-34 .l35-evidence-stack {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-content: start;
+      gap: 3px;
+      min-height: 0;
+    }
+
+    #slide-34 .l35-evidence-row {
+      display: grid;
+      grid-template-columns: minmax(100px, .31fr) minmax(0, 1fr) auto;
+      gap: 5px;
+      align-items: center;
+      min-width: 0;
+      padding: 3px 5px;
+      border-left: 2px solid var(--evidence-color);
+      background: color-mix(in srgb, var(--evidence-color) 6%, transparent);
+    }
+
+    #slide-34 .l35-evidence-row:nth-child(1) { --evidence-color: var(--accent); }
+    #slide-34 .l35-evidence-row:nth-child(2) { --evidence-color: var(--purple); }
+    #slide-34 .l35-evidence-row:nth-child(3) { --evidence-color: var(--hi); }
+    #slide-34 .l35-evidence-row:nth-child(4) { --evidence-color: var(--cyan); }
+    #slide-34 .l35-evidence-row:nth-child(5) { --evidence-color: var(--warn); }
+
+    #slide-34 .l35-evidence-name {
+      color: var(--evidence-color);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-34 .l35-evidence-copy {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .68vw, .8125rem));
+      line-height: 1.16;
+    }
+
+    #slide-34 .l35-evidence-state {
+      padding: 3px 5px;
+      color: var(--state-color);
+      border: 1px solid color-mix(in srgb, var(--state-color) 38%, transparent);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    #slide-34 .l35-evidence-state.positive { --state-color: var(--bull); }
+    #slide-34 .l35-evidence-state.compatible { --state-color: var(--hi); }
+
+    #slide-34 .l35-contradiction-scan {
+      display: grid;
+      grid-template-columns: auto minmax(0,1fr);
+      gap: 6px;
+      align-items: center;
+      padding: 4px 6px;
+      border: 1px solid rgba(230,57,85,.3);
+      background: var(--bear-subtle);
+    }
+
+    #slide-34 .l35-scan-label {
+      color: var(--bear);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-34 .l35-contradiction-scan p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .68vw, .8125rem));
+      line-height: 1.18;
+    }
+
+    #slide-34 .l35-gate {
+      position: relative;
+      display: grid;
+      align-content: center;
+      gap: 11px;
+      min-height: 0;
+      padding: 12px 7px;
+      border-top: 1px solid rgba(255,183,77,.28);
+      border-bottom: 1px solid rgba(255,183,77,.28);
+      background: rgba(0,0,0,.45);
+    }
+
+    #slide-34 .l35-gate-core {
+      display: grid;
+      place-items: center;
+      width: clamp(78px, 7vw, 108px);
+      aspect-ratio: 1;
+      margin: auto;
+      color: var(--warn);
+      border: 1px solid rgba(255,183,77,.48);
+      background: rgba(255,183,77,.055);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+      line-height: 1.45;
+      text-align: center;
+      transform: rotate(45deg);
+    }
+
+    #slide-34 .l35-gate-core span { transform: rotate(-45deg); }
+
+    #slide-34 .l35-gate-copy {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .68vw, .8125rem));
+      line-height: 1.34;
+      text-align: center;
+    }
+
+    #slide-34 .l35-gate-outcomes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    #slide-34 .l35-gate-output {
+      padding: 6px 5px;
+      color: var(--output-color);
+      border: 1px solid color-mix(in srgb, var(--output-color) 35%, transparent);
+      background: color-mix(in srgb, var(--output-color) 6%, transparent);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 800;
+      text-align: center;
+    }
+
+    #slide-34 .l35-gate-output.coherent { --output-color: var(--bull); }
+    #slide-34 .l35-gate-output.falsified { --output-color: var(--bear); }
+
+    #slide-34 .l35-thesis-core {
+      display: grid;
+      align-content: center;
+      gap: 6px;
+      min-height: 0;
+      padding: 10px;
+      border: 1px solid rgba(0,229,255,.38);
+      background: linear-gradient(135deg, rgba(0,229,255,.075), rgba(0,51,255,.05));
+    }
+
+    #slide-34 .l35-thesis-code {
+      color: var(--hi);
+      font-size: clamp(1.25rem, 1.85vw, 2.05rem);
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    #slide-34 .l35-thesis-copy {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .68vw, .8125rem));
+      line-height: 1.34;
+    }
+
+    #slide-34 .l35-conditions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    #slide-34 .l35-condition {
+      padding: 7px 8px;
+      border-left: 2px solid var(--condition-color);
+      background: color-mix(in srgb, var(--condition-color) 6%, transparent);
+    }
+
+    #slide-34 .l35-condition.valid { --condition-color: var(--bull); }
+    #slide-34 .l35-condition.invalid { --condition-color: var(--bear); }
+
+    #slide-34 .l35-condition-title {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--condition-color);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-34 .l35-condition p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .68vw, .8125rem));
+      line-height: 1.28;
+    }
+
+    #slide-34 .l35-execution-port {
+      display: grid;
+      grid-template-columns: auto minmax(0,1fr);
+      gap: 8px;
+      align-items: center;
+      padding: 7px 8px;
+      border: 1px solid rgba(255,183,77,.36);
+      background: var(--warn-subtle);
+    }
+
+    #slide-34 .l35-execution-state {
+      color: var(--warn);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 800;
+    }
+
+    #slide-34 .l35-execution-port p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .68vw, .8125rem));
+      line-height: 1.28;
+    }
+
+    #slide-34 .l35-case-strip {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 13px;
+      align-items: center;
+      padding: clamp(9px, .9vh, 12px) clamp(15px, 1.45vw, 24px);
+      border-top: 1px solid rgba(61,64,69,.72);
+      background: rgba(17,17,17,.72);
+    }
+
+    #slide-34 .l35-case-label {
+      color: var(--purple);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-34 .l35-case-flow {
+      display: grid;
+      grid-template-columns: repeat(4, auto) minmax(180px, .9fr) minmax(220px, 1.1fr);
+      gap: 6px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    #slide-34 .l35-case-token,
+    #slide-34 .l35-case-result {
+      padding: 6px 7px;
+      color: var(--case-color);
+      border: 1px solid color-mix(in srgb, var(--case-color) 36%, transparent);
+      background: color-mix(in srgb, var(--case-color) 6%, transparent);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 800;
+      text-align: center;
+    }
+
+    #slide-34 .l35-case-token.hwte { --case-color: var(--accent); }
+    #slide-34 .l35-case-token.micro { --case-color: var(--purple); }
+    #slide-34 .l35-case-token.cusum { --case-color: var(--hi); }
+    #slide-34 .l35-case-token.market { --case-color: var(--warn); }
+    #slide-34 .l35-case-result { --case-color: var(--bull); }
+
+    #slide-34 .l35-case-copy {
+      grid-column: auto;
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .68vw, .8125rem));
+      line-height: 1.2;
+    }
+
+    #slide-34 .l35-principle {
+      display: grid;
+      grid-template-columns: auto minmax(310px, .66fr) minmax(0, 1fr);
+      gap: clamp(14px, 1.4vw, 23px);
+      align-items: center;
+      padding: clamp(10px, 1vh, 13px) clamp(16px, 1.4vw, 24px);
+      border-left: 3px solid var(--accent);
+      background: linear-gradient(90deg, rgba(0,51,255,.12), rgba(0,229,255,.055));
+    }
+
+    #slide-34 .l35-principle-label {
+      color: var(--accent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-34 .l35-principle-formula {
+      color: var(--hi);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .64vw, .75rem));
+      font-weight: 800;
+      line-height: 1.38;
+    }
+
+    #slide-34 .l35-principle-copy {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.36;
+    }
+
+    @media (max-height: 820px) {
+      #slide-34 .l35-stage { gap: 11px; padding: 18px 32px 16px; }
+      #slide-34 .l35-head .divider { margin-top: 10px; }
+      #slide-34 .l35-head h2 { font-size: var(--fs-slide-title, clamp(1.75rem, 2vw, 2.25rem)); }
+      #slide-34 .l35-canvas { gap: 9px; }
+      #slide-34 .l35-premise { padding-top: 7px; padding-bottom: 7px; }
+      #slide-34 .l35-lab-head,
+      #slide-34 .l35-case-strip { padding-top: 6px; padding-bottom: 6px; }
+      #slide-34 .l35-process { grid-template-columns: minmax(165px,.82fr) 24px minmax(260px,1.42fr) 24px minmax(165px,.84fr) 24px minmax(205px,1fr); padding: 9px; }
+      #slide-34 .l35-chamber { gap: 4px; padding: 6px 7px; }
+      #slide-34 .l35-evidence-stack { gap: 3px; }
+      #slide-34 .l35-evidence-row { padding-top: 2px; padding-bottom: 2px; }
+      #slide-34 .l35-gate { gap: 6px; padding-top: 7px; padding-bottom: 7px; }
+      #slide-34 .l35-gate-core { width: 68px; }
+      #slide-34 .l35-thesis-core { padding: 7px; }
+      #slide-34 .l35-condition,
+      #slide-34 .l35-execution-port { padding-top: 5px; padding-bottom: 5px; }
+      #slide-34 .l35-principle { padding-top: 7px; padding-bottom: 7px; }
+    }
+
+    @media (max-width: 1180px) {
+      #slide-34 .l35-process { grid-template-columns: minmax(155px,.8fr) 22px minmax(245px,1.38fr) 22px minmax(155px,.82fr) 22px minmax(195px,1fr); }
+      #slide-34 .l35-premise { grid-template-columns: 165px minmax(0,1fr) auto; }
+      #slide-34 .l35-principle { grid-template-columns: auto minmax(270px,.66fr) minmax(0,1fr); }
+      #slide-34 .l35-case-flow { grid-template-columns: repeat(4, auto) minmax(0, 1fr); }
+      #slide-34 .l35-case-copy { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 1000px) {
+      #slide-34 .l35-stage { overflow-y: auto; }
+      #slide-34 .l35-premise { grid-template-columns: 1fr; }
+      #slide-34 .l35-premise-badge { width: 100%; }
+      #slide-34 .l35-process { grid-template-columns: 1fr; gap: 8px; }
+      #slide-34 .l35-flow-arrow { min-height: 30px; transform: rotate(90deg); }
+      #slide-34 .l35-chamber { min-height: 300px; }
+      #slide-34 .l35-principle { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 620px) {
+      #slide-34 .l35-stage { padding: 18px 16px; }
+      #slide-34 .l35-evidence-row { grid-template-columns: 1fr; }
+      #slide-34 .l35-conditions,
+      #slide-34 .l35-chip-row,
+      #slide-34 .l35-case-flow { grid-template-columns: 1fr; }
+      #slide-34 .l35-case-strip { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-34" data-module="3">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span><span class="divider"></span>
+    <span class="module-tag" data-mod="3">Módulo III</span><span class="lesson-tag">L35</span>
+    <span class="slide-title">De la Hipótesis a la Tesis Inferencial</span><span class="concept-code">M3.L35.C35</span>
+  </header>
+
+  <main class="slide-body l35-stage">
+    <div class="section-title l35-head">
+      <div class="section-number">Lección 35</div>
+      <h2>De la Hipótesis a la Tesis Inferencial</h2>
+      <div class="divider gradient"></div>
+    </div>
+
+    <div class="l35-canvas">
+      <section class="l35-premise">
+        <span class="l35-kicker">Punto de partida</span>
+        <p>En Cortex-Dendrita, una <strong>hipótesis es una interpretación provisional</strong>. Surge de la observación y de la acumulación de sesgo, pero permanece bajo investigación hasta ser contrastada.</p>
+        <span class="l35-premise-badge">Hipótesis ≠ operación</span>
+      </section>
+
+      <section class="l35-lab" aria-label="Laboratorio de transformación inferencial">
+        <div class="l35-lab-head"><span>Laboratorio de transformación inferencial</span><span>Hipótesis → Evidencia → Contraste y falsación → Tesis inferencial</span></div>
+
+        <div class="l35-process">
+          <article class="l35-chamber l35-hypothesis">
+            <div class="l35-chamber-head"><span class="l35-chamber-index">01 · Entrada</span><span class="l35-chamber-label">Hipótesis</span></div>
+            <p class="l35-chamber-copy">Interpretación <strong>provisional</strong> que todavía debe investigarse.</p>
+            <div class="l35-hypothesis-core">
+              <span class="l35-hypothesis-code">H<sub>1</sub></span>
+              <p class="l35-hypothesis-copy"><strong>Macrociclo HWTE positivo</strong><br />Hipótesis alcista</p>
+            </div>
+            <div class="l35-chip-row"><span class="l35-chip">Observación</span><span class="l35-chip">Sesgo acumulado</span></div>
+          </article>
+
+          <div class="l35-flow-arrow" aria-hidden="true"><span>→</span></div>
+
+          <article class="l35-chamber l35-evidence">
+            <div class="l35-chamber-head"><span class="l35-chamber-index">02 · Adquisición</span><span class="l35-chamber-label">Evidencia</span></div>
+            <p class="l35-chamber-copy">El trader del <strong>Quant Trading Desk</strong> somete la hipótesis a evidencia multidimensional e intermercado.</p>
+            <div class="l35-evidence-stack">
+              <div class="l35-evidence-row"><span class="l35-evidence-name">HWTE</span><span class="l35-evidence-copy">Macrociclo estructural positivo</span><span class="l35-evidence-state positive">Habilita</span></div>
+              <div class="l35-evidence-row"><span class="l35-evidence-name">TIB · VIB · DIB</span><span class="l35-evidence-copy">Microciclos alineados</span><span class="l35-evidence-state positive">Alinea</span></div>
+              <div class="l35-evidence-row"><span class="l35-evidence-name">CUSUM</span><span class="l35-evidence-copy">Confirma el cambio observado</span><span class="l35-evidence-state positive">Confirma</span></div>
+              <div class="l35-evidence-row"><span class="l35-evidence-name">Prob. · niveles</span><span class="l35-evidence-copy">Estructuran contexto y condiciones</span><span class="l35-evidence-state compatible">Compatible</span></div>
+              <div class="l35-evidence-row"><span class="l35-evidence-name">Intermercado</span><span class="l35-evidence-copy">Relaciones entre mercados compatibles</span><span class="l35-evidence-state compatible">Compatible</span></div>
+            </div>
+            <div class="l35-contradiction-scan"><span class="l35-scan-label">Escaneo contrario</span><p>La investigación busca deliberadamente <strong>confirmaciones y contradicciones</strong>.</p></div>
+          </article>
+
+          <div class="l35-flow-arrow" aria-hidden="true"><span>→</span></div>
+
+          <article class="l35-chamber l35-contrast">
+            <div class="l35-chamber-head"><span class="l35-chamber-index">03 · Prueba</span><span class="l35-chamber-label">Contraste</span></div>
+            <p class="l35-chamber-copy">La evidencia debe sostener la interpretación y resistir intentos de <strong>falsación</strong>.</p>
+            <div class="l35-gate">
+              <div class="l35-gate-core"><span>Contraste<br />+<br />falsación</span></div>
+              <p class="l35-gate-copy">¿Existe <strong>suficiente coherencia</strong> para sostener la interpretación?</p>
+            </div>
+            <div class="l35-gate-outcomes"><span class="l35-gate-output coherent">Sostener</span><span class="l35-gate-output falsified">Reformular</span></div>
+          </article>
+
+          <div class="l35-flow-arrow" aria-hidden="true"><span>→</span></div>
+
+          <article class="l35-chamber l35-thesis">
+            <div class="l35-chamber-head"><span class="l35-chamber-index">04 · Salida</span><span class="l35-chamber-label">Tesis inferencial</span></div>
+            <p class="l35-chamber-copy">La tesis aparece cuando la evidencia alcanza <strong>suficiente coherencia</strong>.</p>
+            <div class="l35-thesis-core">
+              <span class="l35-thesis-code">TESIS</span>
+              <p class="l35-thesis-copy">Interpretación sostenida por evidencia y acompañada de límites explícitos.</p>
+              <div class="l35-conditions">
+                <div class="l35-condition valid"><span class="l35-condition-title">Vigencia</span><p>Condiciones que mantienen la tesis activa.</p></div>
+                <div class="l35-condition invalid"><span class="l35-condition-title">Invalidación</span><p>Condiciones que obligan a abandonarla.</p></div>
+              </div>
+            </div>
+            <div class="l35-execution-port"><span class="l35-execution-state">Ejecución · separada</span><p>Solo ocurre cuando las condiciones justifican <strong>capitalizar la tesis</strong>.</p></div>
+          </article>
+        </div>
+
+        <div class="l35-case-strip">
+          <span class="l35-case-label">Ejemplo · hipótesis alcista</span>
+          <div class="l35-case-flow">
+            <span class="l35-case-token hwte">HWTE +</span><span class="l35-case-token micro">Microciclos alineados</span><span class="l35-case-token cusum">CUSUM confirma</span><span class="l35-case-token market">Intermercado compatible</span><span class="l35-case-result">Coherencia suficiente → tesis inferencial</span>
+            <p class="l35-case-copy">La hipótesis gana consistencia conforme la evidencia compatible se acumula; solo entonces puede convertirse en una <strong>tesis con vigencia e invalidación definidas</strong>.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="l35-principle">
+        <span class="l35-principle-label">Principio Cortex-Dendrita</span>
+        <span class="l35-principle-formula">La hipótesis se investiga · La tesis se sostiene con evidencia</span>
+        <p class="l35-principle-copy">Una tesis inferencial tampoco obliga a operar: <strong>la ejecución ocurre únicamente cuando las condiciones justifican capitalizarla.</strong></p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">35/42</span>
+  </footer>
+</section>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex Quant Trader - TechPulse Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-13 .l12-stage {
+      min-height: 0;
+      padding: clamp(18px, 2vw, 30px) clamp(22px, 2.4vw, 42px);
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr);
+      gap: clamp(12px, 1.45vh, 20px);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 53% 48%, rgba(164,140,255,.05), transparent 30%),
+        linear-gradient(rgba(255,255,255,.016) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.016) 1px, transparent 1px),
+        #000;
+      background-size: auto, 52px 52px, 52px 52px, auto;
+    }
+
+    #slide-13 .l12-kicker,
+    #slide-13 .l12-board-label,
+    #slide-13 .l12-family,
+    #slide-13 .l12-state,
+    #slide-13 .l12-graphic-label,
+    #slide-13 .l12-output {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+
+    #slide-13 .l12-kicker {
+      margin-bottom: 7px;
+      color: var(--accent);
+      font-size: var(--fs-slide-label);
+      font-weight: 700;
+    }
+
+    #slide-13 .l12-heading h2 {
+      margin: 0;
+      color: var(--txt-primary);
+      font-family: var(--font-display);
+      font-size: var(--fs-slide-title);
+      font-weight: 500;
+      line-height: 1.12;
+    }
+
+    #slide-13 .l12-title-rule {
+      width: 54px;
+      height: 2px;
+      margin-top: 14px;
+      background: linear-gradient(90deg, var(--accent), var(--cyan));
+    }
+
+    #slide-13 .l12-dependency {
+      min-height: 48px;
+      display: grid;
+      grid-template-columns: 170px repeat(4, 1fr);
+      align-items: stretch;
+      border: 1px solid var(--border-default);
+      border-top-color: var(--purple);
+      background: rgba(7, 7, 10, .95);
+    }
+
+    #slide-13 .l12-dependency > * {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      padding: 9px 14px;
+      border-right: 1px solid var(--border-subtle);
+    }
+
+    #slide-13 .l12-dependency > *:last-child { border-right: 0; }
+
+    #slide-13 .l12-board-label {
+      color: var(--txt-muted);
+      font-size: var(--fs-slide-micro);
+      font-weight: 700;
+    }
+
+    #slide-13 .l12-dependency-step {
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--txt-secondary);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-13 .l12-dependency-step b { color: var(--step); }
+    #slide-13 .l12-dependency-step::after { content: "→"; color: var(--txt-muted); }
+    #slide-13 .l12-dependency-step:last-child::after { content: "OUTPUT"; font-size: var(--fs-slide-micro); color: var(--cyan); }
+
+    #slide-13 .l12-lab {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: clamp(11px, 1.3vw, 18px);
+    }
+
+    #slide-13 .l12-unit {
+      --unit: var(--accent);
+      --unit-bg: rgba(0,51,255,.065);
+      min-width: 0;
+      min-height: 0;
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(190px, .7fr);
+      border: 1px solid var(--border-default);
+      border-top-color: var(--unit);
+      background: linear-gradient(135deg, var(--unit-bg), rgba(6,7,9,.98) 48%);
+      overflow: hidden;
+    }
+
+    #slide-13 .l12-unit.is-commodities { --unit: var(--warn); --unit-bg: rgba(255,183,77,.07); }
+    #slide-13 .l12-unit.is-bonds { --unit: var(--accent); --unit-bg: rgba(0,51,255,.07); }
+    #slide-13 .l12-unit.is-derivatives { --unit: var(--purple); --unit-bg: rgba(164,140,255,.07); }
+    #slide-13 .l12-unit.is-synthetics { --unit: var(--cyan); --unit-bg: rgba(0,229,255,.06); }
+
+    #slide-13 .l12-content {
+      min-width: 0;
+      padding: clamp(14px, 1.6vw, 22px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-right: 1px solid var(--border-subtle);
+    }
+
+    #slide-13 .l12-unit-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+
+    #slide-13 .l12-unit h3 {
+      margin: 0;
+      color: var(--txt-primary);
+      font-family: var(--font-display);
+      font-size: clamp(1.08rem, 1.3vw, 1.45rem);
+      font-weight: 500;
+    }
+
+    #slide-13 .l12-family {
+      color: var(--unit);
+      font-size: var(--fs-slide-micro);
+      font-weight: 700;
+    }
+
+    #slide-13 .l12-copy {
+      margin: 0;
+      color: var(--txt-secondary);
+      font-family: var(--font-body);
+      font-size: var(--fs-slide-support);
+      line-height: 1.48;
+    }
+
+    #slide-13 .l12-copy strong { color: var(--txt-primary); font-weight: 700; }
+
+    #slide-13 .l12-techline {
+      margin-top: 9px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-subtle);
+      color: var(--txt-secondary);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-support);
+      line-height: 1.42;
+    }
+
+    #slide-13 .l12-graphic {
+      position: relative;
+      min-width: 0;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: rgba(255,255,255,.012);
+    }
+
+    #slide-13 .l12-graphic-label {
+      color: var(--unit);
+      font-size: var(--fs-slide-micro);
+      font-weight: 700;
+    }
+
+    #slide-13 .l12-sketch {
+      height: 66px;
+      position: relative;
+      margin: 4px 0;
+      border-bottom: 1px solid rgba(255,255,255,.17);
+      overflow: hidden;
+    }
+
+    #slide-13 .l12-sketch i {
+      position: absolute;
+      display: block;
+      background: var(--unit);
+    }
+
+    #slide-13 .is-commodities .l12-sketch i:nth-child(1) { left: 5%; bottom: 12px; width: 76%; height: 2px; transform: rotate(-11deg); transform-origin: left; }
+    #slide-13 .is-commodities .l12-sketch i:nth-child(2) { left: 5%; bottom: 12px; width: 76%; height: 2px; opacity: .45; transform: rotate(8deg); transform-origin: left; }
+    #slide-13 .is-commodities .l12-sketch i:nth-child(3) { left: 4%; bottom: 8px; width: 5px; height: 5px; border-radius: 50%; box-shadow: 58px -11px 0 var(--unit), 116px -22px 0 var(--unit), 174px -33px 0 var(--unit); }
+
+    #slide-13 .is-bonds .l12-sketch i:nth-child(1) { left: 5%; bottom: 10px; width: 78%; height: 2px; transform: rotate(-19deg); transform-origin: left; }
+    #slide-13 .is-bonds .l12-sketch i:nth-child(2) { left: 5%; bottom: 10px; width: 78%; height: 2px; opacity: .3; transform: rotate(12deg); transform-origin: left; }
+    #slide-13 .is-bonds .l12-sketch::after { content: "PRECIO  ↔  YIELD"; position: absolute; right: 4px; bottom: 7px; color: var(--txt-muted); font: 700 var(--fs-slide-micro)/1 var(--font-mono); }
+
+    #slide-13 .is-derivatives .l12-sketch { border-bottom: 0; display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 5px; align-items: end; }
+    #slide-13 .is-derivatives .l12-sketch i { position: relative; height: var(--h); background: color-mix(in srgb, var(--unit) var(--o), transparent); border-top: 2px solid var(--unit); }
+    #slide-13 .is-derivatives .l12-sketch i:nth-child(1) { --h: 34px; --o: 18%; }
+    #slide-13 .is-derivatives .l12-sketch i:nth-child(2) { --h: 52px; --o: 27%; }
+    #slide-13 .is-derivatives .l12-sketch i:nth-child(3) { --h: 44px; --o: 22%; }
+    #slide-13 .is-derivatives .l12-sketch i:nth-child(4) { --h: 60px; --o: 31%; }
+
+    #slide-13 .is-synthetics .l12-sketch { border-bottom: 0; }
+    #slide-13 .is-synthetics .l12-sketch i:nth-child(1) { left: 4%; top: 36px; width: 38%; height: 2px; transform: rotate(-34deg); transform-origin: right; }
+    #slide-13 .is-synthetics .l12-sketch i:nth-child(2) { left: 40%; top: 36px; width: 38%; height: 2px; transform: rotate(34deg); transform-origin: left; }
+    #slide-13 .is-synthetics .l12-sketch i:nth-child(3) { left: 39%; top: 32px; width: 8px; height: 8px; border-radius: 50%; box-shadow: 0 0 16px var(--unit); }
+
+    #slide-13 .l12-output {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      color: var(--txt-muted);
+      font-size: var(--fs-slide-micro);
+    }
+
+    #slide-13 .l12-output strong { color: var(--unit); }
+
+    @media (min-width: 1181px) and (max-height: 820px) {
+      #slide-13 .l12-stage { padding-top: 15px; padding-bottom: 13px; gap: 10px; }
+      #slide-13 .l12-title-rule { margin-top: 9px; }
+      #slide-13 .l12-dependency { min-height: 40px; }
+      #slide-13 .l12-dependency > * { padding-top: 7px; padding-bottom: 7px; }
+      #slide-13 .l12-content { padding-top: 11px; padding-bottom: 11px; }
+      #slide-13 .l12-graphic { padding-top: 10px; padding-bottom: 10px; }
+      #slide-13 .l12-sketch { height: 52px; }
+    }
+
+    @media (max-width: 1180px) {
+      #slide-13 .l12-stage { overflow-y: auto; }
+      #slide-13 .l12-dependency { grid-template-columns: 1fr 1fr; }
+      #slide-13 .l12-board-label { grid-column: 1 / -1; border-bottom: 1px solid var(--border-subtle); }
+      #slide-13 .l12-lab { grid-template-columns: 1fr; grid-template-rows: auto; }
+      #slide-13 .l12-unit { min-height: 220px; }
+    }
+
+    @media (max-width: 700px) {
+      #slide-13 .l12-unit { grid-template-columns: 1fr; }
+      #slide-13 .l12-content { border-right: 0; border-bottom: 1px solid var(--border-subtle); }
+      #slide-13 .l12-graphic { min-height: 130px; }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-13" data-module="1">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="1">Módulo I</span>
+    <span class="lesson-tag">L12</span>
+    <span class="slide-title">Commodities, Bonos y Sintéticos</span>
+    <span class="concept-code">M1.L12.C12</span>
+  </header>
+
+  <div class="slide-body single-col">
+    <main class="l12-stage">
+      <section class="l12-heading" aria-labelledby="l12-title">
+        <div class="l12-kicker">Lección 12 · Laboratorio de instrumentos</div>
+        <h2 id="l12-title">Activos Complejos</h2>
+        <div class="l12-title-rule"></div>
+      </section>
+
+      <section class="l12-dependency" aria-label="Cadena conceptual de los instrumentos complejos">
+        <div class="l12-board-label">Mapa de dependencia</div>
+        <div class="l12-dependency-step" style="--step:var(--warn);"><span><b>01</b> Activo físico</span></div>
+        <div class="l12-dependency-step" style="--step:var(--accent);"><span><b>02</b> Flujo de deuda</span></div>
+        <div class="l12-dependency-step" style="--step:var(--purple);"><span><b>03</b> Valor subyacente</span></div>
+        <div class="l12-dependency-step" style="--step:var(--cyan);"><span><b>04</b> Payoff replicado</span></div>
+      </section>
+
+      <section class="l12-lab" aria-label="Laboratorio comparativo de commodities, bonos, derivados y sintéticos">
+        <article class="l12-unit is-commodities">
+          <div class="l12-content">
+            <div class="l12-unit-head"><h3>Commodities</h3><span class="l12-family">Activos físicos</span></div>
+            <p class="l12-copy"><strong>Activos físicos —</strong> Energía, metales y agrícolas. Precio influenciado por oferta/demanda física, inventarios, producción, geopolítica y estacionalidad. Futuros con <strong>Contango / Backwardation</strong>.</p>
+            <div class="l12-techline">Curvas de futuros. Contango (futuro &gt; spot) vs. backwardation (futuro &lt; spot). Roll yield. Estacionalidad.</div>
+          </div>
+          <div class="l12-graphic" aria-label="Esquema de curvas de futuros">
+            <span class="l12-graphic-label">Curva temporal</span>
+            <div class="l12-sketch"><i></i><i></i><i></i></div>
+            <div class="l12-output"><span>SPOT</span><strong>CONTANGO / BACKWARDATION</strong></div>
+          </div>
+        </article>
+
+        <article class="l12-unit is-bonds">
+          <div class="l12-content">
+            <div class="l12-unit-head"><h3>Bonos / Fixed Income</h3><span class="l12-family">Instrumentos de deuda</span></div>
+            <p class="l12-copy"><strong>Instrumentos de deuda —</strong> Gobiernos y empresas emiten deuda a cambio de capital. Precio, rendimiento (<em>yield</em>) y tasas de interés están relacionados. Conceptos clave: <strong>Yield Curve · Maturity · Duration · Credit Risk</strong>.</p>
+            <div class="l12-techline">Yield curve. Duration. Sensibilidad a tasas de interés. Inverso al precio. Refugio macro.</div>
+          </div>
+          <div class="l12-graphic" aria-label="Esquema de relación entre precio y rendimiento">
+            <span class="l12-graphic-label">Relación inversa</span>
+            <div class="l12-sketch"><i></i><i></i></div>
+            <div class="l12-output"><span>PRECIO</span><strong>YIELD · DURATION</strong></div>
+          </div>
+        </article>
+
+        <article class="l12-unit is-derivatives">
+          <div class="l12-content">
+            <div class="l12-unit-head"><h3>Derivados</h3><span class="l12-family">Valor derivado</span></div>
+            <p class="l12-copy"><strong>Valor derivado —</strong> Su precio depende de otro activo o variable subyacente. Incluye <strong>Futuros · Opciones · Forwards · Swaps</strong>. Permiten cobertura, especulación y transferencia de riesgo.</p>
+            <div class="l12-techline">Futuros, opciones, forwards y swaps. Su valor depende de un activo o variable subyacente.</div>
+          </div>
+          <div class="l12-graphic" aria-label="Esquema de instrumentos derivados">
+            <span class="l12-graphic-label">Familia contractual</span>
+            <div class="l12-sketch"><i></i><i></i><i></i><i></i></div>
+            <div class="l12-output"><span>SUBYACENTE</span><strong>4 DERIVACIONES</strong></div>
+          </div>
+        </article>
+
+        <article class="l12-unit is-synthetics">
+          <div class="l12-content">
+            <div class="l12-unit-head"><h3>Sintéticos</h3><span class="l12-family">Replicación</span></div>
+            <p class="l12-copy"><strong>Replicación —</strong> Combinaciones de instrumentos diseñadas para reproducir la exposición o <em>payoff</em> de otro activo. Pueden construirse mediante <strong>opciones, futuros y otros derivados</strong>.</p>
+            <div class="l12-techline">Estructurados. Combinaciones de opciones + futuros para replicar payoffs personalizados.</div>
+          </div>
+          <div class="l12-graphic" aria-label="Esquema de replicación de payoff">
+            <span class="l12-graphic-label">Síntesis de exposición</span>
+            <div class="l12-sketch"><i></i><i></i><i></i></div>
+            <div class="l12-output"><span>COMPONENTES</span><strong>PAYOFF OBJETIVO</strong></div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">12/34</span>
+  </footer>
+</section>
+</body>
+</html>

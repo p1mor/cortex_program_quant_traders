@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Macrociclo, Frontera y Migración — Cortex Quant Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-29 .l30-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: clamp(16px, 2vh, 26px);
+      min-height: 0;
+      padding: clamp(24px, 3.1vh, 38px) clamp(30px, 3.2vw, 62px) clamp(22px, 2.8vh, 34px);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 50% 49%, rgba(255, 183, 77, .04), transparent 22%),
+        radial-gradient(circle at 12% 68%, rgba(34, 197, 94, .035), transparent 23%),
+        radial-gradient(circle at 89% 66%, rgba(230, 57, 85, .035), transparent 24%),
+        #000;
+    }
+
+    #slide-29 .l30-head .divider {
+      margin-top: clamp(14px, 1.8vh, 20px);
+    }
+
+    #slide-29 .l30-canvas {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr) auto auto;
+      gap: clamp(11px, 1.25vw, 19px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-29 .l30-premise {
+      display: grid;
+      grid-template-columns: minmax(215px, .4fr) minmax(0, 1.35fr) minmax(250px, .55fr);
+      gap: clamp(16px, 1.8vw, 30px);
+      align-items: center;
+      padding: clamp(12px, 1.4vh, 17px) clamp(18px, 1.55vw, 27px);
+      border-top: 1px solid rgba(0, 51, 255, .56);
+      border-bottom: 1px solid rgba(6, 182, 212, .28);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .085), rgba(6, 182, 212, .035));
+    }
+
+    #slide-29 .l30-kicker,
+    #slide-29 .l30-context-chip,
+    #slide-29 .l30-field-head,
+    #slide-29 .l30-state-index,
+    #slide-29 .l30-state-status,
+    #slide-29 .l30-candle-label,
+    #slide-29 .l30-formula,
+    #slide-29 .l30-detail-label,
+    #slide-29 .l30-principle-label,
+    #slide-29 .l30-boundary-note {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    #slide-29 .l30-kicker {
+      color: var(--accent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+    }
+
+    #slide-29 .l30-premise p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.46;
+    }
+
+    #slide-29 .l30-premise strong,
+    #slide-29 .l30-detail p strong,
+    #slide-29 .l30-principle strong {
+      color: var(--txt-primary);
+      font-weight: 700;
+    }
+
+    #slide-29 .l30-contexts {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+
+    #slide-29 .l30-context-chip {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 6px 9px;
+      border-left: 2px solid var(--bull-glow);
+      color: var(--bull-glow);
+      background: var(--bull-subtle);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 700;
+    }
+
+    #slide-29 .l30-context-chip.negative {
+      border-color: var(--bear);
+      color: var(--bear);
+      background: var(--bear-subtle);
+    }
+
+    #slide-29 .l30-context-chip span:last-child {
+      color: var(--txt-secondary);
+      font-weight: 500;
+    }
+
+    #slide-29 .l30-field {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: clamp(10px, 1.15vh, 14px);
+      min-width: 0;
+      min-height: 0;
+      padding: clamp(15px, 1.7vw, 25px);
+      border: 1px solid var(--border-default);
+      background: rgba(7, 8, 10, .97);
+      overflow: hidden;
+    }
+
+    #slide-29 .l30-field::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .34;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(61, 64, 69, .18) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(61, 64, 69, .18) 1px, transparent 1px);
+      background-size: 56px 56px;
+    }
+
+    #slide-29 .l30-field > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    #slide-29 .l30-field-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+    }
+
+    #slide-29 .l30-field-head span:last-child {
+      color: var(--hi);
+    }
+
+    #slide-29 .l30-state-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr) minmax(0, 1fr);
+      gap: clamp(10px, 1vw, 16px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-29 .l30-state {
+      --state-color: var(--bull-glow);
+      display: grid;
+      grid-template-rows: auto auto minmax(92px, 1fr) auto;
+      gap: clamp(7px, .8vh, 10px);
+      min-width: 0;
+      min-height: 0;
+      padding: clamp(11px, 1.15vw, 17px);
+      border: 1px solid var(--border-subtle);
+      border-top: 2px solid var(--state-color);
+      background: rgba(5, 5, 5, .93);
+    }
+
+    #slide-29 .l30-state.frontier {
+      --state-color: var(--warn);
+      background: linear-gradient(180deg, var(--warn-subtle), rgba(5, 5, 5, .94));
+    }
+
+    #slide-29 .l30-state.migration {
+      --state-color: var(--bear);
+      background: linear-gradient(180deg, var(--bear-subtle), rgba(5, 5, 5, .94));
+    }
+
+    #slide-29 .l30-state-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+    }
+
+    #slide-29 .l30-state-index {
+      color: var(--state-color);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-29 .l30-state-status {
+      padding: 3px 6px;
+      border: 1px solid color-mix(in srgb, var(--state-color) 44%, transparent);
+      color: var(--state-color);
+      background: color-mix(in srgb, var(--state-color) 8%, transparent);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 700;
+    }
+
+    #slide-29 .l30-state h3 {
+      font-family: var(--font-display);
+      color: var(--txt-primary);
+      font-size: clamp(1rem, 1.24vw, 1.38rem);
+      font-weight: 500;
+      line-height: 1.16;
+    }
+
+    #slide-29 .l30-chart {
+      --chart-color: var(--bull-glow);
+      --slope: -7deg;
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: stretch;
+      min-height: 92px;
+      padding: 7px 5px 3px;
+      border: 1px solid var(--border-subtle);
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(61, 64, 69, .17) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(61, 64, 69, .14) 1px, transparent 1px),
+        rgba(0, 0, 0, .54);
+      background-size: 100% 25%, 25% 100%, auto;
+    }
+
+    #slide-29 .l30-frontier-chart,
+    #slide-29 .l30-migration-chart {
+      --chart-color: var(--bear);
+      --slope: 7deg;
+    }
+
+    #slide-29 .l30-chart::before {
+      content: "";
+      position: absolute;
+      left: 9%;
+      right: 9%;
+      bottom: 27px;
+      height: 1px;
+      transform: rotate(var(--slope));
+      transform-origin: left center;
+      background: linear-gradient(90deg, color-mix(in srgb, var(--chart-color) 18%, transparent), var(--chart-color));
+      opacity: .8;
+    }
+
+    #slide-29 .l30-candle-slot {
+      position: relative;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      min-width: 0;
+      border-right: 1px solid var(--border-subtle);
+    }
+
+    #slide-29 .l30-candle-slot:last-child { border-right: 0; }
+
+    #slide-29 .l30-candle-track {
+      position: relative;
+      min-height: 62px;
+    }
+
+    #slide-29 .l30-candle {
+      position: absolute;
+      z-index: 2;
+      left: 50%;
+      bottom: var(--rise);
+      width: clamp(14px, 1.05vw, 20px);
+      height: var(--body-h);
+      transform: translateX(-50%);
+      border: 1px solid var(--chart-color);
+      background: color-mix(in srgb, var(--chart-color) 78%, transparent);
+      box-shadow: 0 0 12px color-mix(in srgb, var(--chart-color) 13%, transparent);
+    }
+
+    #slide-29 .l30-candle::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      top: -10px;
+      bottom: -10px;
+      left: 50%;
+      width: 1px;
+      transform: translateX(-50%);
+      background: var(--chart-color);
+    }
+
+    #slide-29 .l30-candle::after {
+      content: "";
+      position: absolute;
+      top: -1px;
+      left: 100%;
+      width: 9px;
+      height: 1px;
+      background: var(--hi);
+    }
+
+    #slide-29 .l30-candle.bear::after {
+      top: auto;
+      bottom: -1px;
+      background: var(--bear);
+    }
+
+    #slide-29 .l30-candle.forming {
+      border-style: dashed;
+      background:
+        repeating-linear-gradient(135deg, rgba(230, 57, 85, .22) 0 3px, transparent 3px 6px);
+      box-shadow: none;
+    }
+
+    #slide-29 .l30-candle.forming::after {
+      display: none;
+    }
+
+    #slide-29 .l30-candle-label {
+      padding: 4px 2px 1px;
+      color: var(--txt-tertiary);
+      background: rgba(0, 0, 0, .76);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      text-align: center;
+    }
+
+    #slide-29 .l30-candle-label b {
+      display: block;
+      margin-top: 2px;
+      color: var(--chart-color);
+      font-size: .92em;
+    }
+
+    #slide-29 .l30-formula {
+      display: grid;
+      place-items: center;
+      min-height: clamp(34px, 3.8vh, 44px);
+      padding: 6px 8px;
+      border: 1px solid color-mix(in srgb, var(--state-color) 36%, transparent);
+      color: var(--state-color);
+      background: color-mix(in srgb, var(--state-color) 7%, transparent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 800;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    #slide-29 .l30-boundary-rail {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.08fr) auto minmax(0, 1fr);
+      gap: 8px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    #slide-29 .l30-boundary-rail::before,
+    #slide-29 .l30-boundary-rail::after {
+      content: "→";
+      display: none;
+    }
+
+    #slide-29 .l30-boundary-note {
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      padding: 5px 8px;
+      border-top: 1px solid var(--border-default);
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 700;
+      text-align: center;
+    }
+
+    #slide-29 .l30-boundary-note:nth-child(3) {
+      border-color: var(--warn);
+      color: var(--warn);
+    }
+
+    #slide-29 .l30-boundary-note:nth-child(5) {
+      border-color: var(--bear);
+      color: var(--bear);
+    }
+
+    #slide-29 .l30-boundary-arrow {
+      color: var(--txt-tertiary);
+      font-family: var(--font-mono);
+      font-size: .7rem;
+    }
+
+    #slide-29 .l30-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(10px, 1vw, 16px);
+      min-width: 0;
+    }
+
+    #slide-29 .l30-detail {
+      --detail-color: var(--warn);
+      display: grid;
+      grid-template-columns: minmax(155px, .32fr) minmax(0, 1fr);
+      gap: clamp(12px, 1.2vw, 20px);
+      align-items: center;
+      min-width: 0;
+      padding: clamp(11px, 1.15vw, 17px);
+      border-left: 2px solid var(--detail-color);
+      background: color-mix(in srgb, var(--detail-color) 6%, rgba(8, 8, 8, .94));
+    }
+
+    #slide-29 .l30-detail.migration { --detail-color: var(--bear); }
+
+    #slide-29 .l30-detail-label {
+      color: var(--detail-color);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-29 .l30-detail-label strong {
+      display: block;
+      margin-top: 6px;
+      color: var(--txt-primary);
+      font-family: var(--font-display);
+      font-size: clamp(.93rem, 1.1vw, 1.22rem);
+      font-weight: 500;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+
+    #slide-29 .l30-detail p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
+      line-height: 1.43;
+    }
+
+    #slide-29 .l30-principle {
+      display: grid;
+      grid-template-columns: minmax(215px, .4fr) minmax(0, 1.6fr);
+      gap: clamp(16px, 1.8vw, 30px);
+      align-items: center;
+      padding: clamp(11px, 1.3vh, 16px) clamp(18px, 1.55vw, 27px);
+      border-left: 3px solid var(--hi);
+      background: linear-gradient(90deg, var(--accent-subtle), var(--hi-subtle));
+    }
+
+    #slide-29 .l30-principle-label {
+      color: var(--accent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-29 .l30-principle p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.45;
+    }
+
+    #slide-29 .l30-principle em {
+      color: var(--warn);
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    @media (max-height: 820px) {
+      #slide-29 .l30-stage {
+        gap: 13px;
+        padding-top: 20px;
+        padding-bottom: 18px;
+      }
+
+      #slide-29 .l30-head .divider { margin-top: 11px; }
+      #slide-29 .l30-canvas { gap: 9px; }
+      #slide-29 .l30-premise { padding-top: 9px; padding-bottom: 9px; }
+      #slide-29 .l30-field { padding: 12px; gap: 7px; }
+      #slide-29 .l30-state { padding: 9px; gap: 5px; grid-template-rows: auto auto minmax(76px, 1fr) auto; }
+      #slide-29 .l30-chart { min-height: 76px; }
+      #slide-29 .l30-candle-track { min-height: 48px; }
+      #slide-29 .l30-formula { min-height: 28px; }
+      #slide-29 .l30-detail { padding-top: 9px; padding-bottom: 9px; }
+      #slide-29 .l30-principle { padding-top: 8px; padding-bottom: 8px; }
+    }
+
+    @media (max-width: 1120px) {
+      #slide-29 .l30-premise { grid-template-columns: 180px minmax(0, 1fr); }
+      #slide-29 .l30-contexts { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; }
+      #slide-29 .l30-detail { grid-template-columns: 135px minmax(0, 1fr); }
+      #slide-29 .l30-principle { grid-template-columns: 180px minmax(0, 1fr); }
+    }
+
+    @media (max-width: 900px) {
+      #slide-29 .l30-stage { overflow-y: auto; }
+      #slide-29 .l30-state-grid,
+      #slide-29 .l30-details { grid-template-columns: 1fr; }
+      #slide-29 .l30-field { min-height: 980px; }
+      #slide-29 .l30-boundary-rail { display: none; }
+    }
+
+    @media (max-width: 620px) {
+      #slide-29 .l30-premise,
+      #slide-29 .l30-principle,
+      #slide-29 .l30-detail { grid-template-columns: 1fr; }
+      #slide-29 .l30-contexts { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-29" data-module="3">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="3">MÓDULO III</span>
+    <span class="lesson-tag">L30</span>
+    <span class="slide-title">Macrociclo, Frontera y Migración</span>
+    <span class="concept-code">M3.L30.C30</span>
+  </header>
+
+  <main class="slide-body l30-stage">
+    <div class="l30-head">
+      <div class="section-title">
+        <div class="section-number">LECCIÓN 30</div>
+        <h2>Macrociclo, Frontera y Migración</h2>
+      </div>
+      <div class="divider gradient"></div>
+    </div>
+
+    <div class="l30-canvas">
+      <section class="l30-premise">
+        <div class="l30-kicker">Estado direccional rector · HWTE</div>
+        <p>El macrociclo existe exclusivamente en HWTE y se establece mediante <strong>tres barras consecutivas cerradas con el mismo sesgo</strong>. Mientras permanece vigente, es la referencia estructural desde la cual el trader del Quant Trading Desk construye sus hipótesis.</p>
+        <div class="l30-contexts">
+          <div class="l30-context-chip"><span>Macrociclo positivo</span><span>Compras habilitadas</span></div>
+          <div class="l30-context-chip negative"><span>Macrociclo negativo</span><span>Ventas habilitadas</span></div>
+        </div>
+      </section>
+
+      <section class="l30-field" aria-label="Transición de macrociclo, frontera y migración">
+        <div class="l30-field-head"><span>Cinta de transición estructural</span><span>El macrociclo no es estático</span></div>
+
+        <div class="l30-state-grid">
+          <article class="l30-state active">
+            <div class="l30-state-top"><span class="l30-state-index">01 / Estado vigente</span><span class="l30-state-status">Confirmado</span></div>
+            <h3>Macrociclo positivo</h3>
+            <div class="l30-chart l30-positive-chart" aria-label="Tres barras HWTE positivas cerradas">
+              <div class="l30-candle-slot"><div class="l30-candle-track"><i class="l30-candle" style="--rise:3px; --body-h:21px"></i></div><span class="l30-candle-label">HWTE 01<b>Cierre +</b></span></div>
+              <div class="l30-candle-slot"><div class="l30-candle-track"><i class="l30-candle" style="--rise:18px; --body-h:24px"></i></div><span class="l30-candle-label">HWTE 02<b>Cierre +</b></span></div>
+              <div class="l30-candle-slot"><div class="l30-candle-track"><i class="l30-candle" style="--rise:35px; --body-h:27px"></i></div><span class="l30-candle-label">HWTE 03<b>Cierre +</b></span></div>
+            </div>
+            <div class="l30-formula">3 cierres del mismo sesgo → contexto long</div>
+          </article>
+
+          <article class="l30-state frontier">
+            <div class="l30-state-top"><span class="l30-state-index">02 / Frontera</span><span class="l30-state-status">Transición posible</span></div>
+            <h3>La estructura es desafiada</h3>
+            <div class="l30-chart l30-frontier-chart" aria-label="Dos barras HWTE contrarias cerradas y una tercera en formación">
+              <div class="l30-candle-slot"><div class="l30-candle-track"><i class="l30-candle bear" style="--rise:35px; --body-h:24px"></i></div><span class="l30-candle-label">Contraria 01<b>Cerrada</b></span></div>
+              <div class="l30-candle-slot"><div class="l30-candle-track"><i class="l30-candle bear" style="--rise:18px; --body-h:26px"></i></div><span class="l30-candle-label">Contraria 02<b>Cerrada</b></span></div>
+              <div class="l30-candle-slot"><div class="l30-candle-track"><i class="l30-candle bear forming" style="--rise:3px; --body-h:29px"></i></div><span class="l30-candle-label">Contraria 03<b>En formación</b></span></div>
+            </div>
+            <div class="l30-formula">2 cierres contrarios + 1 abierta → frontera</div>
+          </article>
+
+          <article class="l30-state migration">
+            <div class="l30-state-top"><span class="l30-state-index">03 / Migración</span><span class="l30-state-status">Nuevo estado</span></div>
+            <h3>Macrociclo negativo</h3>
+            <div class="l30-chart l30-migration-chart" aria-label="Tres barras HWTE contrarias cerradas que confirman la migración">
+              <div class="l30-candle-slot"><div class="l30-candle-track"><i class="l30-candle bear" style="--rise:35px; --body-h:24px"></i></div><span class="l30-candle-label">Contraria 01<b>Cerrada</b></span></div>
+              <div class="l30-candle-slot"><div class="l30-candle-track"><i class="l30-candle bear" style="--rise:18px; --body-h:26px"></i></div><span class="l30-candle-label">Contraria 02<b>Cerrada</b></span></div>
+              <div class="l30-candle-slot"><div class="l30-candle-track"><i class="l30-candle bear" style="--rise:3px; --body-h:29px"></i></div><span class="l30-candle-label">Contraria 03<b>Cerrada</b></span></div>
+            </div>
+            <div class="l30-formula">3 cierres contrarios → nuevo macrociclo</div>
+          </article>
+        </div>
+
+        <div class="l30-boundary-rail" aria-hidden="true">
+          <div class="l30-boundary-note">Referencia estructural</div><span class="l30-boundary-arrow">→</span>
+          <div class="l30-boundary-note">Amenaza · aún no confirmada</div><span class="l30-boundary-arrow">→</span>
+          <div class="l30-boundary-note">Cambio estructural confirmado</div>
+        </div>
+      </section>
+
+      <div class="l30-details">
+        <article class="l30-detail frontier">
+          <div class="l30-detail-label">Frontera de ciclo<strong>2 + 1 abierta</strong></div>
+          <p>Dos cierres HWTE contrarios y una tercera barra contraria aún en formación crean un estado crítico: existe evidencia para considerar una transición, pero <strong>el nuevo macrociclo todavía no está confirmado.</strong></p>
+        </article>
+        <article class="l30-detail migration">
+          <div class="l30-detail-label">Migración de ciclo<strong>3 cierres completos</strong></div>
+          <p>Cuando la tercera barra contraria cierra, la amenaza sobre el ciclo anterior se convierte en un <strong>nuevo macrociclo con sesgo direccional opuesto.</strong></p>
+        </article>
+      </div>
+
+      <section class="l30-principle">
+        <div class="l30-principle-label">Principio Cortex-Dendrita</div>
+        <p><strong>Una barra contraria introduce potencial sweep; dos cierres construyen frontera; tres cierres confirman migración.</strong> El trader debe distinguir entre <em>evidencia contraria y cambio estructural confirmado</em>: una desviación dentro del macrociclo no implica automáticamente que el macrociclo haya terminado, puede ser solo indicio de un sweep dentro del macrociclo.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">30/42</span>
+  </footer>
+</section>
+</body>
+</html>

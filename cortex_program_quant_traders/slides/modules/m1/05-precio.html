@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex Quant Trader - TechPulse Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+  <link rel="stylesheet" href="../../css/slides.css" />
+</head>
+<body>
+<section class="slide" id="slide-7" data-module="1">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="1">Módulo I</span>
+    <span class="lesson-tag">L6</span>
+    <span class="slide-title">El precio</span>
+    <span class="concept-code">M1.L6.C06</span>
+  </header>
+  <div class="slide-body ratio-60-40">
+    <div class="slide-left">
+      <div class="section-title">
+        <div class="section-number">Lección 6</div>
+        <h2>El precio</h2>
+      </div>
+      <div class="divider gradient"></div>
+      <p class="t-body">El precio se mueve cuando <strong>órdenes agresivas a mercado</strong> consumen <strong>liquidez pasiva</strong> en el libro de órdenes; a la vez, está determinado por las partes interesadas y los agentes que participan en él. Es información: resume la oferta y la demanda, y su variación determina las ganancias y pérdidas de los participantes.</p>
+      <div class="callout">
+        <p><strong>La mano invisible:</strong> Adam Smith, en <em>La riqueza de las naciones</em>, denomina “mano invisible” a la fuerza de los intereses individuales que, en conjunto, determina si un precio sube o baja. <strong>Mecanismo:</strong> si un comprador cruza el <em>ask</em> con una orden grande, el precio sube porque consume liquidez.</p>
+      </div>
+      <div class="callout u-mt-4">
+        <p><strong>El precio necesita una contraparte.</strong> Para que exista una transacción:</p>
+        <div style="margin-top:var(--sp-3);padding:var(--sp-3);text-align:center;font-family:var(--font-mono);font-size:var(--fs-caption);background:var(--accent-subtle);"><span style="color:var(--bull);">COMPRADOR</span><span style="color:var(--txt-primary);"> + </span><span style="color:var(--bear);">VENDEDOR</span><span style="color:var(--txt-primary);"> → EJECUCIÓN → </span><span style="color:var(--accent);">TRADE PRICE</span></div>
+        <p style="margin-top:var(--sp-3);">Una intención de compra por sí sola no constituye una transacción.</p>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-3);margin-top:var(--sp-4);">
+        <div style="padding:var(--sp-3);border-left:3px solid var(--cyan);background:var(--cyan-subtle);"><strong style="color:var(--cyan);">Liquidez pasiva</strong><p style="margin-top:var(--sp-2);color:var(--txt-secondary);">Órdenes que esperan ejecución en el libro.</p></div>
+        <div style="padding:var(--sp-3);border-left:3px solid var(--accent);background:var(--accent-subtle);"><strong style="color:var(--accent);">Liquidez agresiva</strong><p style="margin-top:var(--sp-2);color:var(--txt-secondary);">Órdenes que cruzan el spread buscando ejecución inmediata.</p></div>
+      </div>
+    </div>
+    <div class="slide-right">
+      <div class="viz-panel">
+        <div class="viz-title">Libro de Ordenes</div>
+        <div style="display:flex;flex-direction:column;gap:0;font-family:var(--font-mono);font-size:var(--fs-caption);">
+          <div style="text-align:center;margin-bottom:var(--sp-3);">
+            <span class="badge bear">ASK</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2) var(--sp-3);background:var(--bear-subtle);border-left:3px solid var(--bear-glow);margin-bottom:2px;">
+            <span style="color:var(--bear-glow);font-weight:700;min-width:80px;">5,488.00</span>
+            <div style="flex:1;height:8px;background:rgba(230,57,85,0.12);">
+              <div style="width:84%;height:100%;background:var(--bear);opacity:0.4;"></div>
+            </div>
+            <span style="color:var(--txt-tertiary);">342</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2) var(--sp-3);background:var(--bear-subtle);border-left:3px solid var(--bear-glow);margin-bottom:2px;">
+            <span style="color:var(--bear-glow);font-weight:700;min-width:80px;">5,487.75</span>
+            <div style="flex:1;height:8px;background:rgba(230,57,85,0.12);">
+              <div style="width:62%;height:100%;background:var(--bear);opacity:0.4;"></div>
+            </div>
+            <span style="color:var(--txt-tertiary);">251</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2) var(--sp-3);background:var(--bear-subtle);border-left:3px solid var(--bear-glow);margin-bottom:2px;">
+            <span style="color:var(--bear-glow);font-weight:700;min-width:80px;">5,487.50</span>
+            <div style="flex:1;height:8px;background:rgba(230,57,85,0.12);">
+              <div style="width:45%;height:100%;background:var(--bear);opacity:0.4;"></div>
+            </div>
+            <span style="color:var(--txt-tertiary);">183</span>
+          </div>
+          <div style="text-align:center;padding:var(--sp-2);margin:var(--sp-2) 0;background:var(--bg-elevated);border:1px solid var(--border-default);">
+            <span style="color:var(--txt-primary);font-weight:700;">SPREAD 0.25</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2) var(--sp-3);background:var(--bull-subtle);border-left:3px solid var(--bull-glow);margin-bottom:2px;">
+            <span style="color:var(--bull-glow);font-weight:700;min-width:80px;">5,487.25</span>
+            <div style="flex:1;height:8px;background:rgba(34,197,94,0.12);">
+              <div style="width:55%;height:100%;background:var(--bull);opacity:0.4;"></div>
+            </div>
+            <span style="color:var(--txt-tertiary);">224</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2) var(--sp-3);background:var(--bull-subtle);border-left:3px solid var(--bull-glow);margin-bottom:2px;">
+            <span style="color:var(--bull-glow);font-weight:700;min-width:80px;">5,487.00</span>
+            <div style="flex:1;height:8px;background:rgba(34,197,94,0.12);">
+              <div style="width:78%;height:100%;background:var(--bull);opacity:0.4;"></div>
+            </div>
+            <span style="color:var(--txt-tertiary);">318</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-2) var(--sp-3);background:var(--bull-subtle);border-left:3px solid var(--bull-glow);">
+            <span style="color:var(--bull-glow);font-weight:700;min-width:80px;">5,486.75</span>
+            <div style="flex:1;height:8px;background:rgba(34,197,94,0.12);">
+              <div style="width:90%;height:100%;background:var(--bull);opacity:0.4;"></div>
+            </div>
+            <span style="color:var(--txt-tertiary);">367</span>
+          </div>
+          <div style="text-align:center;margin-top:var(--sp-3);">
+            <span class="badge bull">BID</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">05/34</span>
+  </footer>
+</section>
+</body>
+</html>

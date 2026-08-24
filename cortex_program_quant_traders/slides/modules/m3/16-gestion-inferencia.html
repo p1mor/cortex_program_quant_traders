@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gestión de la Inferencia: Entrada, Stop y Salida — Cortex Quant Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-38 {
+      --l39-blue: #0033ff;
+      --l39-cyan: #00e5ff;
+      --l39-purple: #a48cff;
+      --l39-green: #22c55e;
+      --l39-amber: #ffb74d;
+      --l39-red: #e63955;
+      --l39-panel: rgba(7, 8, 10, .98);
+      --l39-line: rgba(148, 156, 165, .22);
+    }
+
+    #slide-38 .slide-body {
+      min-height: 0;
+      background: #000;
+    }
+
+    #slide-38 .l39-stage {
+      min-width: 0;
+      min-height: 0;
+      height: 100%;
+      padding: clamp(18px, 2vw, 32px) clamp(24px, 3.1vw, 58px) 16px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(0, 229, 255, .02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 51, 255, .018) 1px, transparent 1px),
+        #000;
+      background-size: 54px 54px;
+    }
+
+    #slide-38 .l39-head {
+      margin: 0 0 clamp(13px, 1.3vh, 18px);
+      flex: 0 0 auto;
+    }
+
+    #slide-38 .l39-head .section-number {
+      margin-bottom: 7px;
+      font-size: var(--fs-slide-label);
+      color: var(--l39-blue);
+    }
+
+    #slide-38 .l39-head h2 {
+      margin: 0;
+      font-size: var(--fs-slide-title);
+      line-height: 1.18;
+    }
+
+    #slide-38 .l39-head .divider {
+      width: 50px;
+      height: 2px;
+      margin-top: 13px;
+      background: linear-gradient(90deg, var(--l39-blue), var(--l39-cyan));
+    }
+
+    #slide-38 .l39-canvas {
+      min-width: 0;
+      min-height: 0;
+      flex: 1;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: clamp(8px, 1vh, 12px);
+    }
+
+    #slide-38 .l39-doctrine {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+      padding: 10px 16px;
+      border-top: 1px solid var(--l39-cyan);
+      border-bottom: 1px solid rgba(0, 229, 255, .28);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .07), rgba(0, 229, 255, .035) 66%, rgba(230, 57, 85, .04));
+    }
+
+    #slide-38 .l39-doctrine-label,
+    #slide-38 .l39-doctrine-badge,
+    #slide-38 .l39-kicker,
+    #slide-38 .l39-map-meta,
+    #slide-38 .l39-axis-label,
+    #slide-38 .l39-level-label,
+    #slide-38 .l39-marker-label,
+    #slide-38 .l39-scenario-label,
+    #slide-38 .l39-ledger-index,
+    #slide-38 .l39-ledger-title,
+    #slide-38 .l39-formula,
+    #slide-38 .l39-chip,
+    #slide-38 .l39-principle-label {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .085em;
+      font-weight: 700;
+    }
+
+    #slide-38 .l39-doctrine-label {
+      color: var(--l39-cyan);
+      font-size: var(--fs-slide-label);
+      white-space: nowrap;
+    }
+
+    #slide-38 .l39-doctrine p,
+    #slide-38 .l39-ledger-copy,
+    #slide-38 .l39-principle-copy {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: var(--fs-slide-body);
+      line-height: 1.42;
+      color: var(--txt-secondary);
+    }
+
+    #slide-38 strong {
+      color: var(--txt-primary);
+      font-weight: 700;
+    }
+
+    #slide-38 .l39-doctrine-badge {
+      padding: 8px 14px;
+      border: 1px solid rgba(230, 57, 85, .55);
+      color: var(--l39-red);
+      background: rgba(230, 57, 85, .055);
+      font-size: var(--fs-slide-label);
+      white-space: nowrap;
+    }
+
+    #slide-38 .l39-workspace {
+      min-width: 0;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1.48fr) minmax(430px, .92fr);
+      border: 1px solid var(--border-default);
+      border-top: 2px solid var(--l39-blue);
+      background: var(--l39-panel);
+      overflow: hidden;
+    }
+
+    #slide-38 .l39-map,
+    #slide-38 .l39-ledger {
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-38 .l39-map {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      border-right: 1px solid var(--border-default);
+      background: linear-gradient(145deg, rgba(0, 51, 255, .035), transparent 55%);
+    }
+
+    #slide-38 .l39-map-head {
+      min-width: 0;
+      min-height: 36px;
+      padding: 8px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    #slide-38 .l39-kicker {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-38 .l39-map-meta {
+      color: var(--l39-cyan);
+      font-size: var(--fs-slide-label);
+      text-align: right;
+    }
+
+    #slide-38 .l39-price-map {
+      min-width: 0;
+      min-height: 0;
+      margin: 10px 14px 7px;
+      position: relative;
+      overflow: hidden;
+      border-left: 1px solid rgba(148, 156, 165, .28);
+      border-bottom: 1px solid rgba(148, 156, 165, .28);
+      background:
+        linear-gradient(rgba(148, 156, 165, .11) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 156, 165, .08) 1px, transparent 1px),
+        rgba(2, 3, 5, .96);
+      background-size: 100% 25%, 12.5% 100%;
+    }
+
+    #slide-38 .l39-price-map svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    #slide-38 .l39-level {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 1px;
+      z-index: 2;
+    }
+
+    #slide-38 .l39-level::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      border-top: 1px dashed currentColor;
+      opacity: .72;
+    }
+
+    #slide-38 .l39-level-label {
+      position: absolute;
+      right: 8px;
+      top: -12px;
+      padding: 3px 6px;
+      background: #050608;
+      color: currentColor;
+      font-size: var(--fs-slide-micro);
+      white-space: nowrap;
+    }
+
+    #slide-38 .l39-level.is-hwte { top: 13%; color: var(--l39-cyan); }
+    #slide-38 .l39-level.is-granular { top: 29%; color: var(--l39-purple); }
+    #slide-38 .l39-level.is-entry { top: 62%; color: var(--l39-blue); }
+    #slide-38 .l39-level.is-stop { top: 86%; color: var(--l39-red); }
+
+    #slide-38 .l39-axis-label {
+      position: absolute;
+      z-index: 4;
+      left: 9px;
+      top: 9px;
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro);
+    }
+
+    #slide-38 .l39-marker {
+      position: absolute;
+      z-index: 5;
+      width: 13px;
+      height: 13px;
+      transform: translate(-50%, -50%) rotate(45deg);
+      background: #020305;
+      border: 2px solid currentColor;
+      box-shadow: 0 0 16px currentColor;
+    }
+
+    #slide-38 .l39-marker::after {
+      content: "";
+      position: absolute;
+      inset: 3px;
+      background: currentColor;
+    }
+
+    #slide-38 .l39-marker.is-entry { left: 28%; top: 62%; color: var(--l39-blue); }
+    #slide-38 .l39-marker.is-stop { left: 42%; top: 86%; color: var(--l39-red); }
+    #slide-38 .l39-marker.is-exit { left: 82%; top: 13%; color: var(--l39-green); }
+
+    #slide-38 .l39-marker-label {
+      position: absolute;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 5px 7px;
+      border-left: 2px solid currentColor;
+      background: rgba(2, 3, 5, .94);
+      font-size: var(--fs-slide-micro);
+      color: var(--txt-secondary);
+      white-space: nowrap;
+    }
+
+    #slide-38 .l39-marker-label b { color: currentColor; }
+    #slide-38 .l39-marker-label small {
+      font-size: var(--fs-slide-micro);
+      color: var(--txt-tertiary);
+      letter-spacing: .045em;
+    }
+
+    #slide-38 .l39-marker-label.is-entry {
+      left: calc(28% + 12px);
+      top: calc(62% - 38px);
+      color: var(--l39-blue);
+    }
+
+    #slide-38 .l39-marker-label.is-stop {
+      left: calc(42% + 12px);
+      top: calc(86% - 8px);
+      color: var(--l39-red);
+    }
+
+    #slide-38 .l39-marker-label.is-exit {
+      right: calc(18% + 12px);
+      top: calc(13% + 12px);
+      color: var(--l39-green);
+    }
+
+    #slide-38 .l39-cusum-label {
+      position: absolute;
+      z-index: 4;
+      left: 55%;
+      top: 63%;
+      color: var(--l39-amber);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    #slide-38 .l39-map-foot {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: auto 1fr auto 1fr;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 14px 10px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    #slide-38 .l39-scenario-label {
+      padding: 5px 7px;
+      border: 1px solid currentColor;
+      font-size: var(--fs-slide-micro);
+      text-align: center;
+    }
+
+    #slide-38 .l39-scenario-label.is-long { color: var(--l39-green); }
+    #slide-38 .l39-scenario-label.is-short { color: var(--l39-red); }
+
+    #slide-38 .l39-formula {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-38 .l39-formula b { color: var(--l39-amber); }
+
+    #slide-38 .l39-ledger {
+      display: grid;
+      grid-template-rows: repeat(3, minmax(0, 1fr));
+      background: linear-gradient(180deg, rgba(0, 51, 255, .025), rgba(0, 229, 255, .018));
+    }
+
+    #slide-38 .l39-ledger-row {
+      min-width: 0;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: 62px minmax(0, 1fr);
+      border-bottom: 1px solid var(--border-default);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #slide-38 .l39-ledger-row:last-child { border-bottom: 0; }
+
+    #slide-38 .l39-ledger-index {
+      display: grid;
+      place-items: center;
+      border-right: 1px solid var(--border-default);
+      font-size: var(--fs-slide-label);
+      color: currentColor;
+      position: relative;
+    }
+
+    #slide-38 .l39-ledger-index::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: currentColor;
+    }
+
+    #slide-38 .l39-ledger-row.is-entry { color: var(--l39-blue); }
+    #slide-38 .l39-ledger-row.is-stop { color: var(--l39-red); }
+    #slide-38 .l39-ledger-row.is-exit { color: var(--l39-cyan); }
+
+    #slide-38 .l39-ledger-content {
+      min-width: 0;
+      min-height: 0;
+      padding: 11px 13px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+      color: var(--txt-secondary);
+      background: linear-gradient(90deg, color-mix(in srgb, currentColor 5%, transparent), transparent 72%);
+    }
+
+    #slide-38 .l39-ledger-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    #slide-38 .l39-ledger-title {
+      color: currentColor;
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-38 .l39-ledger-head small {
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      color: var(--txt-tertiary);
+      text-transform: uppercase;
+      letter-spacing: .07em;
+    }
+
+    #slide-38 .l39-ledger-copy {
+      font-size: var(--fs-slide-support);
+      line-height: 1.38;
+    }
+
+    #slide-38 .l39-logic-line,
+    #slide-38 .l39-chip-row {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    #slide-38 .l39-logic-line {
+      padding-top: 5px;
+      border-top: 1px solid rgba(148, 156, 165, .14);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      color: var(--txt-tertiary);
+      text-transform: uppercase;
+      letter-spacing: .055em;
+    }
+
+    #slide-38 .l39-logic-line strong { color: currentColor; }
+
+    #slide-38 .l39-chip {
+      padding: 4px 6px;
+      border: 1px solid rgba(148, 156, 165, .25);
+      color: currentColor;
+      background: rgba(255,255,255,.015);
+      font-size: var(--fs-slide-micro);
+    }
+
+    #slide-38 .l39-principle {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: auto minmax(390px, 1.25fr) minmax(0, 1fr);
+      align-items: center;
+      gap: 18px;
+      padding: 10px 16px;
+      border-left: 2px solid var(--l39-blue);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .09), rgba(0, 229, 255, .045));
+    }
+
+    #slide-38 .l39-principle-label {
+      color: var(--l39-blue);
+      font-size: var(--fs-slide-label);
+      white-space: nowrap;
+    }
+
+    #slide-38 .l39-principle blockquote {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 1.08vw, 1.26rem);
+      line-height: 1.2;
+      color: var(--txt-primary);
+    }
+
+    #slide-38 .l39-principle blockquote em {
+      color: var(--l39-cyan);
+      font-style: normal;
+    }
+
+    #slide-38 .l39-principle-copy {
+      font-size: var(--fs-slide-support);
+      line-height: 1.36;
+    }
+
+    @media (min-width: 1181px) and (max-height: 820px) {
+      #slide-38 .l39-stage { padding-top: 14px; padding-bottom: 10px; }
+      #slide-38 .l39-head { margin-bottom: 10px; }
+      #slide-38 .l39-head .divider { margin-top: 9px; }
+      #slide-38 .l39-canvas { gap: 7px; }
+      #slide-38 .l39-doctrine { padding-block: 7px; }
+      #slide-38 .l39-map-head { min-height: 31px; padding-block: 6px; }
+      #slide-38 .l39-price-map { margin-top: 7px; }
+      #slide-38 .l39-map-foot { padding-bottom: 7px; }
+      #slide-38 .l39-ledger-content { padding-block: 8px; gap: 4px; }
+      #slide-38 .l39-principle { padding-block: 7px; }
+    }
+
+    @media (max-width: 1180px) {
+      #slide-38 .l39-stage {
+        overflow-y: auto;
+        scrollbar-width: none;
+      }
+      #slide-38 .l39-stage::-webkit-scrollbar { width: 0; }
+      #slide-38 .l39-canvas { grid-template-rows: auto auto auto; }
+      #slide-38 .l39-workspace { grid-template-columns: 1fr; }
+      #slide-38 .l39-map { min-height: 510px; border-right: 0; border-bottom: 1px solid var(--border-default); }
+      #slide-38 .l39-ledger { min-height: 620px; }
+      #slide-38 .l39-principle { grid-template-columns: 1fr; gap: 7px; }
+    }
+
+    @media (max-width: 760px) {
+      #slide-38 .l39-stage { padding-inline: 18px; }
+      #slide-38 .l39-doctrine { grid-template-columns: 1fr; align-items: start; }
+      #slide-38 .l39-doctrine-badge { width: fit-content; }
+      #slide-38 .l39-map-head { align-items: flex-start; flex-direction: column; }
+      #slide-38 .l39-map-meta { text-align: left; }
+      #slide-38 .l39-map-foot { grid-template-columns: auto 1fr; }
+      #slide-38 .l39-ledger-row { grid-template-columns: 46px minmax(0, 1fr); }
+      #slide-38 .l39-marker-label small { display: none; }
+      #slide-38 .l39-principle blockquote { font-size: var(--fs-slide-body); }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-38" data-module="3">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="3">Módulo III</span>
+    <span class="lesson-tag">L39</span>
+    <span class="slide-title">Gestión de la Inferencia: Entrada, Stop y Salida</span>
+    <span class="concept-code">M3.L39.C39</span>
+  </header>
+
+  <div class="slide-body single-col">
+    <main class="l39-stage">
+      <div class="section-title l39-head">
+        <div class="section-number">Lección 39</div>
+        <h2>Gestión de la Inferencia: Entrada, Stop y Salida</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="l39-canvas">
+        <section class="l39-doctrine" aria-label="Principio de gestión estructural">
+          <span class="l39-doctrine-label">Gestión = estructura</span>
+          <p>En Cortex-Dendrita, <strong>entrada, stop y salida se gestionan en función de la estructura disponible</strong>. HWTE mantiene la jerarquía principal para construir la tesis, pero la ejecución y la gestión pueden apoyarse en dimensiones más granulares.</p>
+          <span class="l39-doctrine-badge">No distancias arbitrarias</span>
+        </section>
+
+        <section class="l39-workspace" aria-label="Mapa y protocolo de gestión de la inferencia">
+          <article class="l39-map">
+            <div class="l39-map-head">
+              <span class="l39-kicker">Mapa estructural de una posición</span>
+              <span class="l39-map-meta">Ejemplo long · evidencia → capitalización</span>
+            </div>
+
+            <div class="l39-price-map" aria-label="Trayectoria de precio con entrada, stop y salida estructurales">
+              <span class="l39-axis-label">Estructura disponible / precio</span>
+
+              <div class="l39-level is-hwte"><span class="l39-level-label">Objetivo HWTE · prioridad</span></div>
+              <div class="l39-level is-granular"><span class="l39-level-label">T3 · IMB · VPOC · VAH / VAL · VWAP</span></div>
+              <div class="l39-level is-entry"><span class="l39-level-label">Zona de ejecución granular</span></div>
+              <div class="l39-level is-stop"><span class="l39-level-label">Invalidación estructural</span></div>
+
+              <svg viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
+                <defs>
+                  <linearGradient id="l39Price" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="#0033ff" />
+                    <stop offset=".48" stop-color="#a48cff" />
+                    <stop offset=".78" stop-color="#00e5ff" />
+                    <stop offset="1" stop-color="#22c55e" />
+                  </linearGradient>
+                  <linearGradient id="l39Area" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#00e5ff" stop-opacity=".14" />
+                    <stop offset="1" stop-color="#0033ff" stop-opacity="0" />
+                  </linearGradient>
+                </defs>
+                <path d="M25 300 C95 286 142 312 200 263 S305 218 365 241 S462 260 515 206 S604 151 665 169 S764 120 824 91 S916 77 976 48 L976 382 L25 382 Z" fill="url(#l39Area)" />
+                <path d="M25 300 C95 286 142 312 200 263 S305 218 365 241 S462 260 515 206 S604 151 665 169 S764 120 824 91 S916 77 976 48" fill="none" stroke="url(#l39Price)" stroke-width="5" vector-effect="non-scaling-stroke" />
+                <path d="M205 337 C285 322 347 340 420 300 S536 286 610 236 S728 202 804 152 S902 137 960 108" fill="none" stroke="#ffb74d" stroke-width="2" stroke-dasharray="9 8" opacity=".78" vector-effect="non-scaling-stroke" />
+              </svg>
+
+              <span class="l39-cusum-label">CUSUM dinámico · debajo del precio</span>
+              <span class="l39-marker is-entry"></span>
+              <span class="l39-marker-label is-entry"><b>Entrada</b><small>CUSUM + microciclos</small></span>
+              <span class="l39-marker is-stop"></span>
+              <span class="l39-marker-label is-stop"><b>Stop</b><small>la estructura deja de acompañar</small></span>
+              <span class="l39-marker is-exit"></span>
+              <span class="l39-marker-label is-exit"><b>Salida</b><small>objetivo estructural</small></span>
+            </div>
+
+            <div class="l39-map-foot">
+              <span class="l39-scenario-label is-long">Long</span>
+              <span class="l39-formula">CUSUM <b>por debajo</b> del precio</span>
+              <span class="l39-scenario-label is-short">Short</span>
+              <span class="l39-formula">CUSUM <b>por encima</b> del precio</span>
+            </div>
+          </article>
+
+          <aside class="l39-ledger" aria-label="Registro de gestión estructural">
+            <section class="l39-ledger-row is-entry">
+              <div class="l39-ledger-index">01</div>
+              <div class="l39-ledger-content">
+                <div class="l39-ledger-head">
+                  <span class="l39-ledger-title">Entrada</span>
+                  <small>coherencia</small>
+                </div>
+                <p class="l39-ledger-copy">La entrada se busca principalmente mediante <strong>CUSUM y/o microciclos en TIB, VIB y DIB</strong>, siempre en coherencia con la tesis vigente y, cuando se opera a favor del macrociclo, acompañada por la estructura HWTE.</p>
+                <div class="l39-logic-line"><strong>HWTE estructura la inferencia</strong><span>·</span><span>las dimensiones granulares refinan la ejecución</span></div>
+              </div>
+            </section>
+
+            <section class="l39-ledger-row is-stop">
+              <div class="l39-ledger-index">02</div>
+              <div class="l39-ledger-content">
+                <div class="l39-ledger-head">
+                  <span class="l39-ledger-title">Stop</span>
+                  <small>invalidación</small>
+                </div>
+                <p class="l39-ledger-copy">El stop debe responder a una <strong>invalidación estructural</strong>, no a una distancia arbitraria. Puede apoyarse en estructura HWTE o, cuando sea necesario, en niveles granulares como <strong>T3 e IMB</strong> de Tick, Volume o Dollar. CUSUM también puede utilizarse como referencia dinámica. Si esa estructura deja de acompañar la operación, el trader debe <strong>reevaluar la vigencia de la ejecución</strong>.</p>
+                <div class="l39-chip-row">
+                  <span class="l39-chip">HWTE</span><span class="l39-chip">T3</span><span class="l39-chip">IMB</span><span class="l39-chip">Tick</span><span class="l39-chip">Volume</span><span class="l39-chip">Dollar</span>
+                </div>
+              </div>
+            </section>
+
+            <section class="l39-ledger-row is-exit">
+              <div class="l39-ledger-index">03</div>
+              <div class="l39-ledger-content">
+                <div class="l39-ledger-head">
+                  <span class="l39-ledger-title">Salida</span>
+                  <small>objetivos</small>
+                </div>
+                <p class="l39-ledger-copy">La salida se construye utilizando los <strong>niveles que la propia estructura ofrece como objetivos</strong>. T3, IMB, VPOC, VAH/VAL, VWAP y los niveles disponibles en las distintas dimensiones permiten definir dónde capitalizar la inferencia. Los niveles HWTE tienen prioridad cuando existen; si no hay estructura próxima, pueden utilizarse niveles relevantes de las dimensiones granulares.</p>
+                <div class="l39-chip-row">
+                  <span class="l39-chip">HWTE · prioridad</span><span class="l39-chip">T3</span><span class="l39-chip">IMB</span><span class="l39-chip">VPOC</span><span class="l39-chip">VAH / VAL</span><span class="l39-chip">VWAP</span>
+                </div>
+              </div>
+            </section>
+          </aside>
+        </section>
+
+        <section class="l39-principle" aria-label="Principio Cortex-Dendrita">
+          <span class="l39-principle-label">Principio Cortex-Dendrita</span>
+          <blockquote>“La inferencia determina qué queremos capitalizar; la estructura determina <em>dónde entrar, dónde dejar de tener razón y dónde salir</em>.”</blockquote>
+          <p class="l39-principle-copy">El trader del Quant Trading Desk no gestiona una operación mediante distancias arbitrarias: <strong>gestiona evidencia, estructura e invalidación.</strong></p>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">←</kbd> <kbd class="kbd">→</kbd></span>
+    <span class="slide-counter">39/42</span>
+  </footer>
+</section>
+</body>
+</html>

@@ -19,36 +19,91 @@
     <span class="brand">CORTEX QUANT TRADER</span>
     <span class="divider"></span>
     <span class="module-tag" data-mod="2">Modulo II</span>
-    <span class="lesson-tag">L20</span>
+    <span class="lesson-tag">L22</span>
     <span class="slide-title">Monte Carlo</span>
-    <span class="concept-code">M2.L20.C20</span>
+    <span class="concept-code">M2.L22.C22</span>
   </header>
-  <div class="slide-body">
-    <div class="slide-left">
+  <div class="slide-body single-col l22-body">
+    <main class="slide-left full l22-main">
       <div class="section-title">
-        <div class="section-number">Leccion 20</div>
+        <div class="section-number">Lecci&oacute;n 22</div>
         <h2>Monte Carlo</h2>
       </div>
       <div class="divider gradient"></div>
-      <p class="t-body">Simulacion de miles de secuencias posibles de trades para estimar la distribucion de resultados. Permite calcular la probabilidad de ruina, el drawdown esperado y los intervalos de confianza del rendimiento.</p>
-      <div class="callout u-mt-4">
-        <p><strong>Aplicacion:</strong> Si en el 5% de las simulaciones la estrategia arruina la cuenta, el riesgo es inaceptable independientemente del retorno esperado.</p>
+
+      <div class="l22-stage">
+        <section class="l22-thesis" aria-labelledby="l22-thesis-title">
+          <div>
+            <span class="l22-kicker">Nube de futuros posibles / 22</span>
+            <h3 id="l22-thesis-title">Una historia observada.<br><em>M&uacute;ltiples trayectorias plausibles.</em></h3>
+          </div>
+          <p><strong>Monte Carlo</strong> genera m&uacute;ltiples escenarios posibles alterando elementos del comportamiento hist&oacute;rico de la estrategia. Permite estudiar la distribuci&oacute;n de resultados potenciales y estimar escenarios adversos de <strong>drawdown, retorno y riesgo de ruina</strong>, en lugar de confiar en una &uacute;nica curva hist&oacute;rica.</p>
+          <div class="l22-seed"><span>1</span><i>&rarr;</i><strong>N</strong><small>secuencias</small></div>
+        </section>
+
+        <section class="l22-cloud" aria-labelledby="l22-cloud-title">
+          <div class="l22-cloud-head">
+            <div><span class="l22-kicker">Simulaci&oacute;n de trayectorias</span><h3 id="l22-cloud-title">Distribuci&oacute;n, no predicci&oacute;n puntual</h3></div>
+            <div class="l22-cloud-legend"><span class="observed"><i></i>Backtest observado</span><span class="median"><i></i>Mediana</span><span class="adverse"><i></i>Cola adversa</span></div>
+          </div>
+
+          <div class="l22-visual">
+            <svg viewBox="0 0 1280 400" role="img" aria-label="Abanico de trayectorias Monte Carlo que desemboca en una distribuci&oacute;n de resultados finales" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="l22-fan-fill" x1="0" x2="1"><stop offset="0" stop-color="#0033ff" stop-opacity=".03"/><stop offset=".72" stop-color="#a48cff" stop-opacity=".14"/><stop offset="1" stop-color="#06b6d4" stop-opacity=".06"/></linearGradient>
+                <linearGradient id="l22-median-line" x1="0" x2="1"><stop offset="0" stop-color="#0033ff"/><stop offset="1" stop-color="#06b6d4"/></linearGradient>
+              </defs>
+              <g class="l22-grid-lines">
+                <line x1="55" y1="55" x2="930" y2="55"/><line x1="55" y1="120" x2="930" y2="120"/><line x1="55" y1="185" x2="930" y2="185"/><line x1="55" y1="250" x2="930" y2="250"/><line x1="55" y1="315" x2="930" y2="315"/>
+                <line x1="55" y1="350" x2="930" y2="350"/><line x1="230" y1="30" x2="230" y2="350"/><line x1="405" y1="30" x2="405" y2="350"/><line x1="580" y1="30" x2="580" y2="350"/><line x1="755" y1="30" x2="755" y2="350"/><line x1="930" y1="30" x2="930" y2="350"/>
+              </g>
+              <path class="l22-fan-area" d="M60,250 C220,175 360,91 510,47 C650,8 800,19 930,36 L930,335 C780,331 650,305 510,287 C360,269 220,259 60,250 Z"/>
+              <g class="l22-sim-paths">
+                <path d="M60,250 C180,210 285,146 400,122 C550,90 710,57 930,42"/><path d="M60,250 C185,219 300,184 430,132 C590,69 735,91 930,62"/>
+                <path d="M60,250 C175,227 295,153 420,166 C570,181 730,85 930,78"/><path d="M60,250 C190,202 310,199 430,141 C565,75 725,121 930,91"/>
+                <path d="M60,250 C185,233 305,176 425,190 C580,208 730,125 930,112"/><path d="M60,250 C180,216 305,224 430,180 C570,132 740,146 930,132"/>
+                <path d="M60,250 C185,235 305,195 430,214 C580,236 740,168 930,154"/><path d="M60,250 C180,244 300,207 430,229 C570,254 740,202 930,181"/>
+                <path d="M60,250 C185,228 305,253 430,236 C570,218 740,238 930,207"/><path d="M60,250 C180,264 305,227 430,249 C570,273 740,229 930,230"/>
+                <path d="M60,250 C180,239 300,278 430,259 C570,238 740,273 930,254"/><path d="M60,250 C180,271 305,247 430,275 C570,306 740,267 930,278"/>
+                <path d="M60,250 C180,258 305,289 430,284 C570,279 740,309 930,298"/><path d="M60,250 C185,274 305,266 430,301 C570,340 740,295 930,319"/>
+              </g>
+              <path class="l22-observed-path" d="M60,250 C185,216 310,166 430,151 C570,133 720,89 930,84"/>
+              <path class="l22-median-path" d="M60,250 C185,232 305,214 430,208 C570,201 735,183 930,174"/>
+              <path class="l22-adverse-path" d="M60,250 C180,274 305,266 430,301 C570,340 740,295 930,319"/>
+              <line class="l22-terminal-line" x1="930" y1="25" x2="930" y2="350"/>
+              <g class="l22-histogram">
+                <rect x="985" y="49" width="52" height="13"/><rect x="985" y="72" width="88" height="13"/><rect x="985" y="95" width="126" height="13"/>
+                <rect x="985" y="118" width="168" height="13"/><rect x="985" y="141" width="205" height="13"/><rect x="985" y="164" width="232" height="13"/>
+                <rect class="median" x="985" y="187" width="248" height="13"/><rect x="985" y="210" width="226" height="13"/><rect x="985" y="233" width="190" height="13"/>
+                <rect x="985" y="256" width="147" height="13"/><rect x="985" y="279" width="103" height="13"/><rect class="tail" x="985" y="302" width="65" height="13"/>
+              </g>
+              <g class="l22-axis-copy"><text x="490" y="386" text-anchor="middle">SECUENCIA DE OPERACIONES &rarr;</text><text x="1105" y="350" text-anchor="middle">DISTRIBUCI&Oacute;N FINAL</text><text x="24" y="200" text-anchor="middle" transform="rotate(-90 24 200)">EQUITY</text></g>
+            </svg>
+            <div class="l22-chart-label is-origin">Misma estrategia</div>
+            <div class="l22-chart-label is-median">Mediana</div>
+            <div class="l22-chart-label is-tail">Cola adversa</div>
+          </div>
+
+          <div class="l22-readout">
+            <div><span>Retorno</span><strong>Distribuci&oacute;n de resultados</strong><i class="positive"></i></div>
+            <div><span>Drawdown</span><strong>Profundidad y frecuencia</strong><i class="warning"></i></div>
+            <div><span>Riesgo de ruina</span><strong>Probabilidad de no supervivencia</strong><i class="negative"></i></div>
+            <p>El backtest observado es solo <strong>una trayectoria</strong> dentro de un conjunto de secuencias plausibles.</p>
+          </div>
+        </section>
+
+        <section class="l22-principle">
+          <span class="l22-kicker">Principio Quant</span>
+          <p>Una estrategia debe sobrevivir no solo al pasado observado, sino a <strong>variaciones plausibles de ese pasado</strong>.</p>
+          <div class="l22-principle-mark"><span>Historia &uacute;nica</span><b>&rarr;</b><span>Distribuci&oacute;n de riesgo</span></div>
+        </section>
       </div>
-    </div>
-    <div class="slide-right">
-      <div class="callout accent">
-        <p><strong>Monte Carlo permite:</strong></p>
-        <p>&#x25A0; Estimar la probabilidad de ruina (risk of ruin).</p>
-        <p>&#x25A0; Calcular intervalos de confianza para retornos y drawdowns.</p>
-        <p>&#x25A0; Evaluar la sensibilidad al orden de los trades.</p>
-        <p>&#x25A0; Determinar el tamano de posicion optimo (Kelly fraction).</p>
-      </div>
-    </div>
+    </main>
   </div>
   <footer class="slide-footer">
     <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
     <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
-    <span class="slide-counter">22/34</span>
+    <span class="slide-counter">26/39</span>
   </footer>
 </section>
 </body>

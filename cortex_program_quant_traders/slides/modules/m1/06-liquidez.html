@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex Quant Trader - TechPulse Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+  <link rel="stylesheet" href="../../css/slides.css" />
+</head>
+<body>
+<section class="slide" id="slide-8" data-module="1">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="1">Modulo I</span>
+    <span class="lesson-tag">L7</span>
+    <span class="slide-title">Oferta, Demanda y Liquidez</span>
+    <span class="concept-code">M1.L7.C07</span>
+  </header>
+  <div class="slide-body">
+    <div class="slide-left">
+      <div class="section-title">
+        <div class="section-number">Lección 7</div>
+        <h2>Oferta, Demanda y Liquidez</h2>
+      </div>
+      <div class="divider gradient"></div>
+      <p class="t-body" style="display:none;"><strong>Oferta:</strong> representa la disposición de los participantes a <strong>vender</strong> un activo a determinados precios. En el libro de órdenes se observa principalmente en el lado <strong>Ask</strong>.</p>
+      <p class="t-body u-mt-4" style="display:none;"><strong>Demanda:</strong> representa la disposición de los participantes a <strong>comprar</strong> un activo a determinados precios. En el libro de órdenes se observa principalmente en el lado <strong>Bid</strong>.</p>
+      <p class="t-body u-mt-4" style="display:none;"><strong>Liquidez:</strong> es la capacidad del mercado para <strong>absorber compras y ventas sin generar grandes desplazamientos del precio</strong>. Depende de la cantidad y profundidad de órdenes disponibles.</p>
+      <div class="callout u-mt-4" style="display:none;">
+        <p><strong>Concepto fundamental:</strong> el precio se desplaza por la interacción entre órdenes agresivas y la liquidez disponible. Mucha agresividad no implica necesariamente mucho movimiento si existe suficiente liquidez para absorberla.</p>
+      </div>
+      <div class="callout cyan u-mt-4" style="display:none;">
+        <p><strong style="text-decoration:underline;">DOM / Order Book:</strong> muestra las órdenes limitadas pendientes de compra y venta disponibles en distintos niveles de precio. Representa la liquidez visible e intención actual del mercado, pero esas órdenes pueden modificarse o cancelarse.</p>
+        <p style="margin-top:var(--sp-2);"><strong style="text-decoration:underline;">Volumen:</strong> muestra las transacciones que realmente fueron ejecutadas entre compradores y vendedores. Representa actividad confirmada, no intención.</p>
+        <p style="margin-top:var(--sp-2);"><strong style="text-decoration:underline;">Clave:</strong> el Order Book muestra lo que espera ser negociado; el volumen muestra lo que efectivamente se negoció.</p>
+      </div>
+      <div style="display:none;flex-direction:column;gap:var(--sp-3);font-family:var(--font-mono);">
+        <div class="viz-title">Flujo de liquidez y formación de precio</div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3);">
+          <div style="padding:var(--sp-3);border:1px solid var(--border-default);border-left:3px solid var(--bull-glow);background:var(--bg-elevated);">
+            <div style="display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--bull-glow);font-weight:700;font-size:var(--fs-caption);letter-spacing:.07em;">DEMANDA · BID</span><span style="color:var(--bull-glow);">▲</span></div>
+            <div style="display:flex;flex-direction:column;gap:4px;margin:var(--sp-3) 0;"><span style="height:9px;width:90%;background:var(--bull);opacity:.6;"></span><span style="height:9px;width:67%;background:var(--bull);opacity:.43;"></span><span style="height:9px;width:44%;background:var(--bull);opacity:.28;"></span></div>
+            <div style="font-family:var(--font-body);font-size:var(--fs-caption);line-height:1.6;color:var(--txt-secondary);">Disposición a <strong style="color:var(--txt-primary);">comprar</strong> un activo a determinados precios. En el libro se observa principalmente en el lado <strong style="color:var(--bull-glow);">Bid</strong>.</div>
+          </div>
+          <div style="padding:var(--sp-3);border:1px solid var(--border-default);border-left:3px solid var(--bear-glow);background:var(--bg-elevated);">
+            <div style="display:flex;justify-content:space-between;align-items:center;"><span style="color:var(--bear-glow);font-weight:700;font-size:var(--fs-caption);letter-spacing:.07em;">OFERTA · ASK</span><span style="color:var(--bear-glow);">▼</span></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;margin:var(--sp-3) 0;"><span style="height:9px;width:44%;background:var(--bear);opacity:.28;"></span><span style="height:9px;width:67%;background:var(--bear);opacity:.43;"></span><span style="height:9px;width:90%;background:var(--bear);opacity:.6;"></span></div>
+            <div style="font-family:var(--font-body);font-size:var(--fs-caption);line-height:1.6;color:var(--txt-secondary);">Disposición a <strong style="color:var(--txt-primary);">vender</strong> un activo a determinados precios. En el libro se observa principalmente en el lado <strong style="color:var(--bear-glow);">Ask</strong>.</div>
+          </div>
+        </div>
+
+        <div style="padding:var(--sp-3);border:1px solid var(--border-default);background:var(--bg-elevated);">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:var(--sp-2);"><span style="color:var(--hi);font-weight:700;font-size:var(--fs-caption);letter-spacing:.07em;">LIQUIDEZ · PROFUNDIDAD</span><span style="color:var(--txt-tertiary);font-size:10px;">CAPACIDAD DE ABSORCIÓN</span></div>
+          <div style="display:grid;grid-template-columns:1fr 104px 1fr;gap:var(--sp-3);align-items:center;margin:var(--sp-3) 0;">
+            <div style="display:flex;flex-direction:column;gap:4px;"><span style="height:10px;width:100%;background:var(--hi);opacity:.54;"></span><span style="height:10px;width:78%;background:var(--hi);opacity:.38;"></span><span style="height:10px;width:55%;background:var(--hi);opacity:.23;"></span></div>
+            <div style="padding:var(--sp-2);border:1px solid var(--hi);text-align:center;color:var(--hi);font-size:10px;">PRECIO<br><span style="color:var(--txt-secondary);">ESTABLE</span></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;"><span style="height:10px;width:55%;background:var(--hi);opacity:.23;"></span><span style="height:10px;width:78%;background:var(--hi);opacity:.38;"></span><span style="height:10px;width:100%;background:var(--hi);opacity:.54;"></span></div>
+          </div>
+          <div style="font-family:var(--font-body);font-size:var(--fs-caption);line-height:1.6;color:var(--txt-secondary);">La liquidez es la capacidad del mercado para <strong style="color:var(--txt-primary);">absorber compras y ventas sin grandes desplazamientos del precio</strong>. Depende de la cantidad y profundidad de órdenes disponibles.</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3);">
+          <div style="padding:var(--sp-3);border-left:3px solid var(--warn);background:var(--warn-subtle);">
+            <div style="color:var(--warn);font-weight:700;font-size:var(--fs-caption);letter-spacing:.07em;">AGRESIVIDAD · IMPACTO</div>
+            <div style="display:flex;align-items:center;gap:var(--sp-2);margin:var(--sp-3) 0;"><span style="padding:4px;background:rgba(245,158,11,.2);color:var(--warn);font-size:10px;">MKT</span><span style="height:5px;flex:1;background:var(--warn);opacity:.65;"></span><span style="color:var(--warn);">→</span><span style="width:34px;height:22px;border:1px solid var(--warn);"></span></div>
+            <div style="font-family:var(--font-body);font-size:var(--fs-caption);line-height:1.6;color:var(--txt-secondary);">El precio se desplaza por la interacción entre órdenes agresivas y liquidez disponible. Mucha agresividad no implica mucho movimiento si existe suficiente liquidez para absorberla.</div>
+          </div>
+          <div style="padding:var(--sp-3);border-left:3px solid var(--cyan);background:var(--cyan-subtle);">
+            <div style="color:var(--cyan);font-weight:700;font-size:var(--fs-caption);letter-spacing:.07em;">ABSORCIÓN</div>
+            <div style="display:flex;align-items:center;gap:var(--sp-2);margin:var(--sp-3) 0;"><span style="padding:4px;background:rgba(6,182,212,.2);color:var(--cyan);font-size:10px;">MKT</span><span style="height:5px;flex:1;background:var(--cyan);opacity:.65;"></span><span style="padding:5px;border:1px solid var(--cyan);color:var(--cyan);font-size:10px;">DEPTH</span></div>
+            <div style="font-family:var(--font-body);font-size:var(--fs-caption);line-height:1.6;color:var(--txt-secondary);">Flujo agresivo elevado que encuentra suficiente liquidez contraria: la orden se absorbe y el desplazamiento del precio se reduce.</div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--sp-3);">
+          <div style="padding:var(--sp-3);border-left:3px solid var(--accent);background:var(--accent-subtle);">
+            <div style="color:var(--accent);font-weight:700;font-size:var(--fs-caption);letter-spacing:.07em;">DOM / ORDER BOOK</div>
+            <div style="display:flex;flex-direction:column;gap:4px;margin:var(--sp-3) 0;"><span style="height:8px;width:92%;background:var(--accent);opacity:.55;"></span><span style="height:8px;width:65%;background:var(--accent);opacity:.38;"></span><span style="height:8px;width:47%;background:var(--accent);opacity:.25;"></span></div>
+            <div style="font-family:var(--font-body);font-size:var(--fs-caption);line-height:1.6;color:var(--txt-secondary);">Muestra órdenes limitadas pendientes de compra y venta en distintos precios: liquidez visible e intención actual, que puede modificarse o cancelarse.</div>
+          </div>
+          <div style="padding:var(--sp-3);border-left:3px solid var(--purple);background:var(--purple-subtle);">
+            <div style="color:var(--purple);font-weight:700;font-size:var(--fs-caption);letter-spacing:.07em;">VOLUMEN</div>
+            <div style="display:flex;align-items:center;gap:7px;margin:var(--sp-3) 0;height:28px;"><span style="width:11px;height:11px;background:var(--purple);border-radius:50%;"></span><span style="width:16px;height:16px;background:var(--purple);border-radius:50%;opacity:.8;"></span><span style="width:9px;height:9px;background:var(--purple);border-radius:50%;opacity:.6;"></span><span style="width:20px;height:20px;background:var(--purple);border-radius:50%;opacity:.9;"></span></div>
+            <div style="font-family:var(--font-body);font-size:var(--fs-caption);line-height:1.6;color:var(--txt-secondary);">Muestra transacciones que realmente fueron ejecutadas entre compradores y vendedores: actividad confirmada, no intención.</div>
+          </div>
+        </div>
+
+        <div style="padding:var(--sp-3);border-left:3px solid var(--accent);background:var(--accent-subtle);font-family:var(--font-body);font-size:var(--fs-caption);line-height:1.6;color:var(--txt-secondary);"><strong style="color:var(--accent);text-decoration:underline;">Clave:</strong> el Order Book muestra <strong style="color:var(--txt-primary);">lo que espera ser negociado</strong>; el volumen muestra <strong style="color:var(--txt-primary);">lo que efectivamente se negoció</strong>.</div>
+      </div>
+      <div style="margin-top:calc(var(--sp-6) * -3);font-family:var(--font-mono);">
+        <div class="viz-title">Campo de liquidez · del libro al precio</div>
+        <div style="position:relative;padding:var(--sp-4);border:1px solid var(--border-default);background:linear-gradient(180deg,rgba(230,57,85,.05) 0 31%,rgba(255,255,255,.018) 31% 42%,rgba(34,197,94,.05) 42% 100%);overflow:hidden;">
+          <div style="position:absolute;left:50%;top:0;bottom:0;border-left:1px dashed rgba(255,255,255,.15);"></div>
+          <div style="position:relative;display:grid;grid-template-columns:1fr 150px;gap:var(--sp-4);align-items:center;padding-bottom:var(--sp-3);border-bottom:1px solid rgba(230,57,85,.25);">
+            <div>
+              <div style="color:var(--bear-glow);font-weight:700;font-size:var(--fs-caption);letter-spacing:.08em;">ASK · OFERTA</div>
+              <div style="margin-top:var(--sp-2);display:flex;flex-direction:column;align-items:flex-end;gap:5px;"><span style="width:100%;height:9px;background:var(--bear);opacity:.65;"></span><span style="width:72%;height:9px;background:var(--bear);opacity:.45;"></span><span style="width:48%;height:9px;background:var(--bear);opacity:.28;"></span></div>
+            </div>
+            <div style="font-family:var(--font-body);font-size:var(--fs-caption);line-height:1.6;color:var(--txt-secondary);">Disposición a <strong style="color:var(--txt-primary);">vender</strong> a precios determinados. Se observa principalmente en el lado <strong style="color:var(--bear-glow);">Ask</strong>.</div>
+          </div>
+
+          <div style="position:relative;display:grid;grid-template-columns:1fr 150px;gap:var(--sp-4);align-items:center;padding:var(--sp-3) 0;border-bottom:1px solid rgba(255,255,255,.12);">
+            <div style="display:flex;align-items:center;gap:var(--sp-3);">
+              <span style="padding:var(--sp-2) var(--sp-3);border:1px solid var(--txt-tertiary);color:var(--txt-primary);font-size:10px;font-weight:700;">PRECIO</span>
+              <span style="height:1px;flex:1;background:var(--txt-tertiary);opacity:.45;"></span>
+              <span style="color:var(--txt-tertiary);font-size:10px;">SPREAD</span>
+            </div>
+            <div style="font-family:var(--font-body);font-size:var(--fs-caption);line-height:1.6;color:var(--txt-secondary);"><strong style="color:var(--hi);">Liquidez:</strong> capacidad de absorber compras y ventas sin grandes desplazamientos; depende de la cantidad y profundidad de órdenes.</div>
+          </div>
+
+          <div style="position:relative;display:grid;grid-template-columns:1fr 150px;gap:var(--sp-4);align-items:center;padding-top:var(--sp-3);">
+            <div>
+              <div style="color:var(--bull-glow);font-weight:700;font-size:var(--fs-caption);letter-spacing:.08em;">BID · DEMANDA</div>
+              <div style="margin-top:var(--sp-2);display:flex;flex-direction:column;gap:5px;"><span style="width:48%;height:9px;background:var(--bull);opacity:.28;"></span><span style="width:72%;height:9px;background:var(--bull);opacity:.45;"></span><span style="width:100%;height:9px;background:var(--bull);opacity:.65;"></span></div>
+            </div>
+            <div style="font-family:var(--font-body);font-size:var(--fs-caption);line-height:1.6;color:var(--txt-secondary);">Disposición a <strong style="color:var(--txt-primary);">comprar</strong> a precios determinados. Se observa principalmente en el lado <strong style="color:var(--bull-glow);">Bid</strong>.</div>
+          </div>
+
+          <div style="position:relative;display:grid;grid-template-columns:1fr 36px 1fr 36px 1fr;align-items:center;text-align:center;gap:var(--sp-2);margin-top:var(--sp-4);padding-top:var(--sp-3);border-top:1px solid var(--border-default);">
+            <div style="padding:var(--sp-2);background:rgba(245,158,11,.12);color:var(--warn);font-size:10px;">ORDEN<br>AGRESIVA</div><span style="color:var(--warn);">→</span><div style="padding:var(--sp-2);border:1px solid var(--cyan);color:var(--cyan);font-size:10px;">¿HAY<br>PROFUNDIDAD?</div><span style="color:var(--cyan);">↗<br>↘</span><div style="display:flex;flex-direction:column;gap:5px;font-size:10px;"><span style="padding:5px;background:var(--cyan-subtle);color:var(--cyan);">SÍ · ABSORCIÓN</span><span style="padding:5px;background:var(--bear-subtle);color:var(--bear-glow);">NO · IMPACTO / VOID</span></div>
+          </div>
+          <div style="position:relative;margin-top:var(--sp-3);font-family:var(--font-body);font-size:var(--fs-caption);line-height:1.6;color:var(--txt-secondary);">El precio se desplaza por la interacción entre órdenes agresivas y liquidez disponible. Mucha agresividad no implica mucho movimiento si existe suficiente liquidez contraria para absorberla.</div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:var(--sp-3);border:1px solid var(--border-default);background:var(--bg-elevated);">
+          <div style="padding:var(--sp-3);border-right:1px solid var(--border-default);">
+            <div style="color:var(--accent);font-weight:700;font-size:var(--fs-caption);letter-spacing:.08em;">DOM / ORDER BOOK · INTENCIÓN</div>
+            <div style="position:relative;height:42px;margin:var(--sp-3) 0;background:repeating-linear-gradient(0deg,transparent 0 9px,rgba(0,51,255,.13) 9px 10px);"><span style="position:absolute;left:0;top:4px;width:86%;height:6px;background:var(--accent);opacity:.6;"></span><span style="position:absolute;left:0;top:16px;width:62%;height:6px;background:var(--accent);opacity:.45;"></span><span style="position:absolute;left:0;top:28px;width:40%;height:6px;background:var(--accent);opacity:.3;"></span></div>
+            <div style="font-family:var(--font-body);font-size:var(--fs-caption);line-height:1.6;color:var(--txt-secondary);">Muestra órdenes limitadas pendientes de compra y venta en distintos niveles: liquidez visible e intención actual; pueden modificarse o cancelarse.</div>
+          </div>
+          <div style="padding:var(--sp-3);">
+            <div style="color:var(--purple);font-weight:700;font-size:var(--fs-caption);letter-spacing:.08em;">VOLUMEN · CONFIRMACIÓN</div>
+            <div style="display:flex;align-items:flex-end;gap:8px;height:42px;margin:var(--sp-3) 0;border-bottom:1px solid rgba(167,139,250,.3);"><span style="width:14px;height:14px;background:var(--purple);border-radius:50%;"></span><span style="width:14px;height:28px;background:var(--purple);border-radius:50%;opacity:.85;"></span><span style="width:14px;height:19px;background:var(--purple);border-radius:50%;opacity:.65;"></span><span style="width:14px;height:35px;background:var(--purple);border-radius:50%;opacity:.95;"></span><span style="width:14px;height:23px;background:var(--purple);border-radius:50%;opacity:.75;"></span></div>
+            <div style="font-family:var(--font-body);font-size:var(--fs-caption);line-height:1.6;color:var(--txt-secondary);">Muestra transacciones realmente ejecutadas entre compradores y vendedores: actividad confirmada, no intención.</div>
+          </div>
+        </div>
+        <div style="margin-top:var(--sp-3);padding:var(--sp-3);border-left:3px solid var(--accent);background:var(--accent-subtle);font-family:var(--font-body);font-size:var(--fs-caption);line-height:1.6;color:var(--txt-secondary);"><strong style="color:var(--accent);text-decoration:underline;">Clave:</strong> el Order Book muestra <strong style="color:var(--txt-primary);">lo que espera ser negociado</strong>; el volumen muestra <strong style="color:var(--txt-primary);">lo que efectivamente se negoció</strong>.</div>
+      </div>
+    </div>
+    <div class="slide-right">
+      <div class="viz-panel">
+        <div class="viz-title">Conceptos clave de liquidez</div>
+        <div style="display:none;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-2);font-size:var(--fs-caption);font-family:var(--font-mono);">
+          <div style="padding:var(--sp-2);border-left:3px solid var(--accent);background:var(--accent-subtle);"><div style="color:var(--accent);font-weight:700;">DOM — Depth of Market</div><div style="color:var(--txt-secondary);margin-top:4px;">Profundidad visible del libro de órdenes. Muestra la liquidez disponible en diferentes niveles de precio.</div></div>
+          <div style="padding:var(--sp-2);border-left:3px solid var(--bull);background:var(--bull-subtle);"><div style="color:var(--bull-glow);font-weight:700;">Bid / Ask — Oferta y Demanda</div><div style="color:var(--txt-secondary);margin-top:4px;">Bid: mejor precio comprador. Ask: mejor precio vendedor. Su diferencia constituye el spread.</div></div>
+          <div style="padding:var(--sp-2);border-left:3px solid var(--hi);background:var(--hi-subtle);"><div style="color:var(--hi);font-weight:700;">Market Depth — Profundidad</div><div style="color:var(--txt-secondary);margin-top:4px;">Cantidad de órdenes disponibles alrededor del precio. Mayor profundidad permite absorber órdenes con menor impacto.</div></div>
+          <div style="padding:var(--sp-2);border-left:3px solid var(--bear);background:var(--bear-subtle);"><div style="color:var(--bear-glow);font-weight:700;">Liquidity Gap / Void</div><div style="color:var(--txt-secondary);margin-top:4px;">Zona con poca liquidez disponible. El precio puede desplazarse rápidamente al encontrar menor resistencia.</div></div>
+          <div style="padding:var(--sp-2);border-left:3px solid var(--warn);background:var(--warn-subtle);"><div style="color:var(--warn);font-weight:700;">Market Impact</div><div style="color:var(--txt-secondary);margin-top:4px;">Desplazamiento generado cuando una orden agresiva consume la liquidez disponible en uno o varios niveles.</div></div>
+          <div style="padding:var(--sp-2);border-left:3px solid var(--cyan);background:var(--cyan-subtle);"><div style="color:var(--cyan);font-weight:700;">Absorción</div><div style="color:var(--txt-secondary);margin-top:4px;">Flujo agresivo elevado que encuentra suficiente liquidez contraria, generando poco desplazamiento del precio.</div></div>
+          <div style="padding:var(--sp-2);border-left:3px solid var(--purple);background:var(--purple-subtle);"><div style="color:var(--purple);font-weight:700;">POC — Punto de Control</div><div style="color:var(--txt-secondary);margin-top:4px;">Nivel de precio donde se negoció el mayor volumen durante el período analizado.</div></div>
+          <div style="padding:var(--sp-2);border-left:3px solid var(--bull);background:var(--bull-subtle);"><div style="color:var(--bull-glow);font-weight:700;">HVN / LVN — Volume Nodes</div><div style="color:var(--txt-secondary);margin-top:4px;">HVN: zonas de alta concentración histórica de volumen. LVN: zonas de baja concentración histórica de volumen.</div></div>
+          <div style="padding:var(--sp-2);border-left:3px solid var(--hi);background:var(--hi-subtle);"><div style="color:var(--hi);font-weight:700;">Value Area</div><div style="color:var(--txt-secondary);margin-top:4px;">Rango donde se concentra aproximadamente el 70% del volumen negociado del perfil analizado.</div></div>
+          <div style="grid-column:1 / -1;padding:var(--sp-2);border-left:3px solid var(--accent);background:var(--accent-subtle);"><div style="color:var(--txt-primary);"><strong style="color:var(--accent);">Principio clave:</strong> liquidez es lo disponible para negociar; volumen es lo que ya fue ejecutado. El movimiento del precio emerge de la interacción entre <strong>agresividad, profundidad y liquidez disponible</strong>.</div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:var(--sp-3);font-family:var(--font-mono);font-size:var(--fs-caption);">
+          <div style="padding:var(--sp-3);border:1px solid var(--border-default);background:var(--bg-elevated);">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2);"><span style="color:var(--accent);font-weight:700;letter-spacing:.08em;">01 · LIQUIDEZ VISIBLE</span><span style="color:var(--txt-tertiary);font-size:10px;">LIBRO EN REPOSO</span></div>
+            <div style="display:grid;grid-template-columns:136px 1fr;gap:var(--sp-3);margin-top:var(--sp-3);align-items:stretch;">
+              <div style="display:flex;flex-direction:column;justify-content:center;gap:4px;padding:var(--sp-2);border:1px solid rgba(0,51,255,.25);background:rgba(0,51,255,.04);">
+                <span style="color:var(--bear-glow);font-size:10px;">ASK</span><span style="height:7px;background:var(--bear);opacity:.45;"></span><span style="height:7px;width:72%;background:var(--bear);opacity:.32;"></span><span style="margin:3px 0;height:1px;background:var(--txt-tertiary);"></span><span style="height:7px;width:68%;background:var(--bull);opacity:.32;"></span><span style="height:7px;background:var(--bull);opacity:.45;"></span><span style="color:var(--bull-glow);font-size:10px;">BID</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:var(--sp-2);color:var(--txt-secondary);line-height:1.55;">
+                <div><strong style="color:var(--accent);">DOM — Depth of Market:</strong> profundidad visible del libro de órdenes; muestra la liquidez disponible en diferentes niveles de precio.</div>
+                <div><strong style="color:var(--bull-glow);">Bid / Ask — Oferta y Demanda:</strong> Bid: mejor precio comprador. Ask: mejor precio vendedor. Su diferencia constituye el spread.</div>
+                <div><strong style="color:var(--hi);">Market Depth — Profundidad:</strong> cantidad de órdenes alrededor del precio. Mayor profundidad permite absorber órdenes con menor impacto.</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding:var(--sp-3);border:1px solid var(--border-default);background:var(--bg-elevated);">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2);"><span style="color:var(--warn);font-weight:700;letter-spacing:.08em;">02 · RESPUESTA DEL FLUJO</span><span style="color:var(--txt-tertiary);font-size:10px;">ORDEN AGRESIVA</span></div>
+            <div style="display:grid;grid-template-columns:1fr 38px 1.1fr;gap:var(--sp-2);align-items:center;margin:var(--sp-3) 0;">
+              <div style="display:flex;flex-direction:column;gap:5px;"><span style="padding:5px;background:var(--bear-subtle);color:var(--bear-glow);font-size:10px;">LIQUIDITY GAP / VOID</span><span style="height:8px;width:32%;background:var(--bear);opacity:.5;"></span><span style="height:8px;width:17%;background:var(--bear);opacity:.28;"></span></div>
+              <span style="color:var(--warn);text-align:center;font-size:var(--fs-body);">MKT<br>→</span>
+              <div style="display:flex;flex-direction:column;gap:5px;"><span style="height:8px;width:94%;background:var(--cyan);opacity:.55;"></span><span style="height:8px;width:76%;background:var(--cyan);opacity:.42;"></span><span style="padding:5px;background:var(--cyan-subtle);color:var(--cyan);font-size:10px;">PROFUNDIDAD / ABSORCIÓN</span></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--sp-2);color:var(--txt-secondary);line-height:1.55;">
+              <div><strong style="color:var(--bear-glow);">Liquidity Gap / Void:</strong> zona con poca liquidez; el precio puede desplazarse rápidamente al encontrar menor resistencia.</div>
+              <div><strong style="color:var(--warn);">Market Impact:</strong> desplazamiento generado cuando una orden agresiva consume liquidez en uno o varios niveles.</div>
+              <div><strong style="color:var(--cyan);">Absorción:</strong> flujo agresivo elevado que encuentra suficiente liquidez contraria, generando poco desplazamiento.</div>
+            </div>
+          </div>
+
+          <div style="padding:var(--sp-3);border:1px solid var(--border-default);background:var(--bg-elevated);">
+            <div style="display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2);"><span style="color:var(--purple);font-weight:700;letter-spacing:.08em;">03 · PERFIL NEGOCIADO</span><span style="color:var(--txt-tertiary);font-size:10px;">VOLUMEN POR PRECIO</span></div>
+            <div style="display:grid;grid-template-columns:136px 1fr;gap:var(--sp-3);margin-top:var(--sp-3);align-items:center;">
+              <div style="display:flex;flex-direction:column;gap:4px;padding:var(--sp-2);border-left:1px solid var(--purple);">
+                <span style="height:7px;width:44%;background:var(--purple);opacity:.38;"></span><span style="height:7px;width:86%;background:var(--purple);opacity:.65;"></span><span style="height:9px;width:100%;background:var(--warn);opacity:.8;"></span><span style="height:7px;width:82%;background:var(--purple);opacity:.65;"></span><span style="height:7px;width:27%;background:var(--purple);opacity:.28;"></span><span style="height:7px;width:73%;background:var(--purple);opacity:.52;"></span>
+                <span style="margin-top:2px;color:var(--warn);font-size:10px;">POC</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:var(--sp-2);color:var(--txt-secondary);line-height:1.55;">
+                <div><strong style="color:var(--purple);">POC — Punto de Control:</strong> nivel de precio donde se negoció el mayor volumen durante el período analizado.</div>
+                <div><strong style="color:var(--bull-glow);">HVN / LVN — Volume Nodes:</strong> HVN: alta concentración histórica de volumen. LVN: baja concentración histórica de volumen.</div>
+                <div><strong style="color:var(--hi);">Value Area:</strong> rango donde se concentra aproximadamente el 70% del volumen negociado del perfil analizado.</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="padding:var(--sp-3);border-left:3px solid var(--accent);background:var(--accent-subtle);font-family:var(--font-body);line-height:1.6;color:var(--txt-secondary);"><strong style="color:var(--accent);">Principio clave:</strong> liquidez es lo disponible para negociar; volumen es lo que ya fue ejecutado. El movimiento del precio emerge de la interacción entre <strong style="color:var(--txt-primary);">agresividad, profundidad y liquidez disponible</strong>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">06/34</span>
+  </footer>
+</section>
+</body>
+</html>

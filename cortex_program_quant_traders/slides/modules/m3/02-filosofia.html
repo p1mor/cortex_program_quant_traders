@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Filosofía de la Inferencia — Cortex Quant Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-24 .l25-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: clamp(20px, 2.5vh, 30px);
+      min-height: 0;
+      padding: clamp(26px, 3.3vh, 40px) clamp(30px, 3.2vw, 62px) clamp(24px, 3vh, 36px);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 48% 46%, rgba(164, 140, 255, .055), transparent 25%),
+        radial-gradient(circle at 96% 86%, rgba(6, 182, 212, .06), transparent 25%),
+        #000;
+    }
+
+    #slide-24 .l25-head .divider {
+      margin-top: clamp(16px, 2vh, 22px);
+    }
+
+    #slide-24 .l25-canvas {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(320px, .94fr) minmax(250px, .72fr);
+      grid-template-rows: minmax(0, 1fr) auto;
+      gap: clamp(14px, 1.35vw, 24px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-24 .l25-thesis,
+    #slide-24 .l25-method,
+    #slide-24 .l25-gap {
+      position: relative;
+      min-width: 0;
+      min-height: 0;
+      border: 1px solid var(--border-default);
+      background: rgba(7, 8, 10, .93);
+      overflow: hidden;
+    }
+
+    #slide-24 .l25-thesis {
+      display: flex;
+      flex-direction: column;
+      padding: clamp(22px, 2.5vh, 32px);
+      border-top-color: var(--accent);
+      background:
+        linear-gradient(135deg, rgba(0, 51, 255, .095), transparent 54%),
+        rgba(7, 8, 10, .95);
+    }
+
+    #slide-24 .l25-thesis::after {
+      content: "";
+      position: absolute;
+      width: 240px;
+      height: 240px;
+      right: -128px;
+      bottom: -132px;
+      border: 1px solid rgba(0, 51, 255, .28);
+      border-radius: 50%;
+    }
+
+    #slide-24 .l25-label,
+    #slide-24 .l25-method-head,
+    #slide-24 .l25-gap-head,
+    #slide-24 .l25-step-index,
+    #slide-24 .l25-switch span,
+    #slide-24 .l25-stat-label,
+    #slide-24 .l25-principle-title,
+    #slide-24 .l25-equation {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .11em;
+    }
+
+    #slide-24 .l25-label,
+    #slide-24 .l25-method-head,
+    #slide-24 .l25-gap-head {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+    }
+
+    #slide-24 .l25-thesis h3 {
+      max-width: 620px;
+      margin-top: clamp(14px, 1.8vh, 22px);
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 2.6vw, 3.15rem);
+      font-weight: 500;
+      line-height: 1.02;
+      letter-spacing: -.035em;
+      color: var(--txt-primary);
+    }
+
+    #slide-24 .l25-thesis h3 em {
+      color: var(--hi);
+      font-style: normal;
+    }
+
+    #slide-24 .l25-thesis-copy {
+      position: relative;
+      z-index: 1;
+      margin-top: clamp(18px, 2.3vh, 28px);
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.58;
+    }
+
+    #slide-24 .l25-thesis-copy strong {
+      color: var(--txt-primary);
+      font-weight: 700;
+    }
+
+    #slide-24 .l25-switch {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+      margin-top: auto;
+      padding-top: clamp(18px, 2.2vh, 26px);
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    #slide-24 .l25-switch span {
+      min-width: 0;
+      padding: 11px 10px;
+      border: 1px solid var(--border-subtle);
+      color: var(--txt-tertiary);
+      background: rgba(0, 0, 0, .55);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      text-align: center;
+    }
+
+    #slide-24 .l25-switch span:last-child {
+      border-color: var(--hi);
+      color: var(--hi);
+      background: var(--hi-subtle);
+    }
+
+    #slide-24 .l25-switch b {
+      color: var(--purple);
+      font-family: var(--font-mono);
+      font-size: .9rem;
+    }
+
+    #slide-24 .l25-method {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      padding: clamp(20px, 2.3vh, 28px);
+      border-top-color: var(--purple);
+      background:
+        linear-gradient(180deg, rgba(164, 140, 255, .07), transparent 38%),
+        rgba(7, 8, 10, .95);
+    }
+
+    #slide-24 .l25-method-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    #slide-24 .l25-method-head span:last-child {
+      color: var(--purple);
+    }
+
+    #slide-24 .l25-rail {
+      position: relative;
+      display: grid;
+      grid-template-rows: repeat(5, minmax(50px, 1fr));
+      gap: clamp(6px, .75vh, 9px);
+      min-height: 0;
+      margin: clamp(12px, 1.5vh, 18px) 0;
+    }
+
+    #slide-24 .l25-rail::before {
+      content: "";
+      position: absolute;
+      left: 22px;
+      top: 23px;
+      bottom: 23px;
+      width: 1px;
+      background: linear-gradient(var(--accent), var(--purple), var(--hi));
+    }
+
+    #slide-24 .l25-step {
+      position: relative;
+      display: grid;
+      grid-template-columns: 46px minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      min-width: 0;
+      padding: 8px 10px 8px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      background: linear-gradient(90deg, transparent, rgba(164, 140, 255, .035));
+    }
+
+    #slide-24 .l25-step:last-child {
+      border-bottom: 0;
+    }
+
+    #slide-24 .l25-step-index {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      margin-left: 5px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      background: #000;
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+    }
+
+    #slide-24 .l25-step:nth-child(2) .l25-step-index { border-color: var(--purple); color: var(--purple); }
+    #slide-24 .l25-step:nth-child(3) .l25-step-index { border-color: var(--cyan); color: var(--cyan); }
+    #slide-24 .l25-step:nth-child(4) .l25-step-index { border-color: var(--hi); color: var(--hi); }
+    #slide-24 .l25-step:nth-child(5) .l25-step-index { border-color: var(--bull); color: var(--bull); }
+
+    #slide-24 .l25-step strong {
+      color: var(--txt-primary);
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 1.15vw, 1.34rem);
+      font-weight: 500;
+    }
+
+    #slide-24 .l25-step small {
+      color: var(--txt-tertiary);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    #slide-24 .l25-method-note {
+      padding: 10px 12px;
+      border-left: 2px solid var(--purple);
+      color: var(--txt-secondary);
+      background: var(--purple-subtle);
+      font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
+      line-height: 1.42;
+    }
+
+    #slide-24 .l25-gap {
+      display: flex;
+      flex-direction: column;
+      padding: clamp(20px, 2.3vh, 28px);
+      border-top-color: var(--hi);
+      background:
+        linear-gradient(160deg, rgba(6, 182, 212, .075), transparent 45%),
+        rgba(7, 8, 10, .95);
+    }
+
+    #slide-24 .l25-gap-head {
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    #slide-24 .l25-stat {
+      padding: clamp(15px, 1.8vh, 22px) 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    #slide-24 .l25-stat-value {
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 4vw, 5rem);
+      font-weight: 500;
+      line-height: .9;
+      letter-spacing: -.05em;
+      color: var(--txt-primary);
+    }
+
+    #slide-24 .l25-stat.quant .l25-stat-value {
+      color: var(--hi);
+    }
+
+    #slide-24 .l25-stat-label {
+      display: block;
+      margin-top: 10px;
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      line-height: 1.45;
+    }
+
+    #slide-24 .l25-meter {
+      display: grid;
+      grid-template-columns: 94fr 6fr;
+      gap: 3px;
+      height: 8px;
+      margin-top: clamp(16px, 2vh, 24px);
+    }
+
+    #slide-24 .l25-meter span:first-child { background: var(--txt-tertiary); opacity: .35; }
+    #slide-24 .l25-meter span:last-child { background: var(--hi); box-shadow: 0 0 12px rgba(0, 229, 255, .24); }
+
+    #slide-24 .l25-workstation {
+      margin-top: auto;
+      padding: 14px;
+      border-left: 3px solid var(--hi);
+      background: var(--hi-subtle);
+    }
+
+    #slide-24 .l25-workstation strong {
+      display: block;
+      color: var(--hi);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    #slide-24 .l25-workstation p {
+      margin-top: 7px;
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
+      line-height: 1.42;
+    }
+
+    #slide-24 .l25-principle {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: minmax(145px, .32fr) minmax(0, 1.45fr) minmax(270px, .62fr);
+      gap: clamp(18px, 2vw, 34px);
+      align-items: center;
+      padding: clamp(14px, 1.7vh, 20px) clamp(18px, 1.6vw, 28px);
+      border-left: 3px solid var(--accent);
+      border-top: 1px solid rgba(0, 51, 255, .28);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .105), rgba(6, 182, 212, .045));
+    }
+
+    #slide-24 .l25-principle-title {
+      color: var(--accent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+    }
+
+    #slide-24 .l25-principle p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.5;
+    }
+
+    #slide-24 .l25-principle strong {
+      color: var(--txt-primary);
+      font-weight: 700;
+    }
+
+    #slide-24 .l25-equation {
+      padding-left: clamp(16px, 1.7vw, 28px);
+      border-left: 1px solid var(--border-default);
+      color: var(--hi);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      line-height: 1.75;
+      text-align: center;
+    }
+
+    @media (max-width: 1180px) {
+      #slide-24 .l25-canvas { grid-template-columns: minmax(0, 1fr) minmax(290px, .9fr) minmax(230px, .67fr); }
+      #slide-24 .l25-thesis h3 { font-size: clamp(1.7rem, 2.3vw, 2.4rem); }
+      #slide-24 .l25-principle { grid-template-columns: minmax(130px, .28fr) minmax(0, 1.4fr); }
+      #slide-24 .l25-equation { display: none; }
+    }
+
+    @media (max-width: 900px) {
+      #slide-24 .l25-stage { display: block; overflow-y: auto; }
+      #slide-24 .l25-canvas { grid-template-columns: 1fr; grid-template-rows: auto; margin-top: 24px; }
+      #slide-24 .l25-principle { grid-column: auto; grid-template-columns: 1fr; }
+      #slide-24 .l25-thesis,
+      #slide-24 .l25-method,
+      #slide-24 .l25-gap { min-height: 430px; }
+    }
+
+    @media (max-width: 520px) {
+      #slide-24 .l25-stage { padding: 22px 18px 28px; }
+      #slide-24 .l25-switch { grid-template-columns: 1fr; }
+      #slide-24 .l25-switch b { transform: rotate(90deg); text-align: center; }
+      #slide-24 .l25-step { grid-template-columns: 46px minmax(0, 1fr); }
+      #slide-24 .l25-step small { display: none; }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-24" data-module="3">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="3">MÓDULO III</span>
+    <span class="lesson-tag">L25</span>
+    <span class="slide-title">Filosofía de la Inferencia</span>
+    <span class="concept-code">M3.L25.C25</span>
+  </header>
+
+  <main class="slide-body l25-stage">
+    <div class="l25-head">
+      <div class="section-title">
+        <div class="section-number">LECCIÓN 25</div>
+        <h2>Filosofía de la Inferencia</h2>
+      </div>
+      <div class="divider gradient"></div>
+    </div>
+
+    <div class="l25-canvas">
+      <section class="l25-thesis">
+        <div class="l25-label">Axioma del framework</div>
+        <h3>La información <em>precede</em> al precio.</h3>
+        <p class="l25-thesis-copy">La filosofía de Cortex va más allá de un simple gráfico: se expresa como un <strong>sistema físico</strong> en el que la información precede al precio. El sistema no aborda el precio, sino <strong>aquello que lo produce</strong>. Entender el método científico como sustituto de la intuición constituye un punto de partida que diferencia a Cortex de los sistemas de especulación ortodoxos y convencionales.</p>
+        <div class="l25-switch" aria-label="Transición desde la intuición hacia el método científico">
+          <span>Intuición</span><b>→</b><span>Método científico</span>
+        </div>
+      </section>
+
+      <section class="l25-method" aria-label="Secuencia científica del operador Cortex">
+        <div class="l25-method-head"><span>Protocolo mental</span><span>05 etapas</span></div>
+        <div class="l25-rail">
+          <div class="l25-step"><div class="l25-step-index">01</div><strong>Observación</strong><small>registrar</small></div>
+          <div class="l25-step"><div class="l25-step-index">02</div><strong>Hipótesis</strong><small>formular</small></div>
+          <div class="l25-step"><div class="l25-step-index">03</div><strong>Validación</strong><small>contrastar</small></div>
+          <div class="l25-step"><div class="l25-step-index">04</div><strong>Inferencia</strong><small>interpretar</small></div>
+          <div class="l25-step"><div class="l25-step-index">05</div><strong>Decisión</strong><small>ejecutar</small></div>
+        </div>
+        <div class="l25-method-note">Toda decisión debe poder reconstruirse desde la evidencia que la originó.</div>
+      </section>
+
+      <section class="l25-gap" aria-label="Brecha entre sistemas ortodoxos y cuantitativos">
+        <div class="l25-gap-head">Brecha del mercado</div>
+        <div class="l25-stat">
+          <div class="l25-stat-value">≈94%</div>
+          <span class="l25-stat-label">Opera sistemas ortodoxos carentes de criterio científico.</span>
+        </div>
+        <div class="l25-stat quant">
+          <div class="l25-stat-value">5–7%</div>
+          <span class="l25-stat-label">Cuenta con sistemas cuantitativos orientados a generar alfa a largo plazo.</span>
+        </div>
+        <div class="l25-meter" aria-hidden="true"><span></span><span></span></div>
+        <div class="l25-workstation">
+          <strong>Cortex Workstation</strong>
+          <p>Contribuye precisamente a cerrar esta brecha.</p>
+        </div>
+      </section>
+
+      <section class="l25-principle">
+        <div class="l25-principle-title">Criterio científico</div>
+        <p>Toda interpretación mínimamente válida debe provenir de <strong>modelos matemáticos</strong>. Así se reduce la subjetividad, se reemplazan <strong>opiniones por mediciones</strong> y se convierte al trader en un cuantitativo con verdadero criterio científico, capaz de formular hipótesis y ejecutar inferencias con claridad.</p>
+        <div class="l25-equation">Opinión → Medición<br />Hipótesis → Inferencia</div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">25/42</span>
+  </footer>
+</section>
+</body>
+</html>

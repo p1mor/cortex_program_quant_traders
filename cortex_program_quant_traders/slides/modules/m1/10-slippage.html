@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cortex Quant Trader - TechPulse Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-11 {
+      --l10-blue: #0033ff;
+      --l10-cyan: #00e5ff;
+      --l10-purple: #a48cff;
+      --l10-green: #22c55e;
+      --l10-red: #e63955;
+      --l10-amber: #ffb74d;
+      --l10-panel: rgba(7, 8, 11, .98);
+      --l10-line: rgba(148, 163, 184, .22);
+    }
+
+    #slide-11 .slide-body {
+      display: block;
+      background: #000;
+      overflow: hidden;
+    }
+
+    #slide-11 .l10-stage {
+      height: 100%;
+      min-height: 0;
+      box-sizing: border-box;
+      padding: clamp(18px, 1.55vw, 30px) clamp(22px, 2.15vw, 42px);
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: clamp(16px, 1.2vw, 24px);
+      background:
+        radial-gradient(circle at 42% 42%, rgba(0, 229, 255, .055), transparent 31%),
+        linear-gradient(rgba(0, 51, 255, .022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 51, 255, .022) 1px, transparent 1px),
+        #000;
+      background-size: auto, 46px 46px, 46px 46px, auto;
+      overflow: hidden;
+    }
+
+    #slide-11 .l10-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 28px;
+    }
+    #slide-11 .l10-heading .section-title { margin: 0; }
+    #slide-11 .l10-heading .section-number {
+      font-size: var(--fs-slide-label);
+      color: var(--l10-blue);
+    }
+    #slide-11 .l10-heading h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: var(--fs-slide-title);
+      font-weight: 500;
+      line-height: 1.12;
+    }
+    #slide-11 .l10-heading h2::after {
+      content: "";
+      display: block;
+      width: 50px;
+      height: 2px;
+      margin-top: 16px;
+      background: linear-gradient(90deg, var(--l10-blue), var(--l10-cyan));
+    }
+    #slide-11 .l10-heading-meta {
+      padding-bottom: 18px;
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      letter-spacing: .12em;
+      color: var(--txt-tertiary);
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    #slide-11 .l10-workbench {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1.48fr) minmax(350px, .72fr);
+      gap: clamp(14px, 1.2vw, 24px);
+    }
+
+    #slide-11 .l10-simulator,
+    #slide-11 .l10-outcomes {
+      min-height: 0;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--l10-line);
+      background: var(--l10-panel);
+    }
+
+    #slide-11 .l10-simulator {
+      padding: clamp(18px, 1.35vw, 26px);
+      display: grid;
+      grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+      gap: clamp(12px, .95vw, 18px);
+    }
+
+    #slide-11 .l10-panel-head,
+    #slide-11 .l10-outcome-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-label);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    #slide-11 .l10-panel-head strong,
+    #slide-11 .l10-outcome-head strong { color: var(--l10-cyan); }
+    #slide-11 .l10-panel-head span,
+    #slide-11 .l10-outcome-head span { color: var(--txt-tertiary); }
+
+    #slide-11 .l10-intro {
+      margin: 0;
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body);
+      line-height: 1.58;
+    }
+    #slide-11 .l10-intro strong { color: #fff; }
+
+    #slide-11 .l10-execution-rail {
+      display: grid;
+      grid-template-columns: minmax(136px, .66fr) minmax(260px, 1.35fr) minmax(136px, .66fr);
+      align-items: stretch;
+      border: 1px solid rgba(0, 51, 255, .4);
+      background: rgba(0, 51, 255, .035);
+    }
+
+    #slide-11 .l10-price-node {
+      padding: 14px 16px;
+      display: grid;
+      align-content: center;
+      gap: 7px;
+      background: rgba(255, 255, 255, .018);
+    }
+    #slide-11 .l10-price-node:first-child { border-right: 1px solid var(--l10-line); }
+    #slide-11 .l10-price-node:last-child { border-left: 1px solid var(--l10-line); }
+    #slide-11 .l10-price-node small {
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      letter-spacing: .1em;
+      color: var(--txt-tertiary);
+      text-transform: uppercase;
+    }
+    #slide-11 .l10-price-node strong {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.55rem, 2vw, 2.25rem);
+      font-weight: 500;
+      color: #fff;
+      line-height: 1;
+    }
+    #slide-11 .l10-price-node em {
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      font-style: normal;
+      color: var(--l10-cyan);
+    }
+
+    #slide-11 .l10-transit {
+      min-width: 0;
+      padding: 14px 18px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(90deg, rgba(0, 51, 255, .08), rgba(0, 229, 255, .06));
+    }
+    #slide-11 .l10-transit-labels {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      color: var(--txt-tertiary);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    #slide-11 .l10-transit-line {
+      position: relative;
+      height: 2px;
+      background: linear-gradient(90deg, var(--l10-blue), var(--l10-cyan));
+      box-shadow: 0 0 18px rgba(0, 229, 255, .2);
+    }
+    #slide-11 .l10-transit-line::before,
+    #slide-11 .l10-transit-line::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 9px;
+      height: 9px;
+      transform: translateY(-50%) rotate(45deg);
+      background: #000;
+      border: 1px solid var(--l10-cyan);
+    }
+    #slide-11 .l10-transit-line::before { left: 18%; }
+    #slide-11 .l10-transit-line::after { right: 18%; }
+    #slide-11 .l10-slip-readout {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-label);
+      color: #fff;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    #slide-11 .l10-slip-readout strong { color: var(--l10-red); }
+
+    #slide-11 .l10-impact-field {
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(240px, .72fr);
+      border: 1px solid var(--l10-line);
+      background: #030407;
+    }
+    #slide-11 .l10-depth-map {
+      min-height: 0;
+      padding: clamp(14px, 1vw, 20px);
+      border-right: 1px solid var(--l10-line);
+      display: grid;
+      grid-template-rows: auto repeat(5, 1fr);
+      gap: 7px;
+    }
+    #slide-11 .l10-depth-map h3,
+    #slide-11 .l10-impact-readout h3 {
+      margin: 0;
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-label);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--l10-cyan);
+    }
+    #slide-11 .l10-level {
+      display: grid;
+      grid-template-columns: 70px minmax(0, 1fr) 60px;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      color: var(--txt-secondary);
+    }
+    #slide-11 .l10-level i {
+      display: block;
+      height: 8px;
+      width: var(--depth);
+      background: linear-gradient(90deg, rgba(0, 229, 255, .25), var(--l10-cyan));
+      opacity: var(--opacity, .75);
+    }
+    #slide-11 .l10-level strong {
+      color: #fff;
+      text-align: right;
+      font-size: var(--fs-slide-micro);
+    }
+    #slide-11 .l10-level.is-consumed { color: var(--l10-red); }
+    #slide-11 .l10-level.is-consumed i {
+      background: repeating-linear-gradient(90deg, var(--l10-red) 0 10px, transparent 10px 16px);
+    }
+    #slide-11 .l10-level.depth-94 i { width: 94%; opacity: .32; }
+    #slide-11 .l10-level.depth-79 i { width: 79%; opacity: .45; }
+    #slide-11 .l10-level.depth-64 i { width: 64%; }
+    #slide-11 .l10-level.depth-48 i { width: 48%; }
+    #slide-11 .l10-level.depth-31 i { width: 31%; }
+
+    #slide-11 .l10-impact-readout {
+      padding: clamp(14px, 1vw, 20px);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 12px;
+    }
+    #slide-11 .l10-impact-curve {
+      min-height: 92px;
+      position: relative;
+      border-left: 1px solid var(--txt-tertiary);
+      border-bottom: 1px solid var(--txt-tertiary);
+      background: linear-gradient(135deg, transparent 46%, rgba(230, 57, 85, .32) 47% 49%, transparent 50%);
+    }
+    #slide-11 .l10-impact-curve::before {
+      content: "ORDEN ↑  →  IMPACTO ↑";
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      color: var(--l10-red);
+      letter-spacing: .06em;
+    }
+    #slide-11 .l10-impact-caption {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    #slide-11 .l10-impact-caption span {
+      padding: 8px;
+      border: 1px solid var(--l10-line);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      color: var(--txt-secondary);
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    #slide-11 .l10-insights {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    #slide-11 .l10-insight {
+      margin: 0;
+      padding: 11px 13px;
+      border-left: 3px solid var(--l10-blue);
+      background: rgba(0, 51, 255, .08);
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support);
+      line-height: 1.45;
+    }
+    #slide-11 .l10-insight strong { color: #fff; }
+    #slide-11 .l10-insight.is-model {
+      border-left-color: var(--l10-amber);
+      background: rgba(255, 183, 77, .07);
+    }
+
+    #slide-11 .l10-outcomes {
+      padding: clamp(18px, 1.35vw, 26px);
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: clamp(14px, 1.05vw, 22px);
+    }
+    #slide-11 .l10-outcome-stack {
+      min-height: 0;
+      display: grid;
+      grid-template-rows: repeat(4, 1fr);
+      gap: 12px;
+    }
+    #slide-11 .l10-outcome {
+      min-height: 0;
+      padding: 13px 15px;
+      border-left: 3px solid currentColor;
+      background: color-mix(in srgb, currentColor 8%, transparent);
+      display: grid;
+      grid-template-columns: 88px minmax(0, 1fr);
+      align-items: center;
+      gap: 14px;
+    }
+    #slide-11 .l10-outcome-icon {
+      height: 100%;
+      min-height: 44px;
+      display: grid;
+      place-items: center;
+      border-right: 1px solid currentColor;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.75rem;
+      line-height: 1;
+    }
+    #slide-11 .l10-outcome-copy { min-width: 0; }
+    #slide-11 .l10-outcome b {
+      display: block;
+      margin-bottom: 6px;
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-label);
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+    #slide-11 .l10-outcome p {
+      margin: 0;
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support);
+      line-height: 1.45;
+    }
+    #slide-11 .l10-outcome.is-positive { color: var(--l10-green); }
+    #slide-11 .l10-outcome.is-negative { color: var(--l10-red); }
+    #slide-11 .l10-outcome.is-reject { color: var(--l10-amber); }
+    #slide-11 .l10-outcome.is-latency { color: var(--l10-cyan); }
+
+    @media (min-width: 1181px) and (max-height: 820px) {
+      #slide-11 .l10-stage { padding-top: 16px; padding-bottom: 16px; gap: 12px; }
+      #slide-11 .l10-heading h2::after { margin-top: 10px; }
+      #slide-11 .l10-simulator,
+      #slide-11 .l10-outcomes { padding: 15px; gap: 10px; }
+      #slide-11 .l10-price-node,
+      #slide-11 .l10-transit { padding-top: 10px; padding-bottom: 10px; }
+      #slide-11 .l10-impact-field { grid-template-columns: minmax(0, 1fr) 260px; }
+      #slide-11 .l10-depth-map,
+      #slide-11 .l10-impact-readout { padding: 11px; gap: 7px; }
+      #slide-11 .l10-impact-curve { min-height: 70px; }
+      #slide-11 .l10-insight { padding: 8px 10px; }
+      #slide-11 .l10-outcome-stack { gap: 8px; }
+      #slide-11 .l10-outcome { padding: 9px 12px; }
+    }
+
+    @media (max-width: 1180px) {
+      #slide-11 .slide-body { overflow-y: auto; }
+      #slide-11 .l10-stage { height: auto; min-height: 100%; overflow: visible; }
+      #slide-11 .l10-workbench { grid-template-columns: 1fr; }
+      #slide-11 .l10-simulator,
+      #slide-11 .l10-outcomes { min-height: 560px; }
+    }
+
+    @media (max-width: 720px) {
+      #slide-11 .l10-heading { grid-template-columns: 1fr; }
+      #slide-11 .l10-heading-meta { display: none; }
+      #slide-11 .l10-execution-rail { grid-template-columns: 1fr; }
+      #slide-11 .l10-price-node:first-child { border-right: 0; border-bottom: 1px solid var(--l10-line); }
+      #slide-11 .l10-price-node:last-child { border-left: 0; border-top: 1px solid var(--l10-line); }
+      #slide-11 .l10-impact-field { grid-template-columns: 1fr; }
+      #slide-11 .l10-depth-map { border-right: 0; border-bottom: 1px solid var(--l10-line); }
+      #slide-11 .l10-insights { grid-template-columns: 1fr; }
+      #slide-11 .l10-outcome { grid-template-columns: 64px minmax(0, 1fr); }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-11" data-module="1">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="1">Módulo I</span>
+    <span class="lesson-tag">L10</span>
+    <span class="slide-title">Slippage e Impacto de Mercado</span>
+    <span class="concept-code">M1.L10.C10</span>
+  </header>
+
+  <div class="slide-body single-col">
+    <main class="l10-stage">
+      <div class="l10-heading">
+        <div class="section-title">
+          <div class="section-number">Lección 10</div>
+          <h2>Slippage e Impacto</h2>
+        </div>
+        <div class="l10-heading-meta">Precio esperado → ejecución real</div>
+      </div>
+
+      <div class="l10-workbench">
+        <section class="l10-simulator" aria-label="Simulador del corredor de ejecución">
+          <div class="l10-panel-head">
+            <strong>Corredor de ejecución</strong>
+            <span>Liquidez · tamaño · latencia</span>
+          </div>
+
+          <p class="l10-intro"><strong>Slippage</strong> es la diferencia entre el precio esperado y el precio real de ejecución. Puede ser positivo o negativo, y es la manifestación directa del impacto de tu orden sobre la liquidez.</p>
+
+          <div class="l10-execution-rail">
+            <div class="l10-price-node">
+              <small>01 · Precio esperado</small>
+              <strong>5,488.00</strong>
+              <em>orden enviada</em>
+            </div>
+
+            <div class="l10-transit">
+              <div class="l10-transit-labels"><span>tamaño</span><span>liquidez</span><span>latencia</span></div>
+              <div class="l10-transit-line" aria-hidden="true"></div>
+              <div class="l10-slip-readout">Desviación <strong>+0.50</strong></div>
+            </div>
+
+            <div class="l10-price-node">
+              <small>02 · Precio real</small>
+              <strong>5,488.50</strong>
+              <em>orden ejecutada</em>
+            </div>
+          </div>
+
+          <div class="l10-impact-field">
+            <div class="l10-depth-map">
+              <h3>Profundidad consumida</h3>
+              <div class="l10-level depth-94"><span>ASK +4</span><i></i><strong>420</strong></div>
+              <div class="l10-level depth-79"><span>ASK +3</span><i></i><strong>338</strong></div>
+              <div class="l10-level is-consumed depth-64"><span>ASK +2</span><i></i><strong>275</strong></div>
+              <div class="l10-level is-consumed depth-48"><span>ASK +1</span><i></i><strong>190</strong></div>
+              <div class="l10-level is-consumed depth-31"><span>ASK</span><i></i><strong>122</strong></div>
+            </div>
+
+            <div class="l10-impact-readout">
+              <h3>Respuesta del mercado</h3>
+              <div class="l10-impact-curve" aria-hidden="true"></div>
+              <div class="l10-impact-caption"><span>Orden pequeña · lineal</span><span>Orden grande · sublineal</span></div>
+            </div>
+          </div>
+
+          <div class="l10-insights">
+            <p class="l10-insight"><strong>Clave:</strong> el slippage es la manifestación del impacto de tu orden sobre la liquidez. A mayor tamaño de orden, mayor slippage. La latencia amplifica el efecto.</p>
+            <p class="l10-insight is-model"><strong>Modelo:</strong> impacto lineal para órdenes pequeñas, sublineal para órdenes grandes. El rechazo de ejecución ocurre cuando no hay liquidez suficiente.</p>
+          </div>
+        </section>
+
+        <aside class="l10-outcomes" aria-label="Tipos de slippage">
+          <div class="l10-outcome-head">
+            <strong>Resultados posibles</strong>
+            <span>Clasificador de ejecución</span>
+          </div>
+
+          <div class="l10-outcome-stack">
+            <article class="l10-outcome is-positive">
+              <div class="l10-outcome-icon">+</div>
+              <div class="l10-outcome-copy">
+                <b>Positivo</b>
+                <p>Ejecución a mejor precio del esperado. Ocurre en mercados líquidos con órdenes pequeñas.</p>
+              </div>
+            </article>
+
+            <article class="l10-outcome is-negative">
+              <div class="l10-outcome-icon">−</div>
+              <div class="l10-outcome-copy">
+                <b>Negativo</b>
+                <p>Ejecución a peor precio. Costo real del impacto. Aumenta con el tamaño de la orden.</p>
+              </div>
+            </article>
+
+            <article class="l10-outcome is-reject">
+              <div class="l10-outcome-icon">×</div>
+              <div class="l10-outcome-copy">
+                <b>Rechazo</b>
+                <p>Sin liquidez suficiente. La orden no se ejecuta o se ejecuta parcialmente.</p>
+              </div>
+            </article>
+
+            <article class="l10-outcome is-latency">
+              <div class="l10-outcome-icon">Δt</div>
+              <div class="l10-outcome-copy">
+                <b>Latencia</b>
+                <p>El desfase temporal amplifica el slippage. Cada ms cuenta en mercados rápidos.</p>
+              </div>
+            </article>
+          </div>
+        </aside>
+      </div>
+    </main>
+  </div>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">10/34</span>
+  </footer>
+</section>
+</body>
+</html>

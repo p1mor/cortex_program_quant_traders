@@ -1,0 +1,693 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Técnicas de Ejecución y Adaptación al Mercado — Cortex Quant Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-39 {
+      --l40-blue: #0033ff;
+      --l40-cyan: #00e5ff;
+      --l40-purple: #a48cff;
+      --l40-green: #22c55e;
+      --l40-amber: #ffb74d;
+      --l40-red: #e63955;
+      --l40-panel: rgba(7, 8, 10, .98);
+    }
+
+    #slide-39 .slide-body { min-height: 0; background: #000; }
+
+    #slide-39 .l40-stage {
+      min-width: 0;
+      min-height: 0;
+      height: 100%;
+      padding: clamp(18px, 2vw, 32px) clamp(24px, 3.1vw, 58px) 16px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(0, 229, 255, .02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 51, 255, .018) 1px, transparent 1px),
+        #000;
+      background-size: 54px 54px;
+    }
+
+    #slide-39 .l40-head {
+      margin: 0 0 clamp(13px, 1.3vh, 18px);
+      flex: 0 0 auto;
+    }
+
+    #slide-39 .l40-head .section-number {
+      margin-bottom: 7px;
+      font-size: var(--fs-slide-label);
+      color: var(--l40-blue);
+    }
+
+    #slide-39 .l40-head h2 {
+      margin: 0;
+      font-size: var(--fs-slide-title);
+      line-height: 1.18;
+    }
+
+    #slide-39 .l40-head .divider {
+      width: 50px;
+      height: 2px;
+      margin-top: 13px;
+      background: linear-gradient(90deg, var(--l40-blue), var(--l40-cyan));
+    }
+
+    #slide-39 .l40-canvas {
+      min-width: 0;
+      min-height: 0;
+      flex: 1;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: clamp(8px, 1vh, 12px);
+    }
+
+    #slide-39 .l40-doctrine {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+      padding: 10px 16px;
+      border-top: 1px solid var(--l40-cyan);
+      border-bottom: 1px solid rgba(0, 229, 255, .28);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .07), rgba(0, 229, 255, .035) 64%, rgba(164, 140, 255, .055));
+    }
+
+    #slide-39 .l40-doctrine-label,
+    #slide-39 .l40-doctrine-badge,
+    #slide-39 .l40-router-label,
+    #slide-39 .l40-router-input,
+    #slide-39 .l40-router-mode,
+    #slide-39 .l40-cutoff,
+    #slide-39 .l40-terrain-label,
+    #slide-39 .l40-terrain-meta,
+    #slide-39 .l40-structure-title,
+    #slide-39 .l40-chip,
+    #slide-39 .l40-chart-label,
+    #slide-39 .l40-range-price,
+    #slide-39 .l40-cycle-label,
+    #slide-39 .l40-principle-label {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .085em;
+      font-weight: 700;
+    }
+
+    #slide-39 .l40-doctrine-label {
+      color: var(--l40-cyan);
+      font-size: var(--fs-slide-label);
+      white-space: nowrap;
+    }
+
+    #slide-39 .l40-doctrine p,
+    #slide-39 .l40-structure-copy,
+    #slide-39 .l40-range-copy,
+    #slide-39 .l40-principle-copy {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: var(--fs-slide-body);
+      line-height: 1.42;
+      color: var(--txt-secondary);
+    }
+
+    #slide-39 strong { color: var(--txt-primary); font-weight: 700; }
+
+    #slide-39 .l40-doctrine-badge {
+      padding: 8px 14px;
+      border: 1px solid rgba(164, 140, 255, .55);
+      color: var(--l40-purple);
+      background: rgba(164, 140, 255, .06);
+      font-size: var(--fs-slide-label);
+      white-space: nowrap;
+    }
+
+    #slide-39 .l40-workspace {
+      min-width: 0;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(190px, .32fr) minmax(0, 1.68fr);
+      border: 1px solid var(--border-default);
+      border-top: 2px solid var(--l40-blue);
+      background: var(--l40-panel);
+      overflow: hidden;
+    }
+
+    #slide-39 .l40-router {
+      min-width: 0;
+      min-height: 0;
+      padding: 14px;
+      border-right: 1px solid var(--border-default);
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: 10px;
+      background: linear-gradient(160deg, rgba(0, 51, 255, .06), transparent 55%, rgba(164, 140, 255, .035));
+    }
+
+    #slide-39 .l40-router-label {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-39 .l40-router-core {
+      min-width: 0;
+      min-height: 0;
+      display: grid;
+      grid-template-rows: auto auto minmax(74px, 1fr) auto;
+      align-content: center;
+      gap: 10px;
+    }
+
+    #slide-39 .l40-router-inputs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 4px;
+    }
+
+    #slide-39 .l40-router-input {
+      padding: 6px 3px;
+      border: 1px solid rgba(148, 156, 165, .25);
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro);
+      text-align: center;
+    }
+
+    #slide-39 .l40-router-thesis {
+      padding: 10px 8px;
+      border: 1px solid var(--l40-purple);
+      background: rgba(164, 140, 255, .08);
+      color: var(--l40-purple);
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 1.08vw, 1.25rem);
+      line-height: 1.12;
+      text-align: center;
+    }
+
+    #slide-39 .l40-router-switch {
+      min-height: 0;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    #slide-39 .l40-router-switch::before,
+    #slide-39 .l40-router-switch::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      width: 1px;
+      background: linear-gradient(var(--l40-purple), var(--l40-cyan));
+    }
+
+    #slide-39 .l40-router-switch::before { top: 0; height: 30%; }
+    #slide-39 .l40-router-switch::after { bottom: 0; height: 30%; }
+
+    #slide-39 .l40-router-dial {
+      width: clamp(72px, 6vw, 98px);
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--l40-cyan);
+      outline: 1px solid rgba(0, 51, 255, .32);
+      outline-offset: 7px;
+      background:
+        linear-gradient(90deg, transparent 49.5%, rgba(0, 229, 255, .22) 49.6% 50.4%, transparent 50.5%),
+        linear-gradient(transparent 49.5%, rgba(0, 229, 255, .22) 49.6% 50.4%, transparent 50.5%),
+        #050608;
+      color: var(--l40-cyan);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    #slide-39 .l40-router-modes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    #slide-39 .l40-router-mode {
+      padding: 8px 4px;
+      border: 1px solid currentColor;
+      font-size: var(--fs-slide-micro);
+      text-align: center;
+    }
+
+    #slide-39 .l40-router-mode.is-directional { color: var(--l40-cyan); background: rgba(0, 229, 255, .045); }
+    #slide-39 .l40-router-mode.is-lateral { color: var(--l40-amber); background: rgba(255, 183, 77, .045); }
+
+    #slide-39 .l40-cutoff {
+      padding: 8px 7px;
+      border-left: 2px solid var(--l40-red);
+      background: rgba(230, 57, 85, .06);
+      color: var(--l40-red);
+      font-size: var(--fs-slide-micro);
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    #slide-39 .l40-terrains {
+      min-width: 0;
+      min-height: 0;
+      display: grid;
+      grid-template-rows: 1.06fr .94fr;
+    }
+
+    #slide-39 .l40-terrain {
+      min-width: 0;
+      min-height: 0;
+      display: grid;
+      border-bottom: 1px solid var(--border-default);
+      overflow: hidden;
+    }
+
+    #slide-39 .l40-terrain:last-child { border-bottom: 0; }
+
+    #slide-39 .l40-terrain.is-directional {
+      grid-template-columns: minmax(360px, .92fr) minmax(0, 1.08fr);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .035), rgba(0, 229, 255, .025));
+    }
+
+    #slide-39 .l40-terrain.is-range {
+      grid-template-columns: minmax(0, 1.15fr) minmax(360px, .85fr);
+      background: linear-gradient(90deg, rgba(164, 140, 255, .025), rgba(255, 183, 77, .03));
+    }
+
+    #slide-39 .l40-terrain-copy {
+      min-width: 0;
+      min-height: 0;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 7px;
+    }
+
+    #slide-39 .l40-terrain.is-directional .l40-terrain-copy { border-right: 1px solid var(--border-default); }
+    #slide-39 .l40-terrain.is-range .l40-terrain-copy { border-left: 1px solid var(--border-default); }
+
+    #slide-39 .l40-terrain-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    #slide-39 .l40-terrain-label {
+      color: var(--l40-cyan);
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-39 .l40-terrain.is-range .l40-terrain-label { color: var(--l40-amber); }
+
+    #slide-39 .l40-terrain-meta {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro);
+      text-align: right;
+    }
+
+    #slide-39 .l40-structure {
+      padding-top: 6px;
+      border-top: 1px solid rgba(148, 156, 165, .15);
+    }
+
+    #slide-39 .l40-structure-title {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--l40-blue);
+      font-size: var(--fs-slide-micro);
+    }
+
+    #slide-39 .l40-structure:nth-of-type(3) .l40-structure-title { color: var(--l40-purple); }
+
+    #slide-39 .l40-structure-copy,
+    #slide-39 .l40-range-copy {
+      font-size: var(--fs-slide-support);
+      line-height: 1.37;
+    }
+
+    #slide-39 .l40-chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+
+    #slide-39 .l40-chip {
+      padding: 4px 6px;
+      border: 1px solid rgba(148, 156, 165, .25);
+      color: var(--l40-cyan);
+      background: rgba(0, 229, 255, .02);
+      font-size: var(--fs-slide-micro);
+    }
+
+    #slide-39 .l40-trend-visual,
+    #slide-39 .l40-range-visual {
+      min-width: 0;
+      min-height: 0;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(148, 156, 165, .10) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 156, 165, .07) 1px, transparent 1px),
+        rgba(2, 3, 5, .96);
+      background-size: 100% 25%, 12.5% 100%;
+    }
+
+    #slide-39 .l40-trend-visual svg,
+    #slide-39 .l40-range-visual svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #slide-39 .l40-chart-label {
+      position: absolute;
+      z-index: 3;
+      padding: 4px 6px;
+      background: rgba(2,3,5,.93);
+      font-size: var(--fs-slide-micro);
+      color: var(--txt-secondary);
+    }
+
+    #slide-39 .l40-chart-label b { color: currentColor; }
+    #slide-39 .l40-chart-label.is-macro { left: 4%; bottom: 9%; color: var(--l40-blue); }
+    #slide-39 .l40-chart-label.is-pullback { left: 43%; top: 47%; color: var(--l40-amber); border-left: 2px solid currentColor; }
+    #slide-39 .l40-chart-label.is-target { right: 3%; top: 8%; color: var(--l40-green); border-left: 2px solid currentColor; }
+    #slide-39 .l40-chart-label.is-cusum { left: 18%; bottom: 25%; color: var(--l40-purple); }
+
+    #slide-39 .l40-level-bank {
+      position: absolute;
+      z-index: 3;
+      right: 3%;
+      bottom: 7%;
+      width: 45%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+    }
+
+    #slide-39 .l40-level-bank span {
+      padding: 4px 2px;
+      border: 1px solid rgba(0, 229, 255, .28);
+      background: rgba(0, 229, 255, .03);
+      color: var(--l40-cyan);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    #slide-39 .l40-range-visual {
+      border-right: 1px solid var(--border-default);
+    }
+
+    #slide-39 .l40-range-line {
+      position: absolute;
+      z-index: 2;
+      left: 5%;
+      right: 5%;
+      height: 1px;
+      border-top: 1px solid currentColor;
+    }
+
+    #slide-39 .l40-range-line.is-high { top: 21%; color: var(--l40-green); }
+    #slide-39 .l40-range-line.is-low { bottom: 20%; color: var(--l40-blue); }
+
+    #slide-39 .l40-range-price {
+      position: absolute;
+      z-index: 3;
+      left: 7%;
+      padding: 4px 7px;
+      border: 1px solid currentColor;
+      background: rgba(2,3,5,.95);
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-39 .l40-range-price.is-high { top: calc(21% - 14px); color: var(--l40-green); }
+    #slide-39 .l40-range-price.is-low { bottom: calc(20% - 14px); color: var(--l40-blue); }
+
+    #slide-39 .l40-cycle-label {
+      position: absolute;
+      z-index: 4;
+      color: var(--l40-purple);
+      font-size: var(--fs-slide-micro);
+    }
+
+    #slide-39 .l40-cycle-label.is-one { left: 29%; top: 47%; }
+    #slide-39 .l40-cycle-label.is-two { left: 52%; top: 47%; }
+    #slide-39 .l40-cycle-label.is-three { left: 75%; top: 47%; }
+
+    #slide-39 .l40-sequence {
+      padding: 7px 9px;
+      border-left: 2px solid var(--l40-amber);
+      background: rgba(255, 183, 77, .055);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-label);
+      color: var(--l40-amber);
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    #slide-39 .l40-stop-rule {
+      padding-top: 6px;
+      border-top: 1px solid rgba(230, 57, 85, .24);
+      color: var(--txt-secondary);
+      font-family: var(--font-body);
+      font-size: var(--fs-slide-support);
+      line-height: 1.36;
+    }
+
+    #slide-39 .l40-stop-rule strong { color: var(--l40-red); }
+
+    #slide-39 .l40-principle {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: auto minmax(360px, 1.1fr) minmax(0, 1fr);
+      align-items: center;
+      gap: 18px;
+      padding: 10px 16px;
+      border-left: 2px solid var(--l40-blue);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .09), rgba(0, 229, 255, .045));
+    }
+
+    #slide-39 .l40-principle-label {
+      color: var(--l40-blue);
+      font-size: var(--fs-slide-label);
+      white-space: nowrap;
+    }
+
+    #slide-39 .l40-principle blockquote {
+      margin: 0;
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 1.08vw, 1.26rem);
+      line-height: 1.2;
+      color: var(--txt-primary);
+    }
+
+    #slide-39 .l40-principle blockquote em { color: var(--l40-cyan); font-style: normal; }
+
+    #slide-39 .l40-principle-copy {
+      font-size: var(--fs-slide-support);
+      line-height: 1.36;
+    }
+
+    @media (min-width: 1181px) and (max-height: 820px) {
+      #slide-39 .l40-stage { padding-top: 14px; padding-bottom: 10px; }
+      #slide-39 .l40-head { margin-bottom: 10px; }
+      #slide-39 .l40-head .divider { margin-top: 9px; }
+      #slide-39 .l40-canvas { gap: 7px; }
+      #slide-39 .l40-doctrine { padding-block: 7px; }
+      #slide-39 .l40-router { padding: 10px; gap: 7px; }
+      #slide-39 .l40-terrain-copy { padding-block: 8px; gap: 4px; }
+      #slide-39 .l40-structure { padding-top: 4px; }
+      #slide-39 .l40-principle { padding-block: 7px; }
+    }
+
+    @media (max-width: 1180px) {
+      #slide-39 .l40-stage { overflow-y: auto; scrollbar-width: none; }
+      #slide-39 .l40-stage::-webkit-scrollbar { width: 0; }
+      #slide-39 .l40-canvas { grid-template-rows: auto auto auto; }
+      #slide-39 .l40-workspace { grid-template-columns: 1fr; }
+      #slide-39 .l40-router { min-height: 250px; border-right: 0; border-bottom: 1px solid var(--border-default); }
+      #slide-39 .l40-router-core { grid-template-columns: auto auto 1fr auto; grid-template-rows: 1fr; align-items: center; }
+      #slide-39 .l40-router-switch { min-height: 115px; }
+      #slide-39 .l40-terrains { grid-template-rows: auto auto; }
+      #slide-39 .l40-terrain.is-directional,
+      #slide-39 .l40-terrain.is-range { grid-template-columns: 1fr; }
+      #slide-39 .l40-trend-visual,
+      #slide-39 .l40-range-visual { min-height: 340px; }
+      #slide-39 .l40-terrain.is-directional .l40-terrain-copy,
+      #slide-39 .l40-terrain.is-range .l40-terrain-copy { border: 0; border-bottom: 1px solid var(--border-default); }
+      #slide-39 .l40-principle { grid-template-columns: 1fr; gap: 7px; }
+    }
+
+    @media (max-width: 760px) {
+      #slide-39 .l40-stage { padding-inline: 18px; }
+      #slide-39 .l40-doctrine { grid-template-columns: 1fr; align-items: start; }
+      #slide-39 .l40-doctrine-badge { width: fit-content; }
+      #slide-39 .l40-router-core { grid-template-columns: 1fr; grid-template-rows: auto; }
+      #slide-39 .l40-router-switch { min-height: 140px; }
+      #slide-39 .l40-level-bank { grid-template-columns: repeat(2, 1fr); width: 52%; }
+      #slide-39 .l40-principle blockquote { font-size: var(--fs-slide-body); }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-39" data-module="3">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="3">Módulo III</span>
+    <span class="lesson-tag">L40</span>
+    <span class="slide-title">Técnicas de Ejecución y Adaptación al Mercado</span>
+    <span class="concept-code">M3.L40.C40</span>
+  </header>
+
+  <div class="slide-body single-col">
+    <main class="l40-stage">
+      <div class="section-title l40-head">
+        <div class="section-number">Lección 40</div>
+        <h2>Técnicas de Ejecución y Adaptación al Mercado</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="l40-canvas">
+        <section class="l40-doctrine" aria-label="Principio de adaptación de la ejecución">
+          <span class="l40-doctrine-label">Técnica = función del régimen</span>
+          <p>En Cortex-Dendrita, <strong>la técnica de ejecución debe adaptarse al estado del mercado y a la tesis inferencial vigente</strong>. No existe una única forma de capitalizar la información: el trader del <strong>Quant Trading Desk</strong> selecciona la ejecución según estructura, régimen y niveles disponibles.</p>
+          <span class="l40-doctrine-badge">El mercado selecciona el modo</span>
+        </section>
+
+        <section class="l40-workspace" aria-label="Router de ejecución según el estado del mercado">
+          <aside class="l40-router">
+            <span class="l40-router-label">Router de ejecución</span>
+            <div class="l40-router-core">
+              <div class="l40-router-inputs">
+                <span class="l40-router-input">Estructura</span>
+                <span class="l40-router-input">Régimen</span>
+                <span class="l40-router-input">Niveles</span>
+              </div>
+              <div class="l40-router-thesis">Tesis inferencial<br />vigente</div>
+              <div class="l40-router-switch"><div class="l40-router-dial">Estado del<br />mercado</div></div>
+              <div class="l40-router-modes">
+                <span class="l40-router-mode is-directional">Direccional</span>
+                <span class="l40-router-mode is-lateral">Lateral</span>
+              </div>
+            </div>
+            <div class="l40-cutoff">Cambio de estructura / invalidación → detener o adaptar</div>
+          </aside>
+
+          <div class="l40-terrains">
+            <article class="l40-terrain is-directional">
+              <div class="l40-terrain-copy">
+                <div class="l40-terrain-head">
+                  <span class="l40-terrain-label">A · trades de alta probabilidad</span>
+                  <span class="l40-terrain-meta">macrociclo + estructura</span>
+                </div>
+                <p class="l40-structure-copy">Dos estructuras tienen especial relevancia:</p>
+                <div class="l40-structure">
+                  <span class="l40-structure-title">01 · Retroceso al detector de régimen</span>
+                  <p class="l40-structure-copy"><strong>Macrociclo + retroceso al detector de régimen:</strong> con un macrociclo HWTE vigente, el precio retrocede hacia CUSUM en dimensiones más granulares y permite buscar una ejecución coherente con la dirección inferida.</p>
+                </div>
+                <div class="l40-structure">
+                  <span class="l40-structure-title">02 · Nivel cuantitativo próximo</span>
+                  <p class="l40-structure-copy"><strong>Macrociclo + nivel cuantitativo próximo:</strong> la tesis encuentra además un objetivo o referencia estructural cercana como máximo/mínimo del Globex (ETHH/ETHL), VWAP, VAH, VAL o VPOC.</p>
+                </div>
+                <div class="l40-chip-row">
+                  <span class="l40-chip">ETHH</span><span class="l40-chip">ETHL</span><span class="l40-chip">VWAP</span><span class="l40-chip">VAH</span><span class="l40-chip">VAL</span><span class="l40-chip">VPOC</span>
+                </div>
+              </div>
+
+              <div class="l40-trend-visual" aria-label="Macrociclo con retroceso a CUSUM y continuación">
+                <svg viewBox="0 0 1000 360" preserveAspectRatio="none" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="l40Trend" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0" stop-color="#0033ff" />
+                      <stop offset=".58" stop-color="#a48cff" />
+                      <stop offset="1" stop-color="#00e5ff" />
+                    </linearGradient>
+                    <linearGradient id="l40TrendArea" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stop-color="#00e5ff" stop-opacity=".14" />
+                      <stop offset="1" stop-color="#0033ff" stop-opacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <path d="M30 298 C115 285 160 236 236 205 S372 120 442 156 S540 251 625 216 S727 119 798 91 S902 72 974 39 L974 348 L30 348 Z" fill="url(#l40TrendArea)" />
+                  <path d="M30 298 C115 285 160 236 236 205 S372 120 442 156 S540 251 625 216 S727 119 798 91 S902 72 974 39" fill="none" stroke="url(#l40Trend)" stroke-width="5" vector-effect="non-scaling-stroke" />
+                  <path d="M70 325 C165 304 246 272 322 230 S438 201 510 235 S612 238 687 182 S803 126 925 91" fill="none" stroke="#ffb74d" stroke-width="2" stroke-dasharray="9 8" opacity=".8" vector-effect="non-scaling-stroke" />
+                  <line x1="0" y1="72" x2="1000" y2="72" stroke="#22c55e" stroke-width="1" stroke-dasharray="5 5" opacity=".8" />
+                </svg>
+                <span class="l40-chart-label is-macro"><b>Macrociclo HWTE +</b></span>
+                <span class="l40-chart-label is-pullback"><b>Retroceso</b><br />CUSUM / detector</span>
+                <span class="l40-chart-label is-target"><b>Nivel próximo</b></span>
+                <span class="l40-chart-label is-cusum">CUSUM granular</span>
+                <div class="l40-level-bank"><span>ETHH</span><span>ETHL</span><span>VWAP</span><span>VAH</span><span>VAL</span><span>VPOC</span></div>
+              </div>
+            </article>
+
+            <article class="l40-terrain is-range">
+              <div class="l40-range-visual" aria-label="Metralleta en zona lateral entre 4.550 y 4.560">
+                <div class="l40-range-line is-high"></div>
+                <div class="l40-range-line is-low"></div>
+                <span class="l40-range-price is-high">4.560 · salida</span>
+                <span class="l40-range-price is-low">4.550 · entrada</span>
+                <svg viewBox="0 0 1000 300" preserveAspectRatio="none" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="l40Range" x1="0" y1="0" x2="1" y2="0">
+                      <stop offset="0" stop-color="#0033ff" />
+                      <stop offset=".48" stop-color="#a48cff" />
+                      <stop offset="1" stop-color="#ffb74d" />
+                    </linearGradient>
+                    <marker id="l40Arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto" markerUnits="strokeWidth">
+                      <path d="M0,0 L8,4 L0,8 Z" fill="#a48cff" />
+                    </marker>
+                  </defs>
+                  <path d="M85 230 C160 220 174 74 254 64 C334 72 347 221 429 230 C510 218 521 74 604 64 C684 74 699 221 780 230 C852 218 872 85 935 68" fill="none" stroke="url(#l40Range)" stroke-width="5" marker-end="url(#l40Arrow)" vector-effect="non-scaling-stroke" />
+                </svg>
+                <span class="l40-cycle-label is-one">ciclo 01</span>
+                <span class="l40-cycle-label is-two">ciclo 02</span>
+                <span class="l40-cycle-label is-three">ciclo 03</span>
+              </div>
+
+              <div class="l40-terrain-copy">
+                <div class="l40-terrain-head">
+                  <span class="l40-terrain-label">B · metralleta en zona</span>
+                  <span class="l40-terrain-meta">mercado lateral</span>
+                </div>
+                <p class="l40-range-copy">En mercados <strong>laterales</strong>, puede utilizarse la técnica de <strong>metralleta en zona</strong>: capitalizar repetidamente un recorrido definido mientras la estructura permanezca válida.</p>
+                <div class="l40-sequence">4.550 entrada → 4.560 salida → retroceso a 4.550 → reentrada → 4.560 salida</div>
+                <p class="l40-stop-rule">La repetición continúa mientras la tesis siga vigente. Se detiene cuando aparece <strong>invalidación</strong>, cambia el macrociclo HWTE o el <strong>CUSUM/detector de régimen granular deja de acompañar la ejecución</strong>.</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="l40-principle" aria-label="Principio Cortex-Dendrita">
+          <span class="l40-principle-label">Principio Cortex-Dendrita</span>
+          <blockquote>“La inferencia define qué queremos capitalizar; el estado del mercado determina <em>cómo hacerlo</em>.”</blockquote>
+          <p class="l40-principle-copy">El trader del Quant Trading Desk <strong>no fuerza una técnica sobre el mercado: adapta su ejecución a la estructura que el mercado está ofreciendo.</strong></p>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">←</kbd> <kbd class="kbd">→</kbd></span>
+    <span class="slide-counter">40/42</span>
+  </footer>
+</section>
+</body>
+</html>

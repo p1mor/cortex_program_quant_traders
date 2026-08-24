@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Introducción a Cortex-Dendrita — Cortex Quant Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-23 .l24-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: clamp(22px, 2.8vh, 34px);
+      min-height: 0;
+      padding: clamp(26px, 3.3vh, 40px) clamp(30px, 3.2vw, 62px) clamp(24px, 3vh, 36px);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 88% 18%, rgba(6, 182, 212, .075), transparent 25%),
+        radial-gradient(circle at 5% 92%, rgba(0, 51, 255, .07), transparent 28%),
+        #000;
+    }
+
+    #slide-23 .l24-head {
+      position: relative;
+      z-index: 2;
+    }
+
+    #slide-23 .l24-head .divider {
+      margin-top: clamp(16px, 2vh, 22px);
+    }
+
+    #slide-23 .l24-grid {
+      display: grid;
+      grid-template-columns: minmax(0, .96fr) minmax(0, 1.04fr);
+      gap: clamp(32px, 3.2vw, 62px);
+      min-height: 0;
+      align-items: stretch;
+    }
+
+    #slide-23 .l24-narrative {
+      display: grid;
+      grid-template-rows: auto auto 1fr;
+      gap: clamp(14px, 1.8vh, 22px);
+      min-width: 0;
+      align-content: start;
+    }
+
+    #slide-23 .l24-index,
+    #slide-23 .l24-panel-title,
+    #slide-23 .l24-chip,
+    #slide-23 .l24-node,
+    #slide-23 .l24-gap-label,
+    #slide-23 .l24-footnote {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .11em;
+    }
+
+    #slide-23 .l24-index {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+    }
+
+    #slide-23 .l24-context {
+      padding: clamp(18px, 2.2vh, 26px) clamp(20px, 1.8vw, 30px);
+      border-top: 1px solid var(--border-default);
+      border-bottom: 1px solid var(--border-subtle);
+      border-left: 3px solid var(--accent);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .095), rgba(0, 51, 255, .025));
+    }
+
+    #slide-23 .l24-context p,
+    #slide-23 .l24-objective p {
+      margin-top: 10px;
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.62;
+    }
+
+    #slide-23 .l24-context strong,
+    #slide-23 .l24-objective strong {
+      color: var(--txt-primary);
+      font-weight: 700;
+    }
+
+    #slide-23 .l24-origin {
+      display: grid;
+      grid-template-columns: minmax(165px, .42fr) minmax(0, 1.58fr);
+      gap: clamp(18px, 2vw, 34px);
+      align-items: center;
+      padding: clamp(16px, 2vh, 24px) clamp(20px, 1.8vw, 30px);
+      border: 1px solid rgba(6, 182, 212, .28);
+      background: linear-gradient(100deg, rgba(6, 182, 212, .07), rgba(0, 0, 0, .88));
+    }
+
+    #slide-23 .l24-origin-label {
+      color: var(--hi);
+      font-family: var(--font-display);
+      font-size: clamp(1.38rem, 1.55vw, 1.82rem);
+      font-weight: 500;
+      line-height: 1.12;
+    }
+
+    #slide-23 .l24-origin p {
+      color: var(--txt-primary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.58;
+    }
+
+    #slide-23 .l24-objective {
+      align-self: stretch;
+      padding: clamp(18px, 2.2vh, 26px) clamp(20px, 1.8vw, 30px);
+      border-left: 3px solid var(--hi);
+      background: rgba(6, 182, 212, .065);
+    }
+
+    #slide-23 .l24-objective .l24-index {
+      color: var(--hi);
+    }
+
+    #slide-23 .l24-system {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto auto auto auto auto;
+      gap: clamp(12px, 1.45vh, 18px);
+      min-width: 0;
+      min-height: 0;
+      padding: clamp(20px, 2.4vh, 30px);
+      border: 1px solid var(--border-default);
+      background:
+        linear-gradient(rgba(148, 156, 165, .035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 156, 165, .035) 1px, transparent 1px),
+        linear-gradient(140deg, rgba(17, 17, 17, .96), rgba(0, 13, 16, .94));
+      background-size: 34px 34px, 34px 34px, auto;
+      overflow: hidden;
+    }
+
+    #slide-23 .l24-system::after {
+      content: "";
+      position: absolute;
+      width: 270px;
+      height: 270px;
+      right: -112px;
+      top: -118px;
+      border: 1px solid rgba(6, 182, 212, .22);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    #slide-23 .l24-panel-head {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    #slide-23 .l24-panel-title {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+    }
+
+    #slide-23 .l24-chip {
+      padding: 5px 8px;
+      border: 1px solid rgba(164, 140, 255, .4);
+      color: var(--purple);
+      background: var(--purple-subtle);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+    }
+
+    #slide-23 .l24-legacy {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    #slide-23 .l24-legacy > div {
+      min-width: 0;
+      padding: clamp(13px, 1.5vh, 18px) 12px;
+      border: 1px solid var(--border-subtle);
+      background: rgba(5, 5, 5, .88);
+    }
+
+    #slide-23 .l24-legacy span {
+      display: block;
+      color: var(--purple);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      letter-spacing: .1em;
+    }
+
+    #slide-23 .l24-legacy strong {
+      display: block;
+      margin-top: 8px;
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
+      font-weight: 600;
+      line-height: 1.35;
+    }
+
+    #slide-23 .l24-break {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    #slide-23 .l24-break::before,
+    #slide-23 .l24-break::after {
+      content: "";
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--bear));
+    }
+
+    #slide-23 .l24-break::after {
+      background: linear-gradient(90deg, var(--bear), transparent);
+    }
+
+    #slide-23 .l24-gap-label {
+      color: var(--bear);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      text-align: center;
+    }
+
+    #slide-23 .l24-core {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      align-items: stretch;
+      min-width: 0;
+    }
+
+    #slide-23 .l24-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 0;
+      min-height: clamp(92px, 11vh, 122px);
+      padding: 12px 8px;
+      border: 1px solid var(--border-default);
+      background: rgba(5, 5, 5, .92);
+      color: var(--txt-primary);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+      text-align: center;
+    }
+
+    #slide-23 .l24-node small {
+      margin-top: 7px;
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 500;
+      line-height: 1.35;
+    }
+
+    #slide-23 .l24-node.cortex {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-subtle);
+    }
+
+    #slide-23 .l24-node.dendrita {
+      border-color: var(--hi);
+      color: var(--hi);
+      background: var(--hi-subtle);
+    }
+
+    #slide-23 .l24-node.edge {
+      border-color: var(--purple);
+      color: var(--purple);
+      background: var(--purple-subtle);
+    }
+
+    #slide-23 .l24-arrow {
+      display: grid;
+      place-items: center;
+      color: var(--txt-tertiary);
+      font-family: var(--font-mono);
+      font-size: clamp(.8rem, 1vw, 1.05rem);
+    }
+
+    #slide-23 .l24-result {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 14px;
+      align-items: center;
+      padding: 12px 15px;
+      border-left: 3px solid var(--hi);
+      background: rgba(6, 182, 212, .065);
+    }
+
+    #slide-23 .l24-result b {
+      color: var(--hi);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    #slide-23 .l24-result p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
+      line-height: 1.45;
+    }
+
+    #slide-23 .l24-footnote {
+      align-self: end;
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      text-align: right;
+    }
+
+    @media (max-width: 1100px) {
+      #slide-23 .l24-grid { grid-template-columns: 1fr 1fr; gap: 24px; }
+      #slide-23 .l24-origin { grid-template-columns: 1fr; gap: 8px; }
+      #slide-23 .l24-origin-label { font-size: 1.25rem; }
+      #slide-23 .l24-result { grid-template-columns: 1fr; gap: 4px; }
+    }
+
+    @media (max-width: 900px) {
+      #slide-23 .l24-stage { display: block; overflow-y: auto; }
+      #slide-23 .l24-grid { grid-template-columns: 1fr; margin-top: 24px; }
+      #slide-23 .l24-system { min-height: 520px; }
+    }
+
+    @media (max-width: 560px) {
+      #slide-23 .l24-stage { padding: 22px 18px 28px; }
+      #slide-23 .l24-legacy { grid-template-columns: 1fr; }
+      #slide-23 .l24-core { grid-template-columns: 1fr; gap: 7px; }
+      #slide-23 .l24-arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-23" data-module="3">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="3">MÓDULO III</span>
+    <span class="lesson-tag">L24</span>
+    <span class="slide-title">Introducción a Cortex-Dendrita</span>
+    <span class="concept-code">M3.L24.C24</span>
+  </header>
+
+  <main class="slide-body l24-stage">
+    <div class="l24-head">
+      <div class="section-title">
+        <div class="section-number">LECCIÓN 24</div>
+        <h2>Introducción a Cortex-Dendrita</h2>
+      </div>
+      <div class="divider gradient"></div>
+    </div>
+
+    <div class="l24-grid">
+      <article class="l24-narrative">
+        <section class="l24-context">
+          <div class="l24-index">01 / Punto de partida</div>
+          <p>La mayoría de las metodologías utilizadas por traders discrecionales se fundamentan en <strong>indicadores derivados del tiempo, patrones visuales o interpretaciones subjetivas del precio</strong>. Aunque estos enfoques pueden producir resultados positivos, presentan limitaciones importantes desde una perspectiva científica debido a que <strong>no representan directamente la dinámica microestructural responsable de la formación del precio</strong>.</p>
+        </section>
+
+        <section class="l24-origin">
+          <div class="l24-origin-label">El origen del framework</div>
+          <p><strong>Cortex-Dendrita nace precisamente para resolver este problema.</strong></p>
+        </section>
+
+        <section class="l24-objective">
+          <div class="l24-index">02 / Objetivo</div>
+          <p>Su objetivo consiste en <strong>transformar la complejidad matemática del mercado en una herramienta visual</strong> capaz de aumentar el <strong>Edge estadístico</strong> del operador mediante modelos cuantitativos construidos bajo el <strong>método científico</strong>.</p>
+        </section>
+      </article>
+
+      <aside class="l24-system" aria-label="Transición desde métodos discrecionales hacia Cortex-Dendrita">
+        <div class="l24-panel-head">
+          <div class="l24-panel-title">De la interpretación a la inferencia</div>
+          <div class="l24-chip">Arquitectura conceptual</div>
+        </div>
+
+        <div class="l24-legacy">
+          <div><span>01</span><strong>Indicadores derivados del tiempo</strong></div>
+          <div><span>02</span><strong>Patrones visuales del precio</strong></div>
+          <div><span>03</span><strong>Interpretación subjetiva</strong></div>
+        </div>
+
+        <div class="l24-break">
+          <div></div>
+          <div class="l24-gap-label">Brecha científica · dinámica microestructural no representada</div>
+          <div></div>
+        </div>
+
+        <div class="l24-core">
+          <div class="l24-node">Datos<small>microestructura</small></div>
+          <div class="l24-arrow">→</div>
+          <div class="l24-node cortex">Cortex<small>modelo cuantitativo</small></div>
+          <div class="l24-arrow">→</div>
+          <div class="l24-node dendrita">Dendrita<small>herramienta visual</small></div>
+          <div class="l24-arrow">→</div>
+          <div class="l24-node edge">Edge<small>ventaja estadística</small></div>
+        </div>
+
+        <div class="l24-result">
+          <b>Resultado</b>
+          <p>La complejidad matemática se convierte en evidencia visual para apoyar una decisión operativa científicamente estructurada.</p>
+        </div>
+
+        <div class="l24-footnote">Datos · método científico · visualización · decisión</div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">24/42</span>
+  </footer>
+</section>
+</body>
+</html>

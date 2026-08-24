@@ -14,11 +14,16 @@
   <link rel="stylesheet" href="css/slides.css" />
   <style>
     body { display:flex; align-items:center; justify-content:center; min-height:100vh; background:#000; }
+    #slide-container { width:100vw; max-width:100vw; min-width:0; height:100vh; overflow:hidden; }
     .slide { width:100vw; height:100vh; }
     .viewer-info { position:fixed; bottom:var(--sp-4); left:var(--sp-4); z-index:100;
       font-family:var(--font-mono); font-size:var(--fs-micro); color:var(--txt-tertiary);
       background:var(--bg-panel); border:1px solid var(--border-default); padding:var(--sp-2) var(--sp-3); }
     .viewer-info a { color:var(--accent); }
+    @media (max-width: 600px) {
+      .slide-header .concept-code { display:none; }
+      .viewer-info { max-width:calc(100vw - 2rem); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    }
   </style>
 </head>
 <body>
@@ -37,9 +42,14 @@
       }
       document.getElementById('file-name').textContent = file;
       try {
-        const resp = await fetch(file);
+        // El viewer debe mostrar el archivo guardado más reciente, incluso
+        // cuando Chrome haya conservado una copia de una visualización previa.
+        const resp = await fetch(file, { cache: 'no-store' });
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
         const html = await resp.text();
         document.getElementById('slide-container').innerHTML = html;
+        const slide = document.querySelector('#slide-container .slide');
+        if (slide) slide.classList.add('visible');
       } catch(e) {
         document.getElementById('slide-container').innerHTML =
           '<div style="color:#e63955;font-family:monospace;text-align:center;padding:4rem;">Error cargando: ' + file + '</div>';
