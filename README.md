@@ -53,24 +53,35 @@ cortex_program_quant_traders/
 
 ## Ejecución Local
 
-### Requisitos
-- Navegador web moderno (Chrome, Firefox, Safari, Edge)
-- Servidor local HTTP (no funciona con `file://`)
+### ⚠️ IMPORTANTE
+**NO abras `index.html` directamente** (doble click o `file://`). La presentación usa `fetch()` para cargar los slides y esto **no funciona** sin un servidor HTTP local.
 
-### Opción 1: Python
+### Opción 1: Script automático (Recomendado)
+```bash
+# Desde la raíz del proyecto
+./serve.sh
+
+# O con puerto personalizado
+./serve.sh 3000
+```
+Abrir: `http://localhost:8000` (o el puerto que elegiste)
+
+### Opción 2: Python
 ```bash
 cd cortex_program_quant_traders/slides
 python3 -m http.server 8000
 ```
 Abrir: `http://localhost:8000`
 
-### Opción 2: Node.js
+### Opción 3: Node.js
 ```bash
 npx serve cortex_program_quant_traders/slides
 ```
 
-### Opción 3: VS Code
-Instalar extensión **Live Server** y abrir `index.html`
+### Opción 4: VS Code
+1. Instalar extensión **Live Server**
+2. Abrir `cortex_program_quant_traders/slides/index.html`
+3. Click derecho → "Open with Live Server"
 
 ---
 
