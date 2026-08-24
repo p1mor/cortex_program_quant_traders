@@ -1,7 +1,8 @@
 # Cortex Quant Trader — Programa Formativo
 
 > **Repositorio:** GitHub (`github-origin`)  
-> **Rama principal:** `main`  
+> **Rama principal:** `github-main`  
+> **Rama desarrollo:** `github-sebastian`  
 > **Última actualización:** Agosto 2026
 
 ---
@@ -115,10 +116,30 @@ Instalar extensión **Live Server** y abrir `index.html`
 | **Plataforma** | GitHub |
 | **Remoto** | `github-origin` |
 | **URL** | `https://github.com/p1mor/cortex_program_quant_traders.git` |
-| **Rama** | `main` |
+| **Rama principal** | `github-main` |
+| **Rama desarrollo** | `github-sebastian` |
 | **Usuario** | `camilopimor` |
 
 > ⚠️ **IMPORTANTE:** Este repositorio usa `github-origin` como remoto para diferenciarlo de los repositorios AWS CodeCommit del entorno productivo.
+
+### Ramas del Repositorio
+
+| Rama | Propósito | Responsable |
+|------|-----------|-------------|
+| `github-main` | Rama principal (producción) | camilopimor (propietario) |
+| `github-sebastian` | Rama de desarrollo | Sebastian (desarrollador) |
+
+### Flujo de Trabajo
+
+```
+github-sebastian (desarrollo)
+        ↓
+    Pull Request
+        ↓
+    Validación (camilopimor)
+        ↓
+    github-main (producción)
+```
 
 ---
 
