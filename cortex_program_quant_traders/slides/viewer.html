@@ -7,9 +7,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous" />
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous" />
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ez1z02Mkd1+2OdO" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-6YkR/WTIeM03Gd/Gg2Y02FKAtWMH2qWz02vN6pJGN2vB62OLH2F6Lfj3Gk1v1B0" crossorigin="anonymous"
     onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
   <link rel="stylesheet" href="css/slides.css" />
   <style>
@@ -36,23 +36,34 @@
       const params = new URLSearchParams(location.search);
       const file = params.get('slide');
       if (!file) {
-        document.getElementById('slide-container').innerHTML =
-          '<div style="color:#6b7280;font-family:monospace;text-align:center;padding:4rem;">Especifica ?slide=modules/m0/00-portada.html</div>';
+        const msg = document.createElement('div');
+        msg.style.cssText = 'color:#6b7280;font-family:monospace;text-align:center;padding:4rem;';
+        msg.textContent = 'Especifica ?slide=modules/m0/00-portada.html';
+        document.getElementById('slide-container').appendChild(msg);
         return;
       }
       document.getElementById('file-name').textContent = file;
       try {
-        // El viewer debe mostrar el archivo guardado más reciente, incluso
-        // cuando Chrome haya conservado una copia de una visualización previa.
         const resp = await fetch(file, { cache: 'no-store' });
-        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
         const html = await resp.text();
-        document.getElementById('slide-container').innerHTML = html;
-        const slide = document.querySelector('#slide-container .slide');
-        if (slide) slide.classList.add('visible');
+        const container = document.getElementById('slide-container');
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const slide = doc.querySelector('.slide');
+        if (slide) {
+          container.innerHTML = '';
+          container.appendChild(document.importNode(slide, true));
+          slide.classList.add('visible');
+        } else {
+          container.textContent = html;
+        }
       } catch(e) {
-        document.getElementById('slide-container').innerHTML =
-          '<div style="color:#e63955;font-family:monospace;text-align:center;padding:4rem;">Error cargando: ' + file + '</div>';
+        const err = document.createElement('div');
+        err.style.cssText = 'color:#e63955;font-family:monospace;text-align:center;padding:4rem;';
+        err.textContent = 'Error cargando: ' + file;
+        document.getElementById('slide-container').innerHTML = '';
+        document.getElementById('slide-container').appendChild(err);
       }
     })();
   </script>

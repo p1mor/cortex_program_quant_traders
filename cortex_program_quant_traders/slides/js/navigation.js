@@ -92,7 +92,9 @@ const SlideNav = (() => {
     if (!bar) {
       bar = document.createElement('div');
       bar.className = 'progress-bar';
-      bar.innerHTML = '<div class="progress-fill"></div>';
+      const fill = document.createElement('div');
+      fill.className = 'progress-fill';
+      bar.appendChild(fill);
       document.body.appendChild(bar);
     }
     dom.progressFill = bar.querySelector('.progress-fill');
