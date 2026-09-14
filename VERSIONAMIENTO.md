@@ -80,8 +80,8 @@ git remote rename origin github-origin
 
 #### 4. Configurar usuario
 ```bash
-git config user.name "Sebastian"
-git config user.email "sebastian@email.com"
+git config user.name "ConexionesQuantLAB"
+git config user.email "conexionesenterprises@gmail.com"
 ```
 
 #### 5. Cambiar a tu rama de desarrollo

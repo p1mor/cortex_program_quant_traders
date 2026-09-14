@@ -11,7 +11,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ez1z02Mkd1+2OdO" crossorigin="anonymous"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-6YkR/WTIeM03Gd/Gg2Y02FKAtWMH2qWz02vN6pJGN2vB62OLH2F6Lfj3Gk1v1B0" crossorigin="anonymous"
     onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
-  <link rel="stylesheet" href="css/slides.css" />
+  <link rel="stylesheet" href="css/slides.css?v=20260907-4" />
   <style>
     body { display:flex; align-items:center; justify-content:center; min-height:100vh; background:#000; }
     #slide-container { width:100vw; max-width:100vw; min-width:0; height:100vh; overflow:hidden; }
@@ -52,9 +52,10 @@
         const doc = parser.parseFromString(html, 'text/html');
         const slide = doc.querySelector('.slide');
         if (slide) {
+          const renderedSlide = document.importNode(slide, true);
+          renderedSlide.classList.add('visible');
           container.innerHTML = '';
-          container.appendChild(document.importNode(slide, true));
-          slide.classList.add('visible');
+          container.appendChild(renderedSlide);
         } else {
           container.textContent = html;
         }

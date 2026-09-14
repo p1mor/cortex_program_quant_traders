@@ -1,0 +1,761 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contexto Anatómico del Precio — Cortex Quant Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-46 {
+      --l48-blue: #0033ff;
+      --l48-cyan: #06b6d4;
+      --l48-violet: #a48cff;
+      --l48-green: #22c55e;
+      --l48-amber: #ffb74d;
+      --l48-red: #e63955;
+      --l48-panel: rgba(8, 9, 12, .98);
+    }
+
+    #slide-46 .slide-body { min-height: 0; background: #000; }
+
+    #slide-46 .l48-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: clamp(14px, 1.7vh, 21px);
+      min-width: 0;
+      min-height: 0;
+      height: 100%;
+      padding: clamp(20px, 2.5vh, 31px) clamp(30px, 3.2vw, 62px) clamp(17px, 2.1vh, 26px);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 34% 48%, rgba(0, 51, 255, .045), transparent 27%),
+        radial-gradient(circle at 78% 52%, rgba(6, 182, 212, .035), transparent 24%),
+        #000;
+    }
+
+    #slide-46 .l48-head .section-title { margin-bottom: 0; }
+    #slide-46 .l48-head .section-title h2 {
+      max-width: 100%;
+      font-size: var(--fs-slide-title);
+      line-height: 1.18;
+    }
+    #slide-46 .l48-head .divider { margin-top: clamp(12px, 1.55vh, 18px); }
+
+    #slide-46 .l48-canvas {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: clamp(8px, .95vh, 12px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-46 .l48-kicker,
+    #slide-46 .l48-rule,
+    #slide-46 .l48-workspace-title,
+    #slide-46 .l48-workspace-meta,
+    #slide-46 .l48-col-head,
+    #slide-46 .l48-metric-code,
+    #slide-46 .l48-reading-state,
+    #slide-46 .l48-diagnostic-label,
+    #slide-46 .l48-result-label,
+    #slide-46 .l48-side-label,
+    #slide-46 .l48-weight-label,
+    #slide-46 .l48-thesis-title,
+    #slide-46 .l48-thesis-state,
+    #slide-46 .l48-case-label,
+    #slide-46 .l48-principle-label,
+    #slide-46 .l48-warning {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .085em;
+      font-weight: 700;
+    }
+
+    #slide-46 .l48-premise {
+      display: grid;
+      grid-template-columns: minmax(215px, .34fr) minmax(0, 1.28fr) minmax(360px, .62fr);
+      align-items: center;
+      gap: clamp(16px, 1.65vw, 28px);
+      min-width: 0;
+      padding: clamp(10px, 1.25vh, 15px) clamp(16px, 1.4vw, 24px);
+      border-top: 1px solid rgba(0, 51, 255, .62);
+      border-bottom: 1px solid rgba(6, 182, 212, .32);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .08), rgba(6, 182, 212, .03) 60%, rgba(164, 140, 255, .045));
+    }
+
+    #slide-46 .l48-kicker {
+      color: var(--l48-cyan);
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-46 .l48-kicker strong {
+      display: block;
+      margin-top: 5px;
+      color: var(--txt-primary);
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 1.17vw, 1.28rem);
+      font-weight: 500;
+      letter-spacing: 0;
+      line-height: 1.16;
+      text-transform: none;
+    }
+
+    #slide-46 .l48-premise p,
+    #slide-46 .l48-metric-copy,
+    #slide-46 .l48-diagnostic-copy,
+    #slide-46 .l48-side-copy,
+    #slide-46 .l48-case-copy,
+    #slide-46 .l48-principle p {
+      margin: 0;
+      color: var(--txt-secondary);
+      font-family: var(--font-body);
+      font-size: var(--fs-slide-body);
+      line-height: 1.42;
+      overflow-wrap: anywhere;
+    }
+
+    #slide-46 .l48-premise strong,
+    #slide-46 .l48-metric-copy strong,
+    #slide-46 .l48-diagnostic-copy strong,
+    #slide-46 .l48-side-copy strong,
+    #slide-46 .l48-case-copy strong,
+    #slide-46 .l48-principle strong { color: var(--txt-primary); font-weight: 700; }
+
+    #slide-46 .l48-rules {
+      display: grid;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    #slide-46 .l48-rule {
+      min-width: 0;
+      padding: 6px 8px;
+      border-left: 2px solid var(--rule-color, var(--l48-blue));
+      color: var(--rule-color, var(--l48-blue));
+      background: color-mix(in srgb, var(--rule-color, var(--l48-blue)) 6%, transparent);
+      font-size: var(--fs-slide-micro);
+      line-height: 1.28;
+    }
+
+    #slide-46 .l48-rule:nth-child(2) { --rule-color: var(--l48-violet); }
+    #slide-46 .l48-rule:nth-child(3) { --rule-color: var(--l48-cyan); }
+
+    #slide-46 .l48-workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1.43fr) minmax(430px, .72fr);
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      border: 1px solid var(--border-default);
+      border-top: 2px solid var(--l48-blue);
+      background: var(--l48-panel);
+    }
+
+    #slide-46 .l48-monitor {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      min-width: 0;
+      min-height: 0;
+      border-right: 1px solid var(--border-default);
+      background: linear-gradient(145deg, rgba(0, 51, 255, .04), transparent 48%, rgba(6, 182, 212, .025));
+    }
+
+    #slide-46 .l48-workspace-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      min-width: 0;
+      padding: 8px 13px;
+      border-bottom: 1px solid var(--border-default);
+    }
+
+    #slide-46 .l48-workspace-title {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-46 .l48-workspace-meta {
+      color: var(--l48-cyan);
+      font-size: var(--fs-slide-micro);
+      text-align: right;
+    }
+
+    #slide-46 .l48-matrix {
+      display: grid;
+      grid-template-columns: minmax(220px, .46fr) repeat(2, minmax(0, 1fr));
+      grid-template-rows: auto repeat(4, minmax(0, 1fr));
+      min-width: 0;
+      min-height: 0;
+      margin: 9px 12px;
+      border: 1px solid var(--border-default);
+      background:
+        linear-gradient(rgba(148, 156, 165, .055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 156, 165, .045) 1px, transparent 1px),
+        rgba(3, 4, 6, .78);
+      background-size: 100% 25%, 12.5% 100%;
+    }
+
+    #slide-46 .l48-col-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      min-width: 0;
+      padding: 7px 10px;
+      border-bottom: 1px solid var(--border-default);
+      border-left: 1px solid var(--border-default);
+      color: var(--l48-cyan);
+      font-size: var(--fs-slide-micro);
+      line-height: 1.25;
+    }
+
+    #slide-46 .l48-col-head.is-blank {
+      border-left: 0;
+      color: var(--txt-tertiary);
+    }
+
+    #slide-46 .l48-col-head.is-previous { color: var(--l48-violet); }
+    #slide-46 .l48-col-head small {
+      color: var(--txt-muted);
+      font: inherit;
+      letter-spacing: .05em;
+    }
+
+    #slide-46 .l48-metric {
+      --metric-color: var(--l48-blue);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2px;
+      min-width: 0;
+      min-height: 0;
+      padding: 5px 10px;
+      border-bottom: 1px solid var(--border-default);
+    }
+
+    #slide-46 .l48-metric.is-ofi { --metric-color: var(--l48-cyan); }
+    #slide-46 .l48-metric.is-msit { --metric-color: var(--l48-violet); }
+    #slide-46 .l48-metric.is-cusum { --metric-color: var(--l48-amber); border-bottom: 0; }
+
+    #slide-46 .l48-metric-code {
+      min-width: 0;
+      color: var(--metric-color);
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-46 .l48-metric-copy {
+      font-size: var(--fs-slide-support);
+      line-height: 1.24;
+    }
+
+    #slide-46 .l48-reading {
+      --reading-color: var(--l48-red);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 9px;
+      min-width: 0;
+      min-height: 0;
+      padding: 7px 10px;
+      border-bottom: 1px solid var(--border-default);
+      border-left: 1px solid var(--border-default);
+      background: color-mix(in srgb, var(--reading-color) 4%, transparent);
+    }
+
+    #slide-46 .l48-reading.is-last { border-bottom: 0; }
+    #slide-46 .l48-reading.is-current {
+      border-left-style: dashed;
+      background: repeating-linear-gradient(135deg, rgba(230, 57, 85, .045) 0 5px, transparent 5px 10px);
+    }
+
+    #slide-46 .l48-reading-main { min-width: 0; }
+
+    #slide-46 .l48-reading-state {
+      display: block;
+      color: var(--reading-color);
+      font-size: var(--fs-slide-micro);
+      line-height: 1.22;
+      overflow-wrap: anywhere;
+    }
+
+    #slide-46 .l48-reading-sub {
+      display: block;
+      margin-top: 3px;
+      color: var(--txt-tertiary);
+      font-family: var(--font-body);
+      font-size: var(--fs-slide-support);
+      line-height: 1.25;
+    }
+
+    #slide-46 .l48-meter {
+      display: grid;
+      grid-template-columns: repeat(4, 10px);
+      align-items: end;
+      gap: 3px;
+      height: 25px;
+    }
+
+    #slide-46 .l48-meter i {
+      display: block;
+      height: var(--h, 35%);
+      min-height: 4px;
+      background: var(--reading-color);
+      opacity: var(--o, .72);
+    }
+
+    #slide-46 .l48-monitor-foot {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+      border-top: 1px solid var(--border-default);
+    }
+
+    #slide-46 .l48-diagnostic {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 11px;
+      align-items: center;
+      min-width: 0;
+      padding: 9px 12px;
+      border-right: 1px solid var(--border-default);
+      background: rgba(255, 183, 77, .035);
+    }
+
+    #slide-46 .l48-diagnostic-label {
+      color: var(--l48-amber);
+      font-size: var(--fs-slide-label);
+      white-space: nowrap;
+    }
+
+    #slide-46 .l48-diagnostic-copy {
+      font-size: var(--fs-slide-support);
+      line-height: 1.32;
+    }
+
+    #slide-46 .l48-result-map {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      min-width: 0;
+      padding: 7px 9px;
+      gap: 5px;
+    }
+
+    #slide-46 .l48-result {
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      padding: 5px 6px;
+      border: 1px solid currentColor;
+      color: var(--l48-green);
+      background: rgba(34, 197, 94, .04);
+      text-align: center;
+    }
+
+    #slide-46 .l48-result.is-trap {
+      color: var(--l48-red);
+      background: rgba(230, 57, 85, .04);
+    }
+
+    #slide-46 .l48-result-label {
+      font-size: var(--fs-slide-micro);
+      line-height: 1.22;
+    }
+
+    #slide-46 .l48-result small {
+      display: block;
+      margin-top: 2px;
+      color: var(--txt-tertiary);
+      font-family: var(--font-body);
+      font-size: var(--fs-slide-micro);
+      line-height: 1.2;
+    }
+
+    #slide-46 .l48-analysis {
+      display: grid;
+      grid-template-rows: auto auto auto minmax(0, 1fr);
+      min-width: 0;
+      min-height: 0;
+      background: linear-gradient(155deg, rgba(164, 140, 255, .035), transparent 47%, rgba(6, 182, 212, .025));
+    }
+
+    #slide-46 .l48-side-section {
+      min-width: 0;
+      padding: 7px 11px;
+      border-bottom: 1px solid var(--border-default);
+    }
+
+    #slide-46 .l48-side-label {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--l48-cyan);
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-46 .l48-side-copy {
+      font-size: var(--fs-slide-support);
+      line-height: 1.34;
+    }
+
+    #slide-46 .l48-weight {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      margin-top: 5px;
+    }
+
+    #slide-46 .l48-weight-item {
+      min-width: 0;
+      padding: 4px 7px;
+      border-left: 2px dashed var(--l48-cyan);
+      background: rgba(6, 182, 212, .035);
+    }
+
+    #slide-46 .l48-weight-item.is-closed {
+      border-left-style: solid;
+      border-left-color: var(--l48-violet);
+      background: rgba(164, 140, 255, .055);
+    }
+
+    #slide-46 .l48-weight-label {
+      display: block;
+      color: var(--l48-cyan);
+      font-size: var(--fs-slide-micro);
+    }
+
+    #slide-46 .l48-weight-item.is-closed .l48-weight-label { color: var(--l48-violet); }
+    #slide-46 .l48-weight-item small {
+      display: block;
+      margin-top: 3px;
+      color: var(--txt-tertiary);
+      font-family: var(--font-body);
+      font-size: var(--fs-slide-micro);
+      line-height: 1.25;
+    }
+
+    #slide-46 .l48-thesis-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 4px;
+      margin-top: 5px;
+    }
+
+    #slide-46 .l48-thesis {
+      display: grid;
+      grid-template-columns: minmax(104px, .34fr) minmax(0, 1fr);
+      min-width: 0;
+      border: 1px solid rgba(148, 156, 165, .22);
+      background: rgba(0, 0, 0, .34);
+    }
+
+    #slide-46 .l48-thesis-title {
+      display: grid;
+      place-items: center;
+      padding: 3px 6px;
+      border-right: 1px solid rgba(148, 156, 165, .18);
+      color: var(--thesis-color, var(--l48-green));
+      font-size: var(--fs-slide-micro);
+      text-align: center;
+    }
+
+    #slide-46 .l48-thesis.is-negative { --thesis-color: var(--l48-red); }
+
+    #slide-46 .l48-thesis-pair {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4px;
+      padding: 3px;
+    }
+
+    #slide-46 .l48-thesis-state {
+      min-width: 0;
+      padding: 3px;
+      color: var(--l48-green);
+      background: rgba(34, 197, 94, .055);
+      font-size: var(--fs-slide-micro);
+      line-height: 1.2;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    #slide-46 .l48-thesis-state.is-contrary {
+      color: var(--l48-amber);
+      background: rgba(255, 183, 77, .055);
+    }
+
+    #slide-46 .l48-case {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: start;
+      gap: 10px;
+      min-width: 0;
+      min-height: 0;
+      padding: 7px 11px;
+      background: rgba(230, 57, 85, .025);
+    }
+
+    #slide-46 .l48-case-label {
+      color: var(--l48-red);
+      font-size: var(--fs-slide-label);
+      white-space: nowrap;
+    }
+
+    #slide-46 .l48-case-copy {
+      font-size: var(--fs-slide-support);
+      line-height: 1.38;
+    }
+
+    #slide-46 .l48-principle {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1.25fr) minmax(360px, .75fr);
+      align-items: center;
+      gap: clamp(15px, 1.5vw, 25px);
+      min-width: 0;
+      padding: 10px 16px;
+      border-left: 2px solid var(--l48-cyan);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .09), rgba(6, 182, 212, .06), rgba(164, 140, 255, .045));
+    }
+
+    #slide-46 .l48-principle-label {
+      color: var(--l48-cyan);
+      font-size: var(--fs-slide-label);
+      white-space: nowrap;
+    }
+
+    #slide-46 .l48-principle blockquote {
+      margin: 0;
+      color: var(--txt-primary);
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 1.08vw, 1.23rem);
+      line-height: 1.2;
+    }
+
+    #slide-46 .l48-principle blockquote em {
+      color: var(--l48-cyan);
+      font-style: normal;
+    }
+
+    #slide-46 .l48-principle p {
+      font-size: var(--fs-slide-support);
+      line-height: 1.35;
+    }
+
+    #slide-46 .l48-warning {
+      display: block;
+      margin-top: 3px;
+      color: var(--l48-amber);
+      font-size: var(--fs-slide-micro);
+      line-height: 1.3;
+    }
+
+    @media (min-width: 1181px) and (max-height: 820px) {
+      #slide-46 .l48-stage { padding-top: 13px; padding-bottom: 10px; gap: 9px; }
+      #slide-46 .l48-head .divider { margin-top: 8px; }
+      #slide-46 .l48-canvas { gap: 6px; }
+      #slide-46 .l48-premise { padding-block: 7px; }
+      #slide-46 .l48-workspace-head { padding-block: 6px; }
+      #slide-46 .l48-matrix { margin-block: 6px; }
+      #slide-46 .l48-metric,
+      #slide-46 .l48-reading { padding-block: 5px; }
+      #slide-46 .l48-monitor-foot,
+      #slide-46 .l48-side-section,
+      #slide-46 .l48-case { padding-block: 6px; }
+      #slide-46 .l48-principle { padding-block: 7px; }
+    }
+
+    @media (max-width: 1180px) {
+      #slide-46 .l48-stage {
+        height: auto;
+        min-height: 100%;
+        overflow-y: auto;
+        scrollbar-width: none;
+      }
+      #slide-46 .l48-stage::-webkit-scrollbar { width: 0; }
+      #slide-46 .l48-canvas { grid-template-rows: auto auto auto; }
+      #slide-46 .l48-premise { grid-template-columns: 1fr 1.5fr; }
+      #slide-46 .l48-rules { grid-column: 1 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      #slide-46 .l48-workspace { grid-template-columns: 1fr; }
+      #slide-46 .l48-monitor { min-height: 530px; border-right: 0; border-bottom: 1px solid var(--border-default); }
+      #slide-46 .l48-analysis { min-height: 420px; }
+      #slide-46 .l48-principle { grid-template-columns: 1fr; gap: 6px; }
+    }
+
+    @media (max-width: 760px) {
+      #slide-46 .l48-stage { padding-inline: 18px; }
+      #slide-46 .l48-premise { grid-template-columns: 1fr; }
+      #slide-46 .l48-rules { grid-template-columns: 1fr; }
+      #slide-46 .l48-matrix { grid-template-columns: minmax(150px, .5fr) repeat(2, minmax(0, 1fr)); }
+      #slide-46 .l48-reading { grid-template-columns: 1fr; }
+      #slide-46 .l48-meter { display: none; }
+      #slide-46 .l48-monitor-foot { grid-template-columns: 1fr; }
+      #slide-46 .l48-diagnostic { border-right: 0; border-bottom: 1px solid var(--border-default); }
+      #slide-46 .l48-thesis { grid-template-columns: minmax(95px, .34fr) minmax(0, 1fr); }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-46" data-module="3">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="3">MÓDULO III</span>
+    <span class="lesson-tag">L48</span>
+    <span class="slide-title">Contexto Anatómico del Precio</span>
+    <span class="concept-code">M3.L48.C48</span>
+  </header>
+
+  <div class="slide-body single-col">
+    <main class="l48-stage">
+      <div class="l48-head">
+        <div class="section-title">
+          <div class="section-number">LECCIÓN 48</div>
+          <h2>Contexto Anatómico del Precio</h2>
+        </div>
+        <div class="divider gradient"></div>
+      </div>
+
+      <div class="l48-canvas">
+        <section class="l48-premise" aria-label="Definición del Monitor de Anatomía">
+          <div class="l48-kicker">Capa microscópica de Dendrita<strong>La anatomía examina el interior de la barra.</strong></div>
+          <p>El <strong>Monitor de Anatomía</strong> estudia cómo se distribuyó la evidencia microestructural mediante flujo, liquidez, impacto, dominancia, probabilidad y diagnósticos adicionales. En este módulo aporta <strong>certeza adicional a una tesis ya construida</strong>: HWTE conserva la rectoría y la anatomía permite confirmar, debilitar o contradecir la interpretación investigada.</p>
+          <div class="l48-rules" aria-label="Límites del contexto anatómico">
+            <span class="l48-rule">Anatomía ≠ origen de la tesis</span>
+            <span class="l48-rule">Anatomía ≠ señal automática</span>
+            <span class="l48-rule">Anatomía ≠ sustituto de HWTE</span>
+          </div>
+        </section>
+
+        <section class="l48-workspace" aria-label="Monitor anatómico y lectura inferencial">
+          <section class="l48-monitor">
+            <header class="l48-workspace-head">
+              <span class="l48-workspace-title">Monitor anatómico · dimensión operada</span>
+              <span class="l48-workspace-meta">Ejemplo · tesis bajista vigente</span>
+            </header>
+
+            <div class="l48-matrix" role="table" aria-label="Comparación entre la barra actual y la anterior para DOM, OFI, MSIT y CUSUM">
+              <div class="l48-col-head is-blank" role="columnheader">Lectura <small>función</small></div>
+              <div class="l48-col-head" role="columnheader">Actual / en formación <small>provisional</small></div>
+              <div class="l48-col-head is-previous" role="columnheader">Anterior / cerrada <small>realizada</small></div>
+
+              <div class="l48-metric" role="rowheader">
+                <span class="l48-metric-code">DOM</span>
+                <p class="l48-metric-copy"><strong>Esfuerzo vs. resultado:</strong> dominancia o posible atrapamiento.</p>
+              </div>
+              <div class="l48-reading is-current" role="cell">
+                <div class="l48-reading-main"><span class="l48-reading-state">Evidencia vendedora</span><span class="l48-reading-sub">Persistencia bajo observación</span></div>
+                <span class="l48-meter" aria-hidden="true"><i style="--h:32%"></i><i style="--h:48%"></i><i style="--h:70%"></i><i style="--h:82%;--o:1"></i></span>
+              </div>
+              <div class="l48-reading" role="cell">
+                <div class="l48-reading-main"><span class="l48-reading-state">Dominancia vendedora</span><span class="l48-reading-sub">Flujo y cierre coincidentes</span></div>
+                <span class="l48-meter" aria-hidden="true"><i style="--h:40%"></i><i style="--h:58%"></i><i style="--h:76%"></i><i style="--h:100%;--o:1"></i></span>
+              </div>
+
+              <div class="l48-metric is-ofi" role="rowheader">
+                <span class="l48-metric-code">OFI</span>
+                <p class="l48-metric-copy"><strong>Presión neta acumulada</strong> en el mejor bid/ask.</p>
+              </div>
+              <div class="l48-reading is-current" role="cell">
+                <div class="l48-reading-main"><span class="l48-reading-state">Presión −0.62</span><span class="l48-reading-sub">Negativa · aún variable</span></div>
+                <span class="l48-meter" aria-hidden="true"><i style="--h:28%"></i><i style="--h:52%"></i><i style="--h:61%"></i><i style="--h:74%;--o:1"></i></span>
+              </div>
+              <div class="l48-reading" role="cell">
+                <div class="l48-reading-main"><span class="l48-reading-state">Presión −0.71</span><span class="l48-reading-sub">Negativa · cierre confirmado</span></div>
+                <span class="l48-meter" aria-hidden="true"><i style="--h:36%"></i><i style="--h:58%"></i><i style="--h:79%"></i><i style="--h:92%;--o:1"></i></span>
+              </div>
+
+              <div class="l48-metric is-msit" role="rowheader">
+                <span class="l48-metric-code">MSIT</span>
+                <p class="l48-metric-copy"><strong>Coherencia del desbalance</strong> entre escalas.</p>
+              </div>
+              <div class="l48-reading is-current" role="cell">
+                <div class="l48-reading-main"><span class="l48-reading-state">Alineación negativa</span><span class="l48-reading-sub">Tres escalas acompañan</span></div>
+                <span class="l48-meter" aria-hidden="true"><i style="--h:48%"></i><i style="--h:68%"></i><i style="--h:68%"></i><i style="--h:78%;--o:1"></i></span>
+              </div>
+              <div class="l48-reading" role="cell">
+                <div class="l48-reading-main"><span class="l48-reading-state">Alineación negativa</span><span class="l48-reading-sub">Estructura multiescala cerrada</span></div>
+                <span class="l48-meter" aria-hidden="true"><i style="--h:56%"></i><i style="--h:74%"></i><i style="--h:83%"></i><i style="--h:94%;--o:1"></i></span>
+              </div>
+
+              <div class="l48-metric is-cusum" role="rowheader">
+                <span class="l48-metric-code">CUSUM</span>
+                <p class="l48-metric-copy"><strong>Persistencia y cambio de régimen</strong> del flujo.</p>
+              </div>
+              <div class="l48-reading is-current is-last" role="cell">
+                <div class="l48-reading-main"><span class="l48-reading-state">Régimen compatible</span><span class="l48-reading-sub">Continúa, pero puede cambiar</span></div>
+                <span class="l48-meter" aria-hidden="true"><i style="--h:38%"></i><i style="--h:52%"></i><i style="--h:67%"></i><i style="--h:77%;--o:1"></i></span>
+              </div>
+              <div class="l48-reading is-last" role="cell">
+                <div class="l48-reading-main"><span class="l48-reading-state">Régimen negativo</span><span class="l48-reading-sub">Persistencia realizada</span></div>
+                <span class="l48-meter" aria-hidden="true"><i style="--h:44%"></i><i style="--h:62%"></i><i style="--h:81%"></i><i style="--h:96%;--o:1"></i></span>
+              </div>
+            </div>
+
+            <footer class="l48-monitor-foot">
+              <div class="l48-diagnostic">
+                <span class="l48-diagnostic-label">Esfuerzo ≠ resultado</span>
+                <p class="l48-diagnostic-copy">La dirección final depende de <strong>dónde cerró el precio dentro de su rango</strong>. Flujo y resultado coincidentes implican dominancia; si se contradicen, puede existir absorción y atrapamiento.</p>
+              </div>
+              <div class="l48-result-map" aria-label="Diagnóstico de esfuerzo y resultado">
+                <div class="l48-result"><span class="l48-result-label">Coincidencia<small>Dominancia</small></span></div>
+                <div class="l48-result is-trap"><span class="l48-result-label">Contradicción<small>Posible atrapamiento</small></span></div>
+              </div>
+            </footer>
+          </section>
+
+          <aside class="l48-analysis" aria-label="Interpretación inferencial del monitor anatómico">
+            <header class="l48-workspace-head">
+              <span class="l48-workspace-title">Capa de contraste</span>
+              <span class="l48-workspace-meta">No exige unanimidad</span>
+            </header>
+
+            <section class="l48-side-section">
+              <span class="l48-side-label">Actual vs. anterior</span>
+              <p class="l48-side-copy"><strong>Anterior = evidencia realizada.</strong> Actual = lectura en formación: muestra persistencia, fortalecimiento o deterioro, pero <strong>puede cambiar</strong>.</p>
+              <div class="l48-weight">
+                <div class="l48-weight-item"><span class="l48-weight-label">Actual</span><small>Menor peso · provisional</small></div>
+                <div class="l48-weight-item is-closed"><span class="l48-weight-label">Anterior</span><small>Mayor peso · realizada</small></div>
+              </div>
+            </section>
+
+            <section class="l48-side-section">
+              <span class="l48-side-label">Dos lecturas de tesis</span>
+              <p class="l48-side-copy">Las cuatro lecturas aumentan o reducen la <strong>coherencia anatómica</strong>; no necesitan coincidir perfectamente.</p>
+              <div class="l48-thesis-grid">
+                <div class="l48-thesis">
+                  <span class="l48-thesis-title">Tesis positiva</span>
+                  <div class="l48-thesis-pair"><span class="l48-thesis-state">Compatible +</span><span class="l48-thesis-state is-contrary">Contradictoria −</span></div>
+                </div>
+                <div class="l48-thesis is-negative">
+                  <span class="l48-thesis-title">Tesis negativa</span>
+                  <div class="l48-thesis-pair"><span class="l48-thesis-state">Compatible −</span><span class="l48-thesis-state is-contrary">Contradictoria +</span></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="l48-case">
+              <span class="l48-case-label">Caso bajista</span>
+              <p class="l48-case-copy">Tesis bajista vigente: <strong>DOM vendedor + OFI negativo + MSIT negativo + CUSUM compatible</strong>. Si el cierre anterior es negativo y la lectura actual conserva coherencia, aumenta la certeza. Si divergen, surge <strong>evidencia para contrastar</strong>, no invalidación automática.</p>
+            </section>
+          </aside>
+        </section>
+
+        <section class="l48-principle" aria-label="Principio Cortex-Dendrita">
+          <span class="l48-principle-label">Principio Cortex-Dendrita</span>
+          <blockquote>“La anatomía no construye la tesis: observa si la microestructura interna <em>acompaña o contradice</em> una inferencia existente.”</blockquote>
+          <p>Se utiliza para <strong>aumentar certeza, detectar deterioro y actualizar la interpretación</strong>, nunca para operar una casilla aislada.<span class="l48-warning">Anatomía = capa de evidencia · no señal · no sustituye HWTE</span></p>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">←</kbd> <kbd class="kbd">→</kbd></span>
+    <span class="slide-counter">48/50</span>
+  </footer>
+</section>
+</body>
+</html>

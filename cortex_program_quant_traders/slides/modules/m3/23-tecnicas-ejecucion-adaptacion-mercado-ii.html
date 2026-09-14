@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Técnicas de Ejecución y Adaptación al Mercado II — Predominancia HWTE — Cortex Quant Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-45 {
+      --l47-blue: #0033ff;
+      --l47-cyan: #06b6d4;
+      --l47-violet: #a48cff;
+      --l47-green: #22c55e;
+      --l47-amber: #ffb74d;
+      --l47-red: #e63955;
+      --l47-panel: rgba(8, 9, 12, .98);
+    }
+
+    #slide-45 .slide-body {
+      min-height: 0;
+      background: #000;
+    }
+
+    #slide-45 .l47-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: clamp(14px, 1.7vh, 21px);
+      min-width: 0;
+      min-height: 0;
+      height: 100%;
+      padding: clamp(20px, 2.5vh, 31px) clamp(30px, 3.2vw, 62px) clamp(17px, 2.1vh, 26px);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 24% 52%, rgba(0, 51, 255, .045), transparent 25%),
+        radial-gradient(circle at 77% 52%, rgba(164, 140, 255, .04), transparent 25%),
+        #000;
+    }
+
+    #slide-45 .l47-head .section-title { margin-bottom: 0; }
+    #slide-45 .l47-head .section-title h2 {
+      max-width: 100%;
+      font-size: var(--fs-slide-title);
+      line-height: 1.18;
+    }
+    #slide-45 .l47-head .divider { margin-top: clamp(12px, 1.55vh, 18px); }
+
+    #slide-45 .l47-canvas {
+      display: grid;
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
+      gap: clamp(8px, .95vh, 12px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-45 .l47-kicker,
+    #slide-45 .l47-hierarchy-label,
+    #slide-45 .l47-hierarchy-node,
+    #slide-45 .l47-distinction-side,
+    #slide-45 .l47-distinction-main,
+    #slide-45 .l47-scenario-label,
+    #slide-45 .l47-scenario-state,
+    #slide-45 .l47-track-step,
+    #slide-45 .l47-lane-label,
+    #slide-45 .l47-chip,
+    #slide-45 .l47-equation,
+    #slide-45 .l47-principle-label,
+    #slide-45 .l47-warning {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .085em;
+      font-weight: 700;
+    }
+
+    #slide-45 .l47-premise {
+      display: grid;
+      grid-template-columns: minmax(215px, .32fr) minmax(0, 1.28fr) minmax(340px, .58fr);
+      align-items: center;
+      gap: clamp(16px, 1.65vw, 28px);
+      min-width: 0;
+      padding: clamp(10px, 1.25vh, 15px) clamp(16px, 1.4vw, 24px);
+      border-top: 1px solid rgba(0, 51, 255, .62);
+      border-bottom: 1px solid rgba(6, 182, 212, .32);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .08), rgba(6, 182, 212, .028) 58%, rgba(164, 140, 255, .045));
+    }
+
+    #slide-45 .l47-kicker {
+      color: var(--l47-cyan);
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-45 .l47-kicker strong {
+      display: block;
+      margin-top: 5px;
+      color: var(--txt-primary);
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 1.17vw, 1.28rem);
+      font-weight: 500;
+      letter-spacing: 0;
+      line-height: 1.16;
+      text-transform: none;
+    }
+
+    #slide-45 .l47-premise p,
+    #slide-45 .l47-scenario-copy,
+    #slide-45 .l47-principle p {
+      margin: 0;
+      color: var(--txt-secondary);
+      font-family: var(--font-body);
+      font-size: var(--fs-slide-body);
+      line-height: 1.43;
+      overflow-wrap: anywhere;
+    }
+
+    #slide-45 .l47-premise strong,
+    #slide-45 .l47-scenario-copy strong,
+    #slide-45 .l47-principle strong {
+      color: var(--txt-primary);
+      font-weight: 700;
+    }
+
+    #slide-45 .l47-hierarchy {
+      display: grid;
+      grid-template-columns: minmax(82px, .4fr) 20px minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      align-items: stretch;
+      gap: 5px 8px;
+      min-width: 0;
+    }
+
+    #slide-45 .l47-hierarchy-label {
+      grid-column: 1 / -1;
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro);
+      text-align: right;
+    }
+
+    #slide-45 .l47-hierarchy-node {
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      min-height: 48px;
+      padding: 6px 8px;
+      border: 1px solid currentColor;
+      color: var(--l47-cyan);
+      background: rgba(6, 182, 212, .055);
+      font-size: var(--fs-slide-micro);
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    #slide-45 .l47-hierarchy-node.is-granular {
+      color: var(--l47-violet);
+      background: rgba(164, 140, 255, .055);
+    }
+
+    #slide-45 .l47-hierarchy-arrow {
+      display: grid;
+      place-items: center;
+      color: var(--txt-tertiary);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-45 .l47-distinction {
+      display: grid;
+      grid-template-columns: minmax(170px, .42fr) minmax(0, 1fr) minmax(170px, .42fr);
+      align-items: center;
+      min-width: 0;
+      border: 1px solid var(--border-default);
+      background: var(--l47-panel);
+    }
+
+    #slide-45 .l47-distinction-side {
+      padding: 8px 12px;
+      color: var(--l47-violet);
+      font-size: var(--fs-slide-micro);
+      line-height: 1.3;
+      text-align: center;
+    }
+
+    #slide-45 .l47-distinction-side:last-child { color: var(--l47-red); }
+
+    #slide-45 .l47-distinction-main {
+      padding: 9px 14px;
+      border-right: 1px solid rgba(0, 51, 255, .28);
+      border-left: 1px solid rgba(0, 51, 255, .28);
+      color: var(--txt-primary);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .11), rgba(6, 182, 212, .07), rgba(164, 140, 255, .1));
+      font-size: var(--fs-slide-label);
+      line-height: 1.3;
+      text-align: center;
+    }
+
+    #slide-45 .l47-distinction-main em {
+      color: var(--l47-cyan);
+      font-style: normal;
+    }
+
+    #slide-45 .l47-scenarios {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(12px, 1.25vw, 20px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-45 .l47-scenario {
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      border: 1px solid var(--border-default);
+      border-top: 2px solid var(--scenario-color, var(--l47-blue));
+      background: var(--l47-panel);
+    }
+
+    #slide-45 .l47-scenario.is-a {
+      --scenario-color: var(--l47-blue);
+      background: linear-gradient(145deg, rgba(0, 51, 255, .055), transparent 50%), var(--l47-panel);
+    }
+
+    #slide-45 .l47-scenario.is-b {
+      --scenario-color: var(--l47-violet);
+      background: linear-gradient(145deg, rgba(164, 140, 255, .055), transparent 50%), var(--l47-panel);
+    }
+
+    #slide-45 .l47-scenario-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-width: 0;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border-default);
+    }
+
+    #slide-45 .l47-scenario-label {
+      color: var(--scenario-color);
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-45 .l47-scenario-state {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro);
+      text-align: right;
+    }
+
+    #slide-45 .l47-render {
+      display: grid;
+      grid-template-rows: auto minmax(68px, 1fr) auto;
+      gap: 9px;
+      min-width: 0;
+      min-height: 0;
+      padding: 11px 13px;
+      background:
+        linear-gradient(rgba(148, 156, 165, .06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 156, 165, .045) 1px, transparent 1px),
+        rgba(3, 4, 6, .72);
+      background-size: 100% 25%, 12.5% 100%;
+    }
+
+    #slide-45 .l47-track {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 5px;
+      min-width: 0;
+    }
+
+    #slide-45 .l47-track-step {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      min-height: 43px;
+      padding: 5px 4px;
+      border: 1px solid rgba(148, 156, 165, .23);
+      color: var(--txt-tertiary);
+      background: rgba(7, 8, 10, .96);
+      font-size: var(--fs-slide-micro);
+      line-height: 1.22;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    #slide-45 .l47-track-step:not(:last-child)::after {
+      content: "›";
+      position: absolute;
+      z-index: 2;
+      top: 50%;
+      right: -7px;
+      translate: 0 -50%;
+      color: var(--scenario-color);
+      background: #050608;
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    #slide-45 .is-a .l47-track-step:first-child,
+    #slide-45 .is-a .l47-track-step:last-child {
+      border-color: rgba(34, 197, 94, .48);
+      color: var(--l47-green);
+      background: rgba(34, 197, 94, .055);
+    }
+
+    #slide-45 .is-a .l47-track-step:nth-child(2),
+    #slide-45 .is-a .l47-track-step:nth-child(3) {
+      border-color: rgba(255, 183, 77, .4);
+      color: var(--l47-amber);
+      background: rgba(255, 183, 77, .045);
+    }
+
+    #slide-45 .is-a .l47-track-step:nth-child(4) { color: var(--l47-violet); }
+    #slide-45 .is-a .l47-track-step:nth-child(5) { color: var(--l47-cyan); }
+
+    #slide-45 .is-b .l47-track-step:first-child { color: var(--l47-green); }
+    #slide-45 .is-b .l47-track-step:nth-child(2),
+    #slide-45 .is-b .l47-track-step:nth-child(3),
+    #slide-45 .is-b .l47-track-step:nth-child(4) { color: var(--l47-amber); }
+    #slide-45 .is-b .l47-track-step:nth-child(5),
+    #slide-45 .is-b .l47-track-step:nth-child(6) {
+      border-color: rgba(230, 57, 85, .48);
+      color: var(--l47-red);
+      background: rgba(230, 57, 85, .055);
+    }
+
+    #slide-45 .l47-signal {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-rows: 1fr 1fr;
+      align-items: center;
+      gap: 5px 9px;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-45 .l47-lane-label {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro);
+      white-space: nowrap;
+    }
+
+    #slide-45 .l47-lane {
+      position: relative;
+      min-width: 0;
+      min-height: 34px;
+      overflow: hidden;
+      border: 1px solid rgba(148, 156, 165, .16);
+      background: rgba(0, 0, 0, .48);
+    }
+
+    #slide-45 .l47-lane svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    #slide-45 .l47-chips {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 5px;
+      min-width: 0;
+    }
+
+    #slide-45 .l47-chip {
+      min-width: 0;
+      padding: 5px 6px;
+      border: 1px solid rgba(6, 182, 212, .28);
+      color: var(--l47-cyan);
+      background: rgba(6, 182, 212, .04);
+      font-size: var(--fs-slide-micro);
+      line-height: 1.25;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    #slide-45 .l47-hwte-bars {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      align-items: end;
+      gap: 7px;
+      min-width: 0;
+      min-height: 0;
+      padding: 4px 7px 0;
+      border-bottom: 1px solid rgba(148, 156, 165, .22);
+    }
+
+    #slide-45 .l47-hwte-bar {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-width: 0;
+      height: var(--bar-h, 74%);
+      min-height: 45px;
+      border: 1px solid currentColor;
+      color: var(--bar-color, var(--l47-green));
+      background: color-mix(in srgb, var(--bar-color, var(--l47-green)) 12%, transparent);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      font-weight: 700;
+      line-height: 1.15;
+      text-align: center;
+    }
+
+    #slide-45 .l47-hwte-bar::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: -8px;
+      bottom: -6px;
+      width: 1px;
+      translate: -50% 0;
+      background: currentColor;
+      opacity: .72;
+    }
+
+    #slide-45 .l47-hwte-bar span {
+      position: relative;
+      z-index: 1;
+      padding: 2px 3px;
+      background: rgba(3, 4, 6, .9);
+    }
+
+    #slide-45 .l47-hwte-bar.is-negative { --bar-color: var(--l47-red); }
+    #slide-45 .l47-hwte-bar.is-forming {
+      --bar-color: var(--l47-amber);
+      border-style: dashed;
+      background: repeating-linear-gradient(135deg, rgba(255, 183, 77, .09) 0 4px, transparent 4px 8px);
+    }
+
+    #slide-45 .l47-equations {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 5px;
+      min-width: 0;
+    }
+
+    #slide-45 .l47-equation {
+      min-width: 0;
+      padding: 6px 7px;
+      border-left: 2px solid var(--l47-amber);
+      color: var(--l47-amber);
+      background: rgba(255, 183, 77, .05);
+      font-size: var(--fs-slide-micro);
+      line-height: 1.28;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    #slide-45 .l47-equation.is-migration {
+      border-left-color: var(--l47-red);
+      color: var(--l47-red);
+      background: rgba(230, 57, 85, .05);
+    }
+
+    #slide-45 .l47-scenario-copy {
+      min-width: 0;
+      padding: 10px 14px 12px;
+      border-top: 1px solid var(--border-default);
+      font-size: var(--fs-slide-support);
+      line-height: 1.4;
+    }
+
+    #slide-45 .l47-scenario-copy b {
+      color: var(--scenario-color);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    #slide-45 .l47-principle {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1.22fr) minmax(360px, .78fr);
+      align-items: center;
+      gap: clamp(15px, 1.5vw, 25px);
+      min-width: 0;
+      padding: 10px 16px;
+      border-left: 2px solid var(--l47-cyan);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .09), rgba(6, 182, 212, .06), rgba(164, 140, 255, .045));
+    }
+
+    #slide-45 .l47-principle-label {
+      color: var(--l47-cyan);
+      font-size: var(--fs-slide-label);
+      white-space: nowrap;
+    }
+
+    #slide-45 .l47-principle blockquote {
+      margin: 0;
+      color: var(--txt-primary);
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 1.08vw, 1.23rem);
+      line-height: 1.2;
+    }
+
+    #slide-45 .l47-principle blockquote em {
+      color: var(--l47-cyan);
+      font-style: normal;
+    }
+
+    #slide-45 .l47-principle p {
+      font-size: var(--fs-slide-support);
+      line-height: 1.36;
+    }
+
+    #slide-45 .l47-warning {
+      color: var(--l47-amber);
+      font-size: var(--fs-slide-micro);
+    }
+
+    @media (min-width: 1181px) and (max-height: 820px) {
+      #slide-45 .l47-stage { padding-top: 13px; padding-bottom: 10px; gap: 9px; }
+      #slide-45 .l47-head .divider { margin-top: 8px; }
+      #slide-45 .l47-canvas { gap: 6px; }
+      #slide-45 .l47-premise { padding-block: 7px; }
+      #slide-45 .l47-distinction-main { padding-block: 6px; }
+      #slide-45 .l47-scenario-head { padding-block: 7px; }
+      #slide-45 .l47-render { padding-block: 7px; gap: 6px; }
+      #slide-45 .l47-track-step { min-height: 37px; }
+      #slide-45 .l47-lane { min-height: 28px; }
+      #slide-45 .l47-hwte-bar { min-height: 38px; }
+      #slide-45 .l47-scenario-copy { padding-block: 7px; }
+      #slide-45 .l47-principle { padding-block: 7px; }
+    }
+
+    @media (max-width: 1180px) {
+      #slide-45 .l47-stage {
+        height: auto;
+        min-height: 100%;
+        overflow-y: auto;
+        scrollbar-width: none;
+      }
+      #slide-45 .l47-stage::-webkit-scrollbar { width: 0; }
+      #slide-45 .l47-canvas { grid-template-rows: auto auto auto auto; }
+      #slide-45 .l47-premise { grid-template-columns: 1fr 1.5fr; }
+      #slide-45 .l47-hierarchy { grid-column: 1 / -1; }
+      #slide-45 .l47-scenarios { grid-template-columns: 1fr; }
+      #slide-45 .l47-scenario { min-height: 390px; }
+      #slide-45 .l47-principle { grid-template-columns: 1fr; gap: 6px; }
+    }
+
+    @media (max-width: 760px) {
+      #slide-45 .l47-stage { padding-inline: 18px; }
+      #slide-45 .l47-premise,
+      #slide-45 .l47-distinction { grid-template-columns: 1fr; }
+      #slide-45 .l47-distinction-main { border: 1px solid rgba(0, 51, 255, .28); }
+      #slide-45 .l47-track { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      #slide-45 .l47-track-step:nth-child(3)::after { display: none; }
+      #slide-45 .l47-equations { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-45" data-module="3">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="3">MÓDULO III</span>
+    <span class="lesson-tag">L47</span>
+    <span class="slide-title">Técnicas de Ejecución y Adaptación al Mercado II — Predominancia HWTE</span>
+    <span class="concept-code">M3.L47.C47</span>
+  </header>
+
+  <div class="slide-body single-col">
+    <main class="l47-stage">
+      <div class="l47-head">
+        <div class="section-title">
+          <div class="section-number">LECCIÓN 47</div>
+          <h2>Técnicas de Ejecución y Adaptación al Mercado II — Predominancia HWTE</h2>
+        </div>
+        <div class="divider gradient"></div>
+      </div>
+
+      <div class="l47-canvas">
+        <section class="l47-premise" aria-label="Jerarquía estructural de HWTE">
+          <div class="l47-kicker">Jerarquía de ejecución<strong>HWTE define el contexto; lo granular calibra la entrada.</strong></div>
+          <p>Dentro de Cortex-Dendrita, <strong>HWTE mantiene la predominancia estructural e inferencial</strong>. TIB, VIB y DIB aportan granularidad, alineación y contraste, pero no sustituyen el contexto rector. El macrociclo existe exclusivamente en HWTE y continúa vigente hasta una migración confirmada por <strong>tres cierres HWTE consecutivos en sentido contrario</strong>.</p>
+          <div class="l47-hierarchy" aria-label="Jerarquía entre HWTE y las dimensiones granulares">
+            <span class="l47-hierarchy-label">Estructura → ejecución</span>
+            <span class="l47-hierarchy-node">HWTE<br />eje rector</span>
+            <span class="l47-hierarchy-arrow">→</span>
+            <span class="l47-hierarchy-node is-granular">TIB · VIB · DIB · CUSUM<br />granularidad y contraste</span>
+          </div>
+        </section>
+
+        <section class="l47-distinction" aria-label="Distinción entre contradicción granular y migración HWTE">
+          <span class="l47-distinction-side">Modifica la calidad de ejecución</span>
+          <strong class="l47-distinction-main">CONTRADICCIÓN GRANULAR <em>≠</em> MIGRACIÓN HWTE</strong>
+          <span class="l47-distinction-side">Redefine la estructura rectora</span>
+        </section>
+
+        <section class="l47-scenarios" aria-label="Dos escenarios de predominancia y cambio estructural">
+          <article class="l47-scenario is-a">
+            <header class="l47-scenario-head">
+              <span class="l47-scenario-label">Escenario A · Predominancia HWTE</span>
+              <span class="l47-scenario-state">Pausa táctica · no cambio rector</span>
+            </header>
+
+            <div class="l47-render">
+              <div class="l47-track" aria-label="Secuencia de predominancia HWTE">
+                <span class="l47-track-step">Macrociclo<br />HWTE +</span>
+                <span class="l47-track-step">Tick / Volume<br />pierden alineación</span>
+                <span class="l47-track-step">Corrección</span>
+                <span class="l47-track-step">CUSUM<br />granular</span>
+                <span class="l47-track-step">Realineación</span>
+                <span class="l47-track-step">Continuación</span>
+              </div>
+
+              <div class="l47-signal" aria-label="HWTE permanece positivo mientras la evidencia granular se desalinean y recupera">
+                <span class="l47-lane-label">HWTE</span>
+                <div class="l47-lane">
+                  <svg viewBox="0 0 900 58" preserveAspectRatio="none" aria-hidden="true">
+                    <line x1="18" y1="17" x2="882" y2="17" stroke="#22c55e" stroke-width="3" />
+                    <circle cx="36" cy="17" r="6" fill="#22c55e" /><circle cx="864" cy="17" r="6" fill="#22c55e" />
+                    <text x="450" y="43" fill="#22c55e" text-anchor="middle" font-family="JetBrains Mono" font-size="12">MACROCICLO POSITIVO VIGENTE</text>
+                  </svg>
+                </div>
+                <span class="l47-lane-label">Granular</span>
+                <div class="l47-lane">
+                  <svg viewBox="0 0 900 58" preserveAspectRatio="none" aria-hidden="true">
+                    <path d="M18 14 C130 10 180 13 260 19 S360 48 450 43 S555 20 650 18 S770 9 882 12" fill="none" stroke="#a48cff" stroke-width="3" />
+                    <line x1="18" y1="29" x2="882" y2="29" stroke="#6b7280" stroke-width="1" stroke-dasharray="7 7" opacity=".65" />
+                    <circle cx="448" cy="43" r="6" fill="#ffb74d" /><circle cx="808" cy="12" r="6" fill="#06b6d4" />
+                  </svg>
+                </div>
+              </div>
+
+              <div class="l47-chips">
+                <span class="l47-chip">Esperar microciclos</span>
+                <span class="l47-chip">Recuperar CUSUM</span>
+                <span class="l47-chip">Validar ejecución</span>
+              </div>
+            </div>
+
+            <p class="l47-scenario-copy"><b>Lectura:</b> con un macrociclo HWTE positivo, la pérdida temporal de alineación en Tick, Volume, Dollar o CUSUM puede <strong>retrasar, mejorar o impedir la entrada</strong>; no crea por sí sola un nuevo sesgo bajista. Si la evidencia granular vuelve a alinearse, puede investigarse una <strong>continuación del macrociclo</strong>.</p>
+          </article>
+
+          <article class="l47-scenario is-b">
+            <header class="l47-scenario-head">
+              <span class="l47-scenario-label">Escenario B · Cambio estructural real</span>
+              <span class="l47-scenario-state">Frontera → migración confirmada</span>
+            </header>
+
+            <div class="l47-render">
+              <div class="l47-track" aria-label="Secuencia de cambio estructural HWTE">
+                <span class="l47-track-step">Macrociclo<br />HWTE +</span>
+                <span class="l47-track-step">Cierre<br />− 01</span>
+                <span class="l47-track-step">Cierre<br />− 02</span>
+                <span class="l47-track-step">Barra −<br />en formación</span>
+                <span class="l47-track-step">Cierre<br />− 03</span>
+                <span class="l47-track-step">Nuevo<br />macrociclo −</span>
+              </div>
+
+              <div class="l47-hwte-bars" aria-label="Tres cierres HWTE contrarios y migración">
+                <div class="l47-hwte-bar" style="--bar-h: 84%"><span>MACRO +</span></div>
+                <div class="l47-hwte-bar is-negative" style="--bar-h: 55%"><span>− 01</span></div>
+                <div class="l47-hwte-bar is-negative" style="--bar-h: 67%"><span>− 02</span></div>
+                <div class="l47-hwte-bar is-forming" style="--bar-h: 75%"><span>FORMACIÓN</span></div>
+                <div class="l47-hwte-bar is-negative" style="--bar-h: 88%"><span>− 03</span></div>
+                <div class="l47-hwte-bar is-negative" style="--bar-h: 96%"><span>MACRO −</span></div>
+              </div>
+
+              <div class="l47-equations">
+                <div class="l47-equation">2 cierres contrarios + tercera barra contraria en formación = frontera</div>
+                <div class="l47-equation is-migration">3 cierres HWTE contrarios completos = migración</div>
+              </div>
+            </div>
+
+            <p class="l47-scenario-copy"><b>Lectura:</b> durante la frontera, <strong>el macrociclo anterior continúa vigente</strong>; una barra en formación no equivale a un cierre. Solo el tercer cierre contrario confirma la migración. Entonces no se protege la tesis anterior: se <strong>reconstruye la inferencia desde el nuevo macrociclo negativo</strong>.</p>
+          </article>
+        </section>
+
+        <section class="l47-principle" aria-label="Principio Cortex-Dendrita">
+          <span class="l47-principle-label">Principio Cortex-Dendrita</span>
+          <blockquote>“Las dimensiones granulares pueden retrasar, mejorar o impedir una ejecución; <em>solo HWTE redefine el macrociclo</em>.”</blockquote>
+          <p>El trader no permite que el ruido granular reemplace prematuramente la estructura rectora, pero tampoco protege HWTE cuando la migración ha sido confirmada. <span class="l47-warning">Dirección habilitada ≠ operación confirmada.</span></p>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">←</kbd> <kbd class="kbd">→</kbd></span>
+    <span class="slide-counter">47/50</span>
+  </footer>
+</section>
+</body>
+</html>

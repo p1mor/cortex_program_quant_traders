@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cortex vs. Dendrita — Cortex Quant Trader</title>
+  <title>Cortex y Dendrita: Arquitectura Matriz y Framework — Cortex Quant Trader</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -371,7 +371,7 @@
 
     #slide-25 .l26-relation {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       align-items: stretch;
       border: 1px solid var(--border-default);
       background: rgba(7, 8, 10, .96);
@@ -379,14 +379,18 @@
 
     #slide-25 .l26-question {
       display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      gap: 14px;
-      align-items: center;
+      grid-template-columns: 1fr;
+      gap: 7px;
+      align-content: center;
       min-width: 0;
       padding: clamp(13px, 1.6vh, 19px) clamp(16px, 1.5vw, 26px);
     }
 
     #slide-25 .l26-question:first-child { border-left: 3px solid var(--accent); }
+    #slide-25 .l26-question:nth-child(2) {
+      border-right: 1px solid var(--border-subtle);
+      border-left: 1px solid var(--border-subtle);
+    }
     #slide-25 .l26-question:last-child { border-right: 3px solid var(--hi); }
 
     #slide-25 .l26-relation-label {
@@ -395,7 +399,8 @@
       font-weight: 700;
     }
 
-    #slide-25 .l26-question:last-child .l26-relation-label { color: var(--hi); }
+    #slide-25 .l26-question:nth-child(2) .l26-relation-label { color: var(--hi); }
+    #slide-25 .l26-question:last-child .l26-relation-label { color: var(--purple); }
 
     #slide-25 .l26-question strong {
       color: var(--txt-primary);
@@ -426,7 +431,7 @@
       #slide-25 .l26-module { padding: 18px; }
       #slide-25 .l26-module-head { grid-template-columns: auto minmax(0, 1fr); }
       #slide-25 .l26-state { display: none; }
-      #slide-25 .l26-relation { grid-template-columns: minmax(0, 1fr) 120px minmax(0, 1fr); }
+      #slide-25 .l26-relation { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
 
     @media (max-width: 900px) {
@@ -456,16 +461,16 @@
     <span class="brand">CORTEX QUANT TRADER</span>
     <span class="divider"></span>
     <span class="module-tag" data-mod="3">MÓDULO III</span>
-    <span class="lesson-tag">L26</span>
-    <span class="slide-title">Cortex vs. Dendrita</span>
-    <span class="concept-code">M3.L26.C26</span>
+    <span class="lesson-tag">L27</span>
+    <span class="slide-title">Cortex y Dendrita: Arquitectura Matriz y Framework</span>
+    <span class="concept-code">M3.L27.C27</span>
   </header>
 
   <main class="slide-body l26-stage">
     <div class="l26-head">
       <div class="section-title">
-        <div class="section-number">LECCIÓN 26</div>
-        <h2>Cortex vs. Dendrita</h2>
+        <div class="section-number">LECCIÓN 27</div>
+        <h2>Cortex y Dendrita: Arquitectura Matriz y Framework</h2>
       </div>
       <div class="divider gradient"></div>
     </div>
@@ -476,74 +481,74 @@
           <div class="l26-module-head">
             <div class="l26-glyph">C</div>
             <div>
-              <div class="l26-module-kicker">01 / Observación</div>
+              <div class="l26-module-kicker">01 / Arquitectura matriz</div>
               <h3>Cortex</h3>
             </div>
-            <div class="l26-state">Infraestructura cuantitativa</div>
+            <div class="l26-state">Matriz cuantitativa</div>
           </div>
 
-          <p class="l26-description"><strong>Cortex — Infraestructura de Observación Cuantitativa.</strong> Es el sistema que <strong>captura, organiza y representa el estado actual del mercado</strong>. Integra las diferentes dimensiones —HWTE, Tick/TIB, Volume/VIB y Dollar/DIB— junto con sus monitores, niveles y detectores. Su función es transformar el flujo de mercado en <strong>información cuantificable y observable para el trader</strong>.</p>
+          <p class="l26-description"><strong>Cortex — Arquitectura matriz cuantitativa.</strong> Es la infraestructura sobre la cual se construyen frameworks especializados. Su función no es realizar directamente la observación operativa del mercado, sino proporcionar la <strong>matriz tecnológica, matemática y estructural</strong> que permite desarrollar sistemas como Dendrita.</p>
 
           <div class="l26-observation">
-            <div class="l26-viz-label"><span>Dimensiones observables</span><span>Estado actual</span></div>
+            <div class="l26-viz-label"><span>Capas de la matriz</span><span>Infraestructura</span></div>
             <div class="l26-dimensions">
-              <div class="l26-dimension"><strong>HWTE</strong><span>Tiempo</span></div>
-              <div class="l26-dimension"><strong>Tick</strong><span>TIB</span></div>
-              <div class="l26-dimension"><strong>Volume</strong><span>VIB</span></div>
-              <div class="l26-dimension"><strong>Dollar</strong><span>DIB</span></div>
+              <div class="l26-dimension"><strong>Tecnología</strong><span>Sistemas</span></div>
+              <div class="l26-dimension"><strong>Matemática</strong><span>Modelos</span></div>
+              <div class="l26-dimension"><strong>Estructura</strong><span>Arquitectura</span></div>
+              <div class="l26-dimension"><strong>Frameworks</strong><span>Dendrita</span></div>
             </div>
             <div class="l26-sensors">
-              <div class="l26-sensor">Monitores</div>
-              <div class="l26-sensor">Niveles</div>
-              <div class="l26-sensor">Detectores</div>
+              <div class="l26-sensor">Datos</div>
+              <div class="l26-sensor">Modelos</div>
+              <div class="l26-sensor">Desarrollo</div>
             </div>
           </div>
 
-          <div class="l26-output"><b>Salida</b><p><strong>Información cuantificable y observable</strong> para el trader.</p></div>
+          <div class="l26-output"><b>Función</b><p><strong>Cortex es la matriz</strong>; crea la infraestructura para frameworks especializados.</p></div>
         </article>
 
-        <div class="l26-link" aria-label="Cortex entrega información a Dendrita">
-          <span>Observar</span><b>→</b><span>Inferir</span>
+        <div class="l26-link" aria-label="Cortex proporciona la arquitectura matriz sobre la cual se construye Dendrita">
+          <span>Matriz</span><b>→</b><span>Framework</span>
         </div>
 
         <article class="l26-module dendrita">
           <div class="l26-module-head">
             <div class="l26-glyph">D</div>
             <div>
-              <div class="l26-module-kicker">02 / Inferencia</div>
+              <div class="l26-module-kicker">02 / Framework especializado</div>
               <h3>Dendrita</h3>
             </div>
-            <div class="l26-state">Arquitectura de razonamiento</div>
+            <div class="l26-state">Observación multidimensional</div>
           </div>
 
-          <p class="l26-description"><strong>Dendrita — Arquitectura de Inferencia.</strong> Es el sistema mediante el cual el trader <strong>razona sobre la información entregada por Cortex</strong>. Integra macrociclos, microciclos, regímenes, confluencias, divergencias y relaciones intermercado para <strong>acumular sesgo, formular una hipótesis, contrastarla y construir una tesis inferencial</strong>.</p>
+          <p class="l26-description"><strong>Dendrita — Framework multidimensional de observación e inferencia de mercado.</strong> Construido sobre la arquitectura matriz Cortex, transforma información microestructural en <strong>evidencia cuantitativa observable</strong> para que el trader pueda acumular sesgo, formular hipótesis, contrastarlas y construir una tesis inferencial.</p>
 
           <div class="l26-inference">
-            <div class="l26-viz-label"><span>Contexto integrado</span><span>Construcción de tesis</span></div>
+            <div class="l26-viz-label"><span>Estado realizado del mercado</span><span>Evidencia microestructural</span></div>
             <div class="l26-chips">
-              <div class="l26-chip">Macrociclos</div>
-              <div class="l26-chip">Microciclos</div>
-              <div class="l26-chip">Regímenes</div>
-              <div class="l26-chip">Confluencias</div>
-              <div class="l26-chip">Divergencias</div>
-              <div class="l26-chip">Intermercado</div>
+              <div class="l26-chip">HWTE</div>
+              <div class="l26-chip">TIB</div>
+              <div class="l26-chip">VIB</div>
+              <div class="l26-chip">DIB</div>
+              <div class="l26-chip">Monitores · Niveles</div>
+              <div class="l26-chip">Detectores · Probabilidades</div>
             </div>
             <div class="l26-inference-route">
-              <div class="l26-phase">Sesgo</div><div class="l26-mini-arrow">→</div>
+              <div class="l26-phase">Evidencia</div><div class="l26-mini-arrow">→</div>
               <div class="l26-phase">Hipótesis</div><div class="l26-mini-arrow">→</div>
               <div class="l26-phase">Contraste</div><div class="l26-mini-arrow">→</div>
-              <div class="l26-phase">Tesis</div>
+              <div class="l26-phase">Tesis inferencial</div>
             </div>
           </div>
 
-          <div class="l26-output"><b>Salida</b><p><strong>Tesis inferencial</strong> construida a partir de la evidencia.</p></div>
+          <div class="l26-output"><b>Función</b><p><strong>Dendrita es el framework</strong>; observa y organiza la evidencia del mercado.</p></div>
         </article>
       </div>
 
       <section class="l26-relation" aria-label="Relación entre Cortex y Dendrita">
-        <div class="l26-question"><span class="l26-relation-label">Cortex responde</span><strong>¿Qué está ocurriendo en el mercado?</strong></div>
-        <div class="l26-relation-arrow">Cortex → Dendrita</div>
-        <div class="l26-question"><span class="l26-relation-label">Dendrita responde</span><strong>¿Qué puedo inferir a partir de esa información?</strong></div>
+        <div class="l26-question"><span class="l26-relation-label">Cortex proporciona</span><strong>La arquitectura matriz cuantitativa.</strong></div>
+        <div class="l26-question"><span class="l26-relation-label">Dendrita permite observar</span><strong>¿Qué está ocurriendo en la estructura del mercado?</strong></div>
+        <div class="l26-question"><span class="l26-relation-label">El trader del Quant Trading Desk construye</span><strong>¿Qué puedo inferir a partir de esa evidencia?</strong></div>
       </section>
     </div>
   </main>
@@ -551,7 +556,7 @@
   <footer class="slide-footer">
     <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
     <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
-    <span class="slide-counter">26/42</span>
+    <span class="slide-counter">27/50</span>
   </footer>
 </section>
 </body>

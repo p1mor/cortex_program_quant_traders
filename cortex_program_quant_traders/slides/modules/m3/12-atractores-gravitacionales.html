@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Atractores Gravitacionales: Atracción y Repulsión del Precio — Cortex Quant Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-34 .l36-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: clamp(14px, 1.8vh, 22px);
+      min-height: 0;
+      padding: clamp(22px, 2.8vh, 34px) clamp(30px, 3.2vw, 62px) clamp(18px, 2.3vh, 28px);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 41% 53%, rgba(0, 51, 255, .05), transparent 29%),
+        radial-gradient(circle at 78% 47%, rgba(6, 182, 212, .035), transparent 23%),
+        #000;
+    }
+
+    #slide-34 .l36-head .divider { margin-top: clamp(12px, 1.55vh, 18px); }
+    #slide-34 .l36-head .section-title { margin-bottom: 0; }
+    #slide-34 .l36-head .section-title h2 { font-size: var(--fs-slide-title); }
+
+    #slide-34 .l36-canvas {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: clamp(9px, 1vh, 13px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-34 .l36-kicker,
+    #slide-34 .l36-level-rule,
+    #slide-34 .l36-level-chip,
+    #slide-34 .l36-chart-head,
+    #slide-34 .l36-stat,
+    #slide-34 .l36-hierarchy b,
+    #slide-34 .l36-case-strip strong,
+    #slide-34 .l36-card-label,
+    #slide-34 .l36-formula,
+    #slide-34 .l36-flow,
+    #slide-34 .l36-outcome,
+    #slide-34 .l36-principle-label,
+    #slide-34 .l36-warning {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .09em;
+    }
+
+    #slide-34 .l36-premise {
+      display: grid;
+      grid-template-columns: minmax(190px, .34fr) minmax(0, 1.22fr) minmax(325px, .66fr);
+      gap: clamp(16px, 1.7vw, 28px);
+      align-items: center;
+      padding: clamp(11px, 1.3vh, 16px) clamp(17px, 1.45vw, 25px);
+      border-top: 1px solid rgba(0, 51, 255, .58);
+      border-bottom: 1px solid rgba(6, 182, 212, .3);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .085), rgba(6, 182, 212, .028));
+    }
+
+    #slide-34 .l36-kicker {
+      color: var(--accent);
+      font-size: var(--fs-slide-label);
+      font-weight: 800;
+    }
+
+    #slide-34 .l36-kicker strong {
+      display: block;
+      margin-top: 5px;
+      color: var(--txt-primary);
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 1.2vw, 1.3rem);
+      font-weight: 500;
+      letter-spacing: 0;
+      line-height: 1.14;
+      text-transform: none;
+    }
+
+    #slide-34 .l36-premise p,
+    #slide-34 .l36-card p,
+    #slide-34 .l36-principle p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body);
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    #slide-34 .l36-premise p strong,
+    #slide-34 .l36-card p strong,
+    #slide-34 .l36-principle p strong {
+      color: var(--txt-primary);
+      font-weight: 700;
+    }
+
+    #slide-34 .l36-level-set {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 5px;
+    }
+
+    #slide-34 .l36-level-chip {
+      min-width: 0;
+      padding: 5px 4px;
+      border: 1px solid color-mix(in srgb, var(--chip-color, var(--hi)) 32%, transparent);
+      color: var(--chip-color, var(--hi));
+      background: color-mix(in srgb, var(--chip-color, var(--hi)) 7%, transparent);
+      font-size: var(--fs-slide-micro);
+      font-weight: 800;
+      text-align: center;
+    }
+
+    #slide-34 .l36-level-chip:nth-child(2),
+    #slide-34 .l36-level-chip:nth-child(6) { --chip-color: var(--mod-2); }
+    #slide-34 .l36-level-chip:nth-child(3),
+    #slide-34 .l36-level-chip:nth-child(7) { --chip-color: var(--warn); }
+    #slide-34 .l36-level-chip:nth-child(5) { --chip-color: var(--accent); }
+
+    #slide-34 .l36-level-rule {
+      grid-column: 1 / -1;
+      padding-top: 3px;
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro);
+      font-weight: 700;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    #slide-34 .l36-workbench {
+      display: grid;
+      grid-template-columns: minmax(0, 1.58fr) minmax(350px, .72fr);
+      gap: clamp(10px, 1vw, 16px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-34 .l36-chart,
+    #slide-34 .l36-logic {
+      min-width: 0;
+      min-height: 0;
+      border: 1px solid var(--border-default);
+      background: rgba(7, 8, 10, .98);
+      overflow: hidden;
+    }
+
+    #slide-34 .l36-chart {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto auto;
+      border-top: 2px solid var(--accent);
+    }
+
+    #slide-34 .l36-chart::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .28;
+      background-image:
+        linear-gradient(rgba(61, 64, 69, .16) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(61, 64, 69, .13) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+
+    #slide-34 .l36-chart > * { position: relative; z-index: 1; }
+
+    #slide-34 .l36-chart-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-label);
+      font-weight: 700;
+    }
+
+    #slide-34 .l36-stats {
+      display: flex;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    #slide-34 .l36-stat {
+      padding: 4px 7px;
+      border: 1px solid rgba(6, 182, 212, .28);
+      color: var(--hi);
+      background: var(--hi-subtle);
+      font-size: var(--fs-slide-micro);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    #slide-34 .l36-stat strong { color: var(--txt-primary); }
+
+    #slide-34 .l36-plot {
+      min-width: 0;
+      min-height: 215px;
+      background: linear-gradient(180deg, rgba(0, 51, 255, .025), transparent 58%);
+    }
+
+    #slide-34 .l36-plot svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 215px;
+    }
+
+    #slide-34 .l36-svg-copy {
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      font-weight: 700;
+      letter-spacing: .075em;
+    }
+
+    #slide-34 .l36-hierarchy {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      border-top: 1px solid var(--border-subtle);
+      background: rgba(0, 0, 0, .66);
+    }
+
+    #slide-34 .l36-case-strip {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 12px;
+      align-items: center;
+      padding: 6px 11px;
+      border-top: 1px solid rgba(6, 182, 212, .28);
+      color: var(--txt-secondary);
+      background: rgba(6, 182, 212, .045);
+      font-size: var(--fs-slide-support);
+      line-height: 1.36;
+    }
+
+    #slide-34 .l36-case-strip span { min-width: 0; overflow-wrap: anywhere; }
+
+    #slide-34 .l36-case-strip strong {
+      color: var(--hi);
+      font-size: var(--fs-slide-label);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    #slide-34 .l36-case-strip b { color: var(--txt-primary); }
+
+    #slide-34 .l36-hierarchy div {
+      min-width: 0;
+      padding: 8px 10px;
+      border-right: 1px solid var(--border-subtle);
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro);
+      line-height: 1.33;
+      overflow-wrap: anywhere;
+    }
+
+    #slide-34 .l36-hierarchy div:last-child { border-right: 0; }
+    #slide-34 .l36-hierarchy b {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--hierarchy-color, var(--hi));
+      font-size: var(--fs-slide-label);
+      font-weight: 800;
+    }
+    #slide-34 .l36-hierarchy div:nth-child(2) { --hierarchy-color: var(--accent); }
+    #slide-34 .l36-hierarchy div:nth-child(3) { --hierarchy-color: var(--mod-2); }
+    #slide-34 .l36-hierarchy div:nth-child(4) { --hierarchy-color: var(--warn); }
+    #slide-34 .l36-hierarchy div:nth-child(5) { --hierarchy-color: var(--bear); }
+
+    #slide-34 .l36-logic {
+      display: grid;
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      align-content: stretch;
+      gap: 8px;
+      padding: 10px;
+      border-top: 2px solid var(--hi);
+      background: rgba(4, 8, 10, .98);
+    }
+
+    #slide-34 .l36-card {
+      --card-color: var(--accent);
+      display: grid;
+      align-content: center;
+      gap: 6px;
+      min-width: 0;
+      padding: 10px 12px;
+      border-left: 2px solid var(--card-color);
+      background: color-mix(in srgb, var(--card-color) 6%, rgba(8, 8, 8, .96));
+    }
+
+    #slide-34 .l36-card.repulsion { --card-color: var(--bear); }
+    #slide-34 .l36-card.case { --card-color: var(--hi); }
+
+    #slide-34 .l36-card-label {
+      color: var(--card-color);
+      font-size: var(--fs-slide-label);
+      font-weight: 800;
+    }
+
+    #slide-34 .l36-card p { font-size: var(--fs-slide-support); line-height: 1.34; }
+
+    #slide-34 .l36-formula {
+      padding: 5px 7px;
+      color: var(--txt-primary);
+      background: rgba(0, 0, 0, .42);
+      font-size: var(--fs-slide-micro);
+      font-weight: 700;
+      line-height: 1.3;
+      text-align: center;
+      overflow-wrap: anywhere;
+      white-space: normal;
+    }
+
+    #slide-34 .l36-formula span { color: var(--card-color); }
+
+    #slide-34 .l36-flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      align-items: center;
+      gap: 4px;
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro);
+      font-weight: 700;
+      text-align: center;
+    }
+
+    #slide-34 .l36-flow b {
+      min-width: 0;
+      padding: 5px 3px;
+      border: 1px solid color-mix(in srgb, var(--card-color) 32%, transparent);
+      color: var(--card-color);
+      background: color-mix(in srgb, var(--card-color) 5%, transparent);
+      line-height: 1.3;
+      overflow-wrap: anywhere;
+      white-space: normal;
+    }
+
+    #slide-34 .l36-outcomes {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+    }
+
+    #slide-34 .l36-outcome {
+      padding: 5px 6px;
+      border: 1px solid var(--outcome-color);
+      color: var(--outcome-color);
+      background: color-mix(in srgb, var(--outcome-color) 7%, transparent);
+      font-size: var(--fs-slide-micro);
+      font-weight: 800;
+      text-align: center;
+    }
+
+    #slide-34 .l36-outcome.continue { --outcome-color: var(--bull-glow); }
+    #slide-34 .l36-outcome.reject { --outcome-color: var(--bear); }
+
+    #slide-34 .l36-bottom {
+      display: grid;
+      grid-template-columns: minmax(0, 1.55fr) minmax(390px, .65fr);
+      gap: 10px;
+    }
+
+    #slide-34 .l36-principle {
+      display: grid;
+      grid-template-columns: minmax(200px, .32fr) minmax(0, 1.68fr);
+      gap: 18px;
+      align-items: center;
+      padding: 9px 18px;
+      border-left: 3px solid var(--hi);
+      background: linear-gradient(90deg, var(--accent-subtle), var(--hi-subtle));
+    }
+
+    #slide-34 .l36-principle-label {
+      color: var(--accent);
+      font-size: var(--fs-slide-label);
+      font-weight: 800;
+    }
+
+    #slide-34 .l36-principle p { font-size: var(--fs-slide-support); line-height: 1.4; }
+
+    #slide-34 .l36-warning {
+      display: grid;
+      place-items: center;
+      padding: 9px 12px;
+      border: 1px solid rgba(255, 176, 32, .38);
+      color: var(--warn);
+      background: var(--warn-subtle);
+      font-size: var(--fs-slide-micro);
+      font-weight: 800;
+      line-height: 1.45;
+      text-align: center;
+      overflow-wrap: anywhere;
+    }
+
+    @media (max-height: 820px) {
+      #slide-34 .l36-stage { gap: 10px; padding-top: 16px; padding-bottom: 12px; }
+      #slide-34 .l36-head .divider { margin-top: 10px; }
+      #slide-34 .l36-canvas { gap: 8px; }
+      #slide-34 .l36-premise { padding-top: 8px; padding-bottom: 8px; }
+      #slide-34 .l36-chart-head { padding-top: 5px; padding-bottom: 5px; }
+      #slide-34 .l36-plot,
+      #slide-34 .l36-plot svg { min-height: 190px; }
+      #slide-34 .l36-hierarchy div { padding-top: 6px; padding-bottom: 6px; }
+      #slide-34 .l36-case-strip { padding-top: 4px; padding-bottom: 4px; }
+      #slide-34 .l36-logic { gap: 6px; padding: 8px; }
+      #slide-34 .l36-card { gap: 4px; padding-top: 7px; padding-bottom: 7px; }
+      #slide-34 .l36-principle,
+      #slide-34 .l36-warning { padding-top: 6px; padding-bottom: 6px; }
+    }
+
+    @media (max-width: 1080px) {
+      #slide-34 .l36-premise { grid-template-columns: 190px minmax(0, 1fr); }
+      #slide-34 .l36-level-set { grid-column: 1 / -1; }
+      #slide-34 .l36-workbench { grid-template-columns: 1fr; }
+      #slide-34 .l36-stage { overflow-y: auto; }
+      #slide-34 .l36-logic { grid-template-columns: repeat(3, 1fr); grid-template-rows: auto; }
+    }
+
+    @media (max-width: 760px) {
+      #slide-34 .l36-premise,
+      #slide-34 .l36-principle,
+      #slide-34 .l36-bottom { grid-template-columns: 1fr; }
+      #slide-34 .l36-level-set { grid-template-columns: repeat(2, 1fr); }
+      #slide-34 .l36-logic { grid-template-columns: 1fr; }
+      #slide-34 .l36-chart { overflow-x: auto; }
+      #slide-34 .l36-plot,
+      #slide-34 .l36-hierarchy,
+      #slide-34 .l36-chart-head { min-width: 820px; }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-34" data-module="3">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="3">MÓDULO III</span>
+    <span class="lesson-tag">L36</span>
+    <span class="slide-title">Atractores Gravitacionales: Atracción y Repulsión del Precio</span>
+    <span class="concept-code">M3.L36.C36</span>
+  </header>
+
+  <main class="slide-body single-col l36-stage">
+    <div class="l36-head">
+      <div class="section-title">
+        <div class="section-number">LECCIÓN 36</div>
+        <h2>Atractores Gravitacionales: Atracción y Repulsión del Precio</h2>
+      </div>
+      <div class="divider gradient"></div>
+    </div>
+
+    <div class="l36-canvas">
+      <section class="l36-premise">
+        <div class="l36-kicker">Definición canónica<strong>El nivel organiza el espacio</strong></div>
+        <p>En Cortex-Dendrita existen <strong>niveles estructurales que funcionan como referencias de atracción para el precio</strong>. El VPOC actúa como imán de primer orden; IMB+ e IMB− señalan presión significativa y objetivos potenciales. Cuanto más próximo está un IMB, mayor es su atracción inmediata. <strong>Ningún nivel genera una operación automáticamente:</strong> organiza dónde puede capitalizarse una tesis vigente.</p>
+        <div class="l36-level-set" aria-label="Universo de niveles estructurales">
+          <span class="l36-level-chip">ETHH</span><span class="l36-level-chip">IMB+</span><span class="l36-level-chip">T3</span>
+          <span class="l36-level-chip">VAH</span><span class="l36-level-chip">VPOC</span><span class="l36-level-chip">VWAP</span>
+          <span class="l36-level-chip">VAL</span><span class="l36-level-chip">IMB−</span><span class="l36-level-chip">ETHL</span>
+          <span class="l36-level-rule">Proximidad · dimensión · tesis vigente = utilidad operativa</span>
+        </div>
+      </section>
+
+      <section class="l36-workbench">
+        <figure class="l36-chart" aria-label="Campo espacial de niveles estructurales con atracción, vulneración y repulsión">
+          <figcaption class="l36-chart-head">
+            <span>Campo gravitacional del precio · jerarquía espacial</span>
+            <span class="l36-stats"><i class="l36-stat">RTH · ≥1 extremo ETH <strong>≈97%</strong></i><i class="l36-stat">Ambos extremos <strong>≈28%</strong></i></span>
+          </figcaption>
+
+          <div class="l36-plot">
+            <svg viewBox="0 0 920 270" preserveAspectRatio="none" role="img" aria-label="Trayectoria desde el precio actual hacia ETHH con rutas de continuación y repulsión">
+              <defs>
+                <linearGradient id="l36-value-area" x1="0" x2="1">
+                  <stop offset="0" stop-color="#0033ff" stop-opacity=".04" />
+                  <stop offset=".5" stop-color="#a48cff" stop-opacity=".11" />
+                  <stop offset="1" stop-color="#06b6d4" stop-opacity=".04" />
+                </linearGradient>
+                <linearGradient id="l36-attract" x1="0" x2="1">
+                  <stop offset="0" stop-color="#0033ff" />
+                  <stop offset="1" stop-color="#00e5ff" />
+                </linearGradient>
+                <filter id="l36-glow" x="-80%" y="-80%" width="260%" height="260%">
+                  <feGaussianBlur stdDeviation="4" result="blur" />
+                  <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                </filter>
+                <marker id="l36-arrow-cyan" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10Z" fill="#00e5ff" /></marker>
+                <marker id="l36-arrow-green" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10Z" fill="#22c55e" /></marker>
+                <marker id="l36-arrow-red" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10Z" fill="#e63955" /></marker>
+              </defs>
+
+              <g class="l36-svg-copy">
+                <rect x="102" y="104" width="798" height="66" fill="url(#l36-value-area)" stroke="#a48cff" stroke-opacity=".18" />
+                <text x="884" y="163" text-anchor="end" fill="#a48cff" opacity=".8">ÁREA DE VALOR</text>
+
+                <g stroke-width="1">
+                  <line x1="100" y1="32" x2="900" y2="32" stroke="#00e5ff" stroke-opacity=".7" />
+                  <line x1="100" y1="66" x2="900" y2="66" stroke="#0033ff" stroke-opacity=".52" stroke-dasharray="6 4" />
+                  <line x1="100" y1="86" x2="900" y2="86" stroke="#a48cff" stroke-opacity=".46" stroke-dasharray="3 5" />
+                  <line x1="100" y1="104" x2="900" y2="104" stroke="#a48cff" stroke-opacity=".55" />
+                  <line x1="100" y1="132" x2="900" y2="132" stroke="#0033ff" stroke-opacity=".75" />
+                  <line x1="100" y1="148" x2="900" y2="148" stroke="#00e5ff" stroke-opacity=".5" />
+                  <line x1="100" y1="170" x2="900" y2="170" stroke="#a48cff" stroke-opacity=".55" />
+                  <line x1="100" y1="210" x2="900" y2="210" stroke="#e63955" stroke-opacity=".5" stroke-dasharray="6 4" />
+                  <line x1="100" y1="242" x2="900" y2="242" stroke="#ffb020" stroke-opacity=".6" />
+                </g>
+
+                <g text-anchor="end">
+                  <text x="88" y="35" fill="#00e5ff">ETHH</text>
+                  <text x="88" y="69" fill="#0033ff">IMB+</text>
+                  <text x="88" y="89" fill="#a48cff">T3</text>
+                  <text x="88" y="107" fill="#a48cff">VAH</text>
+                  <text x="88" y="135" fill="#0033ff">VPOC</text>
+                  <text x="88" y="151" fill="#00e5ff">VWAP</text>
+                  <text x="88" y="173" fill="#a48cff">VAL</text>
+                  <text x="88" y="213" fill="#e63955">IMB−</text>
+                  <text x="88" y="245" fill="#ffb020">ETHL</text>
+                </g>
+
+                <g opacity=".92">
+                  <g stroke="#22c55e"><line x1="146" y1="209" x2="146" y2="239" /><rect x="140" y="216" width="12" height="15" fill="#22c55e" fill-opacity=".72" /></g>
+                  <g stroke="#22c55e"><line x1="184" y1="196" x2="184" y2="225" /><rect x="178" y="202" width="12" height="16" fill="#22c55e" fill-opacity=".72" /></g>
+                  <g stroke="#e63955"><line x1="222" y1="193" x2="222" y2="219" /><rect x="216" y="199" width="12" height="13" fill="#e63955" fill-opacity=".72" /></g>
+                  <g stroke="#22c55e"><line x1="260" y1="176" x2="260" y2="211" /><rect x="254" y="183" width="12" height="19" fill="#22c55e" fill-opacity=".72" /></g>
+                  <g stroke="#22c55e"><line x1="298" y1="158" x2="298" y2="197" /><rect x="292" y="166" width="12" height="22" fill="#22c55e" fill-opacity=".72" /></g>
+                  <g stroke="#e63955"><line x1="336" y1="160" x2="336" y2="190" /><rect x="330" y="167" width="12" height="15" fill="#e63955" fill-opacity=".72" /></g>
+                  <g stroke="#22c55e"><line x1="374" y1="144" x2="374" y2="180" /><rect x="368" y="151" width="12" height="21" fill="#22c55e" fill-opacity=".72" /></g>
+                  <g stroke="#22c55e"><line x1="412" y1="126" x2="412" y2="163" /><rect x="406" y="134" width="12" height="21" fill="#22c55e" fill-opacity=".72" /></g>
+                  <g stroke="#e63955"><line x1="450" y1="128" x2="450" y2="158" /><rect x="444" y="135" width="12" height="15" fill="#e63955" fill-opacity=".72" /></g>
+                  <g stroke="#22c55e"><line x1="488" y1="111" x2="488" y2="148" /><rect x="482" y="119" width="12" height="21" fill="#22c55e" fill-opacity=".72" /></g>
+                  <g stroke="#22c55e"><line x1="526" y1="94" x2="526" y2="131" /><rect x="520" y="101" width="12" height="22" fill="#22c55e" fill-opacity=".72" /></g>
+                  <g stroke="#e63955"><line x1="564" y1="96" x2="564" y2="125" /><rect x="558" y="102" width="12" height="15" fill="#e63955" fill-opacity=".72" /></g>
+                </g>
+
+                <line x1="100" y1="117" x2="570" y2="117" stroke="#f4f4f5" stroke-opacity=".32" stroke-dasharray="2 5" />
+                <rect x="570" y="105" width="124" height="23" fill="#0c0d10" stroke="#f4f4f5" stroke-opacity=".32" />
+                <text x="632" y="120" text-anchor="middle" fill="#f4f4f5">PRECIO ACTUAL</text>
+
+                <path d="M 694 116 C 714 103, 720 68, 746 35" fill="none" stroke="url(#l36-attract)" stroke-width="3" stroke-dasharray="7 5" marker-end="url(#l36-arrow-cyan)" filter="url(#l36-glow)" />
+                <text x="694" y="83" fill="#00e5ff">ATRACCIÓN</text>
+
+                <circle cx="750" cy="32" r="6" fill="#050608" stroke="#00e5ff" stroke-width="2" filter="url(#l36-glow)" />
+                <circle cx="750" cy="32" r="13" fill="none" stroke="#00e5ff" stroke-opacity=".3" />
+
+                <path d="M 750 24 L 750 22" fill="none" stroke="#22c55e" stroke-width="2" marker-end="url(#l36-arrow-green)" />
+                <rect x="645" y="1" width="210" height="22" fill="#06110b" stroke="#22c55e" stroke-opacity=".62" />
+                <text x="750" y="16" text-anchor="middle" fill="#22c55e">VULNERACIÓN · CONTINUIDAD</text>
+
+                <path d="M 758 37 C 797 50, 808 72, 837 88" fill="none" stroke="#e63955" stroke-width="2" marker-end="url(#l36-arrow-red)" />
+                <rect x="741" y="88" width="174" height="22" fill="#16070b" stroke="#e63955" stroke-opacity=".62" />
+                <text x="828" y="103" text-anchor="middle" fill="#e63955">RECHAZO · REPULSIÓN</text>
+
+                <text x="116" y="259" fill="#6b7280">TESIS PREEXISTENTE → NIVEL PRÓXIMO → INTERACCIÓN → NUEVA EVIDENCIA</text>
+              </g>
+            </svg>
+          </div>
+
+          <div class="l36-case-strip"><strong>03 / Caso ETHH</strong><span><b>Macrociclo HWTE positivo + Tick y Volume alineados + ETHH próximo.</b> La tesis preexiste: ETHH organiza atracción y objetivo, no causa la compra. Al llegar, vulneración → continuidad; rechazo → repulsión y nueva evidencia.</span></div>
+
+          <div class="l36-hierarchy" aria-label="Jerarquía funcional de niveles">
+            <div><b>VPOC</b>Consenso de valor · imán de primer orden.</div>
+            <div><b>VWAP</b>Equilibrio de sesión.</div>
+            <div><b>VAH / VAL</b>Aceptación y extensión.</div>
+            <div><b>IMB+ / IMB−</b>Desbalance y objetivos; más cerca, mayor atracción.</div>
+            <div><b>T3</b>Máxima severidad microestructural.</div>
+          </div>
+        </figure>
+
+        <aside class="l36-logic" aria-label="Lectura inferencial de atracción y repulsión">
+          <article class="l36-card attraction">
+            <div class="l36-card-label">01 / Atracción · capitalización</div>
+            <p>Un nivel próximo y coherente con la dirección inferida organiza la capitalización: <strong>tesis alcista → objetivos superiores</strong>; <strong>tesis bajista → objetivos inferiores</strong>.</p>
+            <div class="l36-formula"><span>Macrociclo HWTE positivo + tesis alcista + ETHH próximo</span></div>
+            <p><strong>Next Targets:</strong> objetivo primario en dirección de la tesis = geometría de primer paso + confluencia direccional.</p>
+          </article>
+
+          <article class="l36-card repulsion">
+            <div class="l36-card-label">02 / Repulsión · respuesta observada</div>
+            <p>La repulsión <strong>no es una variable matemática independiente de Dendrita</strong>: denomina pedagógicamente el rechazo o la falta de aceptación.</p>
+            <div class="l36-flow"><b>Atracción</b><span>→</span><b>Interacción</b><span>→</span><b>Repulsión</b></div>
+            <p>El precio se aproxima, prueba y se aleja. La llegada no anticipa el resultado: se contrasta con <strong>HWTE, microciclos, CUSUM y demás evidencia.</strong></p>
+          </article>
+
+        </aside>
+      </section>
+
+      <section class="l36-bottom">
+        <div class="l36-principle">
+          <div class="l36-principle-label">Principio Cortex-Dendrita</div>
+          <p><strong>Los niveles no producen la inferencia: organizan espacialmente dónde puede capitalizarse, contrastarse o invalidarse.</strong> El trader no opera una línea porque exista; interpreta su proximidad, jerarquía, dimensión y reacción del precio dentro de una tesis previamente construida.</p>
+        </div>
+        <div class="l36-warning">Nivel ≠ orden · Atracción ≠ vulneración garantizada · La reacción debe contrastarse</div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">36/50</span>
+  </footer>
+</section>
+</body>
+</html>

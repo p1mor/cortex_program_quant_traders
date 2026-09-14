@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Niveles de Absorción Multidimensional — Cortex Quant Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-33 .l35-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: clamp(14px, 1.8vh, 22px);
+      min-height: 0;
+      padding: clamp(22px, 2.8vh, 34px) clamp(30px, 3.2vw, 62px) clamp(18px, 2.3vh, 28px);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 23% 51%, rgba(34, 197, 94, .035), transparent 25%),
+        radial-gradient(circle at 79% 48%, rgba(230, 57, 85, .035), transparent 25%),
+        #000;
+    }
+
+    #slide-33 .l35-head .divider {
+      margin-top: clamp(12px, 1.55vh, 18px);
+    }
+
+    #slide-33 .l35-canvas {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr) auto auto;
+      gap: clamp(9px, 1vh, 13px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-33 .l35-kicker,
+    #slide-33 .l35-dimension-note,
+    #slide-33 .l35-color-note,
+    #slide-33 .l35-legend-item,
+    #slide-33 .l35-market-head,
+    #slide-33 .l35-axis-head,
+    #slide-33 .l35-lane-head,
+    #slide-33 .l35-axis,
+    #slide-33 .l35-annotation-label,
+    #slide-33 .l35-annotation-meta,
+    #slide-33 .l35-card-label,
+    #slide-33 .l35-principle-label,
+    #slide-33 .l35-equation {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .09em;
+    }
+
+    #slide-33 .l35-definition {
+      display: grid;
+      grid-template-columns: minmax(205px, .32fr) minmax(0, 1.24fr) minmax(285px, .56fr);
+      gap: clamp(16px, 1.7vw, 28px);
+      align-items: center;
+      padding: clamp(11px, 1.3vh, 16px) clamp(17px, 1.45vw, 25px);
+      border-top: 1px solid rgba(0, 51, 255, .55);
+      border-bottom: 1px solid rgba(6, 182, 212, .28);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .08), rgba(6, 182, 212, .025));
+    }
+
+    #slide-33 .l35-kicker {
+      color: var(--accent);
+      font-size: var(--fs-slide-label);
+      font-weight: 800;
+    }
+
+    #slide-33 .l35-kicker strong {
+      display: block;
+      margin-top: 5px;
+      color: var(--txt-primary);
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 1.2vw, 1.3rem);
+      font-weight: 500;
+      letter-spacing: 0;
+      line-height: 1.14;
+      text-transform: none;
+    }
+
+    #slide-33 .l35-definition p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body);
+      line-height: 1.45;
+    }
+
+    #slide-33 .l35-definition p strong,
+    #slide-33 .l35-card p strong,
+    #slide-33 .l35-principle p strong {
+      color: var(--txt-primary);
+      font-weight: 700;
+    }
+
+    #slide-33 .l35-legend {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    #slide-33 .l35-dimension-note,
+    #slide-33 .l35-color-note {
+      padding: 6px 8px;
+      border-left: 2px solid var(--hi);
+      color: var(--hi);
+      background: var(--hi-subtle);
+      font-size: var(--fs-slide-micro);
+      font-weight: 800;
+      text-align: center;
+    }
+
+    #slide-33 .l35-color-note { grid-column: 1; }
+    #slide-33 .l35-dimension-note { grid-column: 2; }
+
+    #slide-33 .l35-color-note {
+      border-color: var(--txt-tertiary);
+      color: var(--txt-secondary);
+      background: rgba(107, 114, 128, .08);
+    }
+
+    #slide-33 .l35-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-width: 0;
+      padding: 6px 8px;
+      border: 1px solid color-mix(in srgb, var(--legend-color) 35%, transparent);
+      color: var(--legend-color);
+      background: color-mix(in srgb, var(--legend-color) 7%, transparent);
+      font-size: var(--fs-slide-micro);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    #slide-33 .l35-legend-item.buy { --legend-color: var(--bull-glow); }
+    #slide-33 .l35-legend-item.sell { --legend-color: var(--bear); }
+
+    #slide-33 .l35-legend-dot {
+      width: 8px;
+      height: 8px;
+      flex: 0 0 8px;
+      border-radius: 50%;
+      background: var(--legend-color);
+      box-shadow: 0 0 9px color-mix(in srgb, var(--legend-color) 74%, transparent);
+    }
+
+    #slide-33 .l35-market {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      min-width: 0;
+      min-height: 0;
+      border: 1px solid var(--border-default);
+      border-top: 2px solid var(--accent);
+      background: rgba(7, 8, 11, .98);
+      overflow: hidden;
+    }
+
+    #slide-33 .l35-market::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .25;
+      background-image:
+        linear-gradient(rgba(61, 64, 69, .16) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(61, 64, 69, .12) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+
+    #slide-33 .l35-market > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    #slide-33 .l35-market-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      padding: 8px 14px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-label);
+      font-weight: 700;
+    }
+
+    #slide-33 .l35-market-head span:last-child {
+      color: var(--hi);
+    }
+
+    #slide-33 .l35-market-scroll {
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    #slide-33 .l35-market-grid {
+      display: grid;
+      grid-template-columns: 64px repeat(4, minmax(0, 1fr));
+      grid-template-rows: 30px minmax(128px, 1fr);
+      min-width: 0;
+      min-height: 100%;
+    }
+
+    #slide-33 .l35-axis-head,
+    #slide-33 .l35-lane-head {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro);
+      font-weight: 700;
+    }
+
+    #slide-33 .l35-lane-head {
+      gap: 8px;
+      border-left: 1px solid var(--border-subtle);
+      color: var(--lane-color);
+    }
+
+    #slide-33 .l35-lane-head strong {
+      font-size: var(--fs-slide-label);
+      font-weight: 800;
+    }
+
+    #slide-33 .l35-lane-head span {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro);
+      font-weight: 500;
+    }
+
+    #slide-33 .l35-hwte { --lane-color: var(--accent); }
+    #slide-33 .l35-tib { --lane-color: var(--hi); }
+    #slide-33 .l35-vib { --lane-color: var(--mod-2); }
+    #slide-33 .l35-dib { --lane-color: var(--warn); }
+
+    #slide-33 .l35-axis {
+      position: relative;
+      border-right: 1px solid var(--border-subtle);
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro);
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+      background: rgba(0, 0, 0, .52);
+    }
+
+    #slide-33 .l35-axis span {
+      position: absolute;
+      right: 8px;
+      transform: translateY(50%);
+    }
+
+    #slide-33 .l35-axis span:nth-child(1) { bottom: 75%; }
+    #slide-33 .l35-axis span:nth-child(2) { bottom: 50%; }
+    #slide-33 .l35-axis span:nth-child(3) { bottom: 25%; }
+    #slide-33 .l35-axis span:nth-child(4) { bottom: 2%; transform: none; }
+
+    #slide-33 .l35-plot {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto minmax(84px, 1fr);
+      min-width: 0;
+      min-height: 128px;
+      border-right: 1px solid var(--border-subtle);
+      overflow: hidden;
+    }
+
+    #slide-33 .l35-plot:last-child { border-right: 0; }
+
+    #slide-33 .l35-annotation {
+      position: relative;
+      z-index: 7;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 4px 8px;
+      align-content: center;
+      min-height: 38px;
+      padding: 5px 9px;
+      border-bottom: 1px solid var(--border-subtle);
+      background: color-mix(in srgb, var(--annotation-color) 5%, rgba(6, 7, 9, .98));
+    }
+
+    #slide-33 .l35-annotation.sell { --annotation-color: var(--bear); }
+    #slide-33 .l35-annotation.buy { --annotation-color: var(--bull-glow); }
+    #slide-33 .l35-annotation.neutral { --annotation-color: var(--txt-tertiary); }
+
+    #slide-33 .l35-annotation-label {
+      color: var(--annotation-color);
+      font-size: var(--fs-slide-micro);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    #slide-33 .l35-annotation-meta {
+      min-width: 0;
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro);
+      font-weight: 500;
+      letter-spacing: .03em;
+      line-height: 1.25;
+      text-align: right;
+    }
+
+    #slide-33 .l35-price-field {
+      position: relative;
+      min-width: 0;
+      min-height: 84px;
+      overflow: hidden;
+      background-image: linear-gradient(rgba(61, 64, 69, .26) 1px, transparent 1px);
+      background-size: 100% 25%;
+    }
+
+    #slide-33 .l35-price-field::before {
+      content: "";
+      position: absolute;
+      left: 7%;
+      right: 7%;
+      bottom: 14%;
+      height: 1px;
+      transform: rotate(-4deg);
+      transform-origin: left center;
+      background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--lane-color) 72%, transparent));
+      opacity: .72;
+    }
+
+    #slide-33 .l35-candle {
+      position: absolute;
+      z-index: 2;
+      left: var(--x);
+      bottom: var(--y);
+      width: clamp(7px, .62vw, 11px);
+      height: var(--h);
+      transform: translateX(-50%);
+      border: 1px solid var(--candle-color);
+      background: color-mix(in srgb, var(--candle-color) 74%, transparent);
+      box-shadow: 0 0 8px color-mix(in srgb, var(--candle-color) 16%, transparent);
+    }
+
+    #slide-33 .l35-candle.up { --candle-color: var(--bull-glow); }
+    #slide-33 .l35-candle.down { --candle-color: var(--bear); }
+
+    #slide-33 .l35-candle::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      top: -6px;
+      bottom: -6px;
+      left: 50%;
+      width: 1px;
+      transform: translateX(-50%);
+      background: var(--candle-color);
+    }
+
+    #slide-33 .l35-level {
+      position: absolute;
+      z-index: 3;
+      left: 0;
+      right: 0;
+      bottom: var(--level-y);
+      height: 1px;
+      border-top: 1px dashed color-mix(in srgb, var(--level-color) 72%, transparent);
+    }
+
+    #slide-33 .l35-level.buy { --level-color: var(--bull-glow); }
+    #slide-33 .l35-level.sell { --level-color: var(--bear); }
+
+    #slide-33 .l35-guide {
+      position: absolute;
+      z-index: 4;
+      top: 0;
+      bottom: var(--guide-bottom);
+      left: var(--guide-x);
+      width: 1px;
+      background: linear-gradient(180deg, color-mix(in srgb, var(--guide-color) 20%, transparent), var(--guide-color));
+      opacity: .62;
+      pointer-events: none;
+    }
+
+    #slide-33 .l35-pulse {
+      position: absolute;
+      z-index: 5;
+      left: var(--pulse-x);
+      bottom: var(--level-y);
+      width: 10px;
+      height: 10px;
+      transform: translate(-50%, 50%);
+      border: 2px solid var(--level-color);
+      border-radius: 50%;
+      background: #050608;
+      box-shadow:
+        0 0 0 4px color-mix(in srgb, var(--level-color) 20%, transparent),
+        0 0 14px color-mix(in srgb, var(--level-color) 80%, transparent);
+      animation: l35-pulse 1.8s ease-out infinite;
+    }
+
+    #slide-33 .l35-pulse::after {
+      content: "";
+      position: absolute;
+      inset: -7px;
+      border: 1px solid color-mix(in srgb, var(--level-color) 50%, transparent);
+      border-radius: 50%;
+    }
+
+    @keyframes l35-pulse {
+      0%, 100% { box-shadow: 0 0 0 3px color-mix(in srgb, var(--level-color) 18%, transparent), 0 0 11px color-mix(in srgb, var(--level-color) 68%, transparent); }
+      50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--level-color) 7%, transparent), 0 0 18px color-mix(in srgb, var(--level-color) 92%, transparent); }
+    }
+
+    #slide-33 .l35-equation {
+      position: absolute;
+      z-index: 4;
+      left: 8px;
+      right: 8px;
+      bottom: 7px;
+      color: var(--lane-color);
+      font-size: var(--fs-slide-micro);
+      font-weight: 700;
+      line-height: 1.22;
+    }
+
+    #slide-33 .l35-market-caption {
+      padding: 7px 14px;
+      border-top: 1px solid var(--border-subtle);
+      color: var(--txt-secondary);
+      background: rgba(0, 0, 0, .76);
+      font-size: var(--fs-slide-support);
+      line-height: 1.38;
+      text-align: center;
+    }
+
+    #slide-33 .l35-market-caption strong {
+      color: var(--hi);
+      font-weight: 700;
+    }
+
+    #slide-33 .l35-cards {
+      display: grid;
+      grid-template-columns: .8fr 1.3fr 1.2fr;
+      gap: clamp(8px, .9vw, 14px);
+      min-width: 0;
+    }
+
+    #slide-33 .l35-card {
+      --card-color: var(--accent);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 6px;
+      min-width: 0;
+      padding: clamp(10px, 1vw, 14px);
+      border-left: 2px solid var(--card-color);
+      background: color-mix(in srgb, var(--card-color) 6%, rgba(8, 8, 8, .96));
+    }
+
+    #slide-33 .l35-card:nth-child(2) { --card-color: var(--warn); }
+    #slide-33 .l35-card:nth-child(3) { --card-color: var(--hi); }
+
+    #slide-33 .l35-card-label {
+      color: var(--card-color);
+      font-size: var(--fs-slide-label);
+      font-weight: 800;
+    }
+
+    #slide-33 .l35-card p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support);
+      line-height: 1.43;
+    }
+
+    #slide-33 .l35-card .l35-no-signal {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 6px;
+    }
+
+    #slide-33 .l35-card .l35-no-signal span {
+      padding: 3px 6px;
+      border: 1px solid color-mix(in srgb, var(--bear) 35%, transparent);
+      color: var(--bear);
+      background: var(--bear-subtle);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    #slide-33 .l35-principle {
+      display: grid;
+      grid-template-columns: minmax(220px, .36fr) minmax(0, 1.64fr);
+      gap: clamp(16px, 1.7vw, 28px);
+      align-items: center;
+      padding: clamp(10px, 1.15vh, 14px) clamp(17px, 1.45vw, 25px);
+      border-left: 3px solid var(--hi);
+      background: linear-gradient(90deg, var(--accent-subtle), var(--hi-subtle));
+    }
+
+    #slide-33 .l35-principle-label {
+      color: var(--accent);
+      font-size: var(--fs-slide-label);
+      font-weight: 800;
+    }
+
+    #slide-33 .l35-principle p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body);
+      line-height: 1.42;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #slide-33 .l35-pulse { animation: none; }
+    }
+
+    @media (max-height: 820px) {
+      #slide-33 .l35-stage {
+        gap: 10px;
+        padding-top: 16px;
+        padding-bottom: 12px;
+      }
+
+      #slide-33 .l35-head .divider { margin-top: 10px; }
+      #slide-33 .l35-canvas { gap: 8px; }
+      #slide-33 .l35-definition { padding-top: 8px; padding-bottom: 8px; }
+      #slide-33 .l35-market-head { padding-top: 5px; padding-bottom: 5px; }
+      #slide-33 .l35-market-grid { grid-template-rows: 22px minmax(96px, 1fr); }
+      #slide-33 .l35-plot {
+        grid-template-rows: 30px minmax(64px, 1fr);
+        min-height: 96px;
+      }
+      #slide-33 .l35-annotation {
+        min-height: 30px;
+        padding: 3px 7px;
+      }
+      #slide-33 .l35-price-field { min-height: 64px; }
+      #slide-33 .l35-market-caption { padding-top: 5px; padding-bottom: 5px; }
+      #slide-33 .l35-card { padding-top: 8px; padding-bottom: 8px; }
+      #slide-33 .l35-principle { padding-top: 7px; padding-bottom: 7px; }
+    }
+
+    @media (max-width: 1050px) {
+      #slide-33 .l35-definition { grid-template-columns: 180px minmax(0, 1fr); }
+      #slide-33 .l35-legend { grid-column: 1 / -1; grid-template-columns: 1fr 1fr; }
+      #slide-33 .l35-dimension-note,
+      #slide-33 .l35-color-note { grid-column: auto; }
+    }
+
+    @media (max-width: 900px) {
+      #slide-33 .l35-stage { overflow-y: auto; }
+      #slide-33 .l35-canvas { grid-template-rows: auto auto auto auto; }
+      #slide-33 .l35-market-scroll { overflow-x: auto; }
+      #slide-33 .l35-market-grid { min-width: 840px; min-height: 225px; }
+      #slide-33 .l35-cards { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 620px) {
+      #slide-33 .l35-definition,
+      #slide-33 .l35-principle { grid-template-columns: 1fr; }
+      #slide-33 .l35-legend { grid-template-columns: 1fr 1fr; }
+      #slide-33 .l35-dimension-note,
+      #slide-33 .l35-color-note { grid-column: 1 / -1; }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-33" data-module="3">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="3">MÓDULO III</span>
+    <span class="lesson-tag">L35</span>
+    <span class="slide-title">Niveles de Absorción Multidimensional</span>
+    <span class="concept-code">M3.L35.C35</span>
+  </header>
+
+  <main class="slide-body single-col l35-stage">
+    <div class="l35-head">
+      <div class="section-title">
+        <div class="section-number">LECCIÓN 35</div>
+        <h2>Niveles de Absorción Multidimensional</h2>
+      </div>
+      <div class="divider gradient"></div>
+    </div>
+
+    <div class="l35-canvas">
+      <section class="l35-definition">
+        <div class="l35-kicker">Definición canónica<strong>Esfuerzo sin resultado proporcional</strong></div>
+        <p>La absorción identifica un nivel donde existe <strong>agresión significativa</strong>, pero la respuesta del precio puede no ser proporcional porque existe liquidez contraria absorbiendo ese flujo. Una absorción representa un <strong>nivel crítico de interacción entre agresión y liquidez</strong>. Su significado inferencial depende posteriormente del resultado del precio, de la dimensión donde aparece y del contexto multidimensional.</p>
+        <div class="l35-legend" aria-label="Leyenda de niveles de absorción">
+          <div class="l35-legend-item buy"><i class="l35-legend-dot"></i>Verde · compradora</div>
+          <div class="l35-legend-item sell"><i class="l35-legend-dot"></i>Rojo · vendedora</div>
+          <div class="l35-color-note">El color identifica el lado de la agresión detectada · no la dirección de la tesis</div>
+          <div class="l35-dimension-note">HWTE · TIB · VIB · DIB = dimensiones, no temporalidades</div>
+        </div>
+      </section>
+
+      <section class="l35-market" aria-label="Comparación de absorción sobre cuatro dimensiones con un mismo eje de precio">
+        <div class="l35-market-head"><span>Radar de absorción · mismo eje de precio</span><span>Marca detectada ≠ orden</span></div>
+        <div class="l35-market-scroll">
+          <div class="l35-market-grid">
+            <div class="l35-axis-head">Precio</div>
+            <div class="l35-lane-head l35-hwte"><strong>HWTE</strong><span>Estructura</span></div>
+            <div class="l35-lane-head l35-tib"><strong>TIB</strong><span>Frecuencia</span></div>
+            <div class="l35-lane-head l35-vib"><strong>VIB</strong><span>Volumen</span></div>
+            <div class="l35-lane-head l35-dib"><strong>DIB</strong><span>Capital</span></div>
+
+            <div class="l35-axis"><span>18.142</span><span>18.136</span><span>18.130</span><span>18.124</span></div>
+
+            <div class="l35-plot l35-hwte">
+              <div class="l35-annotation sell"><span class="l35-annotation-label">Abs. vendedora</span><span class="l35-annotation-meta">Venta agresiva ↔ liquidez compradora</span></div>
+              <div class="l35-price-field">
+                <i class="l35-candle up" style="--x:10%;--y:18%;--h:20px"></i>
+                <i class="l35-candle up" style="--x:23%;--y:29%;--h:26px"></i>
+                <i class="l35-candle down" style="--x:36%;--y:34%;--h:18px"></i>
+                <i class="l35-candle up" style="--x:49%;--y:39%;--h:25px"></i>
+                <i class="l35-candle up" style="--x:62%;--y:53%;--h:23px"></i>
+                <i class="l35-candle down" style="--x:75%;--y:59%;--h:19px"></i>
+                <i class="l35-candle down" style="--x:88%;--y:47%;--h:25px"></i>
+                <i class="l35-guide" style="--guide-x:62%;--guide-bottom:66%;--guide-color:var(--bear)"></i>
+                <div class="l35-level sell" style="--level-y:66%;--pulse-x:62%"><i class="l35-pulse"></i></div>
+                <div class="l35-equation">Se realiza → continuidad · no → atrapamiento / implicación contraria</div>
+              </div>
+            </div>
+
+            <div class="l35-plot l35-tib">
+              <div class="l35-annotation neutral"><span class="l35-annotation-label">Sin absorción detectada</span><span class="l35-annotation-meta">Tick no reproduce la marca</span></div>
+              <div class="l35-price-field">
+                <i class="l35-candle down" style="--x:10%;--y:44%;--h:22px"></i>
+                <i class="l35-candle up" style="--x:23%;--y:36%;--h:24px"></i>
+                <i class="l35-candle up" style="--x:36%;--y:43%;--h:17px"></i>
+                <i class="l35-candle down" style="--x:49%;--y:40%;--h:22px"></i>
+                <i class="l35-candle up" style="--x:62%;--y:47%;--h:27px"></i>
+                <i class="l35-candle down" style="--x:75%;--y:50%;--h:18px"></i>
+                <i class="l35-candle up" style="--x:88%;--y:53%;--h:20px"></i>
+                <div class="l35-equation">La ausencia también informa</div>
+              </div>
+            </div>
+
+            <div class="l35-plot l35-vib">
+              <div class="l35-annotation buy"><span class="l35-annotation-label">Abs. compradora</span><span class="l35-annotation-meta">Compra agresiva ↔ liquidez vendedora</span></div>
+              <div class="l35-price-field">
+                <i class="l35-candle down" style="--x:10%;--y:60%;--h:20px"></i>
+                <i class="l35-candle down" style="--x:23%;--y:48%;--h:25px"></i>
+                <i class="l35-candle up" style="--x:36%;--y:38%;--h:29px"></i>
+                <i class="l35-candle down" style="--x:49%;--y:39%;--h:18px"></i>
+                <i class="l35-candle up" style="--x:62%;--y:34%;--h:24px"></i>
+                <i class="l35-candle up" style="--x:75%;--y:43%;--h:23px"></i>
+                <i class="l35-candle down" style="--x:88%;--y:45%;--h:19px"></i>
+                <i class="l35-guide" style="--guide-x:62%;--guide-bottom:42%;--guide-color:var(--bull-glow)"></i>
+                <div class="l35-level buy" style="--level-y:42%;--pulse-x:62%"><i class="l35-pulse"></i></div>
+                <div class="l35-equation">Se realiza → continuidad · no → atrapamiento / implicación contraria</div>
+              </div>
+            </div>
+
+            <div class="l35-plot l35-dib">
+              <div class="l35-annotation neutral"><span class="l35-annotation-label">Evidencia complementaria</span><span class="l35-annotation-meta">Dollar contrasta el capital desplazado</span></div>
+              <div class="l35-price-field">
+                <i class="l35-candle up" style="--x:10%;--y:24%;--h:23px"></i>
+                <i class="l35-candle down" style="--x:23%;--y:29%;--h:18px"></i>
+                <i class="l35-candle up" style="--x:36%;--y:32%;--h:25px"></i>
+                <i class="l35-candle up" style="--x:49%;--y:45%;--h:24px"></i>
+                <i class="l35-candle down" style="--x:62%;--y:50%;--h:21px"></i>
+                <i class="l35-candle up" style="--x:75%;--y:48%;--h:27px"></i>
+                <i class="l35-candle down" style="--x:88%;--y:55%;--h:20px"></i>
+                <div class="l35-equation">Contrastar capital desplazado</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="l35-market-caption"><strong>Una dimensión puede detectar absorción sin que las demás la reproduzcan:</strong> cada aparición es evidencia que debe contextualizarse.</p>
+      </section>
+
+      <section class="l35-cards" aria-label="Interpretación inferencial de la absorción">
+        <article class="l35-card">
+          <div class="l35-card-label">01 / Qué puede expresar</div>
+          <p>Una absorción puede acompañar continuidad, revelar agotamiento o atrapamiento, preceder una reacción contraria o aparecer de forma aislada en una dimensión. Su presencia identifica interacción entre agresión y liquidez; <strong>la respuesta posterior del precio determina cómo debe interpretarse.</strong></p>
+        </article>
+        <article class="l35-card">
+          <div class="l35-card-label">02 / Esfuerzo vs. resultado</div>
+          <p>El nivel registra un precio crítico de interacción entre flujo y liquidez. El lado de la agresión identifica el esfuerzo; la respuesta posterior del precio representa el resultado. Si ambos coinciden puede existir continuidad; <strong>si se contradicen puede aparecer absorción efectiva y atrapamiento.</strong></p>
+          <div class="l35-no-signal"><span>Absorción ≠ reversión</span><span>Absorción ≠ entrada</span><span>Absorción ≠ continuación automática</span></div>
+        </article>
+        <article class="l35-card">
+          <div class="l35-card-label">03 / Ejemplo de contraste</div>
+          <p>Con <strong>macrociclo HWTE positivo</strong> y una absorción detectada en VIB, el trader no asume automáticamente continuación ni reversión. Primero identifica el lado de la agresión, observa si ese esfuerzo logra realizarse en el precio y contrasta la respuesta con TIB, DIB, HWTE y demás evidencia disponible. <strong>El nivel informa; no ordena.</strong></p>
+        </article>
+      </section>
+
+      <section class="l35-principle">
+        <div class="l35-principle-label">Principio Cortex-Dendrita</div>
+        <p><strong>La absorción identifica dónde agresión y liquidez interactúan de forma crítica; la arquitectura multidimensional permite determinar cómo se realiza ese esfuerzo en el precio.</strong> El trader no opera el color: interpreta el lado de la agresión, el resultado, la dimensión y su relación con la evidencia disponible.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">35/50</span>
+  </footer>
+</section>
+</body>
+</html>

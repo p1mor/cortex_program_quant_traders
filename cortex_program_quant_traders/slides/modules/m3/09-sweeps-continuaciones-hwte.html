@@ -1,0 +1,762 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sweeps y Continuaciones en HWTE — Cortex Quant Trader</title>
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-31 .sweep-stage {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: clamp(15px, 1.8vh, 24px);
+      min-height: 0;
+      padding: clamp(24px, 3vh, 38px) clamp(30px, 3.2vw, 62px) clamp(20px, 2.6vh, 32px);
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 47% 44%, rgba(0, 51, 255, .045), transparent 26%),
+        radial-gradient(circle at 82% 51%, rgba(230, 57, 85, .028), transparent 24%),
+        #000;
+    }
+
+    #slide-31 .sweep-head .section-title { margin: 0; }
+    #slide-31 .sweep-head .divider { margin-top: clamp(13px, 1.6vh, 19px); margin-bottom: 0; }
+
+    #slide-31 .sweep-canvas {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(238px, 1fr) auto auto;
+      gap: clamp(10px, 1.15vw, 17px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-31 .sweep-kicker,
+    #slide-31 .sweep-eq-label,
+    #slide-31 .sweep-sequence-head,
+    #slide-31 .sweep-phase-label,
+    #slide-31 .sweep-state,
+    #slide-31 .sweep-route-id,
+    #slide-31 .sweep-note-title,
+    #slide-31 .sweep-rule,
+    #slide-31 .sweep-management,
+    #slide-31 .sweep-principle-label,
+    #slide-31 .sweep-term-label {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .09em;
+    }
+
+    #slide-31 .sweep-definition {
+      display: grid;
+      grid-template-columns: minmax(0, 1.32fr) minmax(420px, .88fr);
+      gap: clamp(18px, 2vw, 34px);
+      align-items: center;
+      min-width: 0;
+      padding: clamp(12px, 1.45vh, 18px) clamp(17px, 1.55vw, 26px);
+      border-top: 1px solid rgba(0, 51, 255, .62);
+      border-bottom: 1px solid rgba(6, 182, 212, .25);
+      background: linear-gradient(90deg, rgba(0, 51, 255, .085), rgba(6, 182, 212, .025));
+    }
+
+    #slide-31 .sweep-definition-copy {
+      display: grid;
+      grid-template-columns: minmax(170px, .34fr) minmax(0, 1fr);
+      gap: clamp(14px, 1.5vw, 25px);
+      align-items: center;
+      min-width: 0;
+    }
+
+    #slide-31 .sweep-kicker {
+      color: var(--accent);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-31 .sweep-definition p,
+    #slide-31 .sweep-principle p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
+      line-height: 1.45;
+    }
+
+    #slide-31 .sweep-note p,
+    #slide-31 .sweep-note li,
+    #slide-31 .sweep-term p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
+      line-height: 1.43;
+    }
+
+    #slide-31 .sweep-definition strong,
+    #slide-31 .sweep-note strong,
+    #slide-31 .sweep-principle strong,
+    #slide-31 .sweep-term strong {
+      color: var(--txt-primary);
+      font-weight: 700;
+    }
+
+    #slide-31 .sweep-equations {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 7px;
+      min-width: 0;
+    }
+
+    #slide-31 .sweep-equation {
+      display: grid;
+      grid-template-columns: minmax(128px, auto) 16px minmax(0, 1fr);
+      gap: 8px;
+      align-items: center;
+      min-width: 0;
+      padding: 6px 9px;
+      border-left: 2px solid var(--eq-color);
+      background: color-mix(in srgb, var(--eq-color) 7%, transparent);
+    }
+
+    #slide-31 .sweep-equation.down { --eq-color: var(--bear); }
+    #slide-31 .sweep-equation.up { --eq-color: var(--bull-glow); }
+
+    #slide-31 .sweep-eq-label {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    #slide-31 .sweep-eq-arrow {
+      color: var(--txt-tertiary);
+      font-family: var(--font-mono);
+      text-align: center;
+    }
+
+    #slide-31 .sweep-equation b {
+      color: var(--eq-color);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+
+    #slide-31 .sweep-sequence {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: clamp(9px, 1vh, 13px);
+      min-width: 0;
+      min-height: 0;
+      padding: clamp(13px, 1.35vw, 21px);
+      border: 1px solid var(--border-default);
+      border-top: 2px solid var(--accent);
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(61, 64, 69, .13) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(61, 64, 69, .11) 1px, transparent 1px),
+        rgba(7, 8, 10, .97);
+      background-size: 100% 25%, 5% 100%, auto;
+    }
+
+    #slide-31 .sweep-sequence::after {
+      content: "";
+      position: absolute;
+      right: -84px;
+      top: -112px;
+      width: 260px;
+      height: 260px;
+      border: 1px solid rgba(6, 182, 212, .18);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    #slide-31 .sweep-sequence > * { position: relative; z-index: 1; }
+
+    #slide-31 .sweep-sequence-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 700;
+    }
+
+    #slide-31 .sweep-sequence-head span:last-child { color: var(--hi); }
+
+    #slide-31 .sweep-flow {
+      display: grid;
+      grid-template-columns: minmax(210px, 1.05fr) 24px minmax(155px, .63fr) 38px minmax(0, 2.12fr);
+      gap: clamp(8px, .8vw, 13px);
+      align-items: stretch;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-31 .sweep-phase,
+    #slide-31 .sweep-route {
+      --phase-color: var(--accent);
+      position: relative;
+      display: grid;
+      min-width: 0;
+      border: 1px solid color-mix(in srgb, var(--phase-color) 38%, var(--border-subtle));
+      background: color-mix(in srgb, var(--phase-color) 6%, rgba(3, 3, 4, .96));
+    }
+
+    #slide-31 .sweep-phase {
+      grid-template-rows: auto minmax(58px, 1fr) auto;
+      gap: 6px;
+      padding: clamp(9px, 1vw, 14px);
+    }
+
+    #slide-31 .sweep-phase.macro { --phase-color: var(--bull-glow); }
+    #slide-31 .sweep-phase.sweep { --phase-color: var(--bear); }
+
+    #slide-31 .sweep-phase-label {
+      color: var(--phase-color);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 800;
+    }
+
+    #slide-31 .sweep-phase h3,
+    #slide-31 .sweep-route h4 {
+      color: var(--txt-primary);
+      font-family: var(--font-display);
+      font-weight: 500;
+      line-height: 1.16;
+    }
+
+    #slide-31 .sweep-phase h3 { font-size: clamp(1rem, 1.24vw, 1.38rem); }
+    #slide-31 .sweep-route h4 { font-size: clamp(.93rem, 1.1vw, 1.22rem); }
+
+    #slide-31 .sweep-candles {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: clamp(18px, 2vw, 34px);
+      min-height: 58px;
+      padding: 8px 7px 2px;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(0, 0, 0, .46);
+    }
+
+    #slide-31 .sweep-candle {
+      --candle-color: var(--bull-glow);
+      position: relative;
+      width: clamp(10px, .78vw, 15px);
+      height: var(--body, 24px);
+      margin-bottom: var(--lift, 0px);
+      border: 1px solid var(--candle-color);
+      background: color-mix(in srgb, var(--candle-color) 70%, transparent);
+      box-shadow: 0 0 12px color-mix(in srgb, var(--candle-color) 15%, transparent);
+    }
+
+    #slide-31 .sweep-candle::before {
+      content: "";
+      position: absolute;
+      top: -9px;
+      bottom: -9px;
+      left: 50%;
+      width: 1px;
+      transform: translateX(-50%);
+      background: var(--candle-color);
+    }
+
+    #slide-31 .sweep-candle.down { --candle-color: var(--bear); }
+    #slide-31 .sweep-candle.forming {
+      border-style: dashed;
+      background: repeating-linear-gradient(135deg, rgba(230, 57, 85, .24) 0 3px, transparent 3px 6px);
+      box-shadow: none;
+    }
+
+    #slide-31 .sweep-state {
+      color: var(--phase-color);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 700;
+      text-align: center;
+    }
+
+    #slide-31 .sweep-arrow {
+      display: grid;
+      place-items: center;
+      color: var(--txt-tertiary);
+      font-family: var(--font-mono);
+      font-size: 1rem;
+    }
+
+    #slide-31 .sweep-fork {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      place-items: center;
+      color: var(--purple);
+      font-family: var(--font-mono);
+      font-size: 1rem;
+    }
+
+    #slide-31 .sweep-routes {
+      display: grid;
+      grid-template-rows: 1fr 1.18fr;
+      gap: clamp(7px, .7vw, 11px);
+      min-width: 0;
+      min-height: 0;
+    }
+
+    #slide-31 .sweep-route {
+      grid-template-columns: minmax(116px, .34fr) minmax(0, 1fr);
+      align-items: center;
+      gap: clamp(11px, 1.1vw, 18px);
+      padding: clamp(8px, .8vw, 12px);
+    }
+
+    #slide-31 .sweep-route.macro-route { --phase-color: var(--bull-glow); }
+    #slide-31 .sweep-route.migration-route { --phase-color: var(--warn); }
+
+    #slide-31 .sweep-route-id {
+      color: var(--phase-color);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 800;
+    }
+
+    #slide-31 .sweep-route-heading { display: grid; gap: 3px; }
+
+    #slide-31 .sweep-route p {
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
+      line-height: 1.43;
+    }
+
+    #slide-31 .sweep-route p strong { color: var(--txt-primary); }
+
+    #slide-31 .sweep-route-track {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+      min-width: 0;
+    }
+
+    #slide-31 .sweep-route-step {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 7px;
+      align-items: center;
+      min-width: 0;
+      padding: 6px 7px;
+      border-top: 1px solid var(--step-color);
+      background: color-mix(in srgb, var(--step-color) 6%, transparent);
+    }
+
+    #slide-31 .sweep-route-step:nth-child(1) { --step-color: var(--bear); }
+    #slide-31 .sweep-route-step:nth-child(2) { --step-color: var(--warn); }
+    #slide-31 .sweep-route-step:nth-child(3) { --step-color: var(--bear); }
+
+    #slide-31 .sweep-mini-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 25px;
+    }
+
+    #slide-31 .sweep-mini-bars i {
+      display: block;
+      width: 5px;
+      height: 14px;
+      border: 1px solid var(--step-color);
+      background: color-mix(in srgb, var(--step-color) 66%, transparent);
+    }
+
+    #slide-31 .sweep-mini-bars i:nth-child(2) { height: 18px; }
+    #slide-31 .sweep-mini-bars i:nth-child(3) { height: 22px; }
+    #slide-31 .sweep-mini-bars i.forming { border-style: dashed; background: transparent; }
+
+    #slide-31 .sweep-route-step b {
+      color: var(--step-color);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      line-height: 1.25;
+      text-transform: uppercase;
+    }
+
+    #slide-31 .sweep-management {
+      display: flex;
+      justify-content: center;
+      gap: clamp(10px, 1vw, 16px);
+      flex-wrap: wrap;
+      padding: 7px 12px;
+      border-left: 2px solid var(--warn);
+      border-right: 2px solid var(--warn);
+      color: var(--warn);
+      background: var(--warn-subtle);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      font-weight: 700;
+    }
+
+    #slide-31 .sweep-management span:not(:last-child)::after {
+      content: "·";
+      margin-left: clamp(10px, 1vw, 16px);
+      color: var(--txt-tertiary);
+    }
+
+    #slide-31 .sweep-notes {
+      display: grid;
+      grid-template-columns: .92fr 1.02fr 1.12fr 1.34fr;
+      gap: clamp(8px, .8vw, 12px);
+      min-width: 0;
+    }
+
+    #slide-31 .sweep-note {
+      --note-color: var(--accent);
+      display: grid;
+      align-content: start;
+      gap: 7px;
+      min-width: 0;
+      padding: clamp(9px, .9vw, 14px);
+      border-left: 2px solid var(--note-color);
+      background: color-mix(in srgb, var(--note-color) 6%, rgba(7, 7, 7, .96));
+    }
+
+    #slide-31 .sweep-note.structure { --note-color: var(--accent); }
+    #slide-31 .sweep-note.continuity { --note-color: var(--purple); }
+    #slide-31 .sweep-note.capital { --note-color: var(--hi); }
+    #slide-31 .sweep-note.inhibition { --note-color: var(--warn); }
+
+    #slide-31 .sweep-note-title {
+      color: var(--note-color);
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 800;
+    }
+
+    #slide-31 .sweep-rules { display: grid; gap: 4px; }
+
+    #slide-31 .sweep-rule {
+      display: grid;
+      grid-template-columns: 23px minmax(0, 1fr);
+      gap: 7px;
+      align-items: center;
+      color: var(--txt-secondary);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+    }
+
+    #slide-31 .sweep-rule b {
+      display: grid;
+      place-items: center;
+      width: 23px;
+      height: 23px;
+      color: var(--rule-color);
+      border: 1px solid color-mix(in srgb, var(--rule-color) 50%, transparent);
+    }
+
+    #slide-31 .sweep-rule:nth-child(1) { --rule-color: var(--bear); }
+    #slide-31 .sweep-rule:nth-child(2) { --rule-color: var(--warn); }
+    #slide-31 .sweep-rule:nth-child(3) { --rule-color: var(--hi); }
+
+    #slide-31 .sweep-note ul {
+      display: grid;
+      gap: 3px;
+      list-style: none;
+    }
+
+    #slide-31 .sweep-note li {
+      position: relative;
+      padding-left: 11px;
+    }
+
+    #slide-31 .sweep-note li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .62em;
+      width: 4px;
+      height: 4px;
+      background: var(--note-color);
+    }
+
+    #slide-31 .sweep-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    #slide-31 .sweep-stat {
+      padding: 5px 6px;
+      border: 1px solid color-mix(in srgb, var(--warn) 32%, transparent);
+      background: rgba(0, 0, 0, .26);
+      color: var(--txt-secondary);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+      line-height: 1.28;
+      text-transform: uppercase;
+    }
+
+    #slide-31 .sweep-stat strong {
+      display: block;
+      color: var(--warn);
+      font-size: 1.15em;
+    }
+
+    #slide-31 .sweep-conclusion {
+      display: grid;
+      grid-template-columns: minmax(0, 1.46fr) minmax(360px, .54fr);
+      gap: clamp(8px, .8vw, 12px);
+      min-width: 0;
+    }
+
+    #slide-31 .sweep-principle,
+    #slide-31 .sweep-term {
+      display: grid;
+      grid-template-columns: minmax(185px, .31fr) minmax(0, 1fr);
+      gap: clamp(12px, 1.3vw, 22px);
+      align-items: center;
+      min-width: 0;
+      padding: clamp(9px, 1vh, 13px) clamp(14px, 1.25vw, 21px);
+    }
+
+    #slide-31 .sweep-principle {
+      border-left: 3px solid var(--hi);
+      background: linear-gradient(90deg, var(--accent-subtle), var(--hi-subtle));
+    }
+
+    #slide-31 .sweep-term {
+      grid-template-columns: minmax(100px, .26fr) minmax(0, 1fr);
+      border-left: 2px solid var(--purple);
+      background: var(--purple-subtle);
+    }
+
+    #slide-31 .sweep-principle-label { color: var(--accent); }
+    #slide-31 .sweep-term-label { color: var(--purple); }
+
+    #slide-31 .sweep-principle-label,
+    #slide-31 .sweep-term-label {
+      font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
+      font-weight: 800;
+    }
+
+    @media (max-height: 820px) {
+      #slide-31 .sweep-stage { gap: 8px; padding-top: 14px; padding-bottom: 10px; }
+      #slide-31 .sweep-head .section-title { margin-bottom: 0; }
+      #slide-31 .sweep-head .section-title .section-number { margin-bottom: 4px; }
+      #slide-31 .sweep-head .divider { margin-top: 8px; }
+      #slide-31 .sweep-canvas { grid-template-rows: auto minmax(214px, 1fr) auto auto; gap: 7px; }
+      #slide-31 .sweep-definition { padding-top: 6px; padding-bottom: 6px; }
+      #slide-31 .sweep-sequence { padding: 10px; gap: 7px; }
+      #slide-31 .sweep-phase { padding: 7px; gap: 4px; }
+      #slide-31 .sweep-candles { min-height: 49px; }
+      #slide-31 .sweep-route { padding: 6px 8px; }
+      #slide-31 .sweep-route-step { padding: 4px 5px; }
+      #slide-31 .sweep-route.migration-route {
+        grid-template-columns: minmax(255px, .78fr) minmax(0, 1.22fr);
+      }
+      #slide-31 .sweep-route.migration-route .sweep-route-heading { gap: 1px; }
+      #slide-31 .sweep-route.migration-route .sweep-route-heading p {
+        font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
+        line-height: 1.3;
+      }
+      #slide-31 .sweep-management {
+        padding: 4px 8px;
+        font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
+        line-height: 1.25;
+      }
+      #slide-31 .sweep-notes {
+        grid-template-columns: .7fr 1.2fr 1.15fr 1.35fr;
+      }
+      #slide-31 .sweep-note { padding: 6px 8px; gap: 4px; }
+      #slide-31 .sweep-note p,
+      #slide-31 .sweep-note li {
+        font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
+        line-height: 1.43;
+      }
+      #slide-31 .sweep-conclusion {
+        grid-template-columns: minmax(0, 1.15fr) minmax(410px, .85fr);
+      }
+      #slide-31 .sweep-principle {
+        grid-template-columns: 150px minmax(0, 1fr);
+      }
+      #slide-31 .sweep-term {
+        grid-template-columns: 88px minmax(0, 1fr);
+      }
+      #slide-31 .sweep-principle,
+      #slide-31 .sweep-term { padding-top: 7px; padding-bottom: 7px; }
+    }
+
+    @media (max-width: 1180px) {
+      #slide-31 .sweep-definition { grid-template-columns: 1fr; }
+      #slide-31 .sweep-equations { grid-template-columns: 1fr 1fr; }
+      #slide-31 .sweep-notes { grid-template-columns: 1fr 1fr; }
+      #slide-31 .sweep-stage { overflow-y: auto; }
+    }
+
+    @media (max-width: 900px) {
+      #slide-31 .sweep-flow { grid-template-columns: 1fr; }
+      #slide-31 .sweep-arrow,
+      #slide-31 .sweep-fork { min-height: 24px; }
+      #slide-31 .sweep-fork { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr; }
+      #slide-31 .sweep-routes { min-height: 360px; }
+      #slide-31 .sweep-notes,
+      #slide-31 .sweep-conclusion,
+      #slide-31 .sweep-equations { grid-template-columns: 1fr; }
+      #slide-31 .sweep-definition-copy,
+      #slide-31 .sweep-principle,
+      #slide-31 .sweep-term { grid-template-columns: 1fr; }
+      #slide-31 .sweep-sequence { min-height: 780px; }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-31" data-module="3">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="3">MÓDULO III</span>
+    <span class="lesson-tag">L33</span>
+    <span class="slide-title">Sweeps y Continuaciones en HWTE</span>
+    <span class="concept-code">M3.L33.C33</span>
+  </header>
+
+  <main class="slide-body single-col sweep-stage">
+    <div class="sweep-head">
+      <div class="section-title">
+        <div class="section-number">LECCIÓN 33</div>
+        <h2>Sweeps y Continuaciones en HWTE</h2>
+      </div>
+      <div class="divider gradient"></div>
+    </div>
+
+    <div class="sweep-canvas">
+      <section class="sweep-definition" aria-label="Definición canónica del sweep HWTE">
+        <div class="sweep-definition-copy">
+          <div class="sweep-kicker">Definición canónica</div>
+          <p>Un <strong>sweep es una barra HWTE cerrada con sesgo contrario al macrociclo vigente</strong>. Permite investigar una capitalización contraria sin anticipar una migración. <strong>El sweep no cambia el macrociclo:</strong> el estado rector continúa vigente hasta completar tres cierres HWTE consecutivos en la dirección opuesta.</p>
+        </div>
+        <div class="sweep-equations">
+          <div class="sweep-equation down"><span class="sweep-eq-label">Macrociclo positivo + HWTE negativa</span><span class="sweep-eq-arrow">→</span><b>Sweep bajista habilitado</b></div>
+          <div class="sweep-equation up"><span class="sweep-eq-label">Macrociclo negativo + HWTE positiva</span><span class="sweep-eq-arrow">→</span><b>Sweep alcista habilitado</b></div>
+        </div>
+      </section>
+
+      <section class="sweep-sequence" aria-label="Secuencia de sweep, continuación, frontera y migración">
+        <div class="sweep-sequence-head"><span>Secuencia HWTE · Ejemplo operativo completo</span><span>Macrociclo positivo → Sweep → Dos rutas</span></div>
+
+        <div class="sweep-flow">
+          <article class="sweep-phase macro">
+            <div class="sweep-phase-label">Estado rector</div>
+            <div>
+              <h3>Macrociclo positivo</h3>
+              <div class="sweep-candles" aria-label="Tres cierres HWTE positivos">
+                <i class="sweep-candle" style="--lift:0px;--body:19px"></i>
+                <i class="sweep-candle" style="--lift:10px;--body:23px"></i>
+                <i class="sweep-candle" style="--lift:20px;--body:26px"></i>
+              </div>
+            </div>
+            <div class="sweep-state">Compras habilitadas</div>
+          </article>
+
+          <div class="sweep-arrow" aria-hidden="true">→</div>
+
+          <article class="sweep-phase sweep">
+            <div class="sweep-phase-label">1 cierre contrario</div>
+            <div>
+              <h3>Sweep bajista</h3>
+              <div class="sweep-candles" aria-label="Una barra HWTE negativa cerrada">
+                <i class="sweep-candle down" style="--lift:12px;--body:29px"></i>
+              </div>
+            </div>
+            <div class="sweep-state">Habilitado · confirmar</div>
+          </article>
+
+          <div class="sweep-fork" aria-hidden="true"><span>↗</span><span>↘</span></div>
+
+          <div class="sweep-routes">
+            <article class="sweep-route macro-route">
+              <div class="sweep-route-heading">
+                <span class="sweep-route-id">Ruta A</span>
+                <h4>Continuación del macrociclo</h4>
+              </div>
+              <p><strong>HWTE vuelve a cerrar positiva:</strong> el sweep queda falsado y la continuación del macrociclo vuelve a estar bajo investigación.</p>
+            </article>
+
+            <article class="sweep-route migration-route">
+              <div class="sweep-route-heading">
+                <span class="sweep-route-id">Ruta B</span>
+                <h4>Persistencia contraria</h4>
+                <p>Nuevos cierres contrarios actualizan la lectura.</p>
+              </div>
+              <div class="sweep-route-track">
+                <div class="sweep-route-step">
+                  <span class="sweep-mini-bars"><i></i></span>
+                  <b>Continuación<br />de sweep</b>
+                </div>
+                <div class="sweep-route-step">
+                  <span class="sweep-mini-bars"><i></i><i></i><i class="forming"></i></span>
+                  <b>Frontera<br />2 + 1 formando</b>
+                </div>
+                <div class="sweep-route-step">
+                  <span class="sweep-mini-bars"><i></i><i></i><i></i></span>
+                  <b>Migración<br />3 cierres</b>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="sweep-management" aria-label="Gestión táctica del sweep">
+          <span>Sweep = capitalización rápida</span>
+          <span>2–3 niveles relevantes</span>
+          <span>Sujeto a confirmación</span>
+          <span>Subordinado al estado HWTE</span>
+        </div>
+      </section>
+
+      <section class="sweep-notes" aria-label="Reglas de lectura y capitalización">
+        <article class="sweep-note structure">
+          <div class="sweep-note-title">Sweep vs. Migración</div>
+          <div class="sweep-rules">
+            <div class="sweep-rule"><b>1</b><span>Cierre HWTE contrario → <strong>Sweep</strong></span></div>
+            <div class="sweep-rule"><b>2</b><span>Dos cierres contrarios + tercera barra contraria en formación → <strong>Frontera</strong></span></div>
+            <div class="sweep-rule"><b>3</b><span>Tres cierres contrarios completos → <strong>Migración</strong></span></div>
+          </div>
+        </article>
+
+        <article class="sweep-note continuity">
+          <div class="sweep-note-title">Continuación y actualización</div>
+          <p>Mientras HWTE no complete la migración, pueden aparecer cierres contrarios intercalados y nuevas oportunidades de sweep. El trader distingue entre <strong>continuación del macrociclo, continuación del sweep, frontera y migración</strong>. La lectura se actualiza con cada cierre HWTE.</p>
+        </article>
+
+        <article class="sweep-note capital">
+          <div class="sweep-note-title">Capitalización táctica</div>
+          <ul>
+            <li>Exige una <strong>barra HWTE contraria cerrada</strong> y evidencia de confirmación.</li>
+            <li>Busca normalmente <strong>2–3 niveles</strong> de las demás dimensiones.</li>
+            <li>Puede usar el <strong>stop entrópico</strong> de la estructura sweep.</li>
+            <li>Si HWTE retoma el macrociclo, la tesis debe reevaluarse.</li>
+          </ul>
+        </article>
+
+        <article class="sweep-note inhibition">
+          <div class="sweep-note-title">Habilitación e inhibición</div>
+          <p><strong>No todo sweep debe ejecutarse.</strong> Una tendencia fuerte o un nivel estructural próximo a favor del macrociclo puede restarle atractivo. Con macrociclo positivo, HWTE negativa y el <strong>ETHH inmediatamente arriba</strong>, un sweep bajista puede omitirse o ejecutarse con riesgo mucho más ajustado.</p>
+          <div class="sweep-stats">
+            <div class="sweep-stat"><strong>≈97%</strong>RTH vulnera al menos un extremo Globex</div>
+            <div class="sweep-stat"><strong>≈28%</strong>RTH vulnera ambos extremos</div>
+          </div>
+        </article>
+      </section>
+
+      <div class="sweep-conclusion">
+        <section class="sweep-principle">
+          <div class="sweep-principle-label">Principio Cortex-Dendrita</div>
+          <p><strong>El sweep capitaliza una desviación contra el macrociclo; no anticipa su migración.</strong> El trader debe reconocer cuándo explota una barrida, cuándo el macrociclo retoma el control y cuándo la evidencia contraria se convierte en un nuevo estado estructural.</p>
+        </section>
+        <aside class="sweep-term">
+          <div class="sweep-term-label">Nota terminológica</div>
+          <p>No confundir el <strong>Sweep operativo en HWTE</strong> con el microevento <code>Sweep</code> de la Guía de Variables, referido a una ejecución agresiva que cruza varios niveles del libro.</p>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">33/50</span>
+  </footer>
+</section>
+</body>
+</html>

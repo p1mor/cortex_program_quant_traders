@@ -37,6 +37,7 @@ const SlideNav = (() => {
   let touchStart   = null;      /* { y, t } for swipe detection             */
   let observer      = null;     /* IntersectionObserver instance            */
   let deck          = null;     /* .slide-deck container                    */
+  let lessonIndexes = new Map();/* curriculum number -> physical slide index*/
 
   /* ── DOM References (cached on init) ─────────────────────────────────── */
   const dom = {
@@ -62,6 +63,8 @@ const SlideNav = (() => {
     buildModuleIndicator();
     buildProgressBar();
     updateCounters();
+    buildLessonIndex();
+    setupIndexLinks();
 
     setupObserver();
     setupKeyboard();
@@ -73,7 +76,7 @@ const SlideNav = (() => {
     markVisible(slides[currentIndex]);
 
     /* Expose API for external use */
-    window.SlideNav = { goTo, next, prev, getCurrent, total: slides.length };
+    window.SlideNav = { goTo, goToLesson, next, prev, getCurrent, total: slides.length };
   }
 
   function cacheDOM() {
@@ -173,10 +176,10 @@ const SlideNav = (() => {
      ══════════════════════════════════════════════════════════════════════ */
 
   function updateCounters() {
-    const lessonTotal = 42;
+    const lessonTotal = 50;
 
     /* El deck contiene portadas e índice, por lo que slides.length representa
-       pantallas físicas (47), no lecciones curriculares (42). Los pies de las
+       pantallas físicas (55), no lecciones curriculares (50). Los pies de las
        lecciones se derivan de Lnn y las portadas conservan su valor escrito. */
     slides.forEach((slide) => {
       const ctr = slide.querySelector('.slide-counter');
@@ -272,6 +275,75 @@ const SlideNav = (() => {
   function goTo(index) {
     if (index < 0 || index >= slides.length) return;
     setActive(index, true);
+  }
+
+  function buildLessonIndex() {
+    lessonIndexes = new Map();
+
+    slides.forEach((slide, index) => {
+      const lessonTag = slide.querySelector('.lesson-tag');
+      const match = lessonTag?.textContent.match(/\d+/);
+      if (!match) return;
+
+      const lessonNumber = Number(match[0]);
+      if (Number.isInteger(lessonNumber)) {
+        lessonIndexes.set(lessonNumber, index);
+      }
+    });
+  }
+
+  function goToLesson(lessonNumber) {
+    const targetIndex = lessonIndexes.get(Number(lessonNumber));
+    if (Number.isInteger(targetIndex)) goTo(targetIndex);
+  }
+
+  function setupIndexLinks() {
+    const indexSlide = slides.find((slide) =>
+      slide.id === 'slide-1' && slide.dataset.module === '0'
+    );
+    if (!indexSlide) return;
+
+    indexSlide.querySelectorAll('.topic').forEach((topic) => {
+      const numberText = topic.querySelector('.topic-number')?.textContent || '';
+      const match = numberText.match(/\d+/);
+      if (!match) return;
+
+      const lessonNumber = Number(match[0]);
+      const targetIndex = lessonIndexes.get(lessonNumber);
+      if (!Number.isInteger(targetIndex)) return;
+
+      let link = topic;
+      if (topic.tagName !== 'A') {
+        link = document.createElement('a');
+        Array.from(topic.attributes).forEach(({ name, value }) => {
+          link.setAttribute(name, value);
+        });
+        while (topic.firstChild) link.appendChild(topic.firstChild);
+        topic.replaceWith(link);
+      }
+
+      const title = link.querySelector('.topic-text')?.textContent.trim() || '';
+      link.classList.add('topic-link');
+      link.href = '#' + CFG.HASH_PREFIX + targetIndex;
+      link.dataset.lesson = String(lessonNumber);
+      link.setAttribute('aria-label', `Ir a la lección ${lessonNumber}: ${title}`);
+    });
+
+    if (indexSlide.dataset.lessonLinksReady === 'true') return;
+    indexSlide.dataset.lessonLinksReady = 'true';
+
+    indexSlide.addEventListener('click', (event) => {
+      const link = event.target.closest('.topic-link');
+      if (!link || !indexSlide.contains(link)) return;
+
+      /* Keep native modified-click behaviour so links can open in a new tab. */
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+        return;
+      }
+
+      event.preventDefault();
+      goToLesson(link.dataset.lesson);
+    });
   }
 
   function next() {
@@ -517,6 +589,6 @@ const SlideNav = (() => {
     autoInit();
   }
 
-  return { init, goTo, next, prev, getCurrent };
+  return { init, goTo, goToLesson, next, prev, getCurrent };
 
 })();
