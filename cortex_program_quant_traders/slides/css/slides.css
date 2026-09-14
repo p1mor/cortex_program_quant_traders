@@ -1644,11 +1644,6 @@ button, input, select, textarea {
 #slide-1 {
   background: #000;
 }
-#slide-1 .header-divider {
-  width: 1px;
-  height: 18px;
-  background: var(--border-default);
-}
 #slide-1 .slide-body {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   min-height: 0;
@@ -1681,6 +1676,7 @@ button, input, select, textarea {
 #slide-1 .module-3 { --module-color: var(--cyan); }
 #slide-1 .module-header { position: relative; padding-left: 0; margin-bottom: clamp(18px, 2.2vh, 28px); }
 #slide-1 .module-header::before { display: none; }
+#slide-1 .module-3 .module-header { margin-bottom: 14px; }
 #slide-1 .module-number,
 #slide-1 .module-summary-label {
   font-family: var(--font-mono); font-size: var(--fs-micro); font-weight: var(--fw-bold);
@@ -1700,13 +1696,31 @@ button, input, select, textarea {
   display: grid; grid-template-columns: 36px 1fr; align-items: center; gap: var(--sp-3);
   min-height: 36px; border-bottom: 1px solid var(--border-subtle);
 }
+#slide-1 .topic-link {
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+#slide-1 .topic-link:hover .topic-text,
+#slide-1 .topic-link:focus-visible .topic-text {
+  color: var(--txt-primary);
+}
+#slide-1 .topic-link:focus-visible {
+  box-shadow: inset 2px 0 0 var(--module-color);
+}
+#slide-1 .module-3 .topic { min-height: 25px; }
 #slide-1 .topic:last-child { border-bottom: 0; }
 #slide-1 .topic-number { font-family: var(--font-mono); font-size: var(--fs-micro); color: var(--module-color); }
 #slide-1 .topic-text { font-size: var(--fs-caption); line-height: 1.35; color: var(--txt-secondary); }
+#slide-1 .module-3 .topic-number { font-size: var(--fs-micro); }
+#slide-1 .module-3 .topic-text { font-size: var(--fs-caption); line-height: 1.35; }
 #slide-1 .module-summary {
   display: flex; align-items: flex-end; justify-content: space-between; gap: var(--sp-4);
   margin-top: var(--sp-5); padding-top: var(--sp-4); border-top: 1px solid var(--border-subtle);
 }
+#slide-1 .module-3 .module-summary { margin-top: 12px; padding-top: 12px; }
 #slide-1 .module-summary-label { color: var(--txt-tertiary); }
 #slide-1 .module-summary-value {
   font-family: var(--font-mono); font-size: var(--fs-h2); font-weight: var(--fw-bold);

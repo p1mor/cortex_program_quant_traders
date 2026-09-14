@@ -61,7 +61,7 @@
       --fs-title: 30px;
 
       --font-ui: "Inter", sans-serif;
-      --font-mono: "JetBrains Mono", monospace;
+      --font-mono: "SF Mono", "Fira Code", "Fragment Mono", ui-monospace, monospace;
     }
 
 
@@ -100,9 +100,9 @@
       display: grid;
 
       grid-template-rows:
-        92px
+        56px
         1fr
-        48px;
+        40px;
 
       position: relative;
 
@@ -160,24 +160,15 @@
       position: relative;
       z-index: 2;
 
-      display: grid;
-
-      grid-template-columns:
-        auto
-        1px
-        auto
-        auto
-        1fr
-        auto;
+      display: flex;
 
       align-items: center;
 
-      gap: 18px;
+      gap: 16px;
 
-      padding:
-        24px
-        clamp(32px, 4vw, 72px)
-        18px;
+      padding: 0 40px;
+
+      background: #0a0a0a;
 
       border-bottom:
         1px solid var(--border-default);
@@ -188,22 +179,24 @@
 
       font-family: var(--font-mono);
 
-      font-size: 11px;
-      font-weight: 700;
+      font-size: clamp(11px, .9vw, 14px);
+      font-weight: 800;
 
-      letter-spacing: .14em;
+      letter-spacing: .6px;
 
-      color: #fff;
+      color: #00e5ff;
 
       white-space: nowrap;
     }
 
 
-    .header-divider {
+    .divider {
       width: 1px;
-      height: 18px;
+      height: 20px;
 
       background: var(--border-default);
+
+      flex-shrink: 0;
     }
 
 
@@ -226,17 +219,35 @@
 
 
     .slide-title {
-
-      justify-self: end;
-
-      font-size: clamp(18px, 1.8vw, 27px);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(13px, 1.1vw, 16px);
       font-weight: 600;
 
-      letter-spacing: -.035em;
+      letter-spacing: .4px;
 
       color: #ffffff;
 
+      flex-shrink: 2;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
       white-space: nowrap;
+    }
+
+    .module-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      color: #6b7280;
+      background: rgba(107, 114, 128, .12);
+      border: 1px solid rgba(107, 114, 128, .30);
+      flex-shrink: 0;
+    }
+
+    .lesson-tag {
+      font-size: clamp(9px, .75vw, 12px);
+      color: var(--txt-muted);
+      flex-shrink: 0;
     }
 
 
@@ -247,9 +258,15 @@
       font-size: 10px;
       font-weight: 600;
 
-      color: var(--txt-tertiary);
+      color: var(--accent);
 
-      letter-spacing: .05em;
+      letter-spacing: .1em;
+
+      border: 1px solid rgba(0, 51, 255, .45);
+      padding: 4px 12px;
+      margin-left: auto;
+      flex-shrink: 0;
+      white-space: nowrap;
     }
 
 
@@ -500,6 +517,30 @@
       --module-color: var(--cyan);
     }
 
+    /* El Módulo III conserva una retícula más compacta, pero comparte el
+       mismo tamaño tipográfico de los módulos I y II. */
+    .module-3 .module-header {
+      margin-bottom: 14px;
+    }
+
+    .module-3 .topic {
+      min-height: 25px;
+    }
+
+    .module-3 .topic-number {
+      font-size: 10px;
+    }
+
+    .module-3 .topic-text {
+      font-size: clamp(10.5px, .79vw, 12.5px);
+      line-height: 1.35;
+    }
+
+    .module-3 .module-summary {
+      margin-top: 12px;
+      padding-top: 12px;
+    }
+
 
     /* subtle number accent */
 
@@ -537,29 +578,19 @@
       position: relative;
       z-index: 2;
 
-      display: grid;
-
-      grid-template-columns:
-        1fr
-        auto
-        auto;
+      display: flex;
 
       align-items: center;
+      justify-content: space-between;
 
-      gap: 30px;
+      gap: 24px;
 
-      padding:
-        0
-        clamp(32px, 4vw, 72px);
+      padding: 0 40px;
 
       border-top:
         1px solid var(--border-default);
 
-      background:
-        rgba(7,9,13,.72);
-
-      backdrop-filter:
-        blur(8px);
+      background: #0a0a0a;
     }
 
 
@@ -567,13 +598,13 @@
 
       font-family: var(--font-mono);
 
-      font-size: 8.5px;
+      font-size: clamp(9px, .75vw, 12px);
 
-      letter-spacing: .055em;
+      letter-spacing: .025em;
 
-      text-transform: uppercase;
+      color: var(--txt-tertiary);
 
-      color: var(--txt-muted);
+      white-space: nowrap;
     }
 
 
@@ -581,7 +612,7 @@
 
       font-family: var(--font-mono);
 
-      font-size: 8.5px;
+      font-size: 10px;
 
       color: var(--txt-tertiary);
     }
@@ -621,7 +652,7 @@
 
       font-family: var(--font-mono);
 
-      font-size: 9px;
+      font-size: clamp(9px, .75vw, 12px);
 
       font-weight: 700;
 
@@ -702,7 +733,7 @@
         CORTEX QUANT TRADER
       </span>
 
-      <span class="header-divider"></span>
+      <span class="divider"></span>
 
       <span
         class="module-tag"
@@ -758,100 +789,79 @@
 
           <div class="topic">
             <span class="topic-number">01.</span>
-            <span class="topic-text">
-              Del origen de la vida a las neuronas
-            </span>
+            <span class="topic-text">Del origen de la vida a las neuronas</span>
           </div>
 
           <div class="topic">
             <span class="topic-number">02.</span>
-            <span class="topic-text">
-              Finanzas desde la era sumeria
-            </span>
+            <span class="topic-text">Finanzas desde la era sumeria</span>
           </div>
 
           <div class="topic">
             <span class="topic-number">03.</span>
-            <span class="topic-text">
-              El mercado financiero y su naturaleza
-            </span>
+            <span class="topic-text">El mercado financiero y su naturaleza</span>
           </div>
 
           <div class="topic">
             <span class="topic-number">04.</span>
-            <span class="topic-text">
-              Evolución histórica del trading
-            </span>
+            <span class="topic-text">Evolución histórica del trading</span>
           </div>
 
           <div class="topic">
             <span class="topic-number">05.</span>
-            <span class="topic-text">
-              Taxonomía de Participantes
-            </span>
+            <span class="topic-text">Taxonomía de Participantes</span>
           </div>
 
           <div class="topic">
             <span class="topic-number">06.</span>
-            <span class="topic-text">
-              El precio
-            </span>
+            <span class="topic-text">Dark Pools y Liquidez Oculta</span>
           </div>
 
           <div class="topic">
             <span class="topic-number">07.</span>
-            <span class="topic-text">
-              Oferta, Demanda y Liquidez
-            </span>
+            <span class="topic-text">El precio</span>
           </div>
 
           <div class="topic">
             <span class="topic-number">08.</span>
-            <span class="topic-text">
-              Ticks, Tick Size y Nocional
-            </span>
+            <span class="topic-text">Oferta, Demanda y Liquidez</span>
           </div>
 
           <div class="topic">
             <span class="topic-number">09.</span>
-            <span class="topic-text">
-              The Bid-Ask Spread
-            </span>
+            <span class="topic-text">Ticks, Tick Size y Nocional</span>
           </div>
 
           <div class="topic">
             <span class="topic-number">10.</span>
-            <span class="topic-text">
-              Slippage e Impacto de Mercado
-            </span>
+            <span class="topic-text">The Bid-Ask Spread</span>
           </div>
 
           <div class="topic">
             <span class="topic-number">11.</span>
-            <span class="topic-text">
-              Futuros, Stocks y Forex
-            </span>
+            <span class="topic-text">Slippage e Impacto de Mercado</span>
           </div>
 
           <div class="topic">
             <span class="topic-number">12.</span>
-            <span class="topic-text">
-              Commodities, Bonos y Sintéticos
-            </span>
+            <span class="topic-text">Futuros, Stocks y Forex</span>
           </div>
 
           <div class="topic">
             <span class="topic-number">13.</span>
-            <span class="topic-text">
-              Tape Reading y Footprint
-            </span>
+            <span class="topic-text">Commodities, Bonos y Sintéticos</span>
+          </div>
+
+          <div class="topic">
+            <span class="topic-number">14.</span>
+            <span class="topic-text">Tape Reading y Footprint</span>
           </div>
 
         </div>
 
         <div class="module-summary" aria-label="Resumen del módulo I">
           <span class="module-summary-label">Fundamentos operativos</span>
-          <span class="module-summary-value">13</span>
+          <span class="module-summary-value">14</span>
         </div>
 
       </section>
@@ -881,70 +891,70 @@
         <div class="topic-list">
 
           <div class="topic">
-            <span class="topic-number">14.</span>
+            <span class="topic-number">15.</span>
             <span class="topic-text">
               La Revolución Cuantitativa
             </span>
           </div>
 
           <div class="topic">
-            <span class="topic-number">15.</span>
+            <span class="topic-number">16.</span>
             <span class="topic-text">
               El Perfil del Quant Trader
             </span>
           </div>
 
           <div class="topic">
-            <span class="topic-number">16.</span>
+            <span class="topic-number">17.</span>
             <span class="topic-text">
               Sistemático vs. Discrecional
             </span>
           </div>
 
           <div class="topic">
-            <span class="topic-number">17.</span>
+            <span class="topic-number">18.</span>
             <span class="topic-text">
               El Edge Estadístico
             </span>
           </div>
 
           <div class="topic">
-            <span class="topic-number">18.</span>
+            <span class="topic-number">19.</span>
             <span class="topic-text">
               Diseño de Estrategias Mecánicas
             </span>
           </div>
 
           <div class="topic">
-            <span class="topic-number">19.</span>
+            <span class="topic-number">20.</span>
             <span class="topic-text">
               Backtesting Riguroso
             </span>
           </div>
 
           <div class="topic">
-            <span class="topic-number">20.</span>
+            <span class="topic-number">21.</span>
             <span class="topic-text">
               Overfitting
             </span>
           </div>
 
           <div class="topic">
-            <span class="topic-number">21.</span>
+            <span class="topic-number">22.</span>
             <span class="topic-text">
               Pruebas de Robustez
             </span>
           </div>
 
           <div class="topic">
-            <span class="topic-number">22.</span>
+            <span class="topic-number">23.</span>
             <span class="topic-text">
               Monte Carlo
             </span>
           </div>
 
           <div class="topic">
-            <span class="topic-number">23.</span>
+            <span class="topic-number">24.</span>
             <span class="topic-text">
               Walk Forward
             </span>
@@ -982,145 +992,37 @@
 
 
         <div class="topic-list">
-
-          <div class="topic">
-            <span class="topic-number">24.</span>
-            <span class="topic-text">
-              Introducción a Cortex-Dendrita
-            </span>
-          </div>
-
-          <div class="topic">
-            <span class="topic-number">25.</span>
-            <span class="topic-text">
-              Filosofía de la Inferencia
-            </span>
-          </div>
-
-          <div class="topic">
-            <span class="topic-number">26.</span>
-            <span class="topic-text">
-              Cortex vs. Dendrita
-            </span>
-          </div>
-
-          <div class="topic">
-            <span class="topic-number">27.</span>
-            <span class="topic-text">
-              El Método Científico en Cortex-Dendrita
-            </span>
-          </div>
-
-          <div class="topic">
-            <span class="topic-number">28.</span>
-            <span class="topic-text">
-              Arquitectura Multidimensional
-            </span>
-          </div>
-
-          <div class="topic">
-            <span class="topic-number">29.</span>
-            <span class="topic-text">
-              HWTE como Eje Inferencial
-            </span>
-          </div>
-
-          <div class="topic">
-            <span class="topic-number">30.</span>
-            <span class="topic-text">
-              Macrociclo, Frontera y Migración
-            </span>
-          </div>
-
-          <div class="topic">
-            <span class="topic-number">31.</span>
-            <span class="topic-text">
-              Microciclos y Confluencia Multidimensional
-            </span>
-          </div>
-
-          <div class="topic">
-            <span class="topic-number">32.</span>
-            <span class="topic-text">
-              Observación y Acumulación de Sesgo
-            </span>
-          </div>
-
-          <div class="topic">
-            <span class="topic-number">33.</span>
-            <span class="topic-text">
-              Lectura Unilateral y Multilateral del Mercado
-            </span>
-          </div>
-
-          <div class="topic">
-            <span class="topic-number">34.</span>
-            <span class="topic-text">
-              Confluencia, Divergencia y Sesgo Intermercado
-            </span>
-          </div>
-
-          <div class="topic">
-            <span class="topic-number">35.</span>
-            <span class="topic-text">
-              De la Hipótesis a la Tesis Inferencial
-            </span>
-          </div>
-
-          <div class="topic">
-            <span class="topic-number">36.</span>
-            <span class="topic-text">
-              Contraste, Falsación e Invalidación
-            </span>
-          </div>
-
-          <div class="topic">
-            <span class="topic-number">37.</span>
-            <span class="topic-text">
-              Vigencia y Retoma de la Tesis
-            </span>
-          </div>
-
-          <div class="topic">
-            <span class="topic-number">38.</span>
-            <span class="topic-text">
-              De la Inferencia a la Ejecución Multidimensional
-            </span>
-          </div>
-
-          <div class="topic">
-            <span class="topic-number">39.</span>
-            <span class="topic-text">
-              Gestión de la Inferencia: Entrada, Stop y Salida
-            </span>
-          </div>
-
-          <div class="topic">
-            <span class="topic-number">40.</span>
-            <span class="topic-text">
-              Técnicas de Ejecución y Adaptación al Mercado
-            </span>
-          </div>
-
-          <div class="topic">
-            <span class="topic-number">41.</span>
-            <span class="topic-text">
-              Cobertura y Arquitectura Multimercado
-            </span>
-          </div>
-
-          <div class="topic">
-            <span class="topic-number">42.</span>
-            <span class="topic-text">
-              Protocolo Integral de Inferencia Cortex-Dendrita
-            </span>
-          </div>
-
+          <div class="topic"><span class="topic-number">25.</span><span class="topic-text">Introducción a Cortex-Dendrita</span></div>
+          <div class="topic"><span class="topic-number">26.</span><span class="topic-text">Filosofía de la Inferencia</span></div>
+          <div class="topic"><span class="topic-number">27.</span><span class="topic-text">Cortex y Dendrita: Arquitectura Matriz y Framework</span></div>
+          <div class="topic"><span class="topic-number">28.</span><span class="topic-text">El Método Científico en Cortex-Dendrita</span></div>
+          <div class="topic"><span class="topic-number">29.</span><span class="topic-text">Arquitectura Multidimensional</span></div>
+          <div class="topic"><span class="topic-number">30.</span><span class="topic-text">Morfología Dimensional de las Barras</span></div>
+          <div class="topic"><span class="topic-number">31.</span><span class="topic-text">HWTE como Eje Inferencial</span></div>
+          <div class="topic"><span class="topic-number">32.</span><span class="topic-text">Macrociclo, Frontera y Migración</span></div>
+          <div class="topic"><span class="topic-number">33.</span><span class="topic-text">Sweeps y Continuaciones en HWTE</span></div>
+          <div class="topic"><span class="topic-number">34.</span><span class="topic-text">Microciclos y Confluencia Multidimensional</span></div>
+          <div class="topic"><span class="topic-number">35.</span><span class="topic-text">Niveles de Absorción Multidimensional</span></div>
+          <div class="topic"><span class="topic-number">36.</span><span class="topic-text">Atractores Gravitacionales: Atracción y Repulsión del Precio</span></div>
+          <div class="topic"><span class="topic-number">37.</span><span class="topic-text">ETHH y ETHL: Estructura y Barridos del Globex</span></div>
+          <div class="topic"><span class="topic-number">38.</span><span class="topic-text">Observación y Acumulación de Sesgo</span></div>
+          <div class="topic"><span class="topic-number">39.</span><span class="topic-text">Lectura Unilateral y Multilateral del Mercado</span></div>
+          <div class="topic"><span class="topic-number">40.</span><span class="topic-text">Confluencia, Divergencia y Sesgo Intermercado</span></div>
+          <div class="topic"><span class="topic-number">41.</span><span class="topic-text">De la Hipótesis a la Tesis Inferencial</span></div>
+          <div class="topic"><span class="topic-number">42.</span><span class="topic-text">Contraste, Falsación e Invalidación</span></div>
+          <div class="topic"><span class="topic-number">43.</span><span class="topic-text">Vigencia y Retoma de la Tesis</span></div>
+          <div class="topic"><span class="topic-number">44.</span><span class="topic-text">De la Inferencia a la Ejecución Multidimensional</span></div>
+          <div class="topic"><span class="topic-number">45.</span><span class="topic-text">Gestión de la Inferencia: Entrada, Stop y Salida</span></div>
+          <div class="topic"><span class="topic-number">46.</span><span class="topic-text">Técnicas de Ejecución y Adaptación al Mercado</span></div>
+          <div class="topic"><span class="topic-number">47.</span><span class="topic-text">Técnicas de Ejecución y Adaptación al Mercado II — Predominancia HWTE</span></div>
+          <div class="topic"><span class="topic-number">48.</span><span class="topic-text">Contexto Anatómico del Precio</span></div>
+          <div class="topic"><span class="topic-number">49.</span><span class="topic-text">Cobertura y Arquitectura Multimercado</span></div>
+          <div class="topic"><span class="topic-number">50.</span><span class="topic-text">Protocolo Integral de Inferencia Cortex-Dendrita</span></div>
         </div>
 
         <div class="module-summary" aria-label="Resumen del módulo III">
           <span class="module-summary-label">Framework propietario</span>
-          <span class="module-summary-value">19</span>
+          <span class="module-summary-value">26</span>
         </div>
 
       </section>
@@ -1155,7 +1057,7 @@
       </span>
 
       <span class="slide-counter">
-        02/42
+        02/50
       </span>
 
     </footer>

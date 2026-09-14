@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../../css/slides.css" />
   <style>
-    #slide-36 .l37-stage {
+    #slide-41 .l42-stage {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
       grid-template-rows: auto minmax(0, 1fr);
@@ -23,15 +23,15 @@
         #000;
     }
 
-    #slide-36 .l37-head h2 {
+    #slide-41 .l42-head h2 {
       font-size: var(--fs-slide-title, clamp(1.75rem, 1.95vw, 2.25rem));
     }
 
-    #slide-36 .l37-head .divider {
+    #slide-41 .l42-head .divider {
       margin-top: clamp(11px, 1.4vh, 17px);
     }
 
-    #slide-36 .l37-canvas {
+    #slide-41 .l42-canvas {
       display: grid;
       grid-template-columns: minmax(0, 1fr);
       grid-template-rows: auto minmax(0, 1fr) auto auto;
@@ -40,7 +40,7 @@
       min-height: 0;
     }
 
-    #slide-36 .l37-premise {
+    #slide-41 .l42-premise {
       display: grid;
       grid-template-columns: auto minmax(0, 1fr) auto;
       gap: clamp(15px, 1.45vw, 24px);
@@ -52,48 +52,48 @@
       background: linear-gradient(90deg, rgba(0,229,255,.065), rgba(0,51,255,.04) 58%, rgba(164,140,255,.04));
     }
 
-    #slide-36 .l37-premise-label,
-    #slide-36 .l37-premise-badge,
-    #slide-36 .l37-monitor-head,
-    #slide-36 .l37-state-title,
-    #slide-36 .l37-track-label,
-    #slide-36 .l37-phase-code,
-    #slide-36 .l37-phase-title,
-    #slide-36 .l37-retake-title,
-    #slide-36 .l37-thesis-id,
-    #slide-36 .l37-loop-step,
-    #slide-36 .l37-retake-state,
-    #slide-36 .l37-case-label,
-    #slide-36 .l37-case-events,
-    #slide-36 .l37-principle-label {
+    #slide-41 .l42-premise-label,
+    #slide-41 .l42-premise-badge,
+    #slide-41 .l42-monitor-head,
+    #slide-41 .l42-state-title,
+    #slide-41 .l42-track-label,
+    #slide-41 .l42-phase-code,
+    #slide-41 .l42-phase-title,
+    #slide-41 .l42-retake-title,
+    #slide-41 .l42-thesis-id,
+    #slide-41 .l42-loop-step,
+    #slide-41 .l42-retake-state,
+    #slide-41 .l42-case-label,
+    #slide-41 .l42-case-events,
+    #slide-41 .l42-principle-label {
       font-family: var(--font-mono);
       text-transform: uppercase;
       letter-spacing: .1em;
     }
 
-    #slide-36 .l37-premise-label {
+    #slide-41 .l42-premise-label {
       color: var(--hi);
       font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
       font-weight: 800;
       white-space: nowrap;
     }
 
-    #slide-36 .l37-premise-copy {
+    #slide-41 .l42-premise-copy {
       color: var(--txt-secondary);
       font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
       line-height: 1.42;
     }
 
-    #slide-36 .l37-premise-copy strong,
-    #slide-36 .l37-phase-copy strong,
-    #slide-36 .l37-retake-copy strong,
-    #slide-36 .l37-case-copy strong,
-    #slide-36 .l37-principle-copy strong {
+    #slide-41 .l42-premise-copy strong,
+    #slide-41 .l42-phase-copy strong,
+    #slide-41 .l42-retake-copy strong,
+    #slide-41 .l42-case-copy strong,
+    #slide-41 .l42-principle-copy strong {
       color: var(--txt-primary);
       font-weight: 700;
     }
 
-    #slide-36 .l37-premise-badge {
+    #slide-41 .l42-premise-badge {
       min-width: clamp(180px, 13vw, 235px);
       padding: 8px 11px;
       border: 1px solid rgba(164,140,255,.48);
@@ -104,7 +104,7 @@
       text-align: center;
     }
 
-    #slide-36 .l37-monitor {
+    #slide-41 .l42-monitor {
       position: relative;
       display: grid;
       grid-template-rows: auto minmax(0, 1fr);
@@ -116,7 +116,7 @@
       background: rgba(7,8,10,.98);
     }
 
-    #slide-36 .l37-monitor::before {
+    #slide-41 .l42-monitor::before {
       content: "";
       position: absolute;
       inset: 0;
@@ -128,12 +128,12 @@
       background-size: 40px 40px;
     }
 
-    #slide-36 .l37-monitor > * {
+    #slide-41 .l42-monitor > * {
       position: relative;
       z-index: 1;
     }
 
-    #slide-36 .l37-monitor-head {
+    #slide-41 .l42-monitor-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -144,19 +144,19 @@
       font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
     }
 
-    #slide-36 .l37-monitor-head span:last-child {
+    #slide-41 .l42-monitor-head span:last-child {
       color: var(--hi);
       font-weight: 800;
     }
 
-    #slide-36 .l37-workspace {
+    #slide-41 .l42-workspace {
       display: grid;
       grid-template-columns: minmax(0, 1.62fr) minmax(340px, .78fr);
       min-width: 0;
       min-height: 0;
     }
 
-    #slide-36 .l37-state-field {
+    #slide-41 .l42-state-field {
       display: grid;
       grid-template-rows: auto auto minmax(0, 1fr);
       gap: clamp(8px, .8vw, 12px);
@@ -167,20 +167,20 @@
       overflow: hidden;
     }
 
-    #slide-36 .l37-state-head {
+    #slide-41 .l42-state-head {
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 12px;
     }
 
-    #slide-36 .l37-state-title {
+    #slide-41 .l42-state-title {
       color: var(--hi);
       font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
       font-weight: 800;
     }
 
-    #slide-36 .l37-state-head > span:last-child {
+    #slide-41 .l42-state-head > span:last-child {
       color: var(--txt-tertiary);
       font-family: var(--font-mono);
       font-size: var(--fs-slide-micro, clamp(.625rem, .56vw, .6875rem));
@@ -188,14 +188,14 @@
       text-transform: uppercase;
     }
 
-    #slide-36 .l37-state-track {
+    #slide-41 .l42-state-track {
       display: grid;
       grid-template-columns: 1.15fr .95fr .9fr;
       min-width: 0;
       border: 1px solid rgba(61,64,69,.72);
     }
 
-    #slide-36 .l37-phase {
+    #slide-41 .l42-phase {
       position: relative;
       display: grid;
       grid-template-columns: auto minmax(0, 1fr);
@@ -207,12 +207,12 @@
       background: var(--phase-bg);
     }
 
-    #slide-36 .l37-phase:last-child { border-right: 0; }
-    #slide-36 .l37-phase.is-valid { --phase-color: var(--hi); --phase-bg: rgba(0,229,255,.055); }
-    #slide-36 .l37-phase.is-degraded { --phase-color: var(--warn); --phase-bg: rgba(255,183,77,.05); }
-    #slide-36 .l37-phase.is-invalid { --phase-color: var(--bear-glow); --phase-bg: rgba(230,57,85,.05); }
+    #slide-41 .l42-phase:last-child { border-right: 0; }
+    #slide-41 .l42-phase.is-valid { --phase-color: var(--hi); --phase-bg: rgba(0,229,255,.055); }
+    #slide-41 .l42-phase.is-degraded { --phase-color: var(--warn); --phase-bg: rgba(255,183,77,.05); }
+    #slide-41 .l42-phase.is-invalid { --phase-color: var(--bear-glow); --phase-bg: rgba(230,57,85,.05); }
 
-    #slide-36 .l37-phase::before {
+    #slide-41 .l42-phase::before {
       content: "";
       position: absolute;
       top: 0;
@@ -222,7 +222,7 @@
       background: var(--phase-color);
     }
 
-    #slide-36 .l37-phase-code {
+    #slide-41 .l42-phase-code {
       display: grid;
       place-items: center;
       width: 29px;
@@ -233,7 +233,7 @@
       font-weight: 800;
     }
 
-    #slide-36 .l37-phase-title {
+    #slide-41 .l42-phase-title {
       display: block;
       margin-bottom: 3px;
       color: var(--phase-color);
@@ -241,13 +241,13 @@
       font-weight: 800;
     }
 
-    #slide-36 .l37-phase-copy {
+    #slide-41 .l42-phase-copy {
       color: var(--txt-secondary);
       font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
       line-height: 1.3;
     }
 
-    #slide-36 .l37-trace {
+    #slide-41 .l42-trace {
       display: grid;
       grid-template-rows: minmax(92px, 1fr) auto auto;
       min-width: 0;
@@ -258,21 +258,21 @@
       overflow: hidden;
     }
 
-    #slide-36 .l37-trace svg {
+    #slide-41 .l42-trace svg {
       width: 100%;
       height: 100%;
       min-height: 92px;
       overflow: visible;
     }
 
-    #slide-36 .l37-events {
+    #slide-41 .l42-events {
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
       min-width: 0;
       border-top: 1px solid rgba(61,64,69,.68);
     }
 
-    #slide-36 .l37-event {
+    #slide-41 .l42-event {
       display: grid;
       gap: 2px;
       min-width: 0;
@@ -286,15 +286,15 @@
       text-transform: uppercase;
     }
 
-    #slide-36 .l37-event:last-child { border-right: 0; }
-    #slide-36 .l37-event small { color: var(--txt-tertiary); font: inherit; font-weight: 500; }
-    #slide-36 .l37-event.is-thesis { --event-color: var(--accent); }
-    #slide-36 .l37-event.is-missed { --event-color: var(--purple); }
-    #slide-36 .l37-event.is-correction { --event-color: var(--warn); }
-    #slide-36 .l37-event.is-realign { --event-color: var(--hi); }
-    #slide-36 .l37-event.is-retake { --event-color: var(--bull-glow); }
+    #slide-41 .l42-event:last-child { border-right: 0; }
+    #slide-41 .l42-event small { color: var(--txt-tertiary); font: inherit; font-weight: 500; }
+    #slide-41 .l42-event.is-thesis { --event-color: var(--accent); }
+    #slide-41 .l42-event.is-missed { --event-color: var(--purple); }
+    #slide-41 .l42-event.is-correction { --event-color: var(--warn); }
+    #slide-41 .l42-event.is-realign { --event-color: var(--hi); }
+    #slide-41 .l42-event.is-retake { --event-color: var(--bull-glow); }
 
-    #slide-36 .l37-evidence-rails {
+    #slide-41 .l42-evidence-rails {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 5px;
@@ -302,7 +302,7 @@
       padding: 7px 0 8px;
     }
 
-    #slide-36 .l37-rail {
+    #slide-41 .l42-rail {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -316,13 +316,13 @@
       text-transform: uppercase;
     }
 
-    #slide-36 .l37-rail strong { color: var(--rail-color); }
-    #slide-36 .l37-rail span { color: var(--txt-secondary); text-align: right; }
-    #slide-36 .l37-rail.is-macro { --rail-color: var(--accent); --rail-bg: rgba(0,51,255,.055); }
-    #slide-36 .l37-rail.is-micro { --rail-color: var(--hi); --rail-bg: rgba(0,229,255,.045); }
-    #slide-36 .l37-rail.is-confirm { --rail-color: var(--purple); --rail-bg: rgba(164,140,255,.045); }
+    #slide-41 .l42-rail strong { color: var(--rail-color); }
+    #slide-41 .l42-rail span { color: var(--txt-secondary); text-align: right; }
+    #slide-41 .l42-rail.is-macro { --rail-color: var(--accent); --rail-bg: rgba(0,51,255,.055); }
+    #slide-41 .l42-rail.is-micro { --rail-color: var(--hi); --rail-bg: rgba(0,229,255,.045); }
+    #slide-41 .l42-rail.is-confirm { --rail-color: var(--purple); --rail-bg: rgba(164,140,255,.045); }
 
-    #slide-36 .l37-retake-loop {
+    #slide-41 .l42-retake-loop {
       display: grid;
       grid-template-rows: auto auto minmax(0, 1fr) auto;
       gap: clamp(8px, .8vw, 12px);
@@ -333,20 +333,20 @@
       overflow: hidden;
     }
 
-    #slide-36 .l37-retake-head {
+    #slide-41 .l42-retake-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 10px;
     }
 
-    #slide-36 .l37-retake-title {
+    #slide-41 .l42-retake-title {
       color: var(--purple);
       font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
       font-weight: 800;
     }
 
-    #slide-36 .l37-thesis-id {
+    #slide-41 .l42-thesis-id {
       padding: 5px 8px;
       border: 1px solid rgba(0,229,255,.44);
       color: var(--hi);
@@ -354,13 +354,13 @@
       font-weight: 800;
     }
 
-    #slide-36 .l37-retake-copy {
+    #slide-41 .l42-retake-copy {
       color: var(--txt-secondary);
       font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
       line-height: 1.36;
     }
 
-    #slide-36 .l37-loop {
+    #slide-41 .l42-loop {
       position: relative;
       display: grid;
       grid-template-columns: 1fr 34px 1fr;
@@ -373,7 +373,7 @@
       background: rgba(0,0,0,.28);
     }
 
-    #slide-36 .l37-loop::before {
+    #slide-41 .l42-loop::before {
       content: "";
       position: absolute;
       inset: 17% 22%;
@@ -383,7 +383,7 @@
       box-shadow: inset 0 0 22px rgba(164,140,255,.04);
     }
 
-    #slide-36 .l37-loop-step {
+    #slide-41 .l42-loop-step {
       position: relative;
       z-index: 1;
       display: grid;
@@ -399,12 +399,12 @@
       text-align: center;
     }
 
-    #slide-36 .l37-loop-step.is-current { --loop-color: var(--hi); grid-column: 1; grid-row: 1; }
-    #slide-36 .l37-loop-step.is-missed { --loop-color: var(--purple); grid-column: 3; grid-row: 1; }
-    #slide-36 .l37-loop-step.is-pullback { --loop-color: var(--warn); grid-column: 3; grid-row: 3; }
-    #slide-36 .l37-loop-step.is-realignment { --loop-color: var(--bull-glow); grid-column: 1; grid-row: 3; }
+    #slide-41 .l42-loop-step.is-current { --loop-color: var(--hi); grid-column: 1; grid-row: 1; }
+    #slide-41 .l42-loop-step.is-missed { --loop-color: var(--purple); grid-column: 3; grid-row: 1; }
+    #slide-41 .l42-loop-step.is-pullback { --loop-color: var(--warn); grid-column: 3; grid-row: 3; }
+    #slide-41 .l42-loop-step.is-realignment { --loop-color: var(--bull-glow); grid-column: 1; grid-row: 3; }
 
-    #slide-36 .l37-loop-arrow {
+    #slide-41 .l42-loop-arrow {
       position: relative;
       z-index: 1;
       display: grid;
@@ -414,12 +414,12 @@
       font-size: 1rem;
     }
 
-    #slide-36 .l37-loop-arrow.is-east { grid-column: 2; grid-row: 1; }
-    #slide-36 .l37-loop-arrow.is-south { grid-column: 3; grid-row: 2; }
-    #slide-36 .l37-loop-arrow.is-west { grid-column: 2; grid-row: 3; }
-    #slide-36 .l37-loop-arrow.is-north { grid-column: 1; grid-row: 2; }
+    #slide-41 .l42-loop-arrow.is-east { grid-column: 2; grid-row: 1; }
+    #slide-41 .l42-loop-arrow.is-south { grid-column: 3; grid-row: 2; }
+    #slide-41 .l42-loop-arrow.is-west { grid-column: 2; grid-row: 3; }
+    #slide-41 .l42-loop-arrow.is-north { grid-column: 1; grid-row: 2; }
 
-    #slide-36 .l37-retake-state {
+    #slide-41 .l42-retake-state {
       padding: 7px 9px;
       border: 1px solid rgba(34,197,94,.45);
       color: var(--bull-glow);
@@ -429,7 +429,7 @@
       text-align: center;
     }
 
-    #slide-36 .l37-case {
+    #slide-41 .l42-case {
       display: grid;
       grid-template-columns: auto minmax(390px, .95fr) minmax(0, 1.5fr);
       gap: clamp(11px, 1vw, 17px);
@@ -440,13 +440,13 @@
       background: rgba(255,183,77,.04);
     }
 
-    #slide-36 .l37-case-label {
+    #slide-41 .l42-case-label {
       color: var(--warn);
       font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
       font-weight: 800;
     }
 
-    #slide-36 .l37-case-events {
+    #slide-41 .l42-case-events {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 4px;
@@ -455,7 +455,7 @@
       font-weight: 800;
     }
 
-    #slide-36 .l37-case-events span {
+    #slide-41 .l42-case-events span {
       display: grid;
       place-items: center;
       min-width: 0;
@@ -468,18 +468,18 @@
       text-align: center;
     }
 
-    #slide-36 .l37-case-events .is-positive { --case-color: var(--accent); }
-    #slide-36 .l37-case-events .is-omitted { --case-color: var(--purple); }
-    #slide-36 .l37-case-events .is-preserved { --case-color: var(--hi); }
-    #slide-36 .l37-case-events .is-enabled { --case-color: var(--bull-glow); }
+    #slide-41 .l42-case-events .is-positive { --case-color: var(--accent); }
+    #slide-41 .l42-case-events .is-omitted { --case-color: var(--purple); }
+    #slide-41 .l42-case-events .is-preserved { --case-color: var(--hi); }
+    #slide-41 .l42-case-events .is-enabled { --case-color: var(--bull-glow); }
 
-    #slide-36 .l37-case-copy {
+    #slide-41 .l42-case-copy {
       color: var(--txt-secondary);
       font-size: var(--fs-slide-support, clamp(.75rem, .7vw, .8125rem));
       line-height: 1.34;
     }
 
-    #slide-36 .l37-principle {
+    #slide-41 .l42-principle {
       display: grid;
       grid-template-columns: auto minmax(370px, .95fr) minmax(0, 1fr);
       gap: clamp(14px, 1.35vw, 23px);
@@ -490,126 +490,126 @@
       background: linear-gradient(90deg, rgba(0,51,255,.105), rgba(0,229,255,.055));
     }
 
-    #slide-36 .l37-principle-label {
+    #slide-41 .l42-principle-label {
       color: var(--accent);
       font-size: var(--fs-slide-label, clamp(.6875rem, .62vw, .75rem));
       font-weight: 800;
     }
 
-    #slide-36 .l37-principle-quote {
+    #slide-41 .l42-principle-quote {
       color: var(--txt-primary);
       font-family: var(--font-display);
       font-size: clamp(1rem, 1.15vw, 1.3rem);
       line-height: 1.26;
     }
 
-    #slide-36 .l37-principle-copy {
+    #slide-41 .l42-principle-copy {
       color: var(--txt-secondary);
       font-size: var(--fs-slide-body, clamp(.8125rem, .78vw, .9375rem));
       line-height: 1.38;
     }
 
     @media (max-width: 1180px) {
-      #slide-36 .l37-stage { overflow-y: auto; }
-      #slide-36 .l37-workspace { grid-template-columns: 1fr; }
-      #slide-36 .l37-state-field { border-right: 0; border-bottom: 1px solid rgba(61,64,69,.72); }
-      #slide-36 .l37-case { grid-template-columns: 1fr; }
-      #slide-36 .l37-retake-loop { min-height: 360px; }
+      #slide-41 .l42-stage { overflow-y: auto; }
+      #slide-41 .l42-workspace { grid-template-columns: 1fr; }
+      #slide-41 .l42-state-field { border-right: 0; border-bottom: 1px solid rgba(61,64,69,.72); }
+      #slide-41 .l42-case { grid-template-columns: 1fr; }
+      #slide-41 .l42-retake-loop { min-height: 360px; }
     }
 
     @media (max-width: 760px) {
-      #slide-36 .l37-stage { padding: 20px 16px 28px; }
-      #slide-36 .l37-premise,
-      #slide-36 .l37-principle { grid-template-columns: 1fr; }
-      #slide-36 .l37-premise-badge { justify-self: start; }
-      #slide-36 .l37-state-track,
-      #slide-36 .l37-source-array,
-      #slide-36 .l37-evidence-rails { grid-template-columns: 1fr; }
-      #slide-36 .l37-phase { border-right: 0; border-bottom: 1px solid rgba(61,64,69,.72); }
-      #slide-36 .l37-events,
-      #slide-36 .l37-case-events { grid-template-columns: 1fr 1fr; }
+      #slide-41 .l42-stage { padding: 20px 16px 28px; }
+      #slide-41 .l42-premise,
+      #slide-41 .l42-principle { grid-template-columns: 1fr; }
+      #slide-41 .l42-premise-badge { justify-self: start; }
+      #slide-41 .l42-state-track,
+      #slide-41 .l42-source-array,
+      #slide-41 .l42-evidence-rails { grid-template-columns: 1fr; }
+      #slide-41 .l42-phase { border-right: 0; border-bottom: 1px solid rgba(61,64,69,.72); }
+      #slide-41 .l42-events,
+      #slide-41 .l42-case-events { grid-template-columns: 1fr 1fr; }
     }
 
     @media (min-width: 1181px) and (max-height: 820px) {
-      #slide-36 .l37-stage {
+      #slide-41 .l42-stage {
         gap: 9px;
         padding-top: 15px;
         padding-bottom: 12px;
       }
 
-      #slide-36 .l37-head .divider { margin-top: 7px; }
-      #slide-36 .l37-canvas { gap: 7px; }
-      #slide-36 .l37-premise { padding-top: 7px; padding-bottom: 7px; }
-      #slide-36 .l37-monitor-head { padding-top: 6px; padding-bottom: 6px; }
-      #slide-36 .l37-state-field,
-      #slide-36 .l37-retake-loop { padding-top: 8px; padding-bottom: 8px; }
-      #slide-36 .l37-state-field,
-      #slide-36 .l37-retake-loop { gap: 6px; }
-      #slide-36 .l37-phase { padding-top: 6px; padding-bottom: 6px; }
-      #slide-36 .l37-trace { grid-template-rows: minmax(75px, 1fr) auto auto; }
-      #slide-36 .l37-trace svg { min-height: 75px; }
-      #slide-36 .l37-case,
-      #slide-36 .l37-principle { padding-top: 6px; padding-bottom: 6px; }
+      #slide-41 .l42-head .divider { margin-top: 7px; }
+      #slide-41 .l42-canvas { gap: 7px; }
+      #slide-41 .l42-premise { padding-top: 7px; padding-bottom: 7px; }
+      #slide-41 .l42-monitor-head { padding-top: 6px; padding-bottom: 6px; }
+      #slide-41 .l42-state-field,
+      #slide-41 .l42-retake-loop { padding-top: 8px; padding-bottom: 8px; }
+      #slide-41 .l42-state-field,
+      #slide-41 .l42-retake-loop { gap: 6px; }
+      #slide-41 .l42-phase { padding-top: 6px; padding-bottom: 6px; }
+      #slide-41 .l42-trace { grid-template-rows: minmax(75px, 1fr) auto auto; }
+      #slide-41 .l42-trace svg { min-height: 75px; }
+      #slide-41 .l42-case,
+      #slide-41 .l42-principle { padding-top: 6px; padding-bottom: 6px; }
     }
   </style>
 </head>
 <body>
-<section class="slide" id="slide-36" data-module="3">
+<section class="slide" id="slide-41" data-module="3">
   <header class="slide-header">
     <span class="brand">CORTEX QUANT TRADER</span><span class="divider"></span>
-    <span class="module-tag" data-mod="3">Módulo III</span><span class="lesson-tag">L37</span>
-    <span class="slide-title">Vigencia y Retoma de la Tesis</span><span class="concept-code">M3.L37.C37</span>
+    <span class="module-tag" data-mod="3">Módulo III</span><span class="lesson-tag">L43</span>
+    <span class="slide-title">Vigencia y Retoma de la Tesis</span><span class="concept-code">M3.L43.C43</span>
   </header>
 
-  <main class="slide-body l37-stage">
-    <div class="section-title l37-head">
-      <div class="section-number">Lección 37</div>
+  <main class="slide-body l42-stage">
+    <div class="section-title l42-head">
+      <div class="section-number">LECCIÓN 43</div>
       <h2>Vigencia y Retoma de la Tesis</h2>
       <div class="divider gradient"></div>
     </div>
 
-    <div class="l37-canvas">
-      <section class="l37-premise" aria-label="Regla de vigencia">
-        <span class="l37-premise-label">Memoria de la tesis</span>
-        <p class="l37-premise-copy">En Cortex-Dendrita, una tesis inferencial <strong>permanece vigente mientras la estructura que la sostiene no haya sido invalidada</strong>. Información contraria, una corrección o incluso una oportunidad no ejecutada no significan necesariamente que la tesis haya terminado.</p>
-        <span class="l37-premise-badge">Ejecución ≠ vigencia</span>
+    <div class="l42-canvas">
+      <section class="l42-premise" aria-label="Regla de vigencia">
+        <span class="l42-premise-label">Memoria de la tesis</span>
+        <p class="l42-premise-copy">En Cortex-Dendrita, una tesis inferencial <strong>permanece vigente mientras la estructura que la sostiene no haya sido invalidada</strong>. Información contraria, una corrección o incluso una oportunidad no ejecutada no significan necesariamente que la tesis haya terminado.</p>
+        <span class="l42-premise-badge">Ejecución ≠ vigencia</span>
       </section>
 
-      <section class="l37-monitor" aria-label="Monitor de continuidad de la tesis">
-        <div class="l37-monitor-head"><span>Monitor de continuidad de tesis</span><span>Estado de la evidencia · tiempo real</span></div>
+      <section class="l42-monitor" aria-label="Monitor de continuidad de la tesis">
+        <div class="l42-monitor-head"><span>Monitor de continuidad de tesis</span><span>Estado de la evidencia · tiempo real</span></div>
 
-        <div class="l37-workspace">
-          <div class="l37-state-field">
-            <div class="l37-state-head">
-              <span class="l37-state-title">Estados de persistencia</span>
+        <div class="l42-workspace">
+          <div class="l42-state-field">
+            <div class="l42-state-head">
+              <span class="l42-state-title">Estados de persistencia</span>
               <span>La estructura determina el estado</span>
             </div>
 
-            <div class="l37-state-track" aria-label="Estados de la tesis">
-              <article class="l37-phase is-valid">
-                <span class="l37-phase-code">01</span>
-                <div><span class="l37-phase-title">Tesis vigente</span><p class="l37-phase-copy">La <strong>evidencia principal permanece válida</strong> y la estructura sigue sosteniendo la interpretación.</p></div>
+            <div class="l42-state-track" aria-label="Estados de la tesis">
+              <article class="l42-phase is-valid">
+                <span class="l42-phase-code">01</span>
+                <div><span class="l42-phase-title">Tesis vigente</span><p class="l42-phase-copy">La <strong>evidencia principal permanece válida</strong> y la estructura sigue sosteniendo la interpretación.</p></div>
               </article>
-              <article class="l37-phase is-degraded">
-                <span class="l37-phase-code">02</span>
-                <div><span class="l37-phase-title">Tesis degradada</span><p class="l37-phase-copy">Aparecen <strong>contradicciones que exigen nuevo contraste</strong>.</p></div>
+              <article class="l42-phase is-degraded">
+                <span class="l42-phase-code">02</span>
+                <div><span class="l42-phase-title">Tesis degradada</span><p class="l42-phase-copy">Aparecen <strong>contradicciones que exigen nuevo contraste</strong>.</p></div>
               </article>
-              <article class="l37-phase is-invalid">
-                <span class="l37-phase-code">03</span>
-                <div><span class="l37-phase-title">Tesis invalidada</span><p class="l37-phase-copy">La <strong>estructura que la sustentaba deja de existir</strong>.</p></div>
+              <article class="l42-phase is-invalid">
+                <span class="l42-phase-code">03</span>
+                <div><span class="l42-phase-title">Tesis invalidada</span><p class="l42-phase-copy">La <strong>estructura que la sustentaba deja de existir</strong>.</p></div>
               </article>
             </div>
 
-            <div class="l37-trace" aria-label="Trayectoria de una tesis alcista que conserva vigencia y permite retoma">
+            <div class="l42-trace" aria-label="Trayectoria de una tesis alcista que conserva vigencia y permite retoma">
               <svg viewBox="0 0 1000 180" preserveAspectRatio="none" role="img" aria-label="Precio alcista, corrección y realineación">
                 <defs>
-                  <linearGradient id="l37Trace" x1="0" y1="0" x2="1" y2="0">
+                  <linearGradient id="l42Trace" x1="0" y1="0" x2="1" y2="0">
                     <stop offset="0" stop-color="#0033ff" />
                     <stop offset=".43" stop-color="#ffb74d" />
                     <stop offset=".73" stop-color="#00e5ff" />
                     <stop offset="1" stop-color="#22c55e" />
                   </linearGradient>
-                  <linearGradient id="l37Area" x1="0" y1="0" x2="0" y2="1">
+                  <linearGradient id="l42Area" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0" stop-color="#00e5ff" stop-opacity=".18" />
                     <stop offset="1" stop-color="#00e5ff" stop-opacity="0" />
                   </linearGradient>
@@ -623,8 +623,8 @@
                   <line x1="600" y1="0" x2="600" y2="180" />
                   <line x1="800" y1="0" x2="800" y2="180" />
                 </g>
-                <path d="M20 145 C85 130 125 65 205 74 S315 116 375 138 C435 158 485 110 535 116 C610 125 646 82 705 89 C780 98 820 56 875 62 C925 67 953 39 982 43 L982 180 L20 180 Z" fill="url(#l37Area)" />
-                <path d="M20 145 C85 130 125 65 205 74 S315 116 375 138 C435 158 485 110 535 116 C610 125 646 82 705 89 C780 98 820 56 875 62 C925 67 953 39 982 43" fill="none" stroke="url(#l37Trace)" stroke-width="4" vector-effect="non-scaling-stroke" />
+                <path d="M20 145 C85 130 125 65 205 74 S315 116 375 138 C435 158 485 110 535 116 C610 125 646 82 705 89 C780 98 820 56 875 62 C925 67 953 39 982 43 L982 180 L20 180 Z" fill="url(#l42Area)" />
+                <path d="M20 145 C85 130 125 65 205 74 S315 116 375 138 C435 158 485 110 535 116 C610 125 646 82 705 89 C780 98 820 56 875 62 C925 67 953 39 982 43" fill="none" stroke="url(#l42Trace)" stroke-width="4" vector-effect="non-scaling-stroke" />
                 <g stroke-width="2" vector-effect="non-scaling-stroke">
                   <line x1="205" y1="12" x2="205" y2="74" stroke="#a48cff" stroke-dasharray="5 5" />
                   <circle cx="205" cy="74" r="7" fill="#000" stroke="#a48cff" />
@@ -637,53 +637,53 @@
                 </g>
               </svg>
 
-              <div class="l37-events">
-                <span class="l37-event is-thesis">Tesis activa<small>Macrociclo +</small></span>
-                <span class="l37-event is-missed">Oportunidad 01<small>No ejecutada</small></span>
-                <span class="l37-event is-correction">Corrección<small>Estructura preservada</small></span>
-                <span class="l37-event is-realign">Realineación<small>Microciclos + confirmaciones</small></span>
-                <span class="l37-event is-retake">Retoma<small>Misma tesis T-01</small></span>
+              <div class="l42-events">
+                <span class="l42-event is-thesis">Tesis activa<small>Macrociclo +</small></span>
+                <span class="l42-event is-missed">Oportunidad 01<small>No ejecutada</small></span>
+                <span class="l42-event is-correction">Corrección<small>Estructura preservada</small></span>
+                <span class="l42-event is-realign">Realineación<small>Microciclos + confirmaciones</small></span>
+                <span class="l42-event is-retake">Retoma<small>Misma tesis T-01</small></span>
               </div>
 
-              <div class="l37-evidence-rails">
-                <div class="l37-rail is-macro"><strong>HWTE</strong><span>Macrociclo vigente</span></div>
-                <div class="l37-rail is-micro"><strong>Microciclos</strong><span>Se realinean</span></div>
-                <div class="l37-rail is-confirm"><strong>Confirmaciones</strong><span>Regresan</span></div>
+              <div class="l42-evidence-rails">
+                <div class="l42-rail is-macro"><strong>HWTE</strong><span>Macrociclo vigente</span></div>
+                <div class="l42-rail is-micro"><strong>Microciclos</strong><span>Se realinean</span></div>
+                <div class="l42-rail is-confirm"><strong>Confirmaciones</strong><span>Regresan</span></div>
               </div>
             </div>
           </div>
 
-          <aside class="l37-retake-loop" aria-label="Circuito de retoma">
-            <div class="l37-retake-head"><span class="l37-retake-title">Circuito de retoma</span><span class="l37-thesis-id">Tesis · T-01</span></div>
-            <p class="l37-retake-copy">La <strong>retoma</strong> ocurre cuando una oportunidad inicial no fue ejecutada, o cuando el mercado se alejó temporalmente, pero después vuelve a presentar condiciones compatibles con la misma tesis todavía vigente.</p>
+          <aside class="l42-retake-loop" aria-label="Circuito de retoma">
+            <div class="l42-retake-head"><span class="l42-retake-title">Circuito de retoma</span><span class="l42-thesis-id">Tesis · T-01</span></div>
+            <p class="l42-retake-copy">La <strong>retoma</strong> ocurre cuando una oportunidad inicial no fue ejecutada, o cuando el mercado se alejó temporalmente, pero después vuelve a presentar condiciones compatibles con la misma tesis todavía vigente.</p>
 
-            <div class="l37-loop" aria-label="La oportunidad vuelve a la tesis vigente">
-              <span class="l37-loop-step is-current">Tesis vigente</span><span class="l37-loop-arrow is-east">→</span>
-              <span class="l37-loop-step is-missed">Oportunidad no ejecutada</span><span class="l37-loop-arrow is-south">↓</span>
-              <span class="l37-loop-step is-pullback">Corrección temporal</span><span class="l37-loop-arrow is-west">←</span>
-              <span class="l37-loop-step is-realignment">Evidencia realineada</span><span class="l37-loop-arrow is-north">↑</span>
+            <div class="l42-loop" aria-label="La oportunidad vuelve a la tesis vigente">
+              <span class="l42-loop-step is-current">Tesis vigente</span><span class="l42-loop-arrow is-east">→</span>
+              <span class="l42-loop-step is-missed">Oportunidad no ejecutada</span><span class="l42-loop-arrow is-south">↓</span>
+              <span class="l42-loop-step is-pullback">Corrección temporal</span><span class="l42-loop-arrow is-west">←</span>
+              <span class="l42-loop-step is-realignment">Evidencia realineada</span><span class="l42-loop-arrow is-north">↑</span>
             </div>
 
-            <span class="l37-retake-state">Retoma habilitada · misma tesis</span>
+            <span class="l42-retake-state">Retoma habilitada · misma tesis</span>
           </aside>
         </div>
       </section>
 
-      <section class="l37-case">
-        <span class="l37-case-label">Ejemplo · tesis alcista</span>
-        <div class="l37-case-events" aria-label="Secuencia del ejemplo">
+      <section class="l42-case">
+        <span class="l42-case-label">Ejemplo · tesis alcista</span>
+        <div class="l42-case-events" aria-label="Secuencia del ejemplo">
           <span class="is-positive">HWTE positivo</span>
           <span class="is-omitted">Primera oportunidad omitida</span>
           <span class="is-preserved">Macrociclo vigente</span>
           <span class="is-enabled">Microciclos realineados</span>
         </div>
-        <p class="l37-case-copy">Existe un macrociclo HWTE positivo y una tesis alcista respaldada multidimensionalmente. El precio corrige y la primera oportunidad no es ejecutada. Si el macrociclo continúa vigente y después los microciclos y confirmaciones vuelven a alinearse, el trader puede <strong>retomar la tesis sin necesidad de construir una nueva desde cero</strong>.</p>
+        <p class="l42-case-copy">Existe un macrociclo HWTE positivo y una tesis alcista respaldada multidimensionalmente. El precio corrige y la primera oportunidad no es ejecutada. Si el macrociclo continúa vigente y después los microciclos y confirmaciones vuelven a alinearse, el trader puede <strong>retomar la tesis sin necesidad de construir una nueva desde cero</strong>.</p>
       </section>
 
-      <section class="l37-principle">
-        <span class="l37-principle-label">Principio Cortex-Dendrita</span>
-        <p class="l37-principle-quote">“Oportunidad perdida no significa tesis invalidada.”</p>
-        <p class="l37-principle-copy">El trader del Quant Trading Desk mantiene, degrada, retoma o descarta una tesis <strong>según evoluciona la evidencia</strong>, no según haya ejecutado o no la operación anterior.</p>
+      <section class="l42-principle">
+        <span class="l42-principle-label">Principio Cortex-Dendrita</span>
+        <p class="l42-principle-quote">“Oportunidad perdida no significa tesis invalidada.”</p>
+        <p class="l42-principle-copy">El trader del Quant Trading Desk mantiene, degrada, retoma o descarta una tesis <strong>según evoluciona la evidencia</strong>, no según haya ejecutado o no la operación anterior.</p>
       </section>
     </div>
   </main>
@@ -691,7 +691,7 @@
   <footer class="slide-footer">
     <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
     <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
-    <span class="slide-counter">37/42</span>
+    <span class="slide-counter">43/50</span>
   </footer>
 </section>
 </body>

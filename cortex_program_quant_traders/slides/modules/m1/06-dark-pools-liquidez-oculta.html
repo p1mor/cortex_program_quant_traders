@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dark Pools y Liquidez Oculta — Cortex Quant Trader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/slides.css" />
+  <style>
+    #slide-m1-dark-pools {
+      --dp-blue: #0033ff;
+      --dp-cyan: #00e5ff;
+      --dp-purple: #a48cff;
+      --dp-green: #22c55e;
+      --dp-red: #e63955;
+      --dp-amber: #ffb74d;
+      --dp-panel: rgba(7, 8, 10, .98);
+    }
+
+    #slide-m1-dark-pools .slide-body { min-height: 0; background: #000; }
+
+    #slide-m1-dark-pools .dp-stage {
+      min-width: 0;
+      min-height: 0;
+      height: 100%;
+      padding: clamp(16px, 1.75vw, 28px) clamp(22px, 3vw, 56px) 14px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background:
+        linear-gradient(rgba(0, 229, 255, .018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 51, 255, .016) 1px, transparent 1px),
+        #000;
+      background-size: 54px 54px;
+    }
+
+    #slide-m1-dark-pools .dp-head {
+      margin: 0 0 clamp(10px, 1.15vh, 15px);
+      flex: 0 0 auto;
+    }
+
+    #slide-m1-dark-pools .dp-head .section-number {
+      margin-bottom: 7px;
+      color: var(--dp-blue);
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-m1-dark-pools .dp-head h2 {
+      margin: 0;
+      font-size: var(--fs-slide-title);
+      line-height: 1.18;
+    }
+
+    #slide-m1-dark-pools .dp-head .divider {
+      width: 50px;
+      height: 2px;
+      margin-top: 13px;
+      background: linear-gradient(90deg, var(--dp-blue), var(--dp-cyan));
+    }
+
+    #slide-m1-dark-pools .dp-canvas {
+      min-width: 0;
+      min-height: 0;
+      flex: 1;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto auto auto;
+      gap: clamp(8px, 1vh, 12px);
+    }
+
+    #slide-m1-dark-pools .dp-scenes {
+      min-width: 0;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    #slide-m1-dark-pools .dp-scene {
+      --tone: var(--dp-blue);
+      --wash: rgba(0, 51, 255, .055);
+      min-width: 0;
+      min-height: 0;
+      padding: clamp(10px, 1vw, 16px);
+      display: grid;
+      grid-template-rows: auto auto minmax(108px, 1fr) auto auto;
+      gap: 8px;
+      border: 1px solid var(--border-default);
+      border-top: 2px solid var(--tone);
+      background: linear-gradient(135deg, var(--wash), transparent 58%), var(--dp-panel);
+      overflow: hidden;
+    }
+
+    #slide-m1-dark-pools .dp-scene.is-hidden {
+      --tone: var(--dp-cyan);
+      --wash: rgba(0, 229, 255, .045);
+    }
+
+    #slide-m1-dark-pools .dp-kicker,
+    #slide-m1-dark-pools .dp-definition,
+    #slide-m1-dark-pools .dp-highlight,
+    #slide-m1-dark-pools .dp-note,
+    #slide-m1-dark-pools .dp-visual-label,
+    #slide-m1-dark-pools .dp-market-label,
+    #slide-m1-dark-pools .dp-level-price,
+    #slide-m1-dark-pools .dp-level-size,
+    #slide-m1-dark-pools .dp-seq-item,
+    #slide-m1-dark-pools .dp-tags,
+    #slide-m1-dark-pools .dp-compare-title,
+    #slide-m1-dark-pools .dp-vs,
+    #slide-m1-dark-pools .dp-context-title,
+    #slide-m1-dark-pools .dp-principle-label,
+    #slide-m1-dark-pools .dp-venue-code {
+      font-family: var(--font-mono);
+      text-transform: uppercase;
+      letter-spacing: .075em;
+      font-weight: 700;
+    }
+
+    #slide-m1-dark-pools .dp-scene-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    #slide-m1-dark-pools .dp-kicker {
+      color: var(--tone);
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-m1-dark-pools .dp-definition {
+      color: var(--txt-primary);
+      font-size: var(--fs-slide-support);
+      text-align: right;
+    }
+
+    #slide-m1-dark-pools .dp-copy,
+    #slide-m1-dark-pools .dp-context-copy,
+    #slide-m1-dark-pools .dp-compare-list {
+      margin: 0;
+      color: var(--txt-secondary);
+      font-family: var(--font-body);
+      font-size: var(--fs-slide-body);
+      line-height: 1.42;
+    }
+
+    #slide-m1-dark-pools strong { color: var(--txt-primary); font-weight: 700; }
+
+    #slide-m1-dark-pools .dp-dark-map {
+      min-width: 0;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) 88px minmax(150px, .72fr);
+      align-items: center;
+      gap: 10px;
+    }
+
+    #slide-m1-dark-pools .dp-public-book,
+    #slide-m1-dark-pools .dp-private-venue,
+    #slide-m1-dark-pools .dp-iceberg-book {
+      min-width: 0;
+      padding: 9px 11px;
+      border: 1px solid var(--border-default);
+      background: rgba(255,255,255,.018);
+    }
+
+    #slide-m1-dark-pools .dp-visual-label {
+      margin-bottom: 7px;
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro);
+    }
+
+    #slide-m1-dark-pools .dp-book-side {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr);
+      align-items: center;
+      gap: 8px;
+      margin: 5px 0;
+    }
+
+    #slide-m1-dark-pools .dp-market-label {
+      color: var(--dp-red);
+      font-size: var(--fs-slide-micro);
+    }
+
+    #slide-m1-dark-pools .dp-book-side.is-bid .dp-market-label { color: var(--dp-green); }
+
+    #slide-m1-dark-pools .dp-depth {
+      height: 8px;
+      position: relative;
+      background: rgba(230,57,85,.13);
+    }
+
+    #slide-m1-dark-pools .dp-book-side.is-bid .dp-depth { background: rgba(34,197,94,.12); }
+
+    #slide-m1-dark-pools .dp-depth::after {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: var(--depth, 70%);
+      background: var(--dp-red);
+      opacity: .55;
+    }
+
+    #slide-m1-dark-pools .dp-book-side.is-bid .dp-depth::after { background: var(--dp-green); }
+
+    #slide-m1-dark-pools .dp-public-price {
+      margin: 7px 0;
+      padding: 5px 8px;
+      border: 1px solid var(--border-strong);
+      color: var(--txt-primary);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      text-align: center;
+    }
+
+    #slide-m1-dark-pools .dp-offbook {
+      min-width: 0;
+      display: grid;
+      justify-items: center;
+      gap: 7px;
+      color: var(--dp-purple);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      text-align: center;
+    }
+
+    #slide-m1-dark-pools .dp-offbook::before {
+      content: "";
+      width: 100%;
+      border-top: 1px dashed rgba(164, 140, 255, .58);
+    }
+
+    #slide-m1-dark-pools .dp-offbook-arrow { font-size: 1.35em; }
+
+    #slide-m1-dark-pools .dp-private-venue {
+      position: relative;
+      border-color: rgba(164, 140, 255, .58);
+      background: rgba(164, 140, 255, .065);
+      text-align: center;
+    }
+
+    #slide-m1-dark-pools .dp-private-venue::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      border: 1px solid var(--dp-purple);
+      transform: rotate(45deg);
+    }
+
+    #slide-m1-dark-pools .dp-venue-code {
+      color: var(--dp-purple);
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-m1-dark-pools .dp-institution {
+      margin: 10px 0 7px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 4px;
+      height: 28px;
+    }
+
+    #slide-m1-dark-pools .dp-institution i {
+      width: 7px;
+      height: 42%;
+      display: block;
+      background: var(--dp-purple);
+      opacity: .44;
+    }
+
+    #slide-m1-dark-pools .dp-institution i:nth-child(2) { height: 72%; opacity: .7; }
+    #slide-m1-dark-pools .dp-institution i:nth-child(3) { height: 100%; opacity: 1; }
+    #slide-m1-dark-pools .dp-institution i:nth-child(4) { height: 67%; opacity: .64; }
+
+    #slide-m1-dark-pools .dp-private-copy {
+      color: var(--txt-tertiary);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      line-height: 1.35;
+    }
+
+    #slide-m1-dark-pools .dp-highlight {
+      padding: 6px 9px;
+      border-left: 2px solid var(--tone);
+      color: var(--tone);
+      background: color-mix(in srgb, var(--tone) 7%, #050607);
+      font-size: var(--fs-slide-label);
+      text-align: center;
+    }
+
+    #slide-m1-dark-pools .dp-note {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro);
+      text-align: center;
+    }
+
+    #slide-m1-dark-pools .dp-iceberg-map {
+      min-width: 0;
+      min-height: 0;
+      display: grid;
+      grid-template-columns: minmax(180px, .9fr) minmax(0, 1.3fr);
+      align-items: center;
+      gap: 14px;
+    }
+
+    #slide-m1-dark-pools .dp-iceberg-book {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 6px 10px;
+    }
+
+    #slide-m1-dark-pools .dp-iceberg-book .dp-visual-label { margin-bottom: 0; }
+
+    #slide-m1-dark-pools .dp-reserve {
+      position: static;
+      color: var(--dp-purple);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-micro);
+      opacity: .58;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    #slide-m1-dark-pools .dp-level {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 9px;
+      padding: 8px;
+      border: 1px solid rgba(0,229,255,.38);
+      background: rgba(0,229,255,.045);
+    }
+
+    #slide-m1-dark-pools .dp-level-price,
+    #slide-m1-dark-pools .dp-level-size {
+      color: var(--dp-cyan);
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-m1-dark-pools .dp-level-bar {
+      height: 8px;
+      position: relative;
+      overflow: hidden;
+      background: rgba(0,229,255,.12);
+    }
+
+    #slide-m1-dark-pools .dp-level-bar::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 36%;
+      background: var(--dp-cyan);
+      box-shadow: 55px 0 0 rgba(164,140,255,.35), 110px 0 0 rgba(164,140,255,.18);
+    }
+
+    #slide-m1-dark-pools .dp-iceberg-sequence {
+      display: grid;
+      grid-template-columns: repeat(9, auto);
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+    }
+
+    #slide-m1-dark-pools .dp-seq-item {
+      min-width: 0;
+      padding: 8px 9px;
+      border: 1px solid rgba(0,229,255,.34);
+      color: var(--dp-cyan);
+      background: rgba(0,229,255,.045);
+      font-size: var(--fs-slide-micro);
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    #slide-m1-dark-pools .dp-seq-item.is-execution {
+      border-color: rgba(255,183,77,.34);
+      color: var(--dp-amber);
+      background: rgba(255,183,77,.045);
+    }
+
+    #slide-m1-dark-pools .dp-seq-arrow {
+      color: var(--txt-tertiary);
+      font-family: var(--font-mono);
+      font-size: var(--fs-slide-support);
+    }
+
+    #slide-m1-dark-pools .dp-tags {
+      color: var(--txt-tertiary);
+      font-size: var(--fs-slide-micro);
+      text-align: center;
+    }
+
+    #slide-m1-dark-pools .dp-compare {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: stretch;
+      border: 1px solid var(--border-default);
+      background: var(--dp-panel);
+    }
+
+    #slide-m1-dark-pools .dp-compare-side {
+      min-width: 0;
+      padding: 8px 12px;
+    }
+
+    #slide-m1-dark-pools .dp-compare-side:first-child { border-left: 2px solid var(--dp-blue); }
+    #slide-m1-dark-pools .dp-compare-side:last-child { border-right: 2px solid var(--dp-cyan); }
+
+    #slide-m1-dark-pools .dp-compare-title {
+      margin-bottom: 5px;
+      color: var(--dp-blue);
+      font-size: var(--fs-slide-label);
+    }
+
+    #slide-m1-dark-pools .dp-compare-side:last-child .dp-compare-title { color: var(--dp-cyan); }
+
+    #slide-m1-dark-pools .dp-compare-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 3px 14px;
+      font-size: var(--fs-slide-support);
+      line-height: 1.32;
+    }
+
+    #slide-m1-dark-pools .dp-compare-list span::before {
+      content: "·";
+      margin-right: 6px;
+      color: var(--tone, var(--dp-blue));
+    }
+
+    #slide-m1-dark-pools .dp-vs {
+      min-width: 156px;
+      padding: 8px 13px;
+      display: grid;
+      place-items: center;
+      border-right: 1px solid var(--border-default);
+      border-left: 1px solid var(--border-default);
+      color: var(--txt-primary);
+      background: linear-gradient(135deg, rgba(0,51,255,.08), rgba(0,229,255,.05));
+      font-size: var(--fs-slide-label);
+      text-align: center;
+    }
+
+    #slide-m1-dark-pools .dp-context {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap: 10px;
+    }
+
+    #slide-m1-dark-pools .dp-context-card {
+      min-width: 0;
+      padding: 8px 11px;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      align-items: center;
+      gap: 12px;
+      border-left: 2px solid var(--dp-amber);
+      background: rgba(255,183,77,.045);
+    }
+
+    #slide-m1-dark-pools .dp-context-card.is-cortex {
+      border-color: var(--dp-cyan);
+      background: rgba(0,229,255,.04);
+    }
+
+    #slide-m1-dark-pools .dp-context-title {
+      color: var(--dp-amber);
+      font-size: var(--fs-slide-label);
+      white-space: nowrap;
+    }
+
+    #slide-m1-dark-pools .dp-context-card.is-cortex .dp-context-title { color: var(--dp-cyan); }
+    #slide-m1-dark-pools .dp-context-copy { font-size: var(--fs-slide-support); line-height: 1.35; }
+    #slide-m1-dark-pools .dp-context-copy em { color: var(--dp-cyan); font-family: var(--font-mono); font-style: normal; }
+
+    #slide-m1-dark-pools .dp-principle {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      gap: 13px;
+      padding: 8px 12px;
+      border-left: 3px solid var(--dp-blue);
+      border-top: 1px solid rgba(0,229,255,.2);
+      background: linear-gradient(90deg, rgba(0,51,255,.11), rgba(0,229,255,.055));
+    }
+
+    #slide-m1-dark-pools .dp-principle-label {
+      color: var(--dp-cyan);
+      font-size: var(--fs-slide-label);
+      white-space: nowrap;
+    }
+
+    #slide-m1-dark-pools .dp-principle-copy {
+      margin: 0;
+      color: var(--txt-primary);
+      font-family: var(--font-display);
+      font-size: var(--fs-slide-body);
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    #slide-m1-dark-pools .dp-principle-sep { color: var(--txt-tertiary); font-family: var(--font-mono); }
+
+    @media (min-width: 1181px) and (max-height: 820px) {
+      #slide-m1-dark-pools .dp-stage { padding-top: 8px; padding-bottom: 6px; }
+      #slide-m1-dark-pools .dp-head { margin-bottom: 6px; }
+      #slide-m1-dark-pools .dp-head .section-number { margin-bottom: 4px; }
+      #slide-m1-dark-pools .dp-head .divider { margin-top: 7px; }
+      #slide-m1-dark-pools .dp-canvas { gap: 6px; }
+      #slide-m1-dark-pools .dp-scene { padding: 8px 10px; gap: 5px; grid-template-rows: auto auto minmax(94px, 1fr) auto auto; }
+      #slide-m1-dark-pools .dp-copy { line-height: 1.32; }
+      #slide-m1-dark-pools .dp-public-book,
+      #slide-m1-dark-pools .dp-private-venue,
+      #slide-m1-dark-pools .dp-iceberg-book { padding: 6px 8px; }
+      #slide-m1-dark-pools .dp-institution { margin: 5px 0 3px; height: 22px; }
+      #slide-m1-dark-pools .dp-highlight { padding-top: 4px; padding-bottom: 4px; }
+      #slide-m1-dark-pools .dp-compare-side { padding-top: 5px; padding-bottom: 5px; }
+      #slide-m1-dark-pools .dp-compare-title { margin-bottom: 3px; }
+      #slide-m1-dark-pools .dp-context-card { padding-top: 5px; padding-bottom: 5px; }
+      #slide-m1-dark-pools .dp-principle { padding-top: 6px; padding-bottom: 6px; }
+    }
+
+    @media (max-width: 1180px) {
+      #slide-m1-dark-pools .dp-stage { height: auto; min-height: 100%; overflow-y: auto; }
+      #slide-m1-dark-pools .dp-canvas { display: flex; flex-direction: column; }
+      #slide-m1-dark-pools .dp-scenes { grid-template-columns: 1fr; }
+      #slide-m1-dark-pools .dp-scene { min-height: 330px; }
+      #slide-m1-dark-pools .dp-compare { grid-template-columns: 1fr; }
+      #slide-m1-dark-pools .dp-vs { min-width: 0; border: 1px solid var(--border-default); }
+      #slide-m1-dark-pools .dp-context { grid-template-columns: 1fr; }
+      #slide-m1-dark-pools .dp-principle { grid-template-columns: 1fr; gap: 6px; }
+      #slide-m1-dark-pools .dp-principle-sep { display: none; }
+    }
+
+    @media (max-width: 760px) {
+      #slide-m1-dark-pools .dp-stage { padding: 18px 16px 14px; }
+      #slide-m1-dark-pools .dp-scene-head { align-items: flex-start; flex-direction: column; gap: 4px; }
+      #slide-m1-dark-pools .dp-definition { text-align: left; }
+      #slide-m1-dark-pools .dp-dark-map,
+      #slide-m1-dark-pools .dp-iceberg-map { grid-template-columns: 1fr; }
+      #slide-m1-dark-pools .dp-offbook { grid-template-columns: 1fr auto 1fr; }
+      #slide-m1-dark-pools .dp-offbook::before { width: 100%; }
+      #slide-m1-dark-pools .dp-compare-list { grid-template-columns: 1fr; }
+      #slide-m1-dark-pools .dp-context-card { grid-template-columns: 1fr; gap: 5px; }
+    }
+  </style>
+</head>
+<body>
+<section class="slide" id="slide-m1-dark-pools" data-module="1">
+  <header class="slide-header">
+    <span class="brand">CORTEX QUANT TRADER</span>
+    <span class="divider"></span>
+    <span class="module-tag" data-mod="1">Módulo I</span>
+    <span class="lesson-tag">L6</span>
+    <span class="slide-title">Dark Pools y Liquidez Oculta</span>
+    <span class="concept-code">M1.L6.C06</span>
+  </header>
+
+  <div class="slide-body single-col">
+    <main class="dp-stage">
+      <div class="dp-head section-title">
+        <div class="section-number">LECCIÓN 6</div>
+        <h2>Dark Pools y Liquidez Oculta</h2>
+        <div class="divider"></div>
+      </div>
+
+      <div class="dp-canvas">
+        <section class="dp-scenes" aria-label="Comparación visual entre Dark Pools y liquidez oculta">
+          <article class="dp-scene">
+            <header class="dp-scene-head">
+              <span class="dp-kicker">01 · Dark Pools</span>
+              <span class="dp-definition">Centro privado de negociación</span>
+            </header>
+            <p class="dp-copy">Permiten principalmente a participantes institucionales ejecutar operaciones relevantes <strong>sin revelar previamente toda su intención al libro público</strong>, reduciendo el impacto que produciría una orden visible de gran tamaño.</p>
+
+            <div class="dp-dark-map" aria-label="La orden de la Dark Pool permanece fuera del libro público">
+              <div class="dp-public-book">
+                <div class="dp-visual-label">Libro público · visible</div>
+                <div class="dp-book-side"><span class="dp-market-label">Ask</span><span class="dp-depth" style="--depth:78%;"></span></div>
+                <div class="dp-book-side"><span class="dp-market-label">Ask</span><span class="dp-depth" style="--depth:52%;"></span></div>
+                <div class="dp-public-price">MID / SPREAD</div>
+                <div class="dp-book-side is-bid"><span class="dp-market-label">Bid</span><span class="dp-depth" style="--depth:63%;"></span></div>
+                <div class="dp-book-side is-bid"><span class="dp-market-label">Bid</span><span class="dp-depth" style="--depth:84%;"></span></div>
+              </div>
+
+              <div class="dp-offbook">
+                <span>Fuera del libro</span>
+                <span class="dp-offbook-arrow">→</span>
+              </div>
+
+              <div class="dp-private-venue">
+                <div class="dp-venue-code">Private venue<br />Dark Pool</div>
+                <div class="dp-institution" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+                <div class="dp-private-copy">Bloque institucional<br />sin exposición previa</div>
+              </div>
+            </div>
+
+            <div class="dp-highlight">El lugar de negociación está oculto</div>
+            <div class="dp-note">No es directamente observable mediante DOM o footprint del libro público.</div>
+          </article>
+
+          <article class="dp-scene is-hidden">
+            <header class="dp-scene-head">
+              <span class="dp-kicker">02 · Liquidez oculta</span>
+              <span class="dp-definition">Tamaño real de la orden oculto</span>
+            </header>
+            <p class="dp-copy">Ocurre dentro de un mercado visible, pero <strong>el tamaño total de la orden no se muestra públicamente</strong>. Una Iceberg Order expone solo una fracción y repone liquidez tras cada ejecución.</p>
+
+            <div class="dp-iceberg-map" aria-label="Reposición sucesiva de una orden iceberg">
+              <div class="dp-iceberg-book">
+                <div class="dp-visual-label">Nivel visible del libro</div>
+                <span class="dp-reserve">Reserva mayor · oculta</span>
+                <div class="dp-level">
+                  <span class="dp-level-price">5,488.00</span>
+                  <span class="dp-level-bar"></span>
+                  <span class="dp-level-size">20</span>
+                </div>
+              </div>
+
+              <div class="dp-iceberg-sequence">
+                <span class="dp-seq-item">20</span>
+                <span class="dp-seq-arrow">→</span>
+                <span class="dp-seq-item is-execution">Ejecución</span>
+                <span class="dp-seq-arrow">→</span>
+                <span class="dp-seq-item">20</span>
+                <span class="dp-seq-arrow">→</span>
+                <span class="dp-seq-item is-execution">Ejecución</span>
+                <span class="dp-seq-arrow">→</span>
+                <span class="dp-seq-item">20</span>
+              </div>
+            </div>
+
+            <div class="dp-tags">Iceberg Refill · Replenishment · Hidden Liquidity · Absorción</div>
+            <div class="dp-highlight">El mercado es visible · el tamaño real no</div>
+          </article>
+        </section>
+
+        <section class="dp-compare" aria-label="Comparación directa">
+          <div class="dp-compare-side" style="--tone:var(--dp-blue);">
+            <div class="dp-compare-title">03 · Dark Pool</div>
+            <div class="dp-compare-list">
+              <span>Centro privado de negociación.</span>
+              <span>Intención no visible previamente.</span>
+              <span>Frecuente en grandes operaciones.</span>
+              <span>Busca reducir impacto de mercado.</span>
+            </div>
+          </div>
+          <div class="dp-vs">Lugar oculto<br />≠<br />Tamaño oculto</div>
+          <div class="dp-compare-side" style="--tone:var(--dp-cyan);">
+            <div class="dp-compare-title">Liquidez oculta</div>
+            <div class="dp-compare-list">
+              <span>Característica de una orden.</span>
+              <span>Opera en el mercado visible.</span>
+              <span>El tamaño completo permanece oculto.</span>
+              <span>Puede manifestarse como replenishment.</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="dp-context" aria-label="Huella en el flujo y conexión con Cortex-Dendrita">
+          <div class="dp-context-card">
+            <span class="dp-context-title">04 · Huella en el Order Flow</span>
+            <p class="dp-context-copy">Agresión repetida sobre un nivel, escaso desplazamiento y liquidez que reaparece pueden indicar <strong>absorción o replenishment</strong>. <strong>Huella observable ≠ certeza sobre la identidad del participante.</strong></p>
+          </div>
+          <div class="dp-context-card is-cortex">
+            <span class="dp-context-title">05 · Conexión Dendrita</span>
+            <p class="dp-context-copy">Comprender la microestructura evita narrativas automáticas. <strong>Dendrita analiza consecuencias cuantitativas e informacionales</strong> manifestadas en precio, flujo y liquidez. <em>HWTE → estructura informacional.</em></p>
+          </div>
+        </section>
+
+        <section class="dp-principle" aria-label="Principio final de la lección">
+          <span class="dp-principle-label">Principio final</span>
+          <p class="dp-principle-copy">Dark Pool = el lugar donde se negocia está oculto.</p>
+          <span class="dp-principle-sep">≠</span>
+          <p class="dp-principle-copy">Hidden Liquidity = el tamaño real de la orden está oculto.</p>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <footer class="slide-footer">
+    <span class="watermark">TechPulse Consulting | Proprietary Framework Cortex Quant Trader</span>
+    <span class="nav-hint"><kbd class="kbd">&larr;</kbd> <kbd class="kbd">&rarr;</kbd></span>
+    <span class="slide-counter">06/50</span>
+  </footer>
+</section>
+</body>
+</html>
